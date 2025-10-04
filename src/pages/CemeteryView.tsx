@@ -22,6 +22,27 @@ export function CemeteryView() {
   const [showGraveList, setShowGraveList] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
 
+  // Set initial sidebar visibility based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      // On medium and large screens (>= 640px), show grave list by default
+      if (window.innerWidth >= 640) {
+        setShowGraveList(true);
+        // On large screens (>= 1024px), also show editor if editing
+        if (window.innerWidth >= 1024 && (isEditing || isCreating)) {
+          setShowEditor(true);
+        }
+      }
+    };
+
+    // Set initial state
+    handleResize();
+
+    // Listen for resize events
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isEditing, isCreating]);
+
   // Load cemetery data on mount
   useEffect(() => {
     const loadData = async () => {
@@ -153,43 +174,82 @@ export function CemeteryView() {
 
   return (
     <div className="h-screen flex relative">
-      {/* Mobile Toggle Buttons */}
-      <div className="md:hidden absolute top-4 left-4 z-20 flex gap-2">
+      {/* Small Screen (sm and below): Three buttons - List, Map, Edit */}
+      <div className="sm:hidden absolute top-4 left-0 right-0 z-20 flex justify-center gap-2 px-4">
         <button
           onClick={() => {
-            setShowGraveList(!showGraveList);
-            // Close editor when opening list
-            if (!showGraveList) {
-              setShowEditor(false);
-            }
+            setShowGraveList(true);
+            setShowEditor(false);
           }}
+          className={`px-4 py-2 border rounded-lg shadow-lg text-sm font-medium transition-colors ${
+            showGraveList
+              ? 'bg-blue-600 text-white border-blue-600'
+              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
+          }`}
+          aria-label="Show grave list"
+        >
+          ☰ List
+        </button>
+        <button
+          onClick={() => {
+            setShowGraveList(false);
+            setShowEditor(false);
+          }}
+          className={`px-4 py-2 border rounded-lg shadow-lg text-sm font-medium transition-colors ${
+            !showGraveList && !showEditor
+              ? 'bg-blue-600 text-white border-blue-600'
+              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
+          }`}
+          aria-label="Show map"
+        >
+          🗺 Map
+        </button>
+        <button
+          onClick={() => {
+            setShowGraveList(false);
+            setShowEditor(true);
+          }}
+          disabled={!isEditing && !isCreating}
+          className={`px-4 py-2 border rounded-lg shadow-lg text-sm font-medium transition-colors ${
+            showEditor
+              ? 'bg-blue-600 text-white border-blue-600'
+              : isEditing || isCreating
+                ? 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
+                : 'bg-gray-100 dark:bg-gray-900 text-gray-400 dark:text-gray-600 border-gray-200 dark:border-gray-700 cursor-not-allowed'
+          }`}
+          aria-label="Show editor"
+        >
+          ✏ Edit
+        </button>
+      </div>
+
+      {/* Medium Screen (sm to lg): Toggle buttons on left and right */}
+      <div className="hidden sm:flex lg:hidden absolute top-4 left-4 z-20">
+        <button
+          onClick={() => setShowGraveList(!showGraveList)}
           className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg text-sm font-medium text-gray-700 dark:text-gray-300"
           aria-label="Toggle grave list"
         >
-          {showGraveList ? '✕ List' : '☰ List'}
+          {showGraveList ? '✕' : '☰'} List
         </button>
-        {(isEditing || isCreating) && (
+      </div>
+      {(isEditing || isCreating) && (
+        <div className="hidden sm:flex lg:hidden absolute top-4 right-4 z-20">
           <button
-            onClick={() => {
-              setShowEditor(!showEditor);
-              // Close list when opening editor
-              if (!showEditor) {
-                setShowGraveList(false);
-              }
-            }}
+            onClick={() => setShowEditor(!showEditor)}
             className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg text-sm font-medium text-gray-700 dark:text-gray-300"
             aria-label="Toggle editor"
           >
-            {showEditor ? '✕ Editor' : '✏ Edit'}
+            {showEditor ? '✕' : '✏'} Edit
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Grave List Sidebar */}
       <div
         className={`${
           showGraveList ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 absolute md:relative z-10 w-80 h-full border-r border-gray-200 dark:border-gray-700 flex flex-col bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
+        } lg:translate-x-0 absolute lg:relative z-10 w-80 h-full border-r border-gray-200 dark:border-gray-700 flex flex-col bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
       >
         <div className="p-4 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
@@ -237,7 +297,7 @@ export function CemeteryView() {
           <div
             className={`${
               showEditor ? 'translate-x-0' : 'translate-x-full'
-            } md:translate-x-0 absolute md:relative right-0 z-10 w-full md:w-96 h-full border-l border-gray-200 dark:border-gray-700 overflow-y-auto bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
+            } lg:translate-x-0 absolute lg:relative right-0 z-10 w-full sm:w-96 h-full border-l border-gray-200 dark:border-gray-700 overflow-y-auto bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
           >
             <GraveEditor
               grave={selectedGrave}
