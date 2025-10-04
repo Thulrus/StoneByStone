@@ -1,0 +1,17 @@
+{
+  "name": "StoneByStone",
+  "short_name": "StoneByStone",
+  "description": "Cemetery data management with offline support",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
