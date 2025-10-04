@@ -4,7 +4,7 @@
   "title": "Cemetery Data Schema",
   "description": "Schema for cemetery data including cemetery info, graves, and change logs",
   "type": "object",
-  "required": ["schema_version", "cemetery", "graves", "change_log"],
+  "required": ["schema_version", "cemetery", "graves"],
   "properties": {
     "schema_version": {
       "type": "string",
@@ -110,33 +110,46 @@
           "properties": {
             "type": "object",
             "required": ["last_modified", "modified_by"],
+            "additionalProperties": false,
             "properties": {
               "name": {
-                "type": "string"
+                "type": "string",
+                "description": "Name of the deceased"
               },
               "birth": {
-                "type": "string",
-                "format": "date"
+                "anyOf": [
+                  { "type": "string", "format": "date" },
+                  { "type": "string", "maxLength": 0 }
+                ],
+                "description": "Birth date (YYYY-MM-DD format or empty)"
               },
               "death": {
-                "type": "string",
-                "format": "date"
+                "anyOf": [
+                  { "type": "string", "format": "date" },
+                  { "type": "string", "maxLength": 0 }
+                ],
+                "description": "Death date (YYYY-MM-DD format or empty)"
               },
               "inscription": {
-                "type": "string"
+                "type": "string",
+                "description": "Inscription text on the grave marker"
               },
               "notes": {
-                "type": "string"
+                "type": "string",
+                "description": "Additional notes or observations"
               },
               "deleted": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Whether the grave record is marked as deleted"
               },
               "last_modified": {
                 "type": "string",
-                "format": "date-time"
+                "format": "date-time",
+                "description": "When this record was last modified"
               },
               "modified_by": {
-                "type": "string"
+                "type": "string",
+                "description": "User who last modified this record"
               }
             }
           }

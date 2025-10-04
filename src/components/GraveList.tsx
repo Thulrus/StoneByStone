@@ -67,7 +67,7 @@ export function GraveList({
                 }`}
               >
                 <div className="font-medium text-gray-900 dark:text-white">
-                  {grave.properties.name || 'Unnamed'}
+                  {grave.properties.name || <span className="italic text-gray-400">No name</span>}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">
                   Plot: {grave.plot}
@@ -75,9 +75,9 @@ export function GraveList({
                 <div className="text-xs text-gray-500 dark:text-gray-500">
                   Grid: ({grave.grid.row}, {grave.grid.col})
                 </div>
-                {grave.properties.birth && grave.properties.death && (
+                {(grave.properties.birth || grave.properties.death) && (
                   <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                    {grave.properties.birth} – {grave.properties.death}
+                    {grave.properties.birth || '?'} – {grave.properties.death || '?'}
                   </div>
                 )}
               </div>

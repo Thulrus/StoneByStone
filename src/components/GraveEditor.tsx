@@ -152,11 +152,11 @@ export function GraveEditor({
             onChange={(e) =>
               setFormData({
                 ...formData,
-                properties: { ...formData.properties!, name: e.target.value },
+                properties: { ...formData.properties!, name: e.target.value || undefined },
               })
             }
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            placeholder="Full name of the deceased"
+            placeholder="Full name of the deceased (optional)"
           />
         </div>
 
@@ -171,7 +171,7 @@ export function GraveEditor({
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  properties: { ...formData.properties!, birth: e.target.value },
+                  properties: { ...formData.properties!, birth: e.target.value || undefined },
                 })
               }
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
@@ -187,7 +187,7 @@ export function GraveEditor({
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  properties: { ...formData.properties!, death: e.target.value },
+                  properties: { ...formData.properties!, death: e.target.value || undefined },
                 })
               }
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
@@ -204,12 +204,12 @@ export function GraveEditor({
             onChange={(e) =>
               setFormData({
                 ...formData,
-                properties: { ...formData.properties!, inscription: e.target.value },
+                properties: { ...formData.properties!, inscription: e.target.value || undefined },
               })
             }
             rows={3}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            placeholder="Inscription text on the tombstone"
+            placeholder="Inscription text on the tombstone (optional)"
           />
         </div>
 
@@ -222,12 +222,12 @@ export function GraveEditor({
             onChange={(e) =>
               setFormData({
                 ...formData,
-                properties: { ...formData.properties!, notes: e.target.value },
+                properties: { ...formData.properties!, notes: e.target.value || undefined },
               })
             }
             rows={3}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            placeholder="Additional notes or observations"
+            placeholder="Additional notes or observations (optional)"
           />
         </div>
 
