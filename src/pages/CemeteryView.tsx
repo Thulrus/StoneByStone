@@ -317,6 +317,9 @@ export function CemeteryView() {
 
   const handleEditRoadCells = () => {
     // Re-enter cell selection mode for the current road
+    if (selectedRoad) {
+      setSelectedRoadCells(selectedRoad.cells); // Preserve existing cells
+    }
     setActiveMarkerType('street');
     setIsEditing(false);
     setShowEditor(false);
@@ -418,21 +421,39 @@ export function CemeteryView() {
       return;
     }
 
-    const newRoad: Road = {
-      uuid: crypto.randomUUID(),
-      cells: selectedRoadCells,
-      properties: {
-        color: '#9ca3af', // Default gray color
-        last_modified: getCurrentTimestamp(),
-        modified_by: getCurrentUser(),
-      },
-    };
+    // Check if we're editing an existing road or creating a new one
+    if (selectedRoad) {
+      // Update existing road with new cells
+      const updatedRoad: Road = {
+        ...selectedRoad,
+        cells: selectedRoadCells,
+        properties: {
+          ...selectedRoad.properties,
+          last_modified: getCurrentTimestamp(),
+          modified_by: getCurrentUser(),
+        },
+      };
+      setSelectedRoad(updatedRoad);
+      setIsEditing(true); // Switch to editing mode instead of creating
+      setIsCreating(false);
+    } else {
+      // Create new road
+      const newRoad: Road = {
+        uuid: crypto.randomUUID(),
+        cells: selectedRoadCells,
+        properties: {
+          color: '#9ca3af', // Default gray color
+          last_modified: getCurrentTimestamp(),
+          modified_by: getCurrentUser(),
+        },
+      };
+      setSelectedRoad(newRoad);
+      setSelectedGrave(null);
+      setSelectedLandmark(null);
+      setIsCreating(true);
+      setIsEditing(false);
+    }
 
-    setSelectedRoad(newRoad);
-    setSelectedGrave(null);
-    setSelectedLandmark(null);
-    setIsCreating(true);
-    setIsEditing(false);
     setShowEditor(true);
     setShowGraveList(false);
     setActiveMarkerType(null); // Exit add mode

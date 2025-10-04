@@ -391,7 +391,14 @@ export function MapGrid({
                 <g
                   key={grave.uuid}
                   className="grave-marker cursor-pointer"
-                  onClick={() => onGraveClick(grave)}
+                  style={{
+                    pointerEvents: addMode === 'street' ? 'none' : 'auto',
+                  }}
+                  onClick={() => {
+                    // Don't interact with graves during road selection mode
+                    if (addMode === 'street') return;
+                    onGraveClick(grave);
+                  }}
                 >
                   {/* Base stone icon */}
                   <image
@@ -448,7 +455,14 @@ export function MapGrid({
                 <g
                   key={landmark.uuid}
                   className="landmark-marker cursor-pointer"
-                  onClick={() => onLandmarkClick?.(landmark)}
+                  style={{
+                    pointerEvents: addMode === 'street' ? 'none' : 'auto',
+                  }}
+                  onClick={() => {
+                    // Don't interact with landmarks during road selection mode
+                    if (addMode === 'street') return;
+                    onLandmarkClick?.(landmark);
+                  }}
                 >
                   <image
                     href={iconPath}
@@ -484,7 +498,14 @@ export function MapGrid({
                 <g
                   key={road.uuid}
                   className="road-overlay cursor-pointer"
-                  onClick={() => onRoadClick?.(road)}
+                  style={{
+                    pointerEvents: addMode === 'street' ? 'none' : 'auto',
+                  }}
+                  onClick={() => {
+                    // Don't interact with roads during road selection mode
+                    if (addMode === 'street') return;
+                    onRoadClick?.(road);
+                  }}
                 >
                   {road.cells.map((cell, idx) => {
                     const x = PADDING + cell.col * CELL_SIZE;
