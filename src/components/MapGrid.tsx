@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+} from 'react';
 import type {
   Grave,
   Landmark,
@@ -21,6 +27,13 @@ interface MapGridProps {
   highlightedGraves?: Set<string>;
   addMode?: MarkerType | null; // New prop for click-to-add mode
   onCellClick?: (position: GridPosition) => void; // New callback for cell clicks
+  onMultipleElementsClick?: (
+    elements: Array<{
+      type: 'grave' | 'landmark' | 'road';
+      data: Grave | Landmark | Road;
+    }>,
+    position: GridPosition
+  ) => void; // New callback for multiple elements at same position
 }
 
 const CELL_SIZE = 40;
@@ -39,6 +52,7 @@ export function MapGrid({
   highlightedGraves,
   addMode = null,
   onCellClick,
+  onMultipleElementsClick,
 }: MapGridProps) {
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
   const [isDragging, setIsDragging] = useState(false);
@@ -79,10 +93,8 @@ export function MapGrid({
       // Record mouse down position for click detection
       setMouseDownPos({ x: e.clientX, y: e.clientY });
 
-      if (
-        e.button === 0 &&
-        !(e.target as SVGElement).closest('.grave-marker')
-      ) {
+      // Always allow dragging, regardless of what element is clicked
+      if (e.button === 0) {
         setIsDragging(true);
         setDragStart({
           x: e.clientX - transform.x,
@@ -243,16 +255,140 @@ export function MapGrid({
   }, [width, height]);
 
   // Create grave lookup by grid position
-  const gravesByPosition = new Map<string, Grave[]>();
-  graves.forEach((grave) => {
-    if (!grave.properties.deleted) {
-      const key = `${grave.grid.row},${grave.grid.col}`;
-      if (!gravesByPosition.has(key)) {
-        gravesByPosition.set(key, []);
+  const gravesByPosition = useMemo(() => {
+    const map = new Map<string, Grave[]>();
+    graves.forEach((grave) => {
+      if (!grave.properties.deleted) {
+        const key = `${grave.grid.row},${grave.grid.col}`;
+        if (!map.has(key)) {
+          map.set(key, []);
+        }
+        map.get(key)!.push(grave);
       }
-      gravesByPosition.get(key)!.push(grave);
-    }
-  });
+    });
+    return map;
+  }, [graves]);
+
+  // Create landmark lookup by grid position
+  const landmarksByPosition = useMemo(() => {
+    const map = new Map<string, Landmark[]>();
+    landmarks.forEach((landmark) => {
+      if (!landmark.properties.deleted) {
+        const key = `${landmark.grid.row},${landmark.grid.col}`;
+        if (!map.has(key)) {
+          map.set(key, []);
+        }
+        map.get(key)!.push(landmark);
+      }
+    });
+    return map;
+  }, [landmarks]);
+
+  // Create road lookup by grid position
+  const roadsByPosition = useMemo(() => {
+    const map = new Map<string, Road[]>();
+    roads.forEach((road) => {
+      if (!road.properties.deleted) {
+        road.cells.forEach((cell) => {
+          const key = `${cell.row},${cell.col}`;
+          if (!map.has(key)) {
+            map.set(key, []);
+          }
+          map.get(key)!.push(road);
+        });
+      }
+    });
+    return map;
+  }, [roads]);
+
+  // Get all elements at a specific position
+  const getElementsAtPosition = useCallback(
+    (row: number, col: number) => {
+      const key = `${row},${col}`;
+      const elements: Array<{
+        type: 'grave' | 'landmark' | 'road';
+        data: Grave | Landmark | Road;
+      }> = [];
+
+      // Add roads first (lowest priority)
+      const roadsAtPos = roadsByPosition.get(key) || [];
+      roadsAtPos.forEach((road) => {
+        elements.push({ type: 'road', data: road });
+      });
+
+      // Add graves
+      const gravesAtPos = gravesByPosition.get(key) || [];
+      gravesAtPos.forEach((grave) => {
+        elements.push({ type: 'grave', data: grave });
+      });
+
+      // Add landmarks
+      const landmarksAtPos = landmarksByPosition.get(key) || [];
+      landmarksAtPos.forEach((landmark) => {
+        elements.push({ type: 'landmark', data: landmark });
+      });
+
+      return elements;
+    },
+    [gravesByPosition, landmarksByPosition, roadsByPosition]
+  );
+
+  // Handle click on a marker (grave, landmark, or road)
+  const handleMarkerClick = useCallback(
+    (
+      row: number,
+      col: number,
+      clickedElement: {
+        type: 'grave' | 'landmark' | 'road';
+        data: Grave | Landmark | Road;
+      },
+      e: React.MouseEvent
+    ) => {
+      // Check if this was a drag - if so, don't trigger selection
+      if (mouseDownPos) {
+        const dragDistance = Math.sqrt(
+          Math.pow(e.clientX - mouseDownPos.x, 2) +
+            Math.pow(e.clientY - mouseDownPos.y, 2)
+        );
+        // If mouse moved more than 5 pixels, it was a drag, not a click
+        if (dragDistance >= 5) {
+          return;
+        }
+      }
+
+      // Don't interact during road selection mode
+      if (addMode === 'street') return;
+
+      const allElements = getElementsAtPosition(row, col);
+
+      // If multiple elements exist at this position, show selection modal
+      if (allElements.length > 1 && onMultipleElementsClick) {
+        onMultipleElementsClick(allElements, { row, col });
+      } else {
+        // Single element, trigger the appropriate handler
+        switch (clickedElement.type) {
+          case 'grave':
+            onGraveClick(clickedElement.data as Grave);
+            break;
+          case 'landmark':
+            onLandmarkClick?.(clickedElement.data as Landmark);
+            break;
+          case 'road':
+            onRoadClick?.(clickedElement.data as Road);
+            break;
+        }
+      }
+    },
+    [
+      addMode,
+      mouseDownPos,
+      getElementsAtPosition,
+      onGraveClick,
+      onLandmarkClick,
+      onRoadClick,
+      onMultipleElementsClick,
+    ]
+  );
 
   return (
     <div className="w-full h-full bg-gray-100 dark:bg-gray-900 overflow-hidden relative">
@@ -370,6 +506,59 @@ export function MapGrid({
             </g>
           )}
 
+          {/* Roads/Paths - render FIRST so they appear underneath other elements */}
+          {roads
+            .filter((road) => !road.properties.deleted)
+            .map((road) => {
+              // Use the road's color or default to gray
+              const roadColor = road.properties.color || '#9ca3af';
+              // Convert hex to rgba with 40% opacity for fill
+              const hexToRgba = (hex: string, alpha: number) => {
+                const r = parseInt(hex.slice(1, 3), 16);
+                const g = parseInt(hex.slice(3, 5), 16);
+                const b = parseInt(hex.slice(5, 7), 16);
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+              };
+
+              return (
+                <g key={road.uuid} className="road-overlay">
+                  {road.cells.map((cell, idx) => {
+                    const x = PADDING + cell.col * CELL_SIZE;
+                    const y = PADDING + cell.row * CELL_SIZE;
+
+                    return (
+                      <rect
+                        key={`road-${road.uuid}-${idx}`}
+                        x={x}
+                        y={y}
+                        width={CELL_SIZE}
+                        height={CELL_SIZE}
+                        fill={hexToRgba(roadColor, 0.4)}
+                        stroke={hexToRgba(roadColor, 0.7)}
+                        strokeWidth="2"
+                        className="cursor-pointer"
+                        style={{
+                          pointerEvents: addMode === 'street' ? 'none' : 'auto',
+                        }}
+                        onClick={(e) =>
+                          handleMarkerClick(
+                            cell.row,
+                            cell.col,
+                            {
+                              type: 'road',
+                              data: road,
+                            },
+                            e
+                          )
+                        }
+                      />
+                    );
+                  })}
+                  <title>{road.properties.name || 'Road/Path'}</title>
+                </g>
+              );
+            })}
+
           {/* Graves */}
           {Array.from(gravesByPosition.entries()).map(([key, gravesAtPos]) => {
             const [row, col] = key.split(',').map(Number);
@@ -394,10 +583,15 @@ export function MapGrid({
                   style={{
                     pointerEvents: addMode === 'street' ? 'none' : 'auto',
                   }}
-                  onClick={() => {
+                  onClick={(e) => {
                     // Don't interact with graves during road selection mode
                     if (addMode === 'street') return;
-                    onGraveClick(grave);
+                    handleMarkerClick(
+                      row,
+                      col,
+                      { type: 'grave', data: grave },
+                      e
+                    );
                   }}
                 >
                   {/* Base stone icon */}
@@ -458,10 +652,18 @@ export function MapGrid({
                   style={{
                     pointerEvents: addMode === 'street' ? 'none' : 'auto',
                   }}
-                  onClick={() => {
+                  onClick={(e) => {
                     // Don't interact with landmarks during road selection mode
                     if (addMode === 'street') return;
-                    onLandmarkClick?.(landmark);
+                    handleMarkerClick(
+                      landmark.grid.row,
+                      landmark.grid.col,
+                      {
+                        type: 'landmark',
+                        data: landmark,
+                      },
+                      e
+                    );
                   }}
                 >
                   <image
@@ -476,55 +678,6 @@ export function MapGrid({
                     {landmark.properties.name ||
                       `${landmark.landmark_type} landmark`}
                   </title>
-                </g>
-              );
-            })}
-
-          {/* Roads/Paths - render as semi-transparent overlays */}
-          {roads
-            .filter((road) => !road.properties.deleted)
-            .map((road) => {
-              // Use the road's color or default to gray
-              const roadColor = road.properties.color || '#9ca3af';
-              // Convert hex to rgba with 40% opacity for fill
-              const hexToRgba = (hex: string, alpha: number) => {
-                const r = parseInt(hex.slice(1, 3), 16);
-                const g = parseInt(hex.slice(3, 5), 16);
-                const b = parseInt(hex.slice(5, 7), 16);
-                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-              };
-
-              return (
-                <g
-                  key={road.uuid}
-                  className="road-overlay cursor-pointer"
-                  style={{
-                    pointerEvents: addMode === 'street' ? 'none' : 'auto',
-                  }}
-                  onClick={() => {
-                    // Don't interact with roads during road selection mode
-                    if (addMode === 'street') return;
-                    onRoadClick?.(road);
-                  }}
-                >
-                  {road.cells.map((cell, idx) => {
-                    const x = PADDING + cell.col * CELL_SIZE;
-                    const y = PADDING + cell.row * CELL_SIZE;
-
-                    return (
-                      <rect
-                        key={`road-${road.uuid}-${idx}`}
-                        x={x}
-                        y={y}
-                        width={CELL_SIZE}
-                        height={CELL_SIZE}
-                        fill={hexToRgba(roadColor, 0.4)}
-                        stroke={hexToRgba(roadColor, 0.7)}
-                        strokeWidth="2"
-                      />
-                    );
-                  })}
-                  <title>{road.properties.name || 'Road/Path'}</title>
                 </g>
               );
             })}

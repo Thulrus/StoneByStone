@@ -3,6 +3,7 @@ import { importCemeteryFile, exportCemeteryData } from '../lib/file';
 import { loadCemetery, replaceAllData, hasData } from '../lib/idb';
 import { mergeCemeteryData, applyMergeResult } from '../lib/merge';
 import { MergeConflictModal } from '../components/MergeConflictModal';
+import { ImportDataModal } from '../components/ImportDataModal';
 import type {
   CemeteryData,
   MergeConflict,
@@ -18,6 +19,9 @@ function ImportExport() {
     local: CemeteryData;
     incoming: CemeteryData;
   } | null>(null);
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [pendingImport, setPendingImport] = useState<CemeteryData | null>(null);
+  const [existingData, setExistingData] = useState<CemeteryData | null>(null);
 
   const handleFileSelect = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -55,23 +59,7 @@ function ImportExport() {
         return;
       }
 
-      // Ask user: merge or replace?
-      const choice = confirm(
-        'Local data exists. Click OK to MERGE with existing data, or Cancel to REPLACE all data.'
-      );
-
-      if (!choice) {
-        // Replace
-        if (confirm('This will delete all local data. Are you sure?')) {
-          await replaceAllData(result.data);
-          setImportStatus(`Replaced with ${result.data.graves.length} graves`);
-        }
-        setIsImporting(false);
-        return;
-      }
-
-      // Merge
-      setImportStatus('Merging data...');
+      // Local data exists - show modal to let user choose
       const local = await loadCemetery();
       if (!local) {
         setImportStatus('Failed to load local data');
@@ -79,22 +67,50 @@ function ImportExport() {
         return;
       }
 
-      const mergeResult = mergeCemeteryData(local, result.data);
+      setPendingImport(result.data);
+      setExistingData(local);
+      setShowImportModal(true);
+      setImportStatus('Waiting for user decision...');
+      setIsImporting(false);
+    } catch (error) {
+      console.error('Import error:', error);
+      setImportStatus(
+        `Error: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+      setIsImporting(false);
+    }
+  };
+
+  const handleMergeData = async () => {
+    if (!pendingImport || !existingData) return;
+
+    setShowImportModal(false);
+    setIsImporting(true);
+    setImportStatus('Merging data...');
+
+    try {
+      const mergeResult = mergeCemeteryData(existingData, pendingImport);
 
       if (mergeResult.conflicts.length > 0) {
         // Show conflict resolution UI
         setMergeConflicts(mergeResult.conflicts);
-        setPendingMerge({ local, incoming: result.data });
+        setPendingMerge({ local: existingData, incoming: pendingImport });
         setImportStatus(
           `Merge ready: ${mergeResult.conflicts.length} conflicts to resolve`
         );
       } else {
         // No conflicts - apply merge
-        const merged = applyMergeResult(local, result.data, mergeResult);
+        const merged = applyMergeResult(
+          existingData,
+          pendingImport,
+          mergeResult
+        );
         await replaceAllData(merged);
         setImportStatus(
           `Merged successfully: ${mergeResult.added.length} added, ${mergeResult.updated.length} updated`
         );
+        setPendingImport(null);
+        setExistingData(null);
       }
     } catch (error) {
       console.error('Import error:', error);
@@ -104,6 +120,35 @@ function ImportExport() {
     } finally {
       setIsImporting(false);
     }
+  };
+
+  const handleReplaceData = async () => {
+    if (!pendingImport) return;
+
+    setShowImportModal(false);
+    setIsImporting(true);
+    setImportStatus('Replacing data...');
+
+    try {
+      await replaceAllData(pendingImport);
+      setImportStatus(`Replaced with ${pendingImport.graves.length} graves`);
+      setPendingImport(null);
+      setExistingData(null);
+    } catch (error) {
+      console.error('Replace error:', error);
+      setImportStatus(
+        `Error: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    } finally {
+      setIsImporting(false);
+    }
+  };
+
+  const handleCancelImport = () => {
+    setShowImportModal(false);
+    setPendingImport(null);
+    setExistingData(null);
+    setImportStatus('Import cancelled');
   };
 
   const handleResolveConflicts = async (resolutions: ConflictResolution[]) => {
@@ -242,6 +287,20 @@ function ImportExport() {
           </button>
         </div>
       </div>
+
+      {/* Import Data Modal - choose merge or replace */}
+      {pendingImport && existingData && (
+        <ImportDataModal
+          isOpen={showImportModal}
+          onMerge={handleMergeData}
+          onReplace={handleReplaceData}
+          onCancel={handleCancelImport}
+          incomingGraveCount={pendingImport.graves.length}
+          existingGraveCount={existingData.graves.length}
+          incomingCemeteryName={pendingImport.cemetery.name}
+          existingCemeteryName={existingData.cemetery.name}
+        />
+      )}
 
       {/* Merge Conflict Modal */}
       {mergeConflicts.length > 0 && (

@@ -13,6 +13,7 @@ import { GraveEditor } from '../components/GraveEditor';
 import { LandmarkEditor } from '../components/LandmarkEditor';
 import { RoadEditor } from '../components/RoadEditor';
 import { MarkerToolbar } from '../components/MarkerToolbar';
+import { CellSelectionModal } from '../components/CellSelectionModal';
 import {
   loadCemetery,
   saveOrUpdateGrave,
@@ -47,6 +48,17 @@ export function CemeteryView() {
   const [activeMarkerType, setActiveMarkerType] = useState<MarkerType | null>(
     null
   );
+
+  // State for multi-element selection modal
+  const [showCellSelection, setShowCellSelection] = useState(false);
+  const [selectedCellElements, setSelectedCellElements] = useState<
+    Array<{
+      type: 'grave' | 'landmark' | 'road';
+      data: Grave | Landmark | Road;
+    }>
+  >([]);
+  const [selectedCellPosition, setSelectedCellPosition] =
+    useState<GridPosition | null>(null);
 
   // Set initial sidebar visibility based on screen size
   useEffect(() => {
@@ -345,6 +357,41 @@ export function CemeteryView() {
     setActiveMarkerType(null); // Exit add mode when clicking existing landmark
   };
 
+  const handleMultipleElementsClick = (
+    elements: Array<{
+      type: 'grave' | 'landmark' | 'road';
+      data: Grave | Landmark | Road;
+    }>,
+    position: GridPosition
+  ) => {
+    setSelectedCellElements(elements);
+    setSelectedCellPosition(position);
+    setShowCellSelection(true);
+  };
+
+  const handleElementSelection = (
+    element: {
+      type: 'grave' | 'landmark' | 'road';
+      data: Grave | Landmark | Road;
+    } | null
+  ) => {
+    setShowCellSelection(false);
+    if (!element) return; // User cancelled
+
+    // Route to the appropriate handler
+    switch (element.type) {
+      case 'grave':
+        handleGraveClick(element.data as Grave);
+        break;
+      case 'landmark':
+        handleLandmarkClick(element.data as Landmark);
+        break;
+      case 'road':
+        handleRoadClick(element.data as Road);
+        break;
+    }
+  };
+
   const handleCellClick = (position: GridPosition) => {
     if (!activeMarkerType || !cemeteryData) return;
 
@@ -591,6 +638,7 @@ export function CemeteryView() {
             onGraveClick={handleGraveClick}
             onLandmarkClick={handleLandmarkClick}
             onRoadClick={handleRoadClick}
+            onMultipleElementsClick={handleMultipleElementsClick}
             highlightedGraves={highlightedGraves}
             addMode={activeMarkerType}
             onCellClick={handleCellClick}
@@ -681,6 +729,17 @@ export function CemeteryView() {
             </button>
           </div>
         </div>
+      )}
+
+      {/* Cell Selection Modal - when multiple elements exist at same position */}
+      {selectedCellPosition && (
+        <CellSelectionModal
+          isOpen={showCellSelection}
+          onClose={() => setShowCellSelection(false)}
+          elements={selectedCellElements}
+          position={selectedCellPosition}
+          onSelectElement={handleElementSelection}
+        />
       )}
     </div>
   );

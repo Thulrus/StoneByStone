@@ -1,0 +1,591 @@
+{
+  "schema_version": "1.0.0",
+  "cemetery": {
+    "id": "current",
+    "name": "Willow Creek Memorial Gardens",
+    "grid": {
+      "rows": 15,
+      "cols": 20,
+      "cellSize": 50
+    },
+    "last_modified": "2024-10-04T12:00:00.000Z",
+    "modified_by": "Cemetery Administrator",
+    "license": "CC0-1.0"
+  },
+  "graves": [
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000001",
+      "plot": "A-1",
+      "grid": {
+        "row": 2,
+        "col": 3
+      },
+      "properties": {
+        "name": "Margaret Elizabeth Thompson",
+        "birth": "1923-03-15",
+        "death": "2008-11-22",
+        "inscription": "Beloved Wife and Mother\nForever in Our Hearts",
+        "notes": "Veteran's spouse marker present",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000002",
+      "plot": "A-2",
+      "grid": {
+        "row": 2,
+        "col": 4
+      },
+      "properties": {
+        "name": "Robert James Thompson",
+        "birth": "1920-07-04",
+        "death": "2012-01-30",
+        "inscription": "US Navy WWII\nLoving Husband",
+        "notes": "Bronze military marker",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000003",
+      "plot": "A-3",
+      "grid": {
+        "row": 2,
+        "col": 5
+      },
+      "properties": {
+        "name": "Emily Rose Anderson",
+        "birth": "1945-12-25",
+        "death": "2019-05-14",
+        "inscription": "Christmas Day Baby\nAngel Among Us",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000004",
+      "plot": "B-1",
+      "grid": {
+        "row": 4,
+        "col": 3
+      },
+      "properties": {
+        "name": "William Henry Foster",
+        "birth": "1898-09-12",
+        "death": "1976-03-08",
+        "inscription": "Town Founder\n1898-1976",
+        "notes": "Large granite monument with family name",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000005",
+      "plot": "B-2",
+      "grid": {
+        "row": 4,
+        "col": 4
+      },
+      "properties": {
+        "name": "Sarah Jane Foster",
+        "birth": "1902-04-18",
+        "death": "1989-12-03",
+        "inscription": "Devoted Wife\nCommunity Leader",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000006",
+      "plot": "C-1",
+      "grid": {
+        "row": 6,
+        "col": 8
+      },
+      "properties": {
+        "name": "James Michael O'Brien",
+        "birth": "1955-08-22",
+        "death": "2020-04-10",
+        "inscription": "Forever Young at Heart\nRock On",
+        "notes": "Custom guitar-shaped headstone",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000007",
+      "plot": "C-2",
+      "grid": {
+        "row": 6,
+        "col": 9
+      },
+      "properties": {
+        "name": "Patricia Ann O'Brien",
+        "birth": "1958-02-14",
+        "death": "2021-09-18",
+        "inscription": "Together Again\nValentine Forever",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000008",
+      "plot": "D-1",
+      "grid": {
+        "row": 8,
+        "col": 12
+      },
+      "properties": {
+        "name": "Chen Wei",
+        "birth": "1935-06-10",
+        "death": "2015-03-25",
+        "inscription": "愛與和平\nLove and Peace",
+        "notes": "Bilingual inscription",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000009",
+      "plot": "D-2",
+      "grid": {
+        "row": 8,
+        "col": 13
+      },
+      "properties": {
+        "name": "Li Mei Chen",
+        "birth": "1940-11-03",
+        "death": "2018-07-19",
+        "inscription": "永恆的母親\nEternal Mother",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000010",
+      "plot": "E-1",
+      "grid": {
+        "row": 10,
+        "col": 5
+      },
+      "properties": {
+        "name": "Baby Michael Rodriguez",
+        "birth": "2022-01-15",
+        "death": "2022-01-16",
+        "inscription": "Our Precious Angel\nToo Beautiful for Earth",
+        "notes": "Small white marble stone with lamb",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000011",
+      "plot": "F-1",
+      "grid": {
+        "row": 3,
+        "col": 15
+      },
+      "properties": {
+        "name": "Dr. Eleanor Marie Johnson",
+        "birth": "1942-10-08",
+        "death": "2023-06-12",
+        "inscription": "Healer, Teacher, Friend\nShe Made a Difference",
+        "notes": "Medical symbol engraved on stone",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000012",
+      "plot": "F-2",
+      "grid": {
+        "row": 3,
+        "col": 16
+      },
+      "properties": {
+        "name": "Thomas Edward Johnson",
+        "birth": "1938-05-20",
+        "death": "2019-02-28",
+        "inscription": "Beloved Husband\nWaiting for Her Return",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000013",
+      "plot": "G-1",
+      "grid": {
+        "row": 5,
+        "col": 18
+      },
+      "properties": {
+        "name": "Samuel Washington Brown",
+        "birth": "1878-02-12",
+        "death": "1952-11-07",
+        "inscription": "Civil War Veteran\nGrand Army of the Republic",
+        "notes": "Historic marker, very weathered",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000014",
+      "plot": "H-1",
+      "grid": {
+        "row": 11,
+        "col": 16
+      },
+      "properties": {
+        "name": "Maria Guadalupe Santos",
+        "birth": "1950-12-12",
+        "death": "2017-08-15",
+        "inscription": "Madre Querida\nNos Vemos en el Cielo",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000015",
+      "plot": "H-2",
+      "grid": {
+        "row": 11,
+        "col": 17
+      },
+      "properties": {
+        "name": "Jose Miguel Santos",
+        "birth": "1948-03-19",
+        "death": "2020-11-22",
+        "inscription": "Padre y Esposo Amado\nSiempre en Nuestros Corazones",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000016",
+      "plot": "I-1",
+      "grid": {
+        "row": 13,
+        "col": 8
+      },
+      "properties": {
+        "name": "Ahmed Hassan Al-Rashid",
+        "birth": "1960-01-25",
+        "death": "2022-05-03",
+        "inscription": "إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ\nPeace Be Upon Him",
+        "notes": "Facing qibla direction",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000017",
+      "plot": "J-1",
+      "grid": {
+        "row": 7,
+        "col": 3
+      },
+      "properties": {
+        "name": "Catherine Louise Miller",
+        "birth": "1890-07-30",
+        "death": "1972-04-15",
+        "inscription": "Schoolteacher 1910-1955\nShe Taught With Love",
+        "notes": "Small apple engraving at base",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000018",
+      "plot": "K-1",
+      "grid": {
+        "row": 9,
+        "col": 17
+      },
+      "properties": {
+        "name": "Unknown Soldier",
+        "inscription": "Known But to God\nRest in Peace",
+        "notes": "Small cross, no dates available",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000019",
+      "plot": "L-1",
+      "grid": {
+        "row": 12,
+        "col": 11
+      },
+      "properties": {
+        "name": "Jennifer Marie Peterson",
+        "birth": "1985-09-08",
+        "death": "2023-12-20",
+        "inscription": "Loving Mother & Artist\nHer Colors Live On",
+        "notes": "Colorful ceramic tiles embedded in stone",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000020",
+      "plot": "M-1",
+      "grid": {
+        "row": 4,
+        "col": 11
+      },
+      "properties": {
+        "name": "Daniel Joseph McCarthy",
+        "birth": "1963-11-30",
+        "death": "2021-07-04",
+        "inscription": "Firefighter, Hero, Friend\nGave His Life for Others",
+        "notes": "Firefighter emblem, flag holder present",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    }
+  ],
+  "landmarks": [
+    {
+      "uuid": "landmark-0001-4000-8000-000000000001",
+      "landmark_type": "statue",
+      "grid": {
+        "row": 1,
+        "col": 10
+      },
+      "properties": {
+        "name": "Angel of Hope",
+        "description": "White marble angel statue at cemetery entrance",
+        "notes": "Dedicated 1965, restored 2015",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000002",
+      "landmark_type": "bench",
+      "grid": {
+        "row": 5,
+        "col": 10
+      },
+      "properties": {
+        "name": "Reflection Bench",
+        "description": "Granite bench for visitors",
+        "notes": "In memory of the Anderson family",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000003",
+      "landmark_type": "tree",
+      "grid": {
+        "row": 7,
+        "col": 6
+      },
+      "properties": {
+        "name": "Memorial Oak",
+        "description": "Large oak tree, approximately 150 years old",
+        "notes": "Protected tree, cemetery namesake",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000004",
+      "landmark_type": "pine",
+      "grid": {
+        "row": 13,
+        "col": 1
+      },
+      "properties": {
+        "name": "Evergreen Grove",
+        "description": "Cluster of pine trees in southwest corner",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000005",
+      "landmark_type": "building",
+      "grid": {
+        "row": 1,
+        "col": 1
+      },
+      "properties": {
+        "name": "Cemetery Office",
+        "description": "Small administrative building with records room",
+        "notes": "Office hours: Mon-Fri 9AM-4PM",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000006",
+      "landmark_type": "bench",
+      "grid": {
+        "row": 10,
+        "col": 2
+      },
+      "properties": {
+        "name": "Sunset Viewing Bench",
+        "description": "Wooden bench facing west",
+        "notes": "Donated by Wilson family 2020",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000007",
+      "landmark_type": "statue",
+      "grid": {
+        "row": 14,
+        "col": 19
+      },
+      "properties": {
+        "name": "Eternal Peace Monument",
+        "description": "Bronze statue of praying hands",
+        "notes": "Veterans memorial section marker",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000008",
+      "landmark_type": "tree",
+      "grid": {
+        "row": 3,
+        "col": 19
+      },
+      "properties": {
+        "name": "Weeping Willow",
+        "description": "Large weeping willow near pond area",
+        "notes": "Planted in memory of Emily Whitmore, 1985",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    }
+  ],
+  "roads": [
+    {
+      "uuid": "road-0001-4000-8000-000000000001",
+      "cells": [
+        { "row": 0, "col": 5 },
+        { "row": 1, "col": 5 },
+        { "row": 2, "col": 5 },
+        { "row": 3, "col": 5 },
+        { "row": 4, "col": 5 },
+        { "row": 5, "col": 5 },
+        { "row": 6, "col": 5 },
+        { "row": 7, "col": 5 },
+        { "row": 8, "col": 5 },
+        { "row": 9, "col": 5 },
+        { "row": 10, "col": 5 },
+        { "row": 11, "col": 5 },
+        { "row": 12, "col": 5 },
+        { "row": 13, "col": 5 },
+        { "row": 14, "col": 5 }
+      ],
+      "properties": {
+        "name": "Memorial Avenue",
+        "description": "Main north-south path through cemetery",
+        "color": "#9ca3af",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000002",
+      "cells": [
+        { "row": 5, "col": 0 },
+        { "row": 5, "col": 1 },
+        { "row": 5, "col": 2 },
+        { "row": 5, "col": 3 },
+        { "row": 5, "col": 4 },
+        { "row": 5, "col": 5 },
+        { "row": 5, "col": 6 },
+        { "row": 5, "col": 7 },
+        { "row": 5, "col": 8 },
+        { "row": 5, "col": 9 },
+        { "row": 5, "col": 10 },
+        { "row": 5, "col": 11 },
+        { "row": 5, "col": 12 },
+        { "row": 5, "col": 13 },
+        { "row": 5, "col": 14 },
+        { "row": 5, "col": 15 },
+        { "row": 5, "col": 16 },
+        { "row": 5, "col": 17 },
+        { "row": 5, "col": 18 },
+        { "row": 5, "col": 19 }
+      ],
+      "properties": {
+        "name": "Oak Tree Lane",
+        "description": "Main east-west path, runs by the large oak tree",
+        "color": "#9ca3af",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000003",
+      "cells": [
+        { "row": 0, "col": 14 },
+        { "row": 1, "col": 14 },
+        { "row": 2, "col": 14 },
+        { "row": 3, "col": 14 },
+        { "row": 4, "col": 14 },
+        { "row": 5, "col": 14 },
+        { "row": 6, "col": 14 },
+        { "row": 7, "col": 14 },
+        { "row": 8, "col": 14 },
+        { "row": 9, "col": 14 },
+        { "row": 10, "col": 14 },
+        { "row": 11, "col": 14 },
+        { "row": 12, "col": 14 },
+        { "row": 13, "col": 14 },
+        { "row": 14, "col": 14 }
+      ],
+      "properties": {
+        "name": "Veterans Way",
+        "description": "Path leading to veterans section",
+        "color": "#9ca3af",
+        "notes": "Small flags placed along path on Memorial Day",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000004",
+      "cells": [
+        { "row": 10, "col": 5 },
+        { "row": 10, "col": 6 },
+        { "row": 10, "col": 7 },
+        { "row": 10, "col": 8 },
+        { "row": 10, "col": 9 },
+        { "row": 10, "col": 10 },
+        { "row": 10, "col": 11 },
+        { "row": 10, "col": 12 },
+        { "row": 10, "col": 13 },
+        { "row": 10, "col": 14 }
+      ],
+      "properties": {
+        "name": "Willow Path",
+        "description": "Southern cross path",
+        "color": "#9ca3af",
+        "last_modified": "2024-10-04T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    }
+  ],
+  "change_log": [
+    {
+      "op": "set",
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000001",
+      "changes": {
+        "action": "Initial cemetery data import"
+      },
+      "timestamp": "2024-10-04T12:00:00.000Z",
+      "user": "Cemetery Administrator"
+    }
+  ]
+}
