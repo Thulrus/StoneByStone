@@ -251,6 +251,18 @@ export async function getGraveHistory(uuid: string): Promise<ChangeLogEntry[]> {
 }
 
 /**
+ * Clear all graves, landmarks, roads, and change logs (but keep cemetery metadata)
+ * Used when creating a new empty cemetery
+ */
+export async function clearAllData(): Promise<void> {
+  const db = await openDB();
+  await db.clear('graves');
+  await db.clear('landmarks');
+  await db.clear('roads');
+  await db.clear('change_log');
+}
+
+/**
  * Clear all data and load new dataset
  */
 export async function replaceAllData(data: CemeteryData): Promise<void> {
