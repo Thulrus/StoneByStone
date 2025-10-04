@@ -1,5 +1,10 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import type { Grave, Cemetery } from '../types/cemetery';
+import type {
+  Grave,
+  Cemetery,
+  MarkerType,
+  GridPosition,
+} from '../types/cemetery';
 
 interface MapGridProps {
   cemetery: Cemetery;
@@ -7,6 +12,8 @@ interface MapGridProps {
   selectedGrave: Grave | null;
   onGraveClick: (grave: Grave) => void;
   highlightedGraves?: Set<string>;
+  addMode?: MarkerType | null; // New prop for click-to-add mode
+  onCellClick?: (position: GridPosition) => void; // New callback for cell clicks
 }
 
 const CELL_SIZE = 40;
@@ -18,20 +25,48 @@ export function MapGrid({
   selectedGrave,
   onGraveClick,
   highlightedGraves,
+  addMode = null,
+  onCellClick,
 }: MapGridProps) {
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [mouseDownPos, setMouseDownPos] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
   const [lastTouchDistance, setLastTouchDistance] = useState<number | null>(
     null
   );
+  const [hoveredCell, setHoveredCell] = useState<GridPosition | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
   const width = cemetery.grid.cols * CELL_SIZE + PADDING * 2;
   const height = cemetery.grid.rows * CELL_SIZE + PADDING * 2;
 
+  // Handle clicking on a grid cell (for add mode)
+  const handleCellClick = useCallback(
+    (row: number, col: number, e: React.MouseEvent) => {
+      // Only place marker if we didn't drag (mouse didn't move significantly)
+      if (addMode && onCellClick && mouseDownPos) {
+        const dragDistance = Math.sqrt(
+          Math.pow(e.clientX - mouseDownPos.x, 2) +
+            Math.pow(e.clientY - mouseDownPos.y, 2)
+        );
+        // If mouse moved less than 5 pixels, treat it as a click
+        if (dragDistance < 5) {
+          onCellClick({ row, col });
+        }
+      }
+    },
+    [addMode, onCellClick, mouseDownPos]
+  );
+
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
+      // Record mouse down position for click detection
+      setMouseDownPos({ x: e.clientX, y: e.clientY });
+
       if (
         e.button === 0 &&
         !(e.target as SVGElement).closest('.grave-marker')
@@ -61,16 +96,40 @@ export function MapGrid({
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
+    // Clear mouse down position after a short delay to allow click handlers to fire
+    setTimeout(() => setMouseDownPos(null), 0);
   }, []);
 
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    setTransform((prev) => ({
-      ...prev,
-      scale: Math.max(0.5, Math.min(3, prev.scale * delta)),
-    }));
-  }, []);
+  const handleWheel = useCallback(
+    (e: React.WheelEvent) => {
+      e.preventDefault();
+
+      if (!svgRef.current) return;
+
+      const delta = e.deltaY > 0 ? 0.9 : 1.1;
+      const newScale = Math.max(0.5, Math.min(3, transform.scale * delta));
+
+      // Get mouse position relative to the SVG element
+      const rect = svgRef.current.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      // Calculate the point in the transformed space
+      const pointX = (mouseX - transform.x) / transform.scale;
+      const pointY = (mouseY - transform.y) / transform.scale;
+
+      // Calculate new transform to keep the point under the mouse
+      const newX = mouseX - pointX * newScale;
+      const newY = mouseY - pointY * newScale;
+
+      setTransform({
+        x: newX,
+        y: newY,
+        scale: newScale,
+      });
+    },
+    [transform]
+  );
 
   // Touch event handlers
   const getTouchDistance = (touches: React.TouchList) => {
@@ -106,6 +165,8 @@ export function MapGrid({
     (e: React.TouchEvent) => {
       e.preventDefault();
 
+      if (!svgRef.current) return;
+
       if (e.touches.length === 1 && isDragging) {
         // Single touch - drag
         const touch = e.touches[0];
@@ -117,17 +178,38 @@ export function MapGrid({
       } else if (e.touches.length === 2) {
         // Two touches - pinch zoom
         const currentDistance = getTouchDistance(e.touches);
-        if (lastTouchDistance) {
-          const scale = currentDistance / lastTouchDistance;
-          setTransform((prev) => ({
-            ...prev,
-            scale: Math.max(0.5, Math.min(3, prev.scale * scale)),
-          }));
+        if (lastTouchDistance && transform) {
+          const scaleDelta = currentDistance / lastTouchDistance;
+          const newScale = Math.max(
+            0.5,
+            Math.min(3, transform.scale * scaleDelta)
+          );
+
+          // Get the center point between the two touches
+          const rect = svgRef.current.getBoundingClientRect();
+          const touch1 = e.touches[0];
+          const touch2 = e.touches[1];
+          const centerX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
+          const centerY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
+
+          // Calculate the point in the transformed space
+          const pointX = (centerX - transform.x) / transform.scale;
+          const pointY = (centerY - transform.y) / transform.scale;
+
+          // Calculate new transform to keep the center point stable
+          const newX = centerX - pointX * newScale;
+          const newY = centerY - pointY * newScale;
+
+          setTransform({
+            x: newX,
+            y: newY,
+            scale: newScale,
+          });
         }
         setLastTouchDistance(currentDistance);
       }
     },
-    [isDragging, dragStart, lastTouchDistance]
+    [isDragging, dragStart, lastTouchDistance, transform]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -164,7 +246,13 @@ export function MapGrid({
     <div className="w-full h-full bg-gray-100 dark:bg-gray-900 overflow-hidden relative">
       <svg
         ref={svgRef}
-        className="w-full h-full cursor-move touch-none"
+        className={`w-full h-full touch-none ${
+          isDragging
+            ? 'cursor-grabbing'
+            : addMode
+              ? 'cursor-crosshair'
+              : 'cursor-grab'
+        }`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -231,6 +319,44 @@ export function MapGrid({
               </text>
             ))}
           </g>
+
+          {/* Clickable cells (for add mode) */}
+          {addMode && (
+            <g className="clickable-cells">
+              {Array.from({ length: cemetery.grid.rows }).map((_, row) =>
+                Array.from({ length: cemetery.grid.cols }).map((_, col) => {
+                  const x = PADDING + col * CELL_SIZE;
+                  const y = PADDING + row * CELL_SIZE;
+                  const isHovered =
+                    hoveredCell?.row === row && hoveredCell?.col === col;
+                  const hasGrave = gravesByPosition.has(`${row},${col}`);
+
+                  return (
+                    <rect
+                      key={`cell-${row}-${col}`}
+                      x={x}
+                      y={y}
+                      width={CELL_SIZE}
+                      height={CELL_SIZE}
+                      fill={
+                        isHovered
+                          ? hasGrave
+                            ? 'rgba(239, 68, 68, 0.2)' // Red if occupied
+                            : 'rgba(59, 130, 246, 0.2)' // Blue if empty
+                          : 'transparent'
+                      }
+                      stroke={isHovered ? '#3b82f6' : 'transparent'}
+                      strokeWidth="2"
+                      className="cursor-crosshair"
+                      onMouseEnter={() => setHoveredCell({ row, col })}
+                      onMouseLeave={() => setHoveredCell(null)}
+                      onClick={(e) => handleCellClick(row, col, e)}
+                    />
+                  );
+                })
+              )}
+            </g>
+          )}
 
           {/* Graves */}
           {Array.from(gravesByPosition.entries()).map(([key, gravesAtPos]) => {

@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
-import type { CemeteryData, Grave } from '../types/cemetery';
+import type {
+  CemeteryData,
+  Grave,
+  MarkerType,
+  GridPosition,
+} from '../types/cemetery';
 import { MapGrid } from '../components/MapGrid';
 import { GraveList } from '../components/GraveList';
 import { GraveEditor } from '../components/GraveEditor';
+import { MarkerToolbar } from '../components/MarkerToolbar';
 import { loadCemetery, saveOrUpdateGrave, appendChangeLog } from '../lib/idb';
 import { getCurrentUser, getCurrentTimestamp } from '../lib/user';
 import { detectSpatialConflicts } from '../lib/merge';
@@ -21,27 +27,45 @@ export function CemeteryView() {
   const [showConflicts, setShowConflicts] = useState(false);
   const [showGraveList, setShowGraveList] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
+  const [activeMarkerType, setActiveMarkerType] = useState<MarkerType | null>(
+    null
+  );
 
   // Set initial sidebar visibility based on screen size
   useEffect(() => {
     const handleResize = () => {
       // On medium and large screens (>= 640px), show grave list by default
-      if (window.innerWidth >= 640) {
+      // But only on initial load, not when user is actively editing
+      if (window.innerWidth >= 640 && !isEditing && !isCreating) {
         setShowGraveList(true);
-        // On large screens (>= 1024px), also show editor if editing
-        if (window.innerWidth >= 1024 && (isEditing || isCreating)) {
-          setShowEditor(true);
-        }
+      }
+      // On large screens (>= 1024px), also show editor if editing
+      if (window.innerWidth >= 1024 && (isEditing || isCreating)) {
+        setShowEditor(true);
       }
     };
 
-    // Set initial state
+    // Set initial state only
     handleResize();
 
     // Listen for resize events
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [isEditing, isCreating]);
+    // Only run on mount and window resize, not on edit state changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Handle ESC key to cancel add mode
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && activeMarkerType) {
+        setActiveMarkerType(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeMarkerType]);
 
   // Load cemetery data on mount
   useEffect(() => {
@@ -140,6 +164,7 @@ export function CemeteryView() {
     setIsCreating(false);
     setShowEditor(true);
     setShowGraveList(false); // Close list when selecting a grave
+    setActiveMarkerType(null); // Exit add mode when clicking existing grave
   };
 
   const handleNewGrave = () => {
@@ -148,6 +173,32 @@ export function CemeteryView() {
     setIsEditing(false);
     setShowEditor(true);
     setShowGraveList(false); // Close list when creating a new grave
+  };
+
+  const handleCellClick = (position: GridPosition) => {
+    if (!activeMarkerType || !cemeteryData) return;
+
+    // For now, only handle grave placement
+    if (activeMarkerType === 'grave') {
+      // Create a new grave at the clicked position
+      const newGrave: Grave = {
+        uuid: crypto.randomUUID(),
+        plot: `${position.row}-${position.col}`, // Default plot ID
+        grid: position,
+        properties: {
+          last_modified: getCurrentTimestamp(),
+          modified_by: getCurrentUser(),
+        },
+      };
+
+      // Set as selected and open editor
+      setSelectedGrave(newGrave);
+      setIsCreating(true);
+      setIsEditing(false);
+      setShowEditor(true);
+      setShowGraveList(false);
+      setActiveMarkerType(null); // Exit add mode after placing
+    }
   };
 
   const handleCancel = () => {
@@ -173,7 +224,7 @@ export function CemeteryView() {
   }
 
   return (
-    <div className="h-screen flex relative">
+    <div className="h-full w-full flex relative overflow-hidden">
       {/* Small Screen (sm and below): Three buttons - List, Map, Edit */}
       <div className="sm:hidden absolute top-4 left-0 right-0 z-20 flex justify-center gap-2 px-4">
         <button
@@ -280,15 +331,24 @@ export function CemeteryView() {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex">
+      <div className="flex-1 flex relative overflow-hidden">
         {/* Map Grid */}
-        <div className="flex-1">
+        <div className="flex-1 relative overflow-hidden">
           <MapGrid
             cemetery={cemeteryData.cemetery}
             graves={cemeteryData.graves}
             selectedGrave={selectedGrave}
             onGraveClick={handleGraveClick}
             highlightedGraves={highlightedGraves}
+            addMode={activeMarkerType}
+            onCellClick={handleCellClick}
+          />
+
+          {/* Marker Toolbar */}
+          <MarkerToolbar
+            activeMarkerType={activeMarkerType}
+            onSelectMarkerType={setActiveMarkerType}
+            disabled={!cemeteryData}
           />
         </div>
 

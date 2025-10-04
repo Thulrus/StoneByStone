@@ -2,6 +2,12 @@
  * Type definitions for cemetery data model
  */
 
+/**
+ * Marker types for cemetery features
+ * Currently only 'grave' is implemented, but designed for future expansion
+ */
+export type MarkerType = 'grave' | 'landmark' | 'street';
+
 export interface CemeteryGrid {
   rows: number;
   cols: number;
