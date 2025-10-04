@@ -345,14 +345,6 @@ export function CemeteryView() {
     setActiveMarkerType(null); // Exit add mode when clicking existing landmark
   };
 
-  const handleNewGrave = () => {
-    setSelectedGrave(null);
-    setIsCreating(true);
-    setIsEditing(false);
-    setShowEditor(true);
-    setShowGraveList(false); // Close list when creating a new grave
-  };
-
   const handleCellClick = (position: GridPosition) => {
     if (!activeMarkerType || !cemeteryData) return;
 
@@ -567,16 +559,10 @@ export function CemeteryView() {
           <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
             {cemeteryData.cemetery.name}
           </h2>
-          <button
-            onClick={handleNewGrave}
-            className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium"
-          >
-            + New Grave
-          </button>
           {spatialConflicts.size > 0 && (
             <button
               onClick={() => setShowConflicts(!showConflicts)}
-              className="w-full mt-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium text-sm"
+              className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium text-sm"
             >
               ⚠ {spatialConflicts.size} Spatial Conflict
               {spatialConflicts.size > 1 ? 's' : ''}
