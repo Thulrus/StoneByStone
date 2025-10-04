@@ -83,6 +83,7 @@ export interface RoadProperties {
   name?: string;
   description?: string;
   notes?: string;
+  color?: string; // Hex color for the road overlay (e.g., '#9ca3af')
   deleted?: boolean;
   last_modified: string; // ISO8601
   modified_by: string;

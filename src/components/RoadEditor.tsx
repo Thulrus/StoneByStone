@@ -11,6 +11,20 @@ interface RoadEditorProps {
   onEditCells?: () => void; // Callback to enter cell edit mode
 }
 
+// Predefined color options for roads
+const roadColorOptions = [
+  { value: '#9ca3af', label: 'Gray', preview: '#9ca3af' },
+  { value: '#ef4444', label: 'Red', preview: '#ef4444' },
+  { value: '#f97316', label: 'Orange', preview: '#f97316' },
+  { value: '#eab308', label: 'Yellow', preview: '#eab308' },
+  { value: '#22c55e', label: 'Green', preview: '#22c55e' },
+  { value: '#3b82f6', label: 'Blue', preview: '#3b82f6' },
+  { value: '#8b5cf6', label: 'Purple', preview: '#8b5cf6' },
+  { value: '#ec4899', label: 'Pink', preview: '#ec4899' },
+  { value: '#6366f1', label: 'Indigo', preview: '#6366f1' },
+  { value: '#14b8a6', label: 'Teal', preview: '#14b8a6' },
+];
+
 export function RoadEditor({
   road,
   cemetery: _cemetery,
@@ -24,12 +38,16 @@ export function RoadEditor({
     road?.properties.description || ''
   );
   const [notes, setNotes] = useState(road?.properties.notes || '');
+  const [color, setColor] = useState(
+    road?.properties.color || roadColorOptions[0].value
+  );
 
   useEffect(() => {
     if (road) {
       setName(road.properties.name || '');
       setDescription(road.properties.description || '');
       setNotes(road.properties.notes || '');
+      setColor(road.properties.color || roadColorOptions[0].value);
     }
   }, [road]);
 
@@ -48,6 +66,7 @@ export function RoadEditor({
         name: name.trim() || undefined,
         description: description.trim() || undefined,
         notes: notes.trim() || undefined,
+        color: color,
         deleted: road.properties.deleted,
         last_modified: getCurrentTimestamp(),
         modified_by: getCurrentUser(),
@@ -93,6 +112,36 @@ export function RoadEditor({
             Add/Remove Cells
           </button>
         )}
+
+        {/* Color Picker */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Overlay Color
+          </label>
+          <div className="grid grid-cols-5 gap-2">
+            {roadColorOptions.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => setColor(option.value)}
+                className={`relative h-10 rounded-md border-2 transition-all ${
+                  color === option.value
+                    ? 'border-gray-900 dark:border-white ring-2 ring-blue-500'
+                    : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'
+                }`}
+                style={{ backgroundColor: option.preview }}
+                title={option.label}
+                aria-label={`Select ${option.label} color`}
+              >
+                {color === option.value && (
+                  <span className="absolute inset-0 flex items-center justify-center text-white text-xl font-bold drop-shadow-lg">
+                    ✓
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Name */}
         <div>

@@ -422,6 +422,7 @@ export function CemeteryView() {
       uuid: crypto.randomUUID(),
       cells: selectedRoadCells,
       properties: {
+        color: '#9ca3af', // Default gray color
         last_modified: getCurrentTimestamp(),
         modified_by: getCurrentUser(),
       },

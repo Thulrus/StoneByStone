@@ -469,32 +469,44 @@ export function MapGrid({
           {/* Roads/Paths - render as semi-transparent overlays */}
           {roads
             .filter((road) => !road.properties.deleted)
-            .map((road) => (
-              <g
-                key={road.uuid}
-                className="road-overlay cursor-pointer"
-                onClick={() => onRoadClick?.(road)}
-              >
-                {road.cells.map((cell, idx) => {
-                  const x = PADDING + cell.col * CELL_SIZE;
-                  const y = PADDING + cell.row * CELL_SIZE;
+            .map((road) => {
+              // Use the road's color or default to gray
+              const roadColor = road.properties.color || '#9ca3af';
+              // Convert hex to rgba with 40% opacity for fill
+              const hexToRgba = (hex: string, alpha: number) => {
+                const r = parseInt(hex.slice(1, 3), 16);
+                const g = parseInt(hex.slice(3, 5), 16);
+                const b = parseInt(hex.slice(5, 7), 16);
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+              };
 
-                  return (
-                    <rect
-                      key={`road-${road.uuid}-${idx}`}
-                      x={x}
-                      y={y}
-                      width={CELL_SIZE}
-                      height={CELL_SIZE}
-                      fill="rgba(156, 163, 175, 0.4)" // Gray overlay
-                      stroke="rgba(107, 114, 128, 0.6)"
-                      strokeWidth="2"
-                    />
-                  );
-                })}
-                <title>{road.properties.name || 'Road/Path'}</title>
-              </g>
-            ))}
+              return (
+                <g
+                  key={road.uuid}
+                  className="road-overlay cursor-pointer"
+                  onClick={() => onRoadClick?.(road)}
+                >
+                  {road.cells.map((cell, idx) => {
+                    const x = PADDING + cell.col * CELL_SIZE;
+                    const y = PADDING + cell.row * CELL_SIZE;
+
+                    return (
+                      <rect
+                        key={`road-${road.uuid}-${idx}`}
+                        x={x}
+                        y={y}
+                        width={CELL_SIZE}
+                        height={CELL_SIZE}
+                        fill={hexToRgba(roadColor, 0.4)}
+                        stroke={hexToRgba(roadColor, 0.7)}
+                        strokeWidth="2"
+                      />
+                    );
+                  })}
+                  <title>{road.properties.name || 'Road/Path'}</title>
+                </g>
+              );
+            })}
 
           {/* Selected road cells during placement */}
           {addMode === 'street' &&
