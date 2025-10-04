@@ -2,20 +2,30 @@ import { useState, useEffect } from 'react';
 import type {
   CemeteryData,
   Grave,
+  Landmark,
   MarkerType,
   GridPosition,
 } from '../types/cemetery';
 import { MapGrid } from '../components/MapGrid';
 import { GraveList } from '../components/GraveList';
 import { GraveEditor } from '../components/GraveEditor';
+import { LandmarkEditor } from '../components/LandmarkEditor';
 import { MarkerToolbar } from '../components/MarkerToolbar';
-import { loadCemetery, saveOrUpdateGrave, appendChangeLog } from '../lib/idb';
+import {
+  loadCemetery,
+  saveOrUpdateGrave,
+  saveOrUpdateLandmark,
+  appendChangeLog,
+} from '../lib/idb';
 import { getCurrentUser, getCurrentTimestamp } from '../lib/user';
 import { detectSpatialConflicts } from '../lib/merge';
 
 export function CemeteryView() {
   const [cemeteryData, setCemeteryData] = useState<CemeteryData | null>(null);
   const [selectedGrave, setSelectedGrave] = useState<Grave | null>(null);
+  const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(
+    null
+  );
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [highlightedGraves, setHighlightedGraves] = useState<Set<string>>(
@@ -120,6 +130,31 @@ export function CemeteryView() {
     }
   };
 
+  const handleSaveLandmark = async (landmark: Landmark) => {
+    try {
+      await saveOrUpdateLandmark(landmark);
+
+      // Log the change
+      const changeEntry = {
+        op: 'set' as const,
+        uuid: landmark.uuid,
+        changes: landmark as unknown as Record<string, unknown>,
+        timestamp: getCurrentTimestamp(),
+        user: getCurrentUser(),
+      };
+      await appendChangeLog(changeEntry);
+
+      // Reload data
+      await loadData();
+      setIsEditing(false);
+      setIsCreating(false);
+      setSelectedLandmark(null);
+    } catch (error) {
+      console.error('Failed to save landmark:', error);
+      alert('Failed to save landmark');
+    }
+  };
+
   const handleDeleteGrave = async (uuid: string) => {
     try {
       const grave = cemeteryData?.graves.find((g) => g.uuid === uuid);
@@ -178,7 +213,6 @@ export function CemeteryView() {
   const handleCellClick = (position: GridPosition) => {
     if (!activeMarkerType || !cemeteryData) return;
 
-    // For now, only handle grave placement
     if (activeMarkerType === 'grave') {
       // Create a new grave at the clicked position
       const newGrave: Grave = {
@@ -193,6 +227,27 @@ export function CemeteryView() {
 
       // Set as selected and open editor
       setSelectedGrave(newGrave);
+      setSelectedLandmark(null);
+      setIsCreating(true);
+      setIsEditing(false);
+      setShowEditor(true);
+      setShowGraveList(false);
+      setActiveMarkerType(null); // Exit add mode after placing
+    } else if (activeMarkerType === 'landmark') {
+      // Create a new landmark at the clicked position
+      const newLandmark: Landmark = {
+        uuid: crypto.randomUUID(),
+        landmark_type: 'other', // Default type
+        grid: position,
+        properties: {
+          last_modified: getCurrentTimestamp(),
+          modified_by: getCurrentUser(),
+        },
+      };
+
+      // Set as selected and open editor
+      setSelectedLandmark(newLandmark);
+      setSelectedGrave(null);
       setIsCreating(true);
       setIsEditing(false);
       setShowEditor(true);
@@ -203,6 +258,7 @@ export function CemeteryView() {
 
   const handleCancel = () => {
     setSelectedGrave(null);
+    setSelectedLandmark(null);
     setIsEditing(false);
     setIsCreating(false);
     setShowEditor(false);
@@ -337,6 +393,7 @@ export function CemeteryView() {
           <MapGrid
             cemetery={cemeteryData.cemetery}
             graves={cemeteryData.graves}
+            landmarks={cemeteryData.landmarks}
             selectedGrave={selectedGrave}
             onGraveClick={handleGraveClick}
             highlightedGraves={highlightedGraves}
@@ -359,13 +416,23 @@ export function CemeteryView() {
               showEditor ? 'translate-x-0' : 'translate-x-full'
             } lg:translate-x-0 absolute lg:relative right-0 z-10 w-full sm:w-96 h-full border-l border-gray-200 dark:border-gray-700 overflow-y-auto bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
           >
-            <GraveEditor
-              grave={selectedGrave}
-              cemetery={cemeteryData.cemetery}
-              onSave={handleSaveGrave}
-              onDelete={handleDeleteGrave}
-              onCancel={handleCancel}
-            />
+            {selectedGrave && (
+              <GraveEditor
+                grave={selectedGrave}
+                cemetery={cemeteryData.cemetery}
+                onSave={handleSaveGrave}
+                onDelete={handleDeleteGrave}
+                onCancel={handleCancel}
+              />
+            )}
+            {selectedLandmark && (
+              <LandmarkEditor
+                landmark={selectedLandmark}
+                cemetery={cemeteryData.cemetery}
+                onSave={handleSaveLandmark}
+                onCancel={handleCancel}
+              />
+            )}
           </div>
         )}
       </div>

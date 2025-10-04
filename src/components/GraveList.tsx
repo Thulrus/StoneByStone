@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Grave } from '../types/cemetery';
 
 interface GraveListProps {
@@ -18,7 +18,6 @@ export function GraveList({
 
   const filteredGraves = useMemo(() => {
     if (!searchTerm) {
-      onSearch(new Set());
       return graves.filter((g) => !g.properties.deleted);
     }
 
@@ -35,9 +34,17 @@ export function GraveList({
       );
     });
 
-    onSearch(new Set(results.map((g) => g.uuid)));
     return results;
-  }, [graves, searchTerm, onSearch]);
+  }, [graves, searchTerm]);
+
+  // Update search results in parent component
+  useEffect(() => {
+    if (!searchTerm) {
+      onSearch(new Set());
+    } else {
+      onSearch(new Set(filteredGraves.map((g) => g.uuid)));
+    }
+  }, [filteredGraves, searchTerm, onSearch]);
 
   return (
     <div className="h-full flex flex-col bg-white dark:bg-gray-800">

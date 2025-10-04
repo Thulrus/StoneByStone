@@ -38,19 +38,24 @@ export function MarkerToolbar({
         <span>Add Grave</span>
       </button>
 
-      {/* Placeholder for future marker types - commented out for now */}
-      {/* 
+      {/* Landmark Marker Button */}
       <button
         onClick={() => handleMarkerClick('landmark')}
         disabled={disabled}
-        className="..."
+        className={`px-4 py-3 rounded-lg shadow-lg text-sm font-medium transition-all ${
+          activeMarkerType === 'landmark'
+            ? 'bg-blue-600 text-white border-2 border-blue-700 ring-2 ring-blue-300'
+            : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+        } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         aria-label="Add landmark"
-        title="Add landmarks (coming soon)"
+        title="Click to add landmarks (trees, benches, statues, etc.)"
       >
         <span className="text-xl mr-2">🌳</span>
         <span>Add Landmark</span>
       </button>
 
+      {/* Placeholder for future marker types - commented out for now */}
+      {/* 
       <button
         onClick={() => handleMarkerClick('street')}
         disabled={disabled}

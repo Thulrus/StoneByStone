@@ -4,9 +4,19 @@
 
 /**
  * Marker types for cemetery features
- * Currently only 'grave' is implemented, but designed for future expansion
  */
 export type MarkerType = 'grave' | 'landmark' | 'street';
+
+/**
+ * Landmark types with corresponding icons
+ */
+export type LandmarkType =
+  | 'bench'
+  | 'tree'
+  | 'pine'
+  | 'building'
+  | 'statue'
+  | 'other';
 
 export interface CemeteryGrid {
   rows: number;
@@ -52,6 +62,23 @@ export interface Grave {
   properties: GraveProperties;
 }
 
+export interface LandmarkProperties {
+  name?: string;
+  description?: string;
+  notes?: string;
+  deleted?: boolean;
+  last_modified: string; // ISO8601
+  modified_by: string;
+}
+
+export interface Landmark {
+  uuid: string;
+  landmark_type: LandmarkType;
+  grid: GridPosition;
+  geometry?: GeoPoint;
+  properties: LandmarkProperties;
+}
+
 export type ChangeOperation = 'set' | 'delete';
 
 export interface ChangeLogEntry {
@@ -66,6 +93,7 @@ export interface CemeteryData {
   schema_version: string;
   cemetery: Cemetery;
   graves: Grave[];
+  landmarks?: Landmark[]; // Optional for backward compatibility
   change_log: ChangeLogEntry[];
 }
 

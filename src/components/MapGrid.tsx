@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import type {
   Grave,
+  Landmark,
   Cemetery,
   MarkerType,
   GridPosition,
@@ -9,6 +10,7 @@ import type {
 interface MapGridProps {
   cemetery: Cemetery;
   graves: Grave[];
+  landmarks?: Landmark[];
   selectedGrave: Grave | null;
   onGraveClick: (grave: Grave) => void;
   highlightedGraves?: Set<string>;
@@ -22,6 +24,7 @@ const PADDING = 20;
 export function MapGrid({
   cemetery,
   graves,
+  landmarks = [],
   selectedGrave,
   onGraveClick,
   highlightedGraves,
@@ -373,44 +376,38 @@ export function MapGrid({
               const offsetX = idx * 3;
               const offsetY = idx * 3;
 
+              const stoneIconPath = `${import.meta.env.BASE_URL}stone.png`;
+
               return (
                 <g
                   key={grave.uuid}
                   className="grave-marker cursor-pointer"
                   onClick={() => onGraveClick(grave)}
                 >
-                  {/* Tombstone shape */}
-                  <rect
-                    x={x + 10 + offsetX}
-                    y={y + 15 + offsetY}
-                    width={15}
-                    height={15}
-                    rx="2"
-                    fill={
-                      isSelected
-                        ? '#3b82f6'
-                        : hasConflict
-                          ? '#ef4444'
-                          : isHighlighted
-                            ? '#10b981'
-                            : '#6b7280'
-                    }
-                    stroke={isSelected ? '#1e40af' : '#374151'}
-                    strokeWidth="1"
+                  {/* Base stone icon */}
+                  <image
+                    href={stoneIconPath}
+                    x={x + 5 + offsetX}
+                    y={y + 5 + offsetY}
+                    width={30}
+                    height={30}
                   />
-                  <path
-                    d={`M ${x + 10 + offsetX} ${y + 15 + offsetY} Q ${x + 17.5 + offsetX} ${y + 10 + offsetY}, ${x + 25 + offsetX} ${y + 15 + offsetY}`}
+                  {/* Color overlay for state indication */}
+                  <rect
+                    x={x + 5 + offsetX}
+                    y={y + 5 + offsetY}
+                    width={30}
+                    height={30}
                     fill={
                       isSelected
-                        ? '#3b82f6'
+                        ? 'rgba(59, 130, 246, 0.3)'
                         : hasConflict
-                          ? '#ef4444'
+                          ? 'rgba(239, 68, 68, 0.3)'
                           : isHighlighted
-                            ? '#10b981'
-                            : '#6b7280'
+                            ? 'rgba(16, 185, 129, 0.3)'
+                            : 'transparent'
                     }
-                    stroke={isSelected ? '#1e40af' : '#374151'}
-                    strokeWidth="1"
+                    pointerEvents="none"
                   />
                   {/* Tooltip on hover */}
                   <title>{grave.properties.name || grave.plot}</title>
@@ -418,6 +415,44 @@ export function MapGrid({
               );
             });
           })}
+
+          {/* Landmarks */}
+          {landmarks
+            .filter((landmark) => !landmark.properties.deleted)
+            .map((landmark) => {
+              const x = PADDING + landmark.grid.col * CELL_SIZE;
+              const y = PADDING + landmark.grid.row * CELL_SIZE;
+
+              // Map landmark type to icon filename
+              const iconMap: Record<string, string> = {
+                bench: 'bench.png',
+                tree: 'tree.png',
+                pine: 'pine.png',
+                building: 'building.png',
+                statue: 'statue.png',
+                other: 'other.png',
+              };
+              const iconFile = iconMap[landmark.landmark_type] || 'other.png';
+              const iconPath = `${import.meta.env.BASE_URL}${iconFile}`;
+
+              return (
+                <g key={landmark.uuid} className="landmark-marker">
+                  <image
+                    href={iconPath}
+                    x={x + 5}
+                    y={y + 5}
+                    width={30}
+                    height={30}
+                    className="cursor-pointer"
+                  />
+                  {/* Tooltip on hover */}
+                  <title>
+                    {landmark.properties.name ||
+                      `${landmark.landmark_type} landmark`}
+                  </title>
+                </g>
+              );
+            })}
         </g>
       </svg>
 

@@ -2,6 +2,7 @@ import { openDB as idbOpenDB, DBSchema, IDBPDatabase } from 'idb';
 import type {
   Cemetery,
   Grave,
+  Landmark,
   ChangeLogEntry,
   CemeteryData,
 } from '../types/cemetery';
@@ -19,6 +20,10 @@ interface CemeteryDB extends DBSchema {
     value: Grave;
     indexes: { 'by-plot': string };
   };
+  landmarks: {
+    key: string;
+    value: Landmark;
+  };
   change_log: {
     key: number;
     value: ChangeLogEntry & { id?: number };
@@ -35,8 +40,8 @@ export async function openDB(): Promise<IDBPDatabase<CemeteryDB>> {
     return dbInstance;
   }
 
-  dbInstance = await idbOpenDB<CemeteryDB>('cemetery-db', 1, {
-    upgrade(db) {
+  dbInstance = await idbOpenDB<CemeteryDB>('cemetery-db', 2, {
+    upgrade(db, oldVersion) {
       // Create object stores
       if (!db.objectStoreNames.contains('cemetery')) {
         db.createObjectStore('cemetery', { keyPath: 'id' });
@@ -49,6 +54,11 @@ export async function openDB(): Promise<IDBPDatabase<CemeteryDB>> {
 
       if (!db.objectStoreNames.contains('change_log')) {
         db.createObjectStore('change_log', { autoIncrement: true });
+      }
+
+      // Add landmarks store in version 2
+      if (oldVersion < 2 && !db.objectStoreNames.contains('landmarks')) {
+        db.createObjectStore('landmarks', { keyPath: 'uuid' });
       }
     },
   });
@@ -75,12 +85,14 @@ export async function loadCemetery(): Promise<CemeteryData | null> {
   if (!cemetery) return null;
 
   const graves = await db.getAll('graves');
+  const landmarks = await db.getAll('landmarks');
   const change_log = await db.getAll('change_log');
 
   return {
     schema_version: '1.0.0',
     cemetery,
     graves,
+    landmarks,
     change_log,
   };
 }
@@ -130,6 +142,42 @@ export async function deleteGrave(uuid: string): Promise<void> {
 }
 
 /**
+ * Save or update a landmark
+ */
+export async function saveOrUpdateLandmark(landmark: Landmark): Promise<void> {
+  const db = await openDB();
+  await db.put('landmarks', landmark);
+}
+
+/**
+ * Get all landmarks
+ */
+export async function getAllLandmarks(): Promise<Landmark[]> {
+  const db = await openDB();
+  return db.getAll('landmarks');
+}
+
+/**
+ * Get a single landmark by UUID
+ */
+export async function getLandmark(uuid: string): Promise<Landmark | undefined> {
+  const db = await openDB();
+  return db.get('landmarks', uuid);
+}
+
+/**
+ * Delete a landmark (actually just marks as deleted)
+ */
+export async function deleteLandmark(uuid: string): Promise<void> {
+  const db = await openDB();
+  const landmark = await db.get('landmarks', uuid);
+  if (landmark) {
+    landmark.properties.deleted = true;
+    await db.put('landmarks', landmark);
+  }
+}
+
+/**
  * Append a change log entry
  */
 export async function appendChangeLog(entry: ChangeLogEntry): Promise<void> {
@@ -163,6 +211,7 @@ export async function replaceAllData(data: CemeteryData): Promise<void> {
   // Clear existing data
   await db.clear('cemetery');
   await db.clear('graves');
+  await db.clear('landmarks');
   await db.clear('change_log');
 
   // Load new data
@@ -170,6 +219,12 @@ export async function replaceAllData(data: CemeteryData): Promise<void> {
 
   for (const grave of data.graves) {
     await saveOrUpdateGrave(grave);
+  }
+
+  if (data.landmarks) {
+    for (const landmark of data.landmarks) {
+      await saveOrUpdateLandmark(landmark);
+    }
   }
 
   for (const entry of data.change_log) {
