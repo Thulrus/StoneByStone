@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import ImportExport from './pages/ImportExport';
+import { CemeteryView } from './pages/CemeteryView';
 
 function App() {
   return (
@@ -22,6 +23,12 @@ function App() {
                   Home
                 </Link>
                 <Link
+                  to="/view"
+                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                >
+                  Cemetery View
+                </Link>
+                <Link
                   to="/import"
                   className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
                 >
@@ -33,9 +40,10 @@ function App() {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <main className="h-[calc(100vh-4rem)]">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/view" element={<CemeteryView />} />
           <Route path="/import" element={<ImportExport />} />
         </Routes>
       </main>
