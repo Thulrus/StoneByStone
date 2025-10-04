@@ -3,11 +3,7 @@ import type { CemeteryData, Grave } from '../types/cemetery';
 import { MapGrid } from '../components/MapGrid';
 import { GraveList } from '../components/GraveList';
 import { GraveEditor } from '../components/GraveEditor';
-import {
-  loadCemetery,
-  saveOrUpdateGrave,
-  appendChangeLog,
-} from '../lib/idb';
+import { loadCemetery, saveOrUpdateGrave, appendChangeLog } from '../lib/idb';
 import { getCurrentUser, getCurrentTimestamp } from '../lib/user';
 import { detectSpatialConflicts } from '../lib/merge';
 
@@ -16,8 +12,12 @@ export function CemeteryView() {
   const [selectedGrave, setSelectedGrave] = useState<Grave | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
-  const [highlightedGraves, setHighlightedGraves] = useState<Set<string>>(new Set());
-  const [spatialConflicts, setSpatialConflicts] = useState<Map<string, Grave[]>>(new Map());
+  const [highlightedGraves, setHighlightedGraves] = useState<Set<string>>(
+    new Set()
+  );
+  const [spatialConflicts, setSpatialConflicts] = useState<
+    Map<string, Grave[]>
+  >(new Map());
   const [showConflicts, setShowConflicts] = useState(false);
 
   // Load cemetery data on mount
@@ -163,7 +163,8 @@ export function CemeteryView() {
               onClick={() => setShowConflicts(!showConflicts)}
               className="w-full mt-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium text-sm"
             >
-              ⚠ {spatialConflicts.size} Spatial Conflict{spatialConflicts.size > 1 ? 's' : ''}
+              ⚠ {spatialConflicts.size} Spatial Conflict
+              {spatialConflicts.size > 1 ? 's' : ''}
             </button>
           )}
         </div>
@@ -214,7 +215,10 @@ export function CemeteryView() {
             </p>
             <div className="space-y-4">
               {Array.from(spatialConflicts.entries()).map(([key, graves]) => (
-                <div key={key} className="border border-red-300 dark:border-red-700 rounded-lg p-4">
+                <div
+                  key={key}
+                  className="border border-red-300 dark:border-red-700 rounded-lg p-4"
+                >
                   <div className="font-semibold text-red-600 dark:text-red-400 mb-2">
                     Position: {key}
                   </div>

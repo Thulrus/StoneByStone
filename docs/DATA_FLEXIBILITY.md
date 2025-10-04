@@ -7,6 +7,7 @@ StoneByStone is designed to accommodate incomplete or partial grave data. Not al
 ## Required vs Optional Fields
 
 ### Cemetery Level (Required)
+
 - `id` - Unique identifier
 - `name` - Cemetery name
 - `grid.rows` - Number of rows
@@ -17,6 +18,7 @@ StoneByStone is designed to accommodate incomplete or partial grave data. Not al
 ### Grave Level
 
 #### Required
+
 - `uuid` - Unique identifier (UUID v4 format)
 - `plot` - Plot identifier (can be any string like "A-1", "Section B Plot 15")
 - `grid.row` - Grid row position (integer >= 0)
@@ -25,6 +27,7 @@ StoneByStone is designed to accommodate incomplete or partial grave data. Not al
 - `properties.modified_by` - User identifier
 
 #### Optional (All Nullable)
+
 - `properties.name` - Name of the deceased
 - `properties.birth` - Birth date (YYYY-MM-DD or empty string)
 - `properties.death` - Death date (YYYY-MM-DD or empty string)
@@ -36,15 +39,18 @@ StoneByStone is designed to accommodate incomplete or partial grave data. Not al
 ## UI Behavior with Missing Data
 
 ### Display
+
 - Missing name → Shows "No name" in italics
 - Missing dates → Shows "?" placeholder
 - Empty inscription/notes → Fields are blank
 
 ### Map View
+
 - Tooltip shows name if available, otherwise plot identifier
 - All graves display regardless of completeness
 
 ### Search
+
 - Searches across all available fields
 - Missing fields don't cause errors
 
@@ -95,12 +101,14 @@ Each step can be done independently, and data can be merged from multiple contri
 ## Validation
 
 The JSON Schema validates:
+
 - ✅ Required fields are present
 - ✅ Date formats are correct (YYYY-MM-DD) or empty
 - ✅ UUIDs match v4 specification
 - ✅ Grid positions are non-negative integers
 
 It does NOT require:
+
 - ❌ Name to be filled in
 - ❌ Birth or death dates
 - ❌ Any descriptive text
@@ -113,12 +121,14 @@ It does NOT require:
    - Your name in `modified_by`
 
 2. **Use empty string for unknown dates**:
+
    ```json
    "birth": "",
    "death": ""
    ```
 
 3. **Use notes for uncertainty**:
+
    ```json
    "notes": "Name partially illegible, possibly 'John Smith' or 'John Smythe'"
    ```

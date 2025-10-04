@@ -27,12 +27,21 @@ export function MapGrid({
   const width = cemetery.grid.cols * CELL_SIZE + PADDING * 2;
   const height = cemetery.grid.rows * CELL_SIZE + PADDING * 2;
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (e.button === 0 && !( e.target as SVGElement).closest('.grave-marker')) {
-      setIsDragging(true);
-      setDragStart({ x: e.clientX - transform.x, y: e.clientY - transform.y });
-    }
-  }, [transform]);
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (
+        e.button === 0 &&
+        !(e.target as SVGElement).closest('.grave-marker')
+      ) {
+        setIsDragging(true);
+        setDragStart({
+          x: e.clientX - transform.x,
+          y: e.clientY - transform.y,
+        });
+      }
+    },
+    [transform]
+  );
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -95,7 +104,9 @@ export function MapGrid({
         onMouseLeave={handleMouseUp}
         onWheel={handleWheel}
       >
-        <g transform={`translate(${transform.x}, ${transform.y}) scale(${transform.scale})`}>
+        <g
+          transform={`translate(${transform.x}, ${transform.y}) scale(${transform.scale})`}
+        >
           {/* Grid lines */}
           <g className="grid-lines">
             {Array.from({ length: cemetery.grid.rows + 1 }).map((_, i) => (
@@ -182,10 +193,10 @@ export function MapGrid({
                       isSelected
                         ? '#3b82f6'
                         : hasConflict
-                        ? '#ef4444'
-                        : isHighlighted
-                        ? '#10b981'
-                        : '#6b7280'
+                          ? '#ef4444'
+                          : isHighlighted
+                            ? '#10b981'
+                            : '#6b7280'
                     }
                     stroke={isSelected ? '#1e40af' : '#374151'}
                     strokeWidth="1"
@@ -196,10 +207,10 @@ export function MapGrid({
                       isSelected
                         ? '#3b82f6'
                         : hasConflict
-                        ? '#ef4444'
-                        : isHighlighted
-                        ? '#10b981'
-                        : '#6b7280'
+                          ? '#ef4444'
+                          : isHighlighted
+                            ? '#10b981'
+                            : '#6b7280'
                     }
                     stroke={isSelected ? '#1e40af' : '#374151'}
                     strokeWidth="1"
@@ -216,13 +227,17 @@ export function MapGrid({
       {/* Controls */}
       <div className="absolute bottom-4 right-4 flex flex-col gap-2">
         <button
-          onClick={() => setTransform((prev) => ({ ...prev, scale: prev.scale * 1.2 }))}
+          onClick={() =>
+            setTransform((prev) => ({ ...prev, scale: prev.scale * 1.2 }))
+          }
           className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow text-sm"
         >
           +
         </button>
         <button
-          onClick={() => setTransform((prev) => ({ ...prev, scale: prev.scale * 0.8 }))}
+          onClick={() =>
+            setTransform((prev) => ({ ...prev, scale: prev.scale * 0.8 }))
+          }
           className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow text-sm"
         >
           −

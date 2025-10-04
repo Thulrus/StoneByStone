@@ -13,9 +13,9 @@ export function MergeConflictModal({
   onCancel,
 }: MergeConflictModalProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [resolutions, setResolutions] = useState<Map<string, ConflictResolution>>(
-    new Map()
-  );
+  const [resolutions, setResolutions] = useState<
+    Map<string, ConflictResolution>
+  >(new Map());
 
   const currentConflict = conflicts[currentIndex];
   const conflictKey = `${currentConflict.uuid}-${currentConflict.field}`;
@@ -31,8 +31,8 @@ export function MergeConflictModal({
         choice === 'local'
           ? currentConflict.localValue
           : choice === 'incoming'
-          ? currentConflict.incomingValue
-          : manualValue,
+            ? currentConflict.incomingValue
+            : manualValue,
       resolution: choice,
     };
 
@@ -66,7 +66,10 @@ export function MergeConflictModal({
           <div className="space-y-4">
             <div>
               <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Field: <code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{currentConflict.field}</code>
+                Field:{' '}
+                <code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                  {currentConflict.field}
+                </code>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 UUID: {currentConflict.uuid}
@@ -82,7 +85,8 @@ export function MergeConflictModal({
                   {JSON.stringify(currentConflict.localValue, null, 2)}
                 </div>
                 <div className="text-xs text-gray-500 dark:text-gray-400">
-                  Modified: {new Date(currentConflict.localTimestamp).toLocaleString()}
+                  Modified:{' '}
+                  {new Date(currentConflict.localTimestamp).toLocaleString()}
                   <br />
                   By: {currentConflict.localModifiedBy}
                 </div>
@@ -102,7 +106,8 @@ export function MergeConflictModal({
                   {JSON.stringify(currentConflict.incomingValue, null, 2)}
                 </div>
                 <div className="text-xs text-gray-500 dark:text-gray-400">
-                  Modified: {new Date(currentConflict.incomingTimestamp).toLocaleString()}
+                  Modified:{' '}
+                  {new Date(currentConflict.incomingTimestamp).toLocaleString()}
                   <br />
                   By: {currentConflict.incomingModifiedBy}
                 </div>

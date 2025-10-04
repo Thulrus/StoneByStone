@@ -3,7 +3,11 @@ import { importCemeteryFile, exportCemeteryData } from '../lib/file';
 import { loadCemetery, replaceAllData, hasData } from '../lib/idb';
 import { mergeCemeteryData, applyMergeResult } from '../lib/merge';
 import { MergeConflictModal } from '../components/MergeConflictModal';
-import type { CemeteryData, MergeConflict, ConflictResolution } from '../types/cemetery';
+import type {
+  CemeteryData,
+  MergeConflict,
+  ConflictResolution,
+} from '../types/cemetery';
 import { getCurrentTimestamp, getCurrentUser } from '../lib/user';
 
 function ImportExport() {
@@ -15,7 +19,9 @@ function ImportExport() {
     incoming: CemeteryData;
   } | null>(null);
 
-  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -79,7 +85,9 @@ function ImportExport() {
         // Show conflict resolution UI
         setMergeConflicts(mergeResult.conflicts);
         setPendingMerge({ local, incoming: result.data });
-        setImportStatus(`Merge ready: ${mergeResult.conflicts.length} conflicts to resolve`);
+        setImportStatus(
+          `Merge ready: ${mergeResult.conflicts.length} conflicts to resolve`
+        );
       } else {
         // No conflicts - apply merge
         const merged = applyMergeResult(local, result.data, mergeResult);
@@ -90,7 +98,9 @@ function ImportExport() {
       }
     } catch (error) {
       console.error('Import error:', error);
-      setImportStatus(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setImportStatus(
+        `Error: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     } finally {
       setIsImporting(false);
     }
@@ -103,8 +113,15 @@ function ImportExport() {
       setImportStatus('Applying conflict resolutions...');
 
       // Apply resolutions to merge result
-      const mergeResult = mergeCemeteryData(pendingMerge.local, pendingMerge.incoming);
-      const merged = applyMergeResult(pendingMerge.local, pendingMerge.incoming, mergeResult);
+      const mergeResult = mergeCemeteryData(
+        pendingMerge.local,
+        pendingMerge.incoming
+      );
+      const merged = applyMergeResult(
+        pendingMerge.local,
+        pendingMerge.incoming,
+        mergeResult
+      );
 
       // Apply resolved conflicts
       for (const resolution of resolutions) {
@@ -113,9 +130,12 @@ function ImportExport() {
 
         const fieldParts = resolution.field.split('.');
         if (fieldParts[0] === 'properties' && fieldParts.length === 2) {
-          (grave.properties as unknown as Record<string, unknown>)[fieldParts[1]] = resolution.resolvedValue;
+          (grave.properties as unknown as Record<string, unknown>)[
+            fieldParts[1]
+          ] = resolution.resolvedValue;
         } else {
-          (grave as unknown as Record<string, unknown>)[resolution.field] = resolution.resolvedValue;
+          (grave as unknown as Record<string, unknown>)[resolution.field] =
+            resolution.resolvedValue;
         }
       }
 
@@ -136,7 +156,9 @@ function ImportExport() {
       setPendingMerge(null);
     } catch (error) {
       console.error('Conflict resolution error:', error);
-      alert(`Failed to apply merge: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      alert(
+        `Failed to apply merge: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   };
 
@@ -158,7 +180,9 @@ function ImportExport() {
       setImportStatus('Exported successfully');
     } catch (error) {
       console.error('Export error:', error);
-      alert(`Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      alert(
+        `Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   };
 

@@ -40,7 +40,9 @@ export async function readFileAsJSON<T = unknown>(file: File): Promise<T> {
  */
 export async function importCemeteryFile(
   file: File
-): Promise<{ data: CemeteryData; errors: null } | { data: null; errors: string[] }> {
+): Promise<
+  { data: CemeteryData; errors: null } | { data: null; errors: string[] }
+> {
   try {
     const data = await readFileAsJSON<CemeteryData>(file);
     const validation = validateCemeteryData(data);

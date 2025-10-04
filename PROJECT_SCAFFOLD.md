@@ -9,6 +9,7 @@
 A production-ready static web application scaffold with:
 
 ### Core Stack
+
 - ✅ **TypeScript** - Full type safety
 - ✅ **React 18** - Modern React with hooks
 - ✅ **Vite** - Lightning-fast dev server and build tool
@@ -16,6 +17,7 @@ A production-ready static web application scaffold with:
 - ✅ **Tailwind CSS** - Utility-first styling
 
 ### Features
+
 - ✅ **PWA Support** - Service worker skeleton for offline capability
 - ✅ **IndexedDB** - Local persistence with `idb` wrapper
 - ✅ **JSON Schema** - Data validation with Ajv
@@ -23,12 +25,14 @@ A production-ready static web application scaffold with:
 - ✅ **File I/O** - Browser File API helpers for import/export
 
 ### Developer Experience
+
 - ✅ **ESLint** - TypeScript linting with recommended rules
 - ✅ **Prettier** - Code formatting
 - ✅ **Jest + React Testing Library** - Testing infrastructure
 - ✅ **GitHub Actions CI/CD** - Automated deployment to GitHub Pages
 
 ### Project Files (30 total)
+
 ```
 .
 ├── .eslintignore
@@ -100,6 +104,7 @@ npm run deploy        # Manual deploy to gh-pages
 ## Next Steps
 
 ### Before Deployment
+
 1. **Update Repository Name** in:
    - `vite.config.ts` → `base: '/YourRepoName/'`
    - `src/main.tsx` → `basename="/YourRepoName"`
@@ -110,6 +115,7 @@ npm run deploy        # Manual deploy to gh-pages
    - Push to `main` branch triggers automatic deployment
 
 ### Development Workflow
+
 1. Implement features in `src/`
 2. Add routes in `src/App.tsx`
 3. Create pages in `src/pages/`
@@ -117,6 +123,7 @@ npm run deploy        # Manual deploy to gh-pages
 5. Update schema in `schema/cemetery.schema.json`
 
 ### Placeholder Components Ready
+
 - ✅ Home page with feature overview
 - ✅ Import/Export page with file picker UI
 - ✅ IDB wrapper with cemetery/graves/changes stores
@@ -126,4 +133,5 @@ npm run deploy        # Manual deploy to gh-pages
 All files are syntactically correct, TypeScript-ready, and the project builds successfully!
 
 ---
+
 **Commit:** `e6c62b5` - "chore: scaffold project (vite, react, tailwind, pwa, ci)"

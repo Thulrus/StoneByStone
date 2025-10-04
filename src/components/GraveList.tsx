@@ -30,7 +30,9 @@ export function GraveList({
       const plot = g.plot.toLowerCase();
       const gridStr = `${g.grid.row},${g.grid.col}`;
 
-      return name.includes(term) || plot.includes(term) || gridStr.includes(term);
+      return (
+        name.includes(term) || plot.includes(term) || gridStr.includes(term)
+      );
     });
 
     onSearch(new Set(results.map((g) => g.uuid)));
@@ -67,7 +69,9 @@ export function GraveList({
                 }`}
               >
                 <div className="font-medium text-gray-900 dark:text-white">
-                  {grave.properties.name || <span className="italic text-gray-400">No name</span>}
+                  {grave.properties.name || (
+                    <span className="italic text-gray-400">No name</span>
+                  )}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">
                   Plot: {grave.plot}
@@ -77,7 +81,8 @@ export function GraveList({
                 </div>
                 {(grave.properties.birth || grave.properties.death) && (
                   <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                    {grave.properties.birth || '?'} – {grave.properties.death || '?'}
+                    {grave.properties.birth || '?'} –{' '}
+                    {grave.properties.death || '?'}
                   </div>
                 )}
               </div>
@@ -88,7 +93,8 @@ export function GraveList({
 
       <div className="p-4 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-400">
         {filteredGraves.length} grave{filteredGraves.length !== 1 ? 's' : ''}
-        {searchTerm && ` (filtered from ${graves.filter((g) => !g.properties.deleted).length})`}
+        {searchTerm &&
+          ` (filtered from ${graves.filter((g) => !g.properties.deleted).length})`}
       </div>
     </div>
   );

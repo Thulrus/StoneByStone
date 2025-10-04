@@ -19,6 +19,7 @@ If you're seeing a blank page when visiting your GitHub Pages URL, it's likely d
 The workflow file has been updated to deploy from the `master` branch (your current branch).
 
 **File: `.github/workflows/deploy.yml`**
+
 - Triggers on: push to `master` branch
 - Builds the app with `npm run build`
 - Uploads the `dist` folder to GitHub Pages
@@ -41,11 +42,13 @@ git push origin master
 ## Why This Works
 
 ### The Problem
+
 - Manual "Deploy from branch" expects static HTML files in the repo root
 - Our app needs to be **built** first (`npm run build`) to generate the `dist` folder
 - The `dist` folder contains the compiled/bundled app ready for production
 
 ### The Solution
+
 - GitHub Actions workflow:
   1. Checks out your code
   2. Installs dependencies (`npm ci`)
@@ -55,15 +58,19 @@ git push origin master
 ### Important Configuration
 
 **Vite Base Path (`vite.config.ts`)**:
+
 ```typescript
-base: '/StoneByStone/'
+base: '/StoneByStone/';
 ```
+
 This must match your repository name so that assets load correctly.
 
 **Router Base (`src/main.tsx`)**:
+
 ```typescript
 <BrowserRouter basename="/StoneByStone">
 ```
+
 This ensures client-side routing works on GitHub Pages.
 
 ## Troubleshooting
@@ -91,14 +98,17 @@ This ensures client-side routing works on GitHub Pages.
 ### Common Issues
 
 **404 on assets (JS/CSS files)**
+
 - Problem: Base path is incorrect
 - Solution: Update `base` in `vite.config.ts` to match repo name
 
 **Blank page but no console errors**
+
 - Problem: Router basename might be wrong
 - Solution: Check `basename` in `src/main.tsx`
 
 **Workflow fails to deploy**
+
 - Problem: Permissions not set correctly
 - Solution: In repo Settings → Actions → General, ensure "Read and write permissions" is enabled
 
@@ -115,6 +125,7 @@ npm run deploy
 ```
 
 This will:
+
 1. Build your app to `dist/`
 2. Push the `dist` folder to a `gh-pages` branch
 3. GitHub Pages will serve from that branch
@@ -141,6 +152,7 @@ Both use the same base path for consistency.
 ## Next Steps After First Deployment
 
 Once working, every push to `master` will automatically:
+
 1. Trigger the workflow
 2. Build your app
 3. Deploy to GitHub Pages
