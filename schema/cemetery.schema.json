@@ -9,13 +9,12 @@
     "schema_version": {
       "type": "string",
       "description": "Version of the schema",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$",
-      "default": "1.0.0"
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
     },
     "cemetery": {
       "type": "object",
       "description": "Cemetery information",
-      "required": ["id", "name"],
+      "required": ["id", "name", "grid", "last_modified", "modified_by"],
       "properties": {
         "id": {
           "type": "string",
@@ -25,9 +24,37 @@
           "type": "string",
           "description": "Cemetery name"
         },
-        "location": {
+        "grid": {
+          "type": "object",
+          "description": "Grid layout configuration",
+          "required": ["rows", "cols"],
+          "properties": {
+            "rows": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "cols": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "cellSize": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "last_modified": {
           "type": "string",
-          "description": "Cemetery location or address"
+          "format": "date-time",
+          "description": "Last modification timestamp"
+        },
+        "modified_by": {
+          "type": "string",
+          "description": "User who last modified"
+        },
+        "license": {
+          "type": "string",
+          "description": "Data license"
         }
       }
     },
@@ -36,20 +63,82 @@
       "description": "List of graves in the cemetery",
       "items": {
         "type": "object",
-        "required": ["uuid"],
+        "required": ["uuid", "plot", "grid", "properties"],
         "properties": {
           "uuid": {
             "type": "string",
             "description": "Unique grave identifier (UUID v4)",
             "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
           },
-          "section": {
+          "plot": {
             "type": "string",
-            "description": "Cemetery section or plot"
+            "description": "Plot identifier"
           },
-          "occupant": {
-            "type": "string",
-            "description": "Name of the deceased"
+          "grid": {
+            "type": "object",
+            "description": "Grid position",
+            "required": ["row", "col"],
+            "properties": {
+              "row": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "col": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Point geometry",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["Point"]
+              },
+              "coordinates": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "required": ["last_modified", "modified_by"],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "birth": {
+                "type": "string",
+                "format": "date"
+              },
+              "death": {
+                "type": "string",
+                "format": "date"
+              },
+              "inscription": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "deleted": {
+                "type": "boolean"
+              },
+              "last_modified": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "modified_by": {
+                "type": "string"
+              }
+            }
           }
         }
       }
@@ -59,20 +148,29 @@
       "description": "History of changes to the cemetery data",
       "items": {
         "type": "object",
-        "required": ["timestamp", "action"],
+        "required": ["op", "uuid", "changes", "timestamp", "user"],
         "properties": {
+          "op": {
+            "type": "string",
+            "enum": ["set", "delete"],
+            "description": "Operation type"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "UUID of affected grave"
+          },
+          "changes": {
+            "type": "object",
+            "description": "Changed fields"
+          },
           "timestamp": {
             "type": "string",
             "format": "date-time",
             "description": "When the change occurred"
           },
-          "action": {
+          "user": {
             "type": "string",
-            "description": "Type of change (add, update, delete)"
-          },
-          "entity": {
-            "type": "string",
-            "description": "What was changed (grave, cemetery)"
+            "description": "User who made the change"
           }
         }
       }

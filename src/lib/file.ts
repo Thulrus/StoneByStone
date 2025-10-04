@@ -1,3 +1,6 @@
+import type { CemeteryData } from '../types/cemetery';
+import { validateCemeteryData, formatValidationErrors } from './validator';
+
 /**
  * File I/O helpers using browser File API
  */
@@ -33,6 +36,36 @@ export async function readFileAsJSON<T = unknown>(file: File): Promise<T> {
 }
 
 /**
+ * Import and validate a cemetery data file
+ */
+export async function importCemeteryFile(
+  file: File
+): Promise<{ data: CemeteryData; errors: null } | { data: null; errors: string[] }> {
+  try {
+    const data = await readFileAsJSON<CemeteryData>(file);
+    const validation = validateCemeteryData(data);
+
+    if (!validation.valid) {
+      const errorMessages = formatValidationErrors(validation.errors);
+      return {
+        data: null,
+        errors: errorMessages,
+      };
+    }
+
+    return {
+      data,
+      errors: null,
+    };
+  } catch (error) {
+    return {
+      data: null,
+      errors: [error instanceof Error ? error.message : 'Unknown error'],
+    };
+  }
+}
+
+/**
  * Download data as a JSON file
  */
 export function downloadJSON(data: unknown, filename: string): void {
@@ -47,6 +80,14 @@ export function downloadJSON(data: unknown, filename: string): void {
   link.click();
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
+}
+
+/**
+ * Export cemetery data as a .cem.json file
+ */
+export function exportCemeteryData(data: CemeteryData): void {
+  const filename = `${data.cemetery.name || 'cemetery'}.cem.json`;
+  downloadJSON(data, filename);
 }
 
 /**
