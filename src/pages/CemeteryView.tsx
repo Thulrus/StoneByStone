@@ -19,6 +19,8 @@ export function CemeteryView() {
     Map<string, Grave[]>
   >(new Map());
   const [showConflicts, setShowConflicts] = useState(false);
+  const [showGraveList, setShowGraveList] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
 
   // Load cemetery data on mount
   useEffect(() => {
@@ -115,18 +117,23 @@ export function CemeteryView() {
     setSelectedGrave(grave);
     setIsEditing(true);
     setIsCreating(false);
+    setShowEditor(true);
+    setShowGraveList(false); // Close list when selecting a grave
   };
 
   const handleNewGrave = () => {
     setSelectedGrave(null);
     setIsCreating(true);
     setIsEditing(false);
+    setShowEditor(true);
+    setShowGraveList(false); // Close list when creating a new grave
   };
 
   const handleCancel = () => {
     setSelectedGrave(null);
     setIsEditing(false);
     setIsCreating(false);
+    setShowEditor(false);
   };
 
   if (!cemeteryData) {
@@ -145,9 +152,45 @@ export function CemeteryView() {
   }
 
   return (
-    <div className="h-screen flex">
+    <div className="h-screen flex relative">
+      {/* Mobile Toggle Buttons */}
+      <div className="md:hidden absolute top-4 left-4 z-20 flex gap-2">
+        <button
+          onClick={() => {
+            setShowGraveList(!showGraveList);
+            // Close editor when opening list
+            if (!showGraveList) {
+              setShowEditor(false);
+            }
+          }}
+          className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg text-sm font-medium text-gray-700 dark:text-gray-300"
+          aria-label="Toggle grave list"
+        >
+          {showGraveList ? '✕ List' : '☰ List'}
+        </button>
+        {(isEditing || isCreating) && (
+          <button
+            onClick={() => {
+              setShowEditor(!showEditor);
+              // Close list when opening editor
+              if (!showEditor) {
+                setShowGraveList(false);
+              }
+            }}
+            className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg text-sm font-medium text-gray-700 dark:text-gray-300"
+            aria-label="Toggle editor"
+          >
+            {showEditor ? '✕ Editor' : '✏ Edit'}
+          </button>
+        )}
+      </div>
+
       {/* Grave List Sidebar */}
-      <div className="w-80 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+      <div
+        className={`${
+          showGraveList ? 'translate-x-0' : '-translate-x-full'
+        } md:translate-x-0 absolute md:relative z-10 w-80 h-full border-r border-gray-200 dark:border-gray-700 flex flex-col bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
+      >
         <div className="p-4 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
             {cemeteryData.cemetery.name}
@@ -191,7 +234,11 @@ export function CemeteryView() {
 
         {/* Editor Panel */}
         {(isEditing || isCreating) && (
-          <div className="w-96 border-l border-gray-200 dark:border-gray-700 overflow-y-auto">
+          <div
+            className={`${
+              showEditor ? 'translate-x-0' : 'translate-x-full'
+            } md:translate-x-0 absolute md:relative right-0 z-10 w-full md:w-96 h-full border-l border-gray-200 dark:border-gray-700 overflow-y-auto bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
+          >
             <GraveEditor
               grave={selectedGrave}
               cemetery={cemeteryData.cemetery}

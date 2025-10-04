@@ -22,6 +22,9 @@ export function MapGrid({
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [lastTouchDistance, setLastTouchDistance] = useState<number | null>(
+    null
+  );
   const svgRef = useRef<SVGSVGElement>(null);
 
   const width = cemetery.grid.cols * CELL_SIZE + PADDING * 2;
@@ -69,6 +72,69 @@ export function MapGrid({
     }));
   }, []);
 
+  // Touch event handlers
+  const getTouchDistance = (touches: React.TouchList) => {
+    const touch1 = touches[0];
+    const touch2 = touches[1];
+    const dx = touch1.clientX - touch2.clientX;
+    const dy = touch1.clientY - touch2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  };
+
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (e.touches.length === 1) {
+        // Single touch - start dragging
+        const touch = e.touches[0];
+        if (!(e.target as SVGElement).closest('.grave-marker')) {
+          setIsDragging(true);
+          setDragStart({
+            x: touch.clientX - transform.x,
+            y: touch.clientY - transform.y,
+          });
+        }
+      } else if (e.touches.length === 2) {
+        // Two touches - start pinch zoom
+        setIsDragging(false);
+        setLastTouchDistance(getTouchDistance(e.touches));
+      }
+    },
+    [transform]
+  );
+
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      e.preventDefault();
+
+      if (e.touches.length === 1 && isDragging) {
+        // Single touch - drag
+        const touch = e.touches[0];
+        setTransform((prev) => ({
+          ...prev,
+          x: touch.clientX - dragStart.x,
+          y: touch.clientY - dragStart.y,
+        }));
+      } else if (e.touches.length === 2) {
+        // Two touches - pinch zoom
+        const currentDistance = getTouchDistance(e.touches);
+        if (lastTouchDistance) {
+          const scale = currentDistance / lastTouchDistance;
+          setTransform((prev) => ({
+            ...prev,
+            scale: Math.max(0.5, Math.min(3, prev.scale * scale)),
+          }));
+        }
+        setLastTouchDistance(currentDistance);
+      }
+    },
+    [isDragging, dragStart, lastTouchDistance]
+  );
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+    setLastTouchDistance(null);
+  }, []);
+
   // Center view initially
   useEffect(() => {
     if (svgRef.current && transform.scale === 1 && transform.x === 0) {
@@ -79,6 +145,7 @@ export function MapGrid({
         scale: 1,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, height]);
 
   // Create grave lookup by grid position
@@ -97,12 +164,16 @@ export function MapGrid({
     <div className="w-full h-full bg-gray-100 dark:bg-gray-900 overflow-hidden relative">
       <svg
         ref={svgRef}
-        className="w-full h-full cursor-move"
+        className="w-full h-full cursor-move touch-none"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         <g
           transform={`translate(${transform.x}, ${transform.y}) scale(${transform.scale})`}
