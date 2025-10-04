@@ -6,6 +6,11 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/favicon.ico',
+  '/icon-16.png',
+  '/icon-32.png',
+  '/icon-192.png',
+  '/icon-512.png',
 ];
 
 // Install event - cache app shell
