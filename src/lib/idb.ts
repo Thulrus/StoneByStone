@@ -3,6 +3,7 @@ import type {
   Cemetery,
   Grave,
   Landmark,
+  Road,
   ChangeLogEntry,
   CemeteryData,
 } from '../types/cemetery';
@@ -24,6 +25,10 @@ interface CemeteryDB extends DBSchema {
     key: string;
     value: Landmark;
   };
+  roads: {
+    key: string;
+    value: Road;
+  };
   change_log: {
     key: number;
     value: ChangeLogEntry & { id?: number };
@@ -40,7 +45,7 @@ export async function openDB(): Promise<IDBPDatabase<CemeteryDB>> {
     return dbInstance;
   }
 
-  dbInstance = await idbOpenDB<CemeteryDB>('cemetery-db', 2, {
+  dbInstance = await idbOpenDB<CemeteryDB>('cemetery-db', 3, {
     upgrade(db, oldVersion) {
       // Create object stores
       if (!db.objectStoreNames.contains('cemetery')) {
@@ -59,6 +64,11 @@ export async function openDB(): Promise<IDBPDatabase<CemeteryDB>> {
       // Add landmarks store in version 2
       if (oldVersion < 2 && !db.objectStoreNames.contains('landmarks')) {
         db.createObjectStore('landmarks', { keyPath: 'uuid' });
+      }
+
+      // Add roads store in version 3
+      if (oldVersion < 3 && !db.objectStoreNames.contains('roads')) {
+        db.createObjectStore('roads', { keyPath: 'uuid' });
       }
     },
   });
@@ -86,6 +96,7 @@ export async function loadCemetery(): Promise<CemeteryData | null> {
 
   const graves = await db.getAll('graves');
   const landmarks = await db.getAll('landmarks');
+  const roads = await db.getAll('roads');
   const change_log = await db.getAll('change_log');
 
   return {
@@ -93,6 +104,7 @@ export async function loadCemetery(): Promise<CemeteryData | null> {
     cemetery,
     graves,
     landmarks,
+    roads,
     change_log,
   };
 }
@@ -178,6 +190,42 @@ export async function deleteLandmark(uuid: string): Promise<void> {
 }
 
 /**
+ * Save or update a road
+ */
+export async function saveOrUpdateRoad(road: Road): Promise<void> {
+  const db = await openDB();
+  await db.put('roads', road);
+}
+
+/**
+ * Get all roads
+ */
+export async function getAllRoads(): Promise<Road[]> {
+  const db = await openDB();
+  return db.getAll('roads');
+}
+
+/**
+ * Get a single road by UUID
+ */
+export async function getRoad(uuid: string): Promise<Road | undefined> {
+  const db = await openDB();
+  return db.get('roads', uuid);
+}
+
+/**
+ * Delete a road (actually just marks as deleted)
+ */
+export async function deleteRoad(uuid: string): Promise<void> {
+  const db = await openDB();
+  const road = await db.get('roads', uuid);
+  if (road) {
+    road.properties.deleted = true;
+    await db.put('roads', road);
+  }
+}
+
+/**
  * Append a change log entry
  */
 export async function appendChangeLog(entry: ChangeLogEntry): Promise<void> {
@@ -212,6 +260,7 @@ export async function replaceAllData(data: CemeteryData): Promise<void> {
   await db.clear('cemetery');
   await db.clear('graves');
   await db.clear('landmarks');
+  await db.clear('roads');
   await db.clear('change_log');
 
   // Load new data
@@ -224,6 +273,12 @@ export async function replaceAllData(data: CemeteryData): Promise<void> {
   if (data.landmarks) {
     for (const landmark of data.landmarks) {
       await saveOrUpdateLandmark(landmark);
+    }
+  }
+
+  if (data.roads) {
+    for (const road of data.roads) {
+      await saveOrUpdateRoad(road);
     }
   }
 

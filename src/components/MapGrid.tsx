@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import type {
   Grave,
   Landmark,
+  Road,
   Cemetery,
   MarkerType,
   GridPosition,
@@ -11,9 +12,12 @@ interface MapGridProps {
   cemetery: Cemetery;
   graves: Grave[];
   landmarks?: Landmark[];
+  roads?: Road[];
+  selectedRoadCells?: GridPosition[]; // Cells being selected for road
   selectedGrave: Grave | null;
   onGraveClick: (grave: Grave) => void;
   onLandmarkClick?: (landmark: Landmark) => void;
+  onRoadClick?: (road: Road) => void;
   highlightedGraves?: Set<string>;
   addMode?: MarkerType | null; // New prop for click-to-add mode
   onCellClick?: (position: GridPosition) => void; // New callback for cell clicks
@@ -26,9 +30,12 @@ export function MapGrid({
   cemetery,
   graves,
   landmarks = [],
+  roads = [],
+  selectedRoadCells = [],
   selectedGrave,
   onGraveClick,
   onLandmarkClick,
+  onRoadClick,
   highlightedGraves,
   addMode = null,
   onCellClick,
@@ -456,6 +463,57 @@ export function MapGrid({
                       `${landmark.landmark_type} landmark`}
                   </title>
                 </g>
+              );
+            })}
+
+          {/* Roads/Paths - render as semi-transparent overlays */}
+          {roads
+            .filter((road) => !road.properties.deleted)
+            .map((road) => (
+              <g
+                key={road.uuid}
+                className="road-overlay cursor-pointer"
+                onClick={() => onRoadClick?.(road)}
+              >
+                {road.cells.map((cell, idx) => {
+                  const x = PADDING + cell.col * CELL_SIZE;
+                  const y = PADDING + cell.row * CELL_SIZE;
+
+                  return (
+                    <rect
+                      key={`road-${road.uuid}-${idx}`}
+                      x={x}
+                      y={y}
+                      width={CELL_SIZE}
+                      height={CELL_SIZE}
+                      fill="rgba(156, 163, 175, 0.4)" // Gray overlay
+                      stroke="rgba(107, 114, 128, 0.6)"
+                      strokeWidth="2"
+                    />
+                  );
+                })}
+                <title>{road.properties.name || 'Road/Path'}</title>
+              </g>
+            ))}
+
+          {/* Selected road cells during placement */}
+          {addMode === 'street' &&
+            selectedRoadCells.map((cell, idx) => {
+              const x = PADDING + cell.col * CELL_SIZE;
+              const y = PADDING + cell.row * CELL_SIZE;
+
+              return (
+                <rect
+                  key={`selected-road-cell-${idx}`}
+                  x={x}
+                  y={y}
+                  width={CELL_SIZE}
+                  height={CELL_SIZE}
+                  fill="rgba(59, 130, 246, 0.4)" // Blue overlay for selection
+                  stroke="rgba(37, 99, 235, 0.8)"
+                  strokeWidth="2"
+                  pointerEvents="none"
+                />
               );
             })}
         </g>

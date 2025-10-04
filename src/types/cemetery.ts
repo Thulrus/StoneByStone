@@ -79,6 +79,21 @@ export interface Landmark {
   properties: LandmarkProperties;
 }
 
+export interface RoadProperties {
+  name?: string;
+  description?: string;
+  notes?: string;
+  deleted?: boolean;
+  last_modified: string; // ISO8601
+  modified_by: string;
+}
+
+export interface Road {
+  uuid: string;
+  cells: GridPosition[]; // Array of grid positions that make up the road
+  properties: RoadProperties;
+}
+
 export type ChangeOperation = 'set' | 'delete';
 
 export interface ChangeLogEntry {
@@ -94,6 +109,7 @@ export interface CemeteryData {
   cemetery: Cemetery;
   graves: Grave[];
   landmarks?: Landmark[]; // Optional for backward compatibility
+  roads?: Road[]; // Optional for backward compatibility
   change_log: ChangeLogEntry[];
 }
 

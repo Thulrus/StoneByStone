@@ -3,6 +3,7 @@ import type {
   CemeteryData,
   Grave,
   Landmark,
+  Road,
   MarkerType,
   GridPosition,
 } from '../types/cemetery';
@@ -10,11 +11,13 @@ import { MapGrid } from '../components/MapGrid';
 import { GraveList } from '../components/GraveList';
 import { GraveEditor } from '../components/GraveEditor';
 import { LandmarkEditor } from '../components/LandmarkEditor';
+import { RoadEditor } from '../components/RoadEditor';
 import { MarkerToolbar } from '../components/MarkerToolbar';
 import {
   loadCemetery,
   saveOrUpdateGrave,
   saveOrUpdateLandmark,
+  saveOrUpdateRoad,
   appendChangeLog,
 } from '../lib/idb';
 import { getCurrentUser, getCurrentTimestamp } from '../lib/user';
@@ -26,6 +29,10 @@ export function CemeteryView() {
   const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(
     null
   );
+  const [selectedRoad, setSelectedRoad] = useState<Road | null>(null);
+  const [selectedRoadCells, setSelectedRoadCells] = useState<GridPosition[]>(
+    []
+  ); // Cells selected for current road
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [highlightedGraves, setHighlightedGraves] = useState<Set<string>>(
@@ -231,6 +238,90 @@ export function CemeteryView() {
     }
   };
 
+  const handleSaveRoad = async (road: Road) => {
+    try {
+      await saveOrUpdateRoad(road);
+
+      // Log the change
+      const changeEntry = {
+        op: 'set' as const,
+        uuid: road.uuid,
+        changes: road as unknown as Record<string, unknown>,
+        timestamp: getCurrentTimestamp(),
+        user: getCurrentUser(),
+      };
+      await appendChangeLog(changeEntry);
+
+      // Reload data
+      await loadData();
+      setIsEditing(false);
+      setIsCreating(false);
+      setSelectedRoad(null);
+      setSelectedRoadCells([]);
+    } catch (error) {
+      console.error('Failed to save road:', error);
+      alert('Failed to save road');
+    }
+  };
+
+  const handleDeleteRoad = async (uuid: string) => {
+    try {
+      const road = cemeteryData?.roads?.find((r) => r.uuid === uuid);
+      if (!road) return;
+
+      // Mark as deleted
+      const deletedRoad: Road = {
+        ...road,
+        properties: {
+          ...road.properties,
+          deleted: true,
+          last_modified: getCurrentTimestamp(),
+          modified_by: getCurrentUser(),
+        },
+      };
+
+      await saveOrUpdateRoad(deletedRoad);
+
+      // Log the deletion
+      const changeEntry = {
+        op: 'delete' as const,
+        uuid: road.uuid,
+        changes: { deleted: true },
+        timestamp: getCurrentTimestamp(),
+        user: getCurrentUser(),
+      };
+      await appendChangeLog(changeEntry);
+
+      // Reload data
+      await loadData();
+      setIsEditing(false);
+      setSelectedRoad(null);
+      setSelectedRoadCells([]);
+    } catch (error) {
+      console.error('Failed to delete road:', error);
+      alert('Failed to delete road');
+    }
+  };
+
+  const handleRoadClick = (road: Road) => {
+    setSelectedRoad(road);
+    setSelectedRoadCells(road.cells);
+    setSelectedGrave(null);
+    setSelectedLandmark(null);
+    setIsEditing(true);
+    setIsCreating(false);
+    setShowEditor(true);
+    setShowGraveList(false);
+    setActiveMarkerType(null);
+  };
+
+  const handleEditRoadCells = () => {
+    // Re-enter cell selection mode for the current road
+    setActiveMarkerType('street');
+    setIsEditing(false);
+    setShowEditor(false);
+  };
+
   const handleGraveClick = (grave: Grave) => {
     setSelectedGrave(grave);
     setSelectedLandmark(null);
@@ -302,12 +393,55 @@ export function CemeteryView() {
       setShowEditor(true);
       setShowGraveList(false);
       setActiveMarkerType(null); // Exit add mode after placing
+    } else if (activeMarkerType === 'street') {
+      // Toggle cell selection for road/path
+      const cellIndex = selectedRoadCells.findIndex(
+        (cell) => cell.row === position.row && cell.col === position.col
+      );
+
+      if (cellIndex >= 0) {
+        // Cell already selected - remove it
+        setSelectedRoadCells((prev) =>
+          prev.filter((_, idx) => idx !== cellIndex)
+        );
+      } else {
+        // Cell not selected - add it
+        setSelectedRoadCells((prev) => [...prev, position]);
+      }
     }
+  };
+
+  const handleFinishRoad = () => {
+    // Called when user clicks "Done" button to finalize road placement
+    if (selectedRoadCells.length === 0) {
+      alert('Please select at least one cell for the road/path');
+      return;
+    }
+
+    const newRoad: Road = {
+      uuid: crypto.randomUUID(),
+      cells: selectedRoadCells,
+      properties: {
+        last_modified: getCurrentTimestamp(),
+        modified_by: getCurrentUser(),
+      },
+    };
+
+    setSelectedRoad(newRoad);
+    setSelectedGrave(null);
+    setSelectedLandmark(null);
+    setIsCreating(true);
+    setIsEditing(false);
+    setShowEditor(true);
+    setShowGraveList(false);
+    setActiveMarkerType(null); // Exit add mode
   };
 
   const handleCancel = () => {
     setSelectedGrave(null);
     setSelectedLandmark(null);
+    setSelectedRoad(null);
+    setSelectedRoadCells([]);
     setIsEditing(false);
     setIsCreating(false);
     setShowEditor(false);
@@ -443,9 +577,12 @@ export function CemeteryView() {
             cemetery={cemeteryData.cemetery}
             graves={cemeteryData.graves}
             landmarks={cemeteryData.landmarks}
+            roads={cemeteryData.roads}
+            selectedRoadCells={selectedRoadCells}
             selectedGrave={selectedGrave}
             onGraveClick={handleGraveClick}
             onLandmarkClick={handleLandmarkClick}
+            onRoadClick={handleRoadClick}
             highlightedGraves={highlightedGraves}
             addMode={activeMarkerType}
             onCellClick={handleCellClick}
@@ -455,6 +592,7 @@ export function CemeteryView() {
           <MarkerToolbar
             activeMarkerType={activeMarkerType}
             onSelectMarkerType={setActiveMarkerType}
+            onFinishRoad={handleFinishRoad}
             disabled={!cemeteryData}
           />
         </div>
@@ -482,6 +620,16 @@ export function CemeteryView() {
                 onSave={handleSaveLandmark}
                 onDelete={handleDeleteLandmark}
                 onCancel={handleCancel}
+              />
+            )}
+            {selectedRoad && (
+              <RoadEditor
+                road={selectedRoad}
+                cemetery={cemeteryData.cemetery}
+                onSave={handleSaveRoad}
+                onDelete={handleDeleteRoad}
+                onCancel={handleCancel}
+                onEditCells={handleEditRoadCells}
               />
             )}
           </div>

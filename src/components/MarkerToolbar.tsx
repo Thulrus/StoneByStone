@@ -3,12 +3,14 @@ import type { MarkerType } from '../types/cemetery';
 interface MarkerToolbarProps {
   activeMarkerType: MarkerType | null;
   onSelectMarkerType: (type: MarkerType | null) => void;
+  onFinishRoad?: () => void; // Callback when "Done" is clicked for road
   disabled?: boolean;
 }
 
 export function MarkerToolbar({
   activeMarkerType,
   onSelectMarkerType,
+  onFinishRoad,
   disabled = false,
 }: MarkerToolbarProps) {
   const handleMarkerClick = (type: MarkerType) => {
@@ -52,6 +54,36 @@ export function MarkerToolbar({
       >
         <span className="text-xl mr-2">🌳</span>
         <span>Add Landmark</span>
+      </button>
+
+      {/* Road/Path Marker Button - changes to "Done" when active */}
+      <button
+        onClick={() =>
+          activeMarkerType === 'street' && onFinishRoad
+            ? onFinishRoad()
+            : handleMarkerClick('street')
+        }
+        disabled={disabled}
+        className={`px-4 py-3 rounded-lg shadow-lg text-sm font-medium transition-all ${
+          activeMarkerType === 'street'
+            ? 'bg-green-600 text-white border-2 border-green-700 ring-2 ring-green-300'
+            : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+        } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+        aria-label={
+          activeMarkerType === 'street'
+            ? 'Finish road/path'
+            : 'Add road or path'
+        }
+        title={
+          activeMarkerType === 'street'
+            ? 'Click to finish and save road/path'
+            : 'Click to add roads/paths'
+        }
+      >
+        <span className="text-xl mr-2">
+          {activeMarkerType === 'street' ? '✓' : '🛤️'}
+        </span>
+        <span>{activeMarkerType === 'street' ? 'Done' : 'Add Road/Path'}</span>
       </button>
 
       {/* Placeholder for future marker types - commented out for now */}
