@@ -13,7 +13,7 @@ interface RoadEditorProps {
 
 export function RoadEditor({
   road,
-  cemetery,
+  cemetery: _cemetery,
   onSave,
   onDelete,
   onCancel,
