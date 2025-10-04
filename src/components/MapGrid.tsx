@@ -13,6 +13,7 @@ interface MapGridProps {
   landmarks?: Landmark[];
   selectedGrave: Grave | null;
   onGraveClick: (grave: Grave) => void;
+  onLandmarkClick?: (landmark: Landmark) => void;
   highlightedGraves?: Set<string>;
   addMode?: MarkerType | null; // New prop for click-to-add mode
   onCellClick?: (position: GridPosition) => void; // New callback for cell clicks
@@ -27,6 +28,7 @@ export function MapGrid({
   landmarks = [],
   selectedGrave,
   onGraveClick,
+  onLandmarkClick,
   highlightedGraves,
   addMode = null,
   onCellClick,
@@ -436,14 +438,17 @@ export function MapGrid({
               const iconPath = `${import.meta.env.BASE_URL}${iconFile}`;
 
               return (
-                <g key={landmark.uuid} className="landmark-marker">
+                <g
+                  key={landmark.uuid}
+                  className="landmark-marker cursor-pointer"
+                  onClick={() => onLandmarkClick?.(landmark)}
+                >
                   <image
                     href={iconPath}
                     x={x + 5}
                     y={y + 5}
                     width={30}
                     height={30}
-                    className="cursor-pointer"
                   />
                   {/* Tooltip on hover */}
                   <title>

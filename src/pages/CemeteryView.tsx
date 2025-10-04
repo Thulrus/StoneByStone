@@ -193,13 +193,62 @@ export function CemeteryView() {
     }
   };
 
+  const handleDeleteLandmark = async (uuid: string) => {
+    try {
+      const landmark = cemeteryData?.landmarks?.find((l) => l.uuid === uuid);
+      if (!landmark) return;
+
+      // Mark as deleted
+      const deletedLandmark: Landmark = {
+        ...landmark,
+        properties: {
+          ...landmark.properties,
+          deleted: true,
+          last_modified: getCurrentTimestamp(),
+          modified_by: getCurrentUser(),
+        },
+      };
+
+      await saveOrUpdateLandmark(deletedLandmark);
+
+      // Log the deletion
+      const changeEntry = {
+        op: 'delete' as const,
+        uuid: landmark.uuid,
+        changes: { deleted: true },
+        timestamp: getCurrentTimestamp(),
+        user: getCurrentUser(),
+      };
+      await appendChangeLog(changeEntry);
+
+      // Reload data
+      await loadData();
+      setIsEditing(false);
+      setSelectedLandmark(null);
+    } catch (error) {
+      console.error('Failed to delete landmark:', error);
+      alert('Failed to delete landmark');
+    }
+  };
+
   const handleGraveClick = (grave: Grave) => {
     setSelectedGrave(grave);
+    setSelectedLandmark(null);
     setIsEditing(true);
     setIsCreating(false);
     setShowEditor(true);
     setShowGraveList(false); // Close list when selecting a grave
     setActiveMarkerType(null); // Exit add mode when clicking existing grave
+  };
+
+  const handleLandmarkClick = (landmark: Landmark) => {
+    setSelectedLandmark(landmark);
+    setSelectedGrave(null);
+    setIsEditing(true);
+    setIsCreating(false);
+    setShowEditor(true);
+    setShowGraveList(false); // Close list when selecting a landmark
+    setActiveMarkerType(null); // Exit add mode when clicking existing landmark
   };
 
   const handleNewGrave = () => {
@@ -396,6 +445,7 @@ export function CemeteryView() {
             landmarks={cemeteryData.landmarks}
             selectedGrave={selectedGrave}
             onGraveClick={handleGraveClick}
+            onLandmarkClick={handleLandmarkClick}
             highlightedGraves={highlightedGraves}
             addMode={activeMarkerType}
             onCellClick={handleCellClick}
@@ -430,6 +480,7 @@ export function CemeteryView() {
                 landmark={selectedLandmark}
                 cemetery={cemeteryData.cemetery}
                 onSave={handleSaveLandmark}
+                onDelete={handleDeleteLandmark}
                 onCancel={handleCancel}
               />
             )}
