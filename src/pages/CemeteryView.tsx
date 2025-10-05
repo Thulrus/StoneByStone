@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import type {
   CemeteryData,
   Grave,
@@ -9,16 +9,16 @@ import type {
 } from '../types/cemetery';
 import type { GridDirection } from '../lib/grid';
 import { MapGrid } from '../components/MapGrid';
+import type { MapGridRef } from '../components/MapGrid';
 import { GraveList } from '../components/GraveList';
 import { GraveEditor } from '../components/GraveEditor';
 import { LandmarkEditor } from '../components/LandmarkEditor';
 import { RoadEditor } from '../components/RoadEditor';
-import { MarkerToolbar } from '../components/MarkerToolbar';
+import { MapToolbar } from '../components/MapToolbar';
 import { CellSelectionModal } from '../components/CellSelectionModal';
 import { ElementInfoModal } from '../components/ElementInfoModal';
 import { UserIdentificationModal } from '../components/UserIdentificationModal';
 import { GridResizeModal } from '../components/GridResizeModal';
-import { GridEditToolbar } from '../components/GridEditToolbar';
 import { GridShapeConfirmModal } from '../components/GridShapeConfirmModal';
 import {
   loadCemetery,
@@ -119,6 +119,9 @@ export function CemeteryView() {
   const [originalValidCells, setOriginalValidCells] =
     useState<Set<string> | null>(null);
   const [showGridShapeConfirm, setShowGridShapeConfirm] = useState(false);
+
+  // Ref for MapGrid zoom controls
+  const mapGridRef = useRef<MapGridRef>(null);
 
   // Set initial sidebar visibility based on screen size
   useEffect(() => {
@@ -617,6 +620,19 @@ export function CemeteryView() {
     setOriginalValidCells(null);
   };
 
+  // Zoom control handlers
+  const handleZoomIn = () => {
+    mapGridRef.current?.zoomIn();
+  };
+
+  const handleZoomOut = () => {
+    mapGridRef.current?.zoomOut();
+  };
+
+  const handleResetZoom = () => {
+    mapGridRef.current?.resetView();
+  };
+
   const handleRoadClick = (road: Road) => {
     // Show info modal instead of jumping to edit
     setInfoElement(road);
@@ -1000,6 +1016,7 @@ export function CemeteryView() {
         {/* Map Grid */}
         <div className="flex-1 relative overflow-hidden">
           <MapGrid
+            ref={mapGridRef}
             cemetery={cemeteryData.cemetery}
             graves={cemeteryData.graves}
             landmarks={cemeteryData.landmarks}
@@ -1021,24 +1038,19 @@ export function CemeteryView() {
             onCellPaint={handleCellPaint}
           />
 
-          {/* Marker Toolbar - hide in grid edit mode */}
-          {!isGridEditMode && (
-            <MarkerToolbar
-              activeMarkerType={activeMarkerType}
-              onSelectMarkerType={handleMarkerTypeSelect}
-              onFinishRoad={handleFinishRoad}
-              disabled={!cemeteryData}
-            />
-          )}
-
-          {/* Grid Edit Toolbar */}
-          <GridEditToolbar
-            isActive={isGridEditMode}
-            onToggleActive={handleToggleGridEdit}
-            onReset={handleResetGridShape}
-            onFinalize={handleFinalizeGridShape}
-            onCancel={handleCancelGridEdit}
-            hasPendingChanges={
+          {/* Unified Map Toolbar */}
+          <MapToolbar
+            // Marker controls
+            activeMarkerType={activeMarkerType}
+            onSelectMarkerType={handleMarkerTypeSelect}
+            onFinishRoad={handleFinishRoad}
+            // Grid edit controls
+            isGridEditMode={isGridEditMode}
+            onToggleGridEdit={handleToggleGridEdit}
+            onResetGridShape={handleResetGridShape}
+            onFinalizeGridShape={handleFinalizeGridShape}
+            onCancelGridEdit={handleCancelGridEdit}
+            hasGridChanges={
               !!(
                 pendingValidCells &&
                 originalValidCells &&
@@ -1048,28 +1060,15 @@ export function CemeteryView() {
                   ))
               )
             }
+            // Grid resize control
+            onOpenGridResize={handleOpenGridResize}
+            // Zoom controls
+            onZoomIn={handleZoomIn}
+            onZoomOut={handleZoomOut}
+            onResetZoom={handleResetZoom}
+            // Disabled state
             disabled={!cemeteryData || isEditing || isCreating}
           />
-
-          {/* Grid Settings Button - hide when in edit mode */}
-          {!isGridEditMode && (
-            <div className="absolute bottom-4 right-4 z-[5]">
-              <button
-                onClick={handleOpenGridResize}
-                disabled={!cemeteryData || isEditing || isCreating}
-                className={`px-4 py-3 rounded-lg shadow-lg text-sm font-medium transition-all bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 ${
-                  !cemeteryData || isEditing || isCreating
-                    ? 'opacity-50 cursor-not-allowed'
-                    : ''
-                }`}
-                aria-label="Grid settings"
-                title="Resize cemetery grid"
-              >
-                <span className="text-xl mr-2">⊞</span>
-                <span>Resize Grid</span>
-              </button>
-            </div>
-          )}
         </div>
 
         {/* Editor Panel */}

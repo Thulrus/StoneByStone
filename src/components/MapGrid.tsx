@@ -4,6 +4,8 @@ import React, {
   useMemo,
   useRef,
   useEffect,
+  useImperativeHandle,
+  forwardRef,
 } from 'react';
 import type {
   Grave,
@@ -13,6 +15,12 @@ import type {
   MarkerType,
   GridPosition,
 } from '../types/cemetery';
+
+export interface MapGridRef {
+  zoomIn: () => void;
+  zoomOut: () => void;
+  resetView: () => void;
+}
 
 interface MapGridProps {
   cemetery: Cemetery;
@@ -41,6 +49,10 @@ interface MapGridProps {
   gridEditMode?: boolean;
   pendingValidCells?: Set<string>;
   onCellPaint?: (position: GridPosition) => void;
+  // Zoom control callbacks
+  zoomIn?: () => void;
+  zoomOut?: () => void;
+  resetView?: () => void;
 }
 
 const CELL_SIZE = 40;
@@ -140,27 +152,30 @@ const GridEditCell = React.memo(
 
 GridEditCell.displayName = 'GridEditCell';
 
-export function MapGrid({
-  cemetery,
-  graves,
-  landmarks = [],
-  roads = [],
-  selectedRoadCells = [],
-  selectedGrave,
-  tempGrave = null,
-  tempLandmark = null,
-  listHighlightedGrave = null,
-  onGraveClick,
-  onLandmarkClick,
-  onRoadClick,
-  highlightedGraves,
-  addMode = null,
-  onCellClick,
-  onMultipleElementsClick,
-  gridEditMode = false,
-  pendingValidCells,
-  onCellPaint,
-}: MapGridProps) {
+export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
+  {
+    cemetery,
+    graves,
+    landmarks = [],
+    roads = [],
+    selectedRoadCells = [],
+    selectedGrave,
+    tempGrave = null,
+    tempLandmark = null,
+    listHighlightedGrave = null,
+    onGraveClick,
+    onLandmarkClick,
+    onRoadClick,
+    highlightedGraves,
+    addMode = null,
+    onCellClick,
+    onMultipleElementsClick,
+    gridEditMode = false,
+    pendingValidCells,
+    onCellPaint,
+  },
+  ref
+) {
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -180,6 +195,19 @@ export function MapGrid({
 
   const width = cemetery.grid.cols * CELL_SIZE + PADDING * 2;
   const height = cemetery.grid.rows * CELL_SIZE + PADDING * 2;
+
+  // Expose zoom methods to parent via ref
+  useImperativeHandle(ref, () => ({
+    zoomIn: () => {
+      setTransform((prev) => ({ ...prev, scale: prev.scale * 1.2 }));
+    },
+    zoomOut: () => {
+      setTransform((prev) => ({ ...prev, scale: prev.scale * 0.8 }));
+    },
+    resetView: () => {
+      setTransform({ x: 0, y: 0, scale: 1 });
+    },
+  }));
 
   // Memoized handler for grid edit cell painting
   const handleGridEditCellClick = useCallback(
@@ -1103,32 +1131,6 @@ export function MapGrid({
             })}
         </g>
       </svg>
-
-      {/* Controls */}
-      <div className="absolute bottom-4 right-4 flex flex-col gap-2">
-        <button
-          onClick={() =>
-            setTransform((prev) => ({ ...prev, scale: prev.scale * 1.2 }))
-          }
-          className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow text-sm"
-        >
-          +
-        </button>
-        <button
-          onClick={() =>
-            setTransform((prev) => ({ ...prev, scale: prev.scale * 0.8 }))
-          }
-          className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow text-sm"
-        >
-          −
-        </button>
-        <button
-          onClick={() => setTransform({ x: 0, y: 0, scale: 1 })}
-          className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow text-sm"
-        >
-          Reset
-        </button>
-      </div>
     </div>
   );
-}
+});
