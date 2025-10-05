@@ -22,6 +22,7 @@ export interface CemeteryGrid {
   rows: number;
   cols: number;
   cellSize?: number; // in pixels for rendering
+  validCells?: Set<string>; // For non-rectangular layouts: "row,col" format. If undefined, all cells are valid.
 }
 
 export interface Cemetery {

@@ -94,6 +94,18 @@ export async function loadCemetery(): Promise<CemeteryData | null> {
   const cemetery = await db.get('cemetery', 'current');
   if (!cemetery) return null;
 
+  // Deserialize validCells from array to Set if needed
+  if (cemetery.grid.validCells) {
+    if (Array.isArray(cemetery.grid.validCells)) {
+      cemetery.grid.validCells = new Set(cemetery.grid.validCells);
+    } else if (!(cemetery.grid.validCells instanceof Set)) {
+      // In case it was stored as an object, try to convert
+      cemetery.grid.validCells = new Set(
+        Object.values(cemetery.grid.validCells)
+      );
+    }
+  }
+
   const graves = await db.getAll('graves');
   const landmarks = await db.getAll('landmarks');
   const roads = await db.getAll('roads');
@@ -114,7 +126,18 @@ export async function loadCemetery(): Promise<CemeteryData | null> {
  */
 export async function saveCemeteryMeta(cemetery: Cemetery): Promise<void> {
   const db = await openDB();
-  await db.put('cemetery', { ...cemetery, id: 'current' });
+  // Serialize validCells Set to array for IndexedDB storage
+  const cemeteryToSave = {
+    ...cemetery,
+    id: 'current',
+    grid: {
+      ...cemetery.grid,
+      validCells: cemetery.grid.validCells
+        ? Array.from(cemetery.grid.validCells)
+        : undefined,
+    },
+  } as unknown as Cemetery; // Type assertion since we're serializing
+  await db.put('cemetery', cemeteryToSave);
 }
 
 /**
@@ -306,4 +329,55 @@ export async function hasData(): Promise<boolean> {
   const db = await openDB();
   const cemetery = await db.get('cemetery', 'current');
   return !!cemetery;
+}
+
+/**
+ * Batch update cemetery and all elements (for grid resize/reshape operations)
+ */
+export async function batchUpdateCemeteryAndElements(
+  cemetery: Cemetery,
+  graves: Grave[],
+  landmarks: Landmark[],
+  roads: Road[]
+): Promise<void> {
+  const db = await openDB();
+  const tx = db.transaction(
+    ['cemetery', 'graves', 'landmarks', 'roads'],
+    'readwrite'
+  );
+
+  // Serialize validCells Set to array for IndexedDB storage
+  const cemeteryToSave = {
+    ...cemetery,
+    id: 'current',
+    grid: {
+      ...cemetery.grid,
+      validCells: cemetery.grid.validCells
+        ? Array.from(cemetery.grid.validCells)
+        : undefined,
+    },
+  } as unknown as Cemetery; // Type assertion since we're serializing
+
+  // Update cemetery
+  await tx.objectStore('cemetery').put(cemeteryToSave);
+
+  // Update all graves
+  const gravesStore = tx.objectStore('graves');
+  for (const grave of graves) {
+    await gravesStore.put(grave);
+  }
+
+  // Update all landmarks
+  const landmarksStore = tx.objectStore('landmarks');
+  for (const landmark of landmarks) {
+    await landmarksStore.put(landmark);
+  }
+
+  // Update all roads
+  const roadsStore = tx.objectStore('roads');
+  for (const road of roads) {
+    await roadsStore.put(road);
+  }
+
+  await tx.done;
 }

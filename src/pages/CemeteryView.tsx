@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type {
   CemeteryData,
   Grave,
@@ -7,6 +7,7 @@ import type {
   MarkerType,
   GridPosition,
 } from '../types/cemetery';
+import type { GridDirection } from '../lib/grid';
 import { MapGrid } from '../components/MapGrid';
 import { GraveList } from '../components/GraveList';
 import { GraveEditor } from '../components/GraveEditor';
@@ -16,12 +17,16 @@ import { MarkerToolbar } from '../components/MarkerToolbar';
 import { CellSelectionModal } from '../components/CellSelectionModal';
 import { ElementInfoModal } from '../components/ElementInfoModal';
 import { UserIdentificationModal } from '../components/UserIdentificationModal';
+import { GridResizeModal } from '../components/GridResizeModal';
+import { GridEditToolbar } from '../components/GridEditToolbar';
+import { GridShapeConfirmModal } from '../components/GridShapeConfirmModal';
 import {
   loadCemetery,
   saveOrUpdateGrave,
   saveOrUpdateLandmark,
   saveOrUpdateRoad,
   appendChangeLog,
+  batchUpdateCemeteryAndElements,
 } from '../lib/idb';
 import {
   getCurrentUserOrAnonymous,
@@ -30,6 +35,12 @@ import {
   setCurrentUser,
 } from '../lib/user';
 import { detectSpatialConflicts } from '../lib/merge';
+import {
+  resizeGrid,
+  updateCemeteryShape,
+  getAllValidCells,
+  isCellValid,
+} from '../lib/grid';
 
 export function CemeteryView() {
   const [cemeteryData, setCemeteryData] = useState<CemeteryData | null>(null);
@@ -89,6 +100,25 @@ export function CemeteryView() {
   const [pendingSaveAction, setPendingSaveAction] = useState<
     (() => Promise<void>) | null
   >(null);
+
+  // State for grid resize modal
+  const [showGridResizeModal, setShowGridResizeModal] = useState(false);
+  const [gridResizeConflicts, setGridResizeConflicts] = useState<
+    Array<{
+      type: 'grave' | 'landmark' | 'road';
+      uuid: string;
+      name: string;
+      position: GridPosition;
+    }>
+  >([]);
+
+  // State for grid shape editing
+  const [isGridEditMode, setIsGridEditMode] = useState(false);
+  const [pendingValidCells, setPendingValidCells] =
+    useState<Set<string> | null>(null);
+  const [originalValidCells, setOriginalValidCells] =
+    useState<Set<string> | null>(null);
+  const [showGridShapeConfirm, setShowGridShapeConfirm] = useState(false);
 
   // Set initial sidebar visibility based on screen size
   useEffect(() => {
@@ -393,6 +423,200 @@ export function CemeteryView() {
     });
   };
 
+  // Grid resize functionality
+  const handleOpenGridResize = () => {
+    setShowGridResizeModal(true);
+    setGridResizeConflicts([]);
+  };
+
+  const handleGridResize = async (direction: GridDirection, count: number) => {
+    if (!cemeteryData) return;
+
+    await withUserIdentification(async () => {
+      try {
+        // Perform the resize operation
+        const result = resizeGrid({
+          cemetery: cemeteryData.cemetery,
+          graves: cemeteryData.graves,
+          landmarks: cemeteryData.landmarks || [],
+          roads: cemeteryData.roads || [],
+          direction,
+          count,
+          userId: getCurrentUserOrAnonymous(),
+        });
+
+        // If there are conflicts, show them and don't proceed
+        if (result.conflicts.length > 0) {
+          setGridResizeConflicts(result.conflicts);
+          return; // Don't close modal, let user see conflicts
+        }
+
+        // Save all changes in a single transaction
+        await batchUpdateCemeteryAndElements(
+          result.cemetery,
+          result.graves,
+          result.landmarks,
+          result.roads
+        );
+
+        // Log the grid resize operation
+        const changeEntry = {
+          op: 'set' as const,
+          uuid: result.cemetery.id,
+          changes: {
+            operation: 'grid_resize',
+            direction,
+            count,
+            oldDimensions: {
+              rows: cemeteryData.cemetery.grid.rows,
+              cols: cemeteryData.cemetery.grid.cols,
+            },
+            newDimensions: {
+              rows: result.cemetery.grid.rows,
+              cols: result.cemetery.grid.cols,
+            },
+          },
+          timestamp: getCurrentTimestamp(),
+          user: getCurrentUserOrAnonymous(),
+        };
+        await appendChangeLog(changeEntry);
+
+        // Reload data to show updated cemetery
+        await loadData();
+        setShowGridResizeModal(false);
+        setGridResizeConflicts([]);
+      } catch (error) {
+        console.error('Failed to resize grid:', error);
+        alert(
+          'Failed to resize grid: ' +
+            (error instanceof Error ? error.message : 'Unknown error')
+        );
+      }
+    });
+  };
+
+  const handleCancelGridResize = () => {
+    setShowGridResizeModal(false);
+    setGridResizeConflicts([]);
+  };
+
+  // Grid shape editing handlers
+  const handleToggleGridEdit = () => {
+    if (!cemeteryData) return;
+
+    if (isGridEditMode) {
+      // Exiting grid edit mode - reset everything
+      setIsGridEditMode(false);
+      setPendingValidCells(null);
+      setOriginalValidCells(null);
+    } else {
+      // Entering grid edit mode - initialize
+      const currentValidCells =
+        cemeteryData.cemetery.grid.validCells ||
+        getAllValidCells(cemeteryData.cemetery);
+      setOriginalValidCells(new Set(currentValidCells));
+      setPendingValidCells(new Set(currentValidCells));
+      setIsGridEditMode(true);
+    }
+  };
+
+  const handleCellPaint = useCallback((position: GridPosition) => {
+    const cellKey = `${position.row},${position.col}`;
+
+    // Use functional update for better performance
+    setPendingValidCells((prevCells) => {
+      if (!prevCells) return prevCells;
+
+      const newPendingCells = new Set(prevCells);
+
+      // Toggle the cell
+      if (newPendingCells.has(cellKey)) {
+        newPendingCells.delete(cellKey);
+      } else {
+        newPendingCells.add(cellKey);
+      }
+
+      return newPendingCells;
+    });
+  }, []); // Empty dependency array since we use functional update
+
+  const handleResetGridShape = () => {
+    if (originalValidCells) {
+      setPendingValidCells(new Set(originalValidCells));
+    }
+  };
+
+  const handleFinalizeGridShape = () => {
+    if (!pendingValidCells || !originalValidCells) return;
+
+    // Show confirmation modal
+    setShowGridShapeConfirm(true);
+  };
+
+  const handleConfirmGridShape = async () => {
+    if (!cemeteryData || !pendingValidCells) return;
+
+    await withUserIdentification(async () => {
+      try {
+        // Calculate changes
+        const result = updateCemeteryShape(
+          cemeteryData.cemetery,
+          cemeteryData.graves,
+          cemeteryData.landmarks || [],
+          cemeteryData.roads || [],
+          pendingValidCells
+        );
+
+        // Save the updated cemetery
+        await batchUpdateCemeteryAndElements(
+          result.cemetery,
+          cemeteryData.graves,
+          cemeteryData.landmarks || [],
+          cemeteryData.roads || []
+        );
+
+        // Log the shape change
+        const changeEntry = {
+          op: 'set' as const,
+          uuid: result.cemetery.id,
+          changes: {
+            operation: 'grid_shape_edit',
+            validCells: Array.from(pendingValidCells),
+            invalidElements: result.invalidElements.length,
+          },
+          timestamp: getCurrentTimestamp(),
+          user: getCurrentUserOrAnonymous(),
+        };
+        await appendChangeLog(changeEntry);
+
+        // Reload data
+        await loadData();
+
+        // Close modals and reset state
+        setShowGridShapeConfirm(false);
+        setIsGridEditMode(false);
+        setPendingValidCells(null);
+        setOriginalValidCells(null);
+      } catch (error) {
+        console.error('Failed to update grid shape:', error);
+        alert(
+          'Failed to update grid shape: ' +
+            (error instanceof Error ? error.message : 'Unknown error')
+        );
+      }
+    });
+  };
+
+  const handleCancelGridShapeConfirm = () => {
+    setShowGridShapeConfirm(false);
+  };
+
+  const handleCancelGridEdit = () => {
+    setIsGridEditMode(false);
+    setPendingValidCells(null);
+    setOriginalValidCells(null);
+  };
+
   const handleRoadClick = (road: Road) => {
     // Show info modal instead of jumping to edit
     setInfoElement(road);
@@ -514,6 +738,13 @@ export function CemeteryView() {
 
   const handleCellClick = (position: GridPosition) => {
     if (!activeMarkerType || !cemeteryData) return;
+
+    // Check if the cell is valid (part of the cemetery)
+    if (!isCellValid(cemeteryData.cemetery, position)) {
+      // Optionally show a message to the user
+      console.warn('Cannot place element on invalid cell:', position);
+      return;
+    }
 
     if (activeMarkerType === 'grave') {
       // Create a new grave at the clicked position
@@ -785,15 +1016,60 @@ export function CemeteryView() {
             highlightedGraves={highlightedGraves}
             addMode={activeMarkerType}
             onCellClick={handleCellClick}
+            gridEditMode={isGridEditMode}
+            pendingValidCells={pendingValidCells || undefined}
+            onCellPaint={handleCellPaint}
           />
 
-          {/* Marker Toolbar */}
-          <MarkerToolbar
-            activeMarkerType={activeMarkerType}
-            onSelectMarkerType={handleMarkerTypeSelect}
-            onFinishRoad={handleFinishRoad}
-            disabled={!cemeteryData}
+          {/* Marker Toolbar - hide in grid edit mode */}
+          {!isGridEditMode && (
+            <MarkerToolbar
+              activeMarkerType={activeMarkerType}
+              onSelectMarkerType={handleMarkerTypeSelect}
+              onFinishRoad={handleFinishRoad}
+              disabled={!cemeteryData}
+            />
+          )}
+
+          {/* Grid Edit Toolbar */}
+          <GridEditToolbar
+            isActive={isGridEditMode}
+            onToggleActive={handleToggleGridEdit}
+            onReset={handleResetGridShape}
+            onFinalize={handleFinalizeGridShape}
+            onCancel={handleCancelGridEdit}
+            hasPendingChanges={
+              !!(
+                pendingValidCells &&
+                originalValidCells &&
+                (pendingValidCells.size !== originalValidCells.size ||
+                  Array.from(pendingValidCells).some(
+                    (cell) => !originalValidCells.has(cell)
+                  ))
+              )
+            }
+            disabled={!cemeteryData || isEditing || isCreating}
           />
+
+          {/* Grid Settings Button - hide when in edit mode */}
+          {!isGridEditMode && (
+            <div className="absolute bottom-4 right-4 z-[5]">
+              <button
+                onClick={handleOpenGridResize}
+                disabled={!cemeteryData || isEditing || isCreating}
+                className={`px-4 py-3 rounded-lg shadow-lg text-sm font-medium transition-all bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 ${
+                  !cemeteryData || isEditing || isCreating
+                    ? 'opacity-50 cursor-not-allowed'
+                    : ''
+                }`}
+                aria-label="Grid settings"
+                title="Resize cemetery grid"
+              >
+                <span className="text-xl mr-2">⊞</span>
+                <span>Resize Grid</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Editor Panel */}
@@ -901,6 +1177,47 @@ export function CemeteryView() {
         onSubmit={handleUserIdentification}
         onCancel={handleUserIdCancel}
       />
+
+      {/* Grid Resize Modal */}
+      {showGridResizeModal && cemeteryData && (
+        <GridResizeModal
+          cemetery={cemeteryData.cemetery}
+          onResize={handleGridResize}
+          onCancel={handleCancelGridResize}
+          conflicts={gridResizeConflicts}
+        />
+      )}
+
+      {/* Grid Shape Confirmation Modal */}
+      {showGridShapeConfirm &&
+        cemeteryData &&
+        pendingValidCells &&
+        originalValidCells && (
+          <GridShapeConfirmModal
+            isOpen={showGridShapeConfirm}
+            onConfirm={handleConfirmGridShape}
+            onCancel={handleCancelGridShapeConfirm}
+            invalidElements={
+              updateCemeteryShape(
+                cemeteryData.cemetery,
+                cemeteryData.graves,
+                cemeteryData.landmarks || [],
+                cemeteryData.roads || [],
+                pendingValidCells
+              ).invalidElements
+            }
+            addedCellsCount={
+              Array.from(pendingValidCells).filter(
+                (cell) => !originalValidCells.has(cell)
+              ).length
+            }
+            removedCellsCount={
+              Array.from(originalValidCells).filter(
+                (cell) => !pendingValidCells.has(cell)
+              ).length
+            }
+          />
+        )}
     </div>
   );
 }

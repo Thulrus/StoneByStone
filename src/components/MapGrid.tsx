@@ -37,10 +37,108 @@ interface MapGridProps {
     }>,
     position: GridPosition
   ) => void; // New callback for multiple elements at same position
+  // Grid shape editing props
+  gridEditMode?: boolean;
+  pendingValidCells?: Set<string>;
+  onCellPaint?: (position: GridPosition) => void;
 }
 
 const CELL_SIZE = 40;
 const PADDING = 20;
+
+// Memoized cell component for grid edit mode to prevent unnecessary re-renders
+const GridEditCell = React.memo(
+  ({
+    row,
+    col,
+    isValid,
+    isHovered,
+    onMouseEnter,
+    onMouseLeave,
+    onClick,
+  }: {
+    row: number;
+    col: number;
+    isValid: boolean;
+    isHovered: boolean;
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
+    onClick: (e: React.MouseEvent) => void;
+  }) => {
+    const x = PADDING + col * CELL_SIZE;
+    const y = PADDING + row * CELL_SIZE;
+
+    // Determine fill color based on validity and hover state
+    let fillColor = 'transparent';
+    let strokeColor = 'rgba(156, 163, 175, 0.3)';
+    let strokeWidth = '1';
+
+    if (isValid) {
+      // Valid cell - green tint
+      fillColor = isHovered
+        ? 'rgba(34, 197, 94, 0.3)'
+        : 'rgba(34, 197, 94, 0.1)';
+      strokeColor = isHovered
+        ? 'rgba(34, 197, 94, 0.8)'
+        : 'rgba(34, 197, 94, 0.4)';
+    } else {
+      // Invalid cell - red tint with hatching pattern
+      fillColor = isHovered
+        ? 'rgba(239, 68, 68, 0.3)'
+        : 'rgba(239, 68, 68, 0.15)';
+      strokeColor = isHovered
+        ? 'rgba(239, 68, 68, 0.8)'
+        : 'rgba(239, 68, 68, 0.4)';
+    }
+
+    if (isHovered) {
+      strokeWidth = '2';
+    }
+
+    return (
+      <g key={`edit-cell-${row}-${col}`}>
+        <rect
+          x={x}
+          y={y}
+          width={CELL_SIZE}
+          height={CELL_SIZE}
+          fill={fillColor}
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
+          className="cursor-pointer"
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          onClick={onClick}
+        />
+        {/* Hatching pattern for invalid cells */}
+        {!isValid && (
+          <g>
+            <line
+              x1={x}
+              y1={y}
+              x2={x + CELL_SIZE}
+              y2={y + CELL_SIZE}
+              stroke="rgba(239, 68, 68, 0.3)"
+              strokeWidth="1"
+              pointerEvents="none"
+            />
+            <line
+              x1={x + CELL_SIZE}
+              y1={y}
+              x2={x}
+              y2={y + CELL_SIZE}
+              stroke="rgba(239, 68, 68, 0.3)"
+              strokeWidth="1"
+              pointerEvents="none"
+            />
+          </g>
+        )}
+      </g>
+    );
+  }
+);
+
+GridEditCell.displayName = 'GridEditCell';
 
 export function MapGrid({
   cemetery,
@@ -59,6 +157,9 @@ export function MapGrid({
   addMode = null,
   onCellClick,
   onMultipleElementsClick,
+  gridEditMode = false,
+  pendingValidCells,
+  onCellPaint,
 }: MapGridProps) {
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
   const [isDragging, setIsDragging] = useState(false);
@@ -79,6 +180,25 @@ export function MapGrid({
 
   const width = cemetery.grid.cols * CELL_SIZE + PADDING * 2;
   const height = cemetery.grid.rows * CELL_SIZE + PADDING * 2;
+
+  // Memoized handler for grid edit cell painting
+  const handleGridEditCellClick = useCallback(
+    (row: number, col: number, e: React.MouseEvent) => {
+      e.stopPropagation();
+      // Only toggle if we didn't drag (mouse didn't move significantly)
+      if (mouseDownPos) {
+        const dragDistance = Math.sqrt(
+          Math.pow(e.clientX - mouseDownPos.x, 2) +
+            Math.pow(e.clientY - mouseDownPos.y, 2)
+        );
+        // If mouse moved less than 5 pixels, treat it as a click
+        if (dragDistance < 5) {
+          onCellPaint?.({ row, col });
+        }
+      }
+    },
+    [mouseDownPos, onCellPaint]
+  );
 
   // Handle clicking on a grid cell (for add mode)
   const handleCellClick = useCallback(
@@ -494,6 +614,35 @@ export function MapGrid({
             ))}
           </g>
 
+          {/* Invalid cells overlay (show in normal view when cemetery has custom shape) */}
+          {!gridEditMode && cemetery.grid.validCells && (
+            <g className="invalid-cells-overlay">
+              {Array.from({ length: cemetery.grid.rows }).map((_, row) =>
+                Array.from({ length: cemetery.grid.cols }).map((_, col) => {
+                  const cellKey = `${row},${col}`;
+                  const isValid = cemetery.grid.validCells!.has(cellKey);
+
+                  if (isValid) return null; // Don't render valid cells
+
+                  const x = PADDING + col * CELL_SIZE;
+                  const y = PADDING + row * CELL_SIZE;
+
+                  return (
+                    <rect
+                      key={`invalid-cell-${row}-${col}`}
+                      x={x}
+                      y={y}
+                      width={CELL_SIZE}
+                      height={CELL_SIZE}
+                      fill="rgba(0, 0, 0, 0.8)"
+                      pointerEvents="none"
+                    />
+                  );
+                })
+              )}
+            </g>
+          )}
+
           {/* Row/Col labels */}
           <g className="labels text-xs fill-gray-600 dark:fill-gray-400">
             {Array.from({ length: cemetery.grid.rows }).map((_, i) => (
@@ -553,6 +702,39 @@ export function MapGrid({
                       onMouseEnter={() => setHoveredCell({ row, col })}
                       onMouseLeave={() => setHoveredCell(null)}
                       onClick={(e) => handleCellClick(row, col, e)}
+                    />
+                  );
+                })
+              )}
+            </g>
+          )}
+
+          {/* Grid shape editing overlay */}
+          {gridEditMode && (
+            <g className="grid-edit-overlay">
+              {Array.from({ length: cemetery.grid.rows }).map((_, row) =>
+                Array.from({ length: cemetery.grid.cols }).map((_, col) => {
+                  const cellKey = `${row},${col}`;
+                  const isHovered =
+                    hoveredCell?.row === row && hoveredCell?.col === col;
+
+                  // Check if cell is valid in pending state
+                  const isValidInPending = pendingValidCells
+                    ? pendingValidCells.has(cellKey)
+                    : cemetery.grid.validCells
+                      ? cemetery.grid.validCells.has(cellKey)
+                      : true; // Default to valid if no validCells set
+
+                  return (
+                    <GridEditCell
+                      key={`edit-cell-${row}-${col}`}
+                      row={row}
+                      col={col}
+                      isValid={isValidInPending}
+                      isHovered={isHovered}
+                      onMouseEnter={() => setHoveredCell({ row, col })}
+                      onMouseLeave={() => setHoveredCell(null)}
+                      onClick={(e) => handleGridEditCellClick(row, col, e)}
                     />
                   );
                 })
