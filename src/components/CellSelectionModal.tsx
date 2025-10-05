@@ -26,7 +26,10 @@ export function CellSelectionModal({
     switch (element.type) {
       case 'grave': {
         const grave = element.data as Grave;
-        return grave.properties.name || grave.plot || 'Unnamed Grave';
+        return (
+          grave.properties.name ||
+          `Grave at (${grave.grid.row}, ${grave.grid.col})`
+        );
       }
       case 'landmark': {
         const landmark = element.data as Landmark;

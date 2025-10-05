@@ -399,7 +399,6 @@ export function CemeteryView() {
       // Create a new grave at the clicked position
       const newGrave: Grave = {
         uuid: crypto.randomUUID(),
-        plot: `${position.row}-${position.col}`, // Default plot ID
         grid: position,
         properties: {
           last_modified: getCurrentTimestamp(),
@@ -714,7 +713,8 @@ export function CemeteryView() {
                   <div className="space-y-2">
                     {graves.map((grave) => (
                       <div key={grave.uuid} className="text-sm">
-                        • {grave.properties.name || 'Unnamed'} ({grave.plot})
+                        • {grave.properties.name || 'Unnamed'} at (
+                        {grave.grid.row}, {grave.grid.col})
                       </div>
                     ))}
                   </div>

@@ -26,12 +26,9 @@ export function GraveList({
       if (g.properties.deleted) return false;
 
       const name = g.properties.name?.toLowerCase() || '';
-      const plot = g.plot.toLowerCase();
       const gridStr = `${g.grid.row},${g.grid.col}`;
 
-      return (
-        name.includes(term) || plot.includes(term) || gridStr.includes(term)
-      );
+      return name.includes(term) || gridStr.includes(term);
     });
 
     return results;
@@ -51,7 +48,7 @@ export function GraveList({
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <input
           type="text"
-          placeholder="Search by name, plot, or grid..."
+          placeholder="Search by name or grid..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
@@ -79,9 +76,6 @@ export function GraveList({
                   {grave.properties.name || (
                     <span className="italic text-gray-400">No name</span>
                   )}
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
-                  Plot: {grave.plot}
                 </div>
                 <div className="text-xs text-gray-500 dark:text-gray-500">
                   Grid: ({grave.grid.row}, {grave.grid.col})

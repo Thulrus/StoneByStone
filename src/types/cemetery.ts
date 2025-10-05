@@ -56,7 +56,7 @@ export interface GraveProperties {
 
 export interface Grave {
   uuid: string;
-  plot: string;
+  plot?: string; // Deprecated: Auto-generated from grid position if not provided
   grid: GridPosition;
   geometry?: GeoPoint;
   properties: GraveProperties;

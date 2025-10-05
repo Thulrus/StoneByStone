@@ -20,7 +20,6 @@ export function GraveEditor({
 }: GraveEditorProps) {
   const [formData, setFormData] = useState<Partial<Grave>>({
     uuid: '',
-    plot: '',
     grid: { row: 0, col: 0 },
     properties: {
       name: '',
@@ -39,7 +38,6 @@ export function GraveEditor({
     } else {
       setFormData({
         uuid: generateUUID(),
-        plot: '',
         grid: { row: 0, col: 0 },
         properties: {
           name: '',
@@ -57,15 +55,11 @@ export function GraveEditor({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.plot) {
-      alert('Plot is required');
-      return;
-    }
+    const grid = formData.grid || { row: 0, col: 0 };
 
     const graveData: Grave = {
       uuid: formData.uuid || generateUUID(),
-      plot: formData.plot,
-      grid: formData.grid || { row: 0, col: 0 },
+      grid,
       properties: {
         ...formData.properties!,
         last_modified: getCurrentTimestamp(),
@@ -89,20 +83,6 @@ export function GraveEditor({
       </h3>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Plot * <span className="text-xs text-gray-500">(required)</span>
-          </label>
-          <input
-            type="text"
-            value={formData.plot || ''}
-            onChange={(e) => setFormData({ ...formData, plot: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            placeholder="e.g., A1, Section B-12"
-            required
-          />
-        </div>
-
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">

@@ -644,7 +644,10 @@ export function MapGrid({
                     pointerEvents="none"
                   />
                   {/* Tooltip on hover */}
-                  <title>{grave.properties.name || grave.plot}</title>
+                  <title>
+                    {grave.properties.name ||
+                      `Grave at (${grave.grid.row}, ${grave.grid.col})`}
+                  </title>
                 </g>
               );
             });

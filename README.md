@@ -67,7 +67,7 @@ This is a **passion project** built solo using AI-assisted development ("vibe-co
 3. **Add graves**:
    - Click cells on the map grid, or
    - Use the "Add New Grave" button in the grave list
-   - Only plot number and grid position are required—all other fields are optional
+   - Only grid position is required—all other fields (name, dates, etc.) are optional
 
 4. **Export your data**:
    - Go to Import/Export page
@@ -81,7 +81,6 @@ Cemetery data is stored as JSON with a flexible schema. Here's a minimal grave r
 ```json
 {
   "uuid": "123e4567-e89b-12d3-a456-426614174000",
-  "plot": "A-1",
   "grid": { "row": 0, "col": 0 },
   "properties": {
     "last_modified": "2024-10-04T12:00:00.000Z",

@@ -37,6 +37,7 @@ export async function readFileAsJSON<T = unknown>(file: File): Promise<T> {
 
 /**
  * Import and validate a cemetery data file
+ * Accepts plot field for backwards compatibility but doesn't require it
  */
 export async function importCemeteryFile(
   file: File
@@ -55,8 +56,18 @@ export async function importCemeteryFile(
       };
     }
 
+    // Normalize data: strip deprecated plot field from graves
+    const normalizedData: CemeteryData = {
+      ...data,
+      graves: data.graves.map((grave) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { plot, ...graveWithoutPlot } = grave;
+        return graveWithoutPlot;
+      }),
+    };
+
     return {
-      data,
+      data: normalizedData,
       errors: null,
     };
   } catch (error) {
@@ -86,10 +97,21 @@ export function downloadJSON(data: unknown, filename: string): void {
 
 /**
  * Export cemetery data as a .cem.json file
+ * Strips deprecated plot field from graves
  */
 export function exportCemeteryData(data: CemeteryData): void {
+  // Create a clean copy without the deprecated plot field
+  const cleanData: CemeteryData = {
+    ...data,
+    graves: data.graves.map((grave) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { plot, ...graveWithoutPlot } = grave;
+      return graveWithoutPlot;
+    }),
+  };
+
   const filename = `${data.cemetery.name || 'cemetery'}.cem.json`;
-  downloadJSON(data, filename);
+  downloadJSON(cleanData, filename);
 }
 
 /**

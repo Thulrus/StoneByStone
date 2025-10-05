@@ -63,7 +63,7 @@
       "description": "List of graves in the cemetery",
       "items": {
         "type": "object",
-        "required": ["uuid", "plot", "grid", "properties"],
+        "required": ["uuid", "grid", "properties"],
         "properties": {
           "uuid": {
             "type": "string",
@@ -72,7 +72,7 @@
           },
           "plot": {
             "type": "string",
-            "description": "Plot identifier"
+            "description": "Plot identifier (deprecated, auto-generated from grid if not provided)"
           },
           "grid": {
             "type": "object",

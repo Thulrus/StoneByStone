@@ -73,7 +73,7 @@ Cemetery {
 
 Grave {
   uuid: string           // UUID v4
-  plot: string          // Any format (e.g., "A-1", "Section B")
+  plot?: string          // DEPRECATED: Optional for backwards compatibility
   grid: { row: number, col: number }
   geometry?: GeoPoint   // Optional GPS coordinates
   properties: {
@@ -101,7 +101,8 @@ ChangeLogEntry {
 
 ### Important Rules
 
-- **Required fields**: `uuid`, `plot`, `grid`, `last_modified`, `modified_by`
+- **Required fields**: `uuid`, `grid`, `last_modified`, `modified_by`
+- **Deprecated fields**: `plot` (accepted on import for backwards compatibility, stripped on export)
 - **Optional fields**: ALL grave properties (name, dates, inscription, notes)
 - **Soft Deletes**: Use `deleted: true` in properties, never hard delete
 - **Timestamps**: Always ISO8601 format (use `new Date().toISOString()`)
@@ -112,7 +113,7 @@ ChangeLogEntry {
 Three object stores (see `src/lib/idb.ts`):
 
 1. **cemetery**: Single entry for cemetery metadata
-2. **graves**: Keyed by `uuid`, indexed by `plot`
+2. **graves**: Keyed by `uuid`, indexed by `plot` (deprecated index)
 3. **change_log**: Auto-incrementing, indexed by `grave_uuid` and `timestamp`
 
 ### Database Functions
@@ -129,15 +130,17 @@ Always use these functions; never access IndexedDB directly.
 ### Import (see `src/lib/file.ts` and `src/lib/validator.ts`)
 
 1. Parse JSON
-2. Validate against schema with AJV
-3. Check for merge conflicts
-4. If conflicts → show `MergeConflictModal`
-5. If no conflicts or resolved → save to IndexedDB
-6. Update change log
+2. Validate against schema with AJV (accepts deprecated `plot` field)
+3. Strip deprecated `plot` field during normalization
+4. Check for merge conflicts
+5. If conflicts → show `MergeConflictModal`
+6. If no conflicts or resolved → save to IndexedDB
+7. Update change log
 
 ### Export
 
 - Export complete cemetery data as `.cem.json`
+- Strip deprecated `plot` field from graves
 - Pretty-print with 2-space indentation
 - Include all non-deleted graves
 - Include cemetery metadata
@@ -196,7 +199,6 @@ npm run test:coverage # Coverage report (when configured)
 ```typescript
 const grave: Grave = {
   uuid: crypto.randomUUID(),
-  plot: plotInput,
   grid: { row: rowNum, col: colNum },
   properties: {
     name: nameInput || undefined, // Optional fields
