@@ -52,6 +52,7 @@ export function CemeteryView() {
   const [selectedRoadCells, setSelectedRoadCells] = useState<GridPosition[]>(
     []
   ); // Cells selected for current road
+  const [previewRoad, setPreviewRoad] = useState<Road | null>(null); // Preview road while editing
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [highlightedGraves, setHighlightedGraves] = useState<Set<string>>(
@@ -122,6 +123,33 @@ export function CemeteryView() {
 
   // Ref for MapGrid zoom controls
   const mapGridRef = useRef<MapGridRef>(null);
+
+  // Update preview road whenever selected road cells change
+  useEffect(() => {
+    if (selectedRoad && selectedRoadCells.length > 0) {
+      setPreviewRoad({
+        ...selectedRoad,
+        cells: selectedRoadCells,
+      });
+    } else if (
+      !selectedRoad &&
+      selectedRoadCells.length > 0 &&
+      activeMarkerType === 'street'
+    ) {
+      // Creating a new road - create a preview
+      setPreviewRoad({
+        uuid: crypto.randomUUID(), // Temporary UUID for preview
+        cells: selectedRoadCells,
+        properties: {
+          color: '#9ca3af', // Default gray color
+          last_modified: new Date().toISOString(),
+          modified_by: getCurrentUserOrAnonymous(),
+        },
+      });
+    } else if (selectedRoadCells.length === 0) {
+      setPreviewRoad(null);
+    }
+  }, [selectedRoadCells, selectedRoad, activeMarkerType]);
 
   // Set initial sidebar visibility based on screen size
   useEffect(() => {
@@ -378,6 +406,7 @@ export function CemeteryView() {
         setIsCreating(false);
         setSelectedRoad(null);
         setSelectedRoadCells([]);
+        setPreviewRoad(null);
       } catch (error) {
         console.error('Failed to save road:', error);
         alert('Failed to save road');
@@ -419,6 +448,7 @@ export function CemeteryView() {
         setIsEditing(false);
         setSelectedRoad(null);
         setSelectedRoadCells([]);
+        setPreviewRoad(null);
       } catch (error) {
         console.error('Failed to delete road:', error);
         alert('Failed to delete road');
@@ -687,10 +717,24 @@ export function CemeteryView() {
     // Re-enter cell selection mode for the current road
     if (selectedRoad) {
       setSelectedRoadCells(selectedRoad.cells); // Preserve existing cells
+      // Create preview road for live updates
+      setPreviewRoad({ ...selectedRoad });
     }
     setActiveMarkerType('street');
     setIsEditing(false);
     setShowEditor(false);
+  };
+
+  const handleRoadPreviewUpdate = (updates: Partial<Road['properties']>) => {
+    if (previewRoad) {
+      setPreviewRoad({
+        ...previewRoad,
+        properties: {
+          ...previewRoad.properties,
+          ...updates,
+        },
+      });
+    }
   };
 
   const handleGraveClick = (grave: Grave) => {
@@ -875,6 +919,7 @@ export function CemeteryView() {
     setSelectedLandmark(null);
     setSelectedRoad(null);
     setSelectedRoadCells([]);
+    setPreviewRoad(null);
     setIsEditing(false);
     setIsCreating(false);
     setShowEditor(false);
@@ -1020,7 +1065,16 @@ export function CemeteryView() {
             cemetery={cemeteryData.cemetery}
             graves={cemeteryData.graves}
             landmarks={cemeteryData.landmarks}
-            roads={cemeteryData.roads}
+            roads={
+              previewRoad
+                ? [
+                    ...(cemeteryData.roads || []).filter(
+                      (r) => r.uuid !== (selectedRoad?.uuid || previewRoad.uuid)
+                    ),
+                    previewRoad,
+                  ]
+                : cemeteryData.roads
+            }
             selectedRoadCells={selectedRoadCells}
             selectedGrave={selectedGrave}
             tempGrave={tempGrave}
@@ -1104,6 +1158,7 @@ export function CemeteryView() {
                 onDelete={handleDeleteRoad}
                 onCancel={handleCancel}
                 onEditCells={handleEditRoadCells}
+                onPreviewUpdate={handleRoadPreviewUpdate}
               />
             )}
           </div>

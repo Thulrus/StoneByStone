@@ -9,6 +9,7 @@ interface RoadEditorProps {
   onDelete?: (uuid: string) => void;
   onCancel: () => void;
   onEditCells?: () => void; // Callback to enter cell edit mode
+  onPreviewUpdate?: (updates: Partial<Road['properties']>) => void; // Callback for live preview updates
 }
 
 // Predefined color options for roads
@@ -32,6 +33,7 @@ export function RoadEditor({
   onDelete,
   onCancel,
   onEditCells,
+  onPreviewUpdate,
 }: RoadEditorProps) {
   const [name, setName] = useState(road?.properties.name || '');
   const [description, setDescription] = useState(
@@ -123,7 +125,13 @@ export function RoadEditor({
               <button
                 key={option.value}
                 type="button"
-                onClick={() => setColor(option.value)}
+                onClick={() => {
+                  setColor(option.value);
+                  // Update preview in real-time
+                  if (onPreviewUpdate) {
+                    onPreviewUpdate({ color: option.value });
+                  }
+                }}
                 className={`relative h-10 rounded-md border-2 transition-all ${
                   color === option.value
                     ? 'border-gray-900 dark:border-white ring-2 ring-blue-500'
