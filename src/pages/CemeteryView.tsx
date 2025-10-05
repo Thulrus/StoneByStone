@@ -60,6 +60,10 @@ export function CemeteryView() {
   const [tempGrave, setTempGrave] = useState<Grave | null>(null);
   const [tempLandmark, setTempLandmark] = useState<Landmark | null>(null);
 
+  // State for highlighting a grave from list selection (with floating label)
+  const [listHighlightedGrave, setListHighlightedGrave] =
+    useState<Grave | null>(null);
+
   // State for multi-element selection modal
   const [showCellSelection, setShowCellSelection] = useState(false);
   const [selectedCellElements, setSelectedCellElements] = useState<
@@ -450,10 +454,20 @@ export function CemeteryView() {
   };
 
   const handleGraveClick = (grave: Grave) => {
-    // Show info modal instead of jumping to edit
+    // Show info modal instead of jumping to edit (for map clicks)
     setInfoElement(grave);
     setInfoElementType('grave');
     setShowInfoModal(true);
+  };
+
+  const handleGraveListSelection = (grave: Grave) => {
+    // When selecting from list, highlight on map instead of opening info
+    setListHighlightedGrave(grave);
+
+    // Clear the highlight after 3 seconds
+    setTimeout(() => {
+      setListHighlightedGrave(null);
+    }, 3000);
   };
 
   const handleLandmarkClick = (landmark: Landmark) => {
@@ -744,8 +758,9 @@ export function CemeteryView() {
         <GraveList
           graves={cemeteryData.graves}
           selectedGrave={selectedGrave}
-          onSelectGrave={handleGraveClick}
+          onSelectGrave={handleGraveListSelection}
           onSearch={setHighlightedGraves}
+          highlightedGraveUuid={listHighlightedGrave?.uuid || null}
         />
       </div>
 
@@ -762,6 +777,7 @@ export function CemeteryView() {
             selectedGrave={selectedGrave}
             tempGrave={tempGrave}
             tempLandmark={tempLandmark}
+            listHighlightedGrave={listHighlightedGrave}
             onGraveClick={handleGraveClick}
             onLandmarkClick={handleLandmarkClick}
             onRoadClick={handleRoadClick}

@@ -23,6 +23,7 @@ interface MapGridProps {
   selectedGrave: Grave | null;
   tempGrave?: Grave | null; // Temporary preview grave before saving
   tempLandmark?: Landmark | null; // Temporary preview landmark before saving
+  listHighlightedGrave?: Grave | null; // Grave highlighted from list selection (shows floating label)
   onGraveClick: (grave: Grave) => void;
   onLandmarkClick?: (landmark: Landmark) => void;
   onRoadClick?: (road: Road) => void;
@@ -50,6 +51,7 @@ export function MapGrid({
   selectedGrave,
   tempGrave = null,
   tempLandmark = null,
+  listHighlightedGrave = null,
   onGraveClick,
   onLandmarkClick,
   onRoadClick,
@@ -268,6 +270,30 @@ export function MapGrid({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, height]);
+
+  // Center view on list-highlighted grave
+  useEffect(() => {
+    if (listHighlightedGrave && svgRef.current) {
+      const containerRect = svgRef.current.getBoundingClientRect();
+
+      // Calculate grave's position in SVG coordinates
+      const graveX =
+        PADDING + listHighlightedGrave.grid.col * CELL_SIZE + CELL_SIZE / 2;
+      const graveY =
+        PADDING + listHighlightedGrave.grid.row * CELL_SIZE + CELL_SIZE / 2;
+
+      // Calculate where to position the transform so grave is centered
+      const targetX = containerRect.width / 2 - graveX * transform.scale;
+      const targetY = containerRect.height / 2 - graveY * transform.scale;
+
+      // Smoothly animate to the target position
+      setTransform((prev) => ({
+        ...prev,
+        x: targetX,
+        y: targetY,
+      }));
+    }
+  }, [listHighlightedGrave, transform.scale]);
 
   // Create grave lookup by grid position
   const gravesByPosition = useMemo(() => {
@@ -788,6 +814,85 @@ export function MapGrid({
                       pointerEvents="none"
                     />
                     <title>New {tempLandmark.landmark_type} (unsaved)</title>
+                  </>
+                );
+              })()}
+            </g>
+          )}
+
+          {/* Floating label for list-highlighted grave */}
+          {listHighlightedGrave && (
+            <g key={`highlight-${listHighlightedGrave.uuid}`}>
+              {(() => {
+                const x = PADDING + listHighlightedGrave.grid.col * CELL_SIZE;
+                const y = PADDING + listHighlightedGrave.grid.row * CELL_SIZE;
+
+                // Position label above the grave icon
+                const labelX = x + 20; // Center of cell
+                const labelY = y - 10; // Above the cell
+
+                const displayName =
+                  listHighlightedGrave.properties.name || 'Unnamed';
+                const labelWidth = Math.max(displayName.length * 7 + 20, 100); // Approximate width
+
+                return (
+                  <>
+                    {/* Pulsing ring around grave */}
+                    <circle
+                      cx={x + 20}
+                      cy={y + 20}
+                      r={22}
+                      fill="none"
+                      stroke="rgba(234, 179, 8, 0.8)"
+                      strokeWidth={3}
+                      pointerEvents="none"
+                    >
+                      <animate
+                        attributeName="r"
+                        values="22;28;22"
+                        dur="1.5s"
+                        repeatCount="indefinite"
+                      />
+                      <animate
+                        attributeName="opacity"
+                        values="0.8;0.3;0.8"
+                        dur="1.5s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+
+                    {/* Floating label background */}
+                    <rect
+                      x={labelX - labelWidth / 2}
+                      y={labelY - 20}
+                      width={labelWidth}
+                      height={28}
+                      rx={4}
+                      fill="rgba(234, 179, 8, 0.95)"
+                      stroke="rgba(161, 98, 7, 0.8)"
+                      strokeWidth={2}
+                      pointerEvents="none"
+                    />
+
+                    {/* Label text */}
+                    <text
+                      x={labelX}
+                      y={labelY - 4}
+                      textAnchor="middle"
+                      fontSize="13"
+                      fontWeight="600"
+                      fill="#1f2937"
+                      pointerEvents="none"
+                    >
+                      {displayName}
+                    </text>
+
+                    {/* Small pointer arrow from label to grave */}
+                    <path
+                      d={`M ${labelX - 4} ${labelY + 8} L ${labelX + 4} ${labelY + 8} L ${labelX} ${labelY + 12} Z`}
+                      fill="rgba(234, 179, 8, 0.95)"
+                      pointerEvents="none"
+                    />
                   </>
                 );
               })()}
