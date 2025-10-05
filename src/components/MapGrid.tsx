@@ -21,6 +21,8 @@ interface MapGridProps {
   roads?: Road[];
   selectedRoadCells?: GridPosition[]; // Cells being selected for road
   selectedGrave: Grave | null;
+  tempGrave?: Grave | null; // Temporary preview grave before saving
+  tempLandmark?: Landmark | null; // Temporary preview landmark before saving
   onGraveClick: (grave: Grave) => void;
   onLandmarkClick?: (landmark: Landmark) => void;
   onRoadClick?: (road: Road) => void;
@@ -46,6 +48,8 @@ export function MapGrid({
   roads = [],
   selectedRoadCells = [],
   selectedGrave,
+  tempGrave = null,
+  tempLandmark = null,
   onGraveClick,
   onLandmarkClick,
   onRoadClick,
@@ -708,6 +712,87 @@ export function MapGrid({
                 </g>
               );
             })}
+
+          {/* Temporary preview grave (before saving) */}
+          {tempGrave && (
+            <g key={`temp-${tempGrave.uuid}`} className="temp-grave-marker">
+              {(() => {
+                const x = PADDING + tempGrave.grid.col * CELL_SIZE;
+                const y = PADDING + tempGrave.grid.row * CELL_SIZE;
+                const stoneIconPath = `${import.meta.env.BASE_URL}stone.png`;
+
+                return (
+                  <>
+                    <image
+                      href={stoneIconPath}
+                      x={x + 5}
+                      y={y + 5}
+                      width={30}
+                      height={30}
+                      opacity={0.7}
+                    />
+                    {/* Blue overlay to indicate temporary state */}
+                    <rect
+                      x={x + 5}
+                      y={y + 5}
+                      width={30}
+                      height={30}
+                      fill="rgba(59, 130, 246, 0.4)"
+                      pointerEvents="none"
+                    />
+                    <title>New grave (unsaved)</title>
+                  </>
+                );
+              })()}
+            </g>
+          )}
+
+          {/* Temporary preview landmark (before saving) */}
+          {tempLandmark && (
+            <g
+              key={`temp-${tempLandmark.uuid}`}
+              className="temp-landmark-marker"
+            >
+              {(() => {
+                const x = PADDING + tempLandmark.grid.col * CELL_SIZE;
+                const y = PADDING + tempLandmark.grid.row * CELL_SIZE;
+
+                // Map landmark type to icon filename
+                const iconMap: Record<string, string> = {
+                  bench: 'bench.png',
+                  tree: 'tree.png',
+                  pine: 'pine.png',
+                  statue: 'statue.png',
+                  building: 'building.png',
+                  other: 'other.png',
+                };
+                const iconPath = `${import.meta.env.BASE_URL}${iconMap[tempLandmark.landmark_type] || 'other.png'}`;
+
+                return (
+                  <>
+                    <image
+                      href={iconPath}
+                      x={x + 5}
+                      y={y + 5}
+                      width={30}
+                      height={30}
+                      opacity={0.7}
+                    />
+                    {/* Blue overlay to indicate temporary state */}
+                    <rect
+                      x={x + 5}
+                      y={y + 5}
+                      width={30}
+                      height={30}
+                      fill="rgba(59, 130, 246, 0.4)"
+                      pointerEvents="none"
+                    />
+                    <title>New {tempLandmark.landmark_type} (unsaved)</title>
+                  </>
+                );
+              })()}
+            </g>
+          )}
 
           {/* Selected road cells during placement */}
           {addMode === 'street' &&

@@ -56,6 +56,10 @@ export function CemeteryView() {
     null
   );
 
+  // Temporary preview elements for placement feedback
+  const [tempGrave, setTempGrave] = useState<Grave | null>(null);
+  const [tempLandmark, setTempLandmark] = useState<Landmark | null>(null);
+
   // State for multi-element selection modal
   const [showCellSelection, setShowCellSelection] = useState(false);
   const [selectedCellElements, setSelectedCellElements] = useState<
@@ -198,6 +202,8 @@ export function CemeteryView() {
         setIsEditing(false);
         setIsCreating(false);
         setSelectedGrave(null);
+        // Clear temporary preview
+        setTempGrave(null);
       } catch (error) {
         console.error('Failed to save grave:', error);
         alert('Failed to save grave');
@@ -225,6 +231,8 @@ export function CemeteryView() {
         setIsEditing(false);
         setIsCreating(false);
         setSelectedLandmark(null);
+        // Clear temporary preview
+        setTempLandmark(null);
       } catch (error) {
         console.error('Failed to save landmark:', error);
         alert('Failed to save landmark');
@@ -504,6 +512,9 @@ export function CemeteryView() {
         },
       };
 
+      // Set temporary preview
+      setTempGrave(newGrave);
+
       // Set as selected and open editor
       setSelectedGrave(newGrave);
       setSelectedLandmark(null);
@@ -523,6 +534,9 @@ export function CemeteryView() {
           modified_by: getCurrentUserOrAnonymous(),
         },
       };
+
+      // Set temporary preview
+      setTempLandmark(newLandmark);
 
       // Set as selected and open editor
       setSelectedLandmark(newLandmark);
@@ -603,6 +617,20 @@ export function CemeteryView() {
     setIsEditing(false);
     setIsCreating(false);
     setShowEditor(false);
+    // Clear temporary preview elements
+    setTempGrave(null);
+    setTempLandmark(null);
+  };
+
+  // Handle marker type selection with sidebar management
+  const handleMarkerTypeSelect = (type: MarkerType | null) => {
+    setActiveMarkerType(type);
+
+    // Close sidebars on medium and small screens when entering placement mode
+    if (type !== null && window.innerWidth < 1024) {
+      setShowGraveList(false);
+      setShowEditor(false);
+    }
   };
 
   if (!cemeteryData) {
@@ -732,6 +760,8 @@ export function CemeteryView() {
             roads={cemeteryData.roads}
             selectedRoadCells={selectedRoadCells}
             selectedGrave={selectedGrave}
+            tempGrave={tempGrave}
+            tempLandmark={tempLandmark}
             onGraveClick={handleGraveClick}
             onLandmarkClick={handleLandmarkClick}
             onRoadClick={handleRoadClick}
@@ -744,7 +774,7 @@ export function CemeteryView() {
           {/* Marker Toolbar */}
           <MarkerToolbar
             activeMarkerType={activeMarkerType}
-            onSelectMarkerType={setActiveMarkerType}
+            onSelectMarkerType={handleMarkerTypeSelect}
             onFinishRoad={handleFinishRoad}
             disabled={!cemeteryData}
           />

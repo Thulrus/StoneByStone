@@ -23,7 +23,7 @@ export function MarkerToolbar({
   };
 
   return (
-    <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-2">
+    <div className="absolute bottom-4 left-4 z-[5] flex flex-col gap-2">
       {/* Grave Marker Button */}
       <button
         onClick={() => handleMarkerClick('grave')}
