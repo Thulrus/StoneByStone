@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Road, Cemetery } from '../types/cemetery';
-import { getCurrentUser, getCurrentTimestamp } from '../lib/user';
+import { getCurrentUserOrAnonymous, getCurrentTimestamp } from '../lib/user';
 
 interface RoadEditorProps {
   road: Road | null;
@@ -69,7 +69,7 @@ export function RoadEditor({
         color: color,
         deleted: road.properties.deleted,
         last_modified: getCurrentTimestamp(),
-        modified_by: getCurrentUser(),
+        modified_by: getCurrentUserOrAnonymous(),
       },
     };
 

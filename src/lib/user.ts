@@ -5,22 +5,40 @@
 const USER_KEY = 'cemetery_user';
 
 /**
- * Get or create a user identifier
+ * Get the stored user identifier (if any)
+ * Returns null if not set - no longer prompts automatically
  */
-export function getCurrentUser(): string {
-  let user = localStorage.getItem(USER_KEY);
-  if (!user) {
-    user = prompt('Enter your name for change tracking:') || 'Anonymous';
-    localStorage.setItem(USER_KEY, user);
-  }
-  return user;
+export function getCurrentUser(): string | null {
+  return localStorage.getItem(USER_KEY);
 }
 
 /**
- * Set the current user
+ * Get the user identifier or return 'Anonymous' if not set
+ * Use this only when you need a guaranteed non-null value
  */
-export function setCurrentUser(name: string): void {
-  localStorage.setItem(USER_KEY, name);
+export function getCurrentUserOrAnonymous(): string {
+  return localStorage.getItem(USER_KEY) || 'Anonymous';
+}
+
+/**
+ * Set the current user identifier
+ */
+export function setCurrentUser(identifier: string): void {
+  localStorage.setItem(USER_KEY, identifier);
+}
+
+/**
+ * Check if a user identifier has been set
+ */
+export function hasUserIdentifier(): boolean {
+  return !!localStorage.getItem(USER_KEY);
+}
+
+/**
+ * Clear the stored user identifier
+ */
+export function clearUserIdentifier(): void {
+  localStorage.removeItem(USER_KEY);
 }
 
 /**

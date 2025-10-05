@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { Grave, Cemetery } from '../types/cemetery';
 import { generateUUID } from '../lib/uuid';
-import { getCurrentUser, getCurrentTimestamp } from '../lib/user';
+import { getCurrentUserOrAnonymous, getCurrentTimestamp } from '../lib/user';
 
 interface GraveEditorProps {
   grave: Grave | null;
@@ -28,7 +28,7 @@ export function GraveEditor({
       inscription: '',
       notes: '',
       last_modified: getCurrentTimestamp(),
-      modified_by: getCurrentUser(),
+      modified_by: getCurrentUserOrAnonymous(),
     },
   });
 
@@ -46,7 +46,7 @@ export function GraveEditor({
           inscription: '',
           notes: '',
           last_modified: getCurrentTimestamp(),
-          modified_by: getCurrentUser(),
+          modified_by: getCurrentUserOrAnonymous(),
         },
       });
     }
@@ -63,7 +63,7 @@ export function GraveEditor({
       properties: {
         ...formData.properties!,
         last_modified: getCurrentTimestamp(),
-        modified_by: getCurrentUser(),
+        modified_by: getCurrentUserOrAnonymous(),
       },
     };
 

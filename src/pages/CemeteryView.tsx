@@ -14,6 +14,8 @@ import { LandmarkEditor } from '../components/LandmarkEditor';
 import { RoadEditor } from '../components/RoadEditor';
 import { MarkerToolbar } from '../components/MarkerToolbar';
 import { CellSelectionModal } from '../components/CellSelectionModal';
+import { ElementInfoModal } from '../components/ElementInfoModal';
+import { UserIdentificationModal } from '../components/UserIdentificationModal';
 import {
   loadCemetery,
   saveOrUpdateGrave,
@@ -21,7 +23,12 @@ import {
   saveOrUpdateRoad,
   appendChangeLog,
 } from '../lib/idb';
-import { getCurrentUser, getCurrentTimestamp } from '../lib/user';
+import {
+  getCurrentUserOrAnonymous,
+  getCurrentTimestamp,
+  hasUserIdentifier,
+  setCurrentUser,
+} from '../lib/user';
 import { detectSpatialConflicts } from '../lib/merge';
 
 export function CemeteryView() {
@@ -59,6 +66,21 @@ export function CemeteryView() {
   >([]);
   const [selectedCellPosition, setSelectedCellPosition] =
     useState<GridPosition | null>(null);
+
+  // State for element info modal (view mode before edit)
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [infoElement, setInfoElement] = useState<
+    Grave | Landmark | Road | null
+  >(null);
+  const [infoElementType, setInfoElementType] = useState<
+    'grave' | 'landmark' | 'road' | null
+  >(null);
+
+  // State for user identification modal
+  const [showUserIdModal, setShowUserIdModal] = useState(false);
+  const [pendingSaveAction, setPendingSaveAction] = useState<
+    (() => Promise<void>) | null
+  >(null);
 
   // Set initial sidebar visibility based on screen size
   useEffect(() => {
@@ -124,207 +146,289 @@ export function CemeteryView() {
     }
   };
 
-  const handleSaveGrave = async (grave: Grave) => {
-    try {
-      await saveOrUpdateGrave(grave);
-
-      // Log the change
-      const changeEntry = {
-        op: 'set' as const,
-        uuid: grave.uuid,
-        changes: grave as unknown as Record<string, unknown>,
-        timestamp: getCurrentTimestamp(),
-        user: getCurrentUser(),
-      };
-      await appendChangeLog(changeEntry);
-
-      // Reload data
-      await loadData();
-      setIsEditing(false);
-      setIsCreating(false);
-      setSelectedGrave(null);
-    } catch (error) {
-      console.error('Failed to save grave:', error);
-      alert('Failed to save grave');
+  // Helper to execute save action with user identification check
+  const withUserIdentification = async (
+    saveAction: () => Promise<void>
+  ): Promise<void> => {
+    if (!hasUserIdentifier()) {
+      // Store the action and show user ID modal
+      setPendingSaveAction(() => saveAction);
+      setShowUserIdModal(true);
+    } else {
+      // User already identified, execute immediately
+      await saveAction();
     }
+  };
+
+  // Handle user identification submission
+  const handleUserIdentification = async (identifier: string) => {
+    setCurrentUser(identifier);
+    setShowUserIdModal(false);
+
+    // Execute the pending save action
+    if (pendingSaveAction) {
+      await pendingSaveAction();
+      setPendingSaveAction(null);
+    }
+  };
+
+  // Handle user identification cancellation
+  const handleUserIdCancel = () => {
+    setShowUserIdModal(false);
+    setPendingSaveAction(null);
+  };
+
+  const handleSaveGrave = async (grave: Grave) => {
+    await withUserIdentification(async () => {
+      try {
+        await saveOrUpdateGrave(grave);
+
+        // Log the change
+        const changeEntry = {
+          op: 'set' as const,
+          uuid: grave.uuid,
+          changes: grave as unknown as Record<string, unknown>,
+          timestamp: getCurrentTimestamp(),
+          user: getCurrentUserOrAnonymous(),
+        };
+        await appendChangeLog(changeEntry);
+
+        // Reload data
+        await loadData();
+        setIsEditing(false);
+        setIsCreating(false);
+        setSelectedGrave(null);
+      } catch (error) {
+        console.error('Failed to save grave:', error);
+        alert('Failed to save grave');
+      }
+    });
   };
 
   const handleSaveLandmark = async (landmark: Landmark) => {
-    try {
-      await saveOrUpdateLandmark(landmark);
+    await withUserIdentification(async () => {
+      try {
+        await saveOrUpdateLandmark(landmark);
 
-      // Log the change
-      const changeEntry = {
-        op: 'set' as const,
-        uuid: landmark.uuid,
-        changes: landmark as unknown as Record<string, unknown>,
-        timestamp: getCurrentTimestamp(),
-        user: getCurrentUser(),
-      };
-      await appendChangeLog(changeEntry);
+        // Log the change
+        const changeEntry = {
+          op: 'set' as const,
+          uuid: landmark.uuid,
+          changes: landmark as unknown as Record<string, unknown>,
+          timestamp: getCurrentTimestamp(),
+          user: getCurrentUserOrAnonymous(),
+        };
+        await appendChangeLog(changeEntry);
 
-      // Reload data
-      await loadData();
-      setIsEditing(false);
-      setIsCreating(false);
-      setSelectedLandmark(null);
-    } catch (error) {
-      console.error('Failed to save landmark:', error);
-      alert('Failed to save landmark');
-    }
+        // Reload data
+        await loadData();
+        setIsEditing(false);
+        setIsCreating(false);
+        setSelectedLandmark(null);
+      } catch (error) {
+        console.error('Failed to save landmark:', error);
+        alert('Failed to save landmark');
+      }
+    });
   };
 
   const handleDeleteGrave = async (uuid: string) => {
-    try {
-      const grave = cemeteryData?.graves.find((g) => g.uuid === uuid);
-      if (!grave) return;
+    await withUserIdentification(async () => {
+      try {
+        const grave = cemeteryData?.graves.find((g) => g.uuid === uuid);
+        if (!grave) return;
 
-      // Mark as deleted
-      const deletedGrave: Grave = {
-        ...grave,
-        properties: {
-          ...grave.properties,
-          deleted: true,
-          last_modified: getCurrentTimestamp(),
-          modified_by: getCurrentUser(),
-        },
-      };
+        // Mark as deleted
+        const deletedGrave: Grave = {
+          ...grave,
+          properties: {
+            ...grave.properties,
+            deleted: true,
+            last_modified: getCurrentTimestamp(),
+            modified_by: getCurrentUserOrAnonymous(),
+          },
+        };
 
-      await saveOrUpdateGrave(deletedGrave);
+        await saveOrUpdateGrave(deletedGrave);
 
-      // Log the deletion
-      const changeEntry = {
-        op: 'delete' as const,
-        uuid: grave.uuid,
-        changes: { deleted: true },
-        timestamp: getCurrentTimestamp(),
-        user: getCurrentUser(),
-      };
-      await appendChangeLog(changeEntry);
+        // Log the deletion
+        const changeEntry = {
+          op: 'delete' as const,
+          uuid: grave.uuid,
+          changes: { deleted: true },
+          timestamp: getCurrentTimestamp(),
+          user: getCurrentUserOrAnonymous(),
+        };
+        await appendChangeLog(changeEntry);
 
-      // Reload data
-      await loadData();
-      setIsEditing(false);
-      setSelectedGrave(null);
-    } catch (error) {
-      console.error('Failed to delete grave:', error);
-      alert('Failed to delete grave');
-    }
+        // Reload data
+        await loadData();
+        setIsEditing(false);
+        setSelectedGrave(null);
+      } catch (error) {
+        console.error('Failed to delete grave:', error);
+        alert('Failed to delete grave');
+      }
+    });
   };
 
   const handleDeleteLandmark = async (uuid: string) => {
-    try {
-      const landmark = cemeteryData?.landmarks?.find((l) => l.uuid === uuid);
-      if (!landmark) return;
+    await withUserIdentification(async () => {
+      try {
+        const landmark = cemeteryData?.landmarks?.find((l) => l.uuid === uuid);
+        if (!landmark) return;
 
-      // Mark as deleted
-      const deletedLandmark: Landmark = {
-        ...landmark,
-        properties: {
-          ...landmark.properties,
-          deleted: true,
-          last_modified: getCurrentTimestamp(),
-          modified_by: getCurrentUser(),
-        },
-      };
+        // Mark as deleted
+        const deletedLandmark: Landmark = {
+          ...landmark,
+          properties: {
+            ...landmark.properties,
+            deleted: true,
+            last_modified: getCurrentTimestamp(),
+            modified_by: getCurrentUserOrAnonymous(),
+          },
+        };
 
-      await saveOrUpdateLandmark(deletedLandmark);
+        await saveOrUpdateLandmark(deletedLandmark);
 
-      // Log the deletion
-      const changeEntry = {
-        op: 'delete' as const,
-        uuid: landmark.uuid,
-        changes: { deleted: true },
-        timestamp: getCurrentTimestamp(),
-        user: getCurrentUser(),
-      };
-      await appendChangeLog(changeEntry);
+        // Log the deletion
+        const changeEntry = {
+          op: 'delete' as const,
+          uuid: landmark.uuid,
+          changes: { deleted: true },
+          timestamp: getCurrentTimestamp(),
+          user: getCurrentUserOrAnonymous(),
+        };
+        await appendChangeLog(changeEntry);
 
-      // Reload data
-      await loadData();
-      setIsEditing(false);
-      setSelectedLandmark(null);
-    } catch (error) {
-      console.error('Failed to delete landmark:', error);
-      alert('Failed to delete landmark');
-    }
+        // Reload data
+        await loadData();
+        setIsEditing(false);
+        setSelectedLandmark(null);
+      } catch (error) {
+        console.error('Failed to delete landmark:', error);
+        alert('Failed to delete landmark');
+      }
+    });
   };
 
   const handleSaveRoad = async (road: Road) => {
-    try {
-      await saveOrUpdateRoad(road);
+    await withUserIdentification(async () => {
+      try {
+        await saveOrUpdateRoad(road);
 
-      // Log the change
-      const changeEntry = {
-        op: 'set' as const,
-        uuid: road.uuid,
-        changes: road as unknown as Record<string, unknown>,
-        timestamp: getCurrentTimestamp(),
-        user: getCurrentUser(),
-      };
-      await appendChangeLog(changeEntry);
+        // Log the change
+        const changeEntry = {
+          op: 'set' as const,
+          uuid: road.uuid,
+          changes: road as unknown as Record<string, unknown>,
+          timestamp: getCurrentTimestamp(),
+          user: getCurrentUserOrAnonymous(),
+        };
+        await appendChangeLog(changeEntry);
 
-      // Reload data
-      await loadData();
-      setIsEditing(false);
-      setIsCreating(false);
-      setSelectedRoad(null);
-      setSelectedRoadCells([]);
-    } catch (error) {
-      console.error('Failed to save road:', error);
-      alert('Failed to save road');
-    }
+        // Reload data
+        await loadData();
+        setIsEditing(false);
+        setIsCreating(false);
+        setSelectedRoad(null);
+        setSelectedRoadCells([]);
+      } catch (error) {
+        console.error('Failed to save road:', error);
+        alert('Failed to save road');
+      }
+    });
   };
 
   const handleDeleteRoad = async (uuid: string) => {
-    try {
-      const road = cemeteryData?.roads?.find((r) => r.uuid === uuid);
-      if (!road) return;
+    await withUserIdentification(async () => {
+      try {
+        const road = cemeteryData?.roads?.find((r) => r.uuid === uuid);
+        if (!road) return;
 
-      // Mark as deleted
-      const deletedRoad: Road = {
-        ...road,
-        properties: {
-          ...road.properties,
-          deleted: true,
-          last_modified: getCurrentTimestamp(),
-          modified_by: getCurrentUser(),
-        },
-      };
+        // Mark as deleted
+        const deletedRoad: Road = {
+          ...road,
+          properties: {
+            ...road.properties,
+            deleted: true,
+            last_modified: getCurrentTimestamp(),
+            modified_by: getCurrentUserOrAnonymous(),
+          },
+        };
 
-      await saveOrUpdateRoad(deletedRoad);
+        await saveOrUpdateRoad(deletedRoad);
 
-      // Log the deletion
-      const changeEntry = {
-        op: 'delete' as const,
-        uuid: road.uuid,
-        changes: { deleted: true },
-        timestamp: getCurrentTimestamp(),
-        user: getCurrentUser(),
-      };
-      await appendChangeLog(changeEntry);
+        // Log the deletion
+        const changeEntry = {
+          op: 'delete' as const,
+          uuid: road.uuid,
+          changes: { deleted: true },
+          timestamp: getCurrentTimestamp(),
+          user: getCurrentUserOrAnonymous(),
+        };
+        await appendChangeLog(changeEntry);
 
-      // Reload data
-      await loadData();
-      setIsEditing(false);
-      setSelectedRoad(null);
-      setSelectedRoadCells([]);
-    } catch (error) {
-      console.error('Failed to delete road:', error);
-      alert('Failed to delete road');
-    }
+        // Reload data
+        await loadData();
+        setIsEditing(false);
+        setSelectedRoad(null);
+        setSelectedRoadCells([]);
+      } catch (error) {
+        console.error('Failed to delete road:', error);
+        alert('Failed to delete road');
+      }
+    });
   };
 
   const handleRoadClick = (road: Road) => {
-    setSelectedRoad(road);
-    setSelectedRoadCells(road.cells);
-    setSelectedGrave(null);
-    setSelectedLandmark(null);
-    setIsEditing(true);
-    setIsCreating(false);
-    setShowEditor(true);
-    setShowGraveList(false);
-    setActiveMarkerType(null);
+    // Show info modal instead of jumping to edit
+    setInfoElement(road);
+    setInfoElementType('road');
+    setShowInfoModal(true);
+  };
+
+  // Handle clicking "Edit" in the info modal
+  const handleEditFromInfo = () => {
+    setShowInfoModal(false);
+
+    if (infoElementType === 'grave') {
+      setSelectedGrave(infoElement as Grave);
+      setSelectedLandmark(null);
+      setSelectedRoad(null);
+      setIsEditing(true);
+      setIsCreating(false);
+      setShowEditor(true);
+      setShowGraveList(false);
+      setActiveMarkerType(null);
+    } else if (infoElementType === 'landmark') {
+      setSelectedLandmark(infoElement as Landmark);
+      setSelectedGrave(null);
+      setSelectedRoad(null);
+      setIsEditing(true);
+      setIsCreating(false);
+      setShowEditor(true);
+      setShowGraveList(false);
+      setActiveMarkerType(null);
+    } else if (infoElementType === 'road') {
+      const road = infoElement as Road;
+      setSelectedRoad(road);
+      setSelectedRoadCells(road.cells);
+      setSelectedGrave(null);
+      setSelectedLandmark(null);
+      setIsEditing(true);
+      setIsCreating(false);
+      setShowEditor(true);
+      setShowGraveList(false);
+      setActiveMarkerType(null);
+    }
+  };
+
+  // Handle closing the info modal
+  const handleCloseInfo = () => {
+    setShowInfoModal(false);
+    setInfoElement(null);
+    setInfoElementType(null);
   };
 
   const handleEditRoadCells = () => {
@@ -338,23 +442,17 @@ export function CemeteryView() {
   };
 
   const handleGraveClick = (grave: Grave) => {
-    setSelectedGrave(grave);
-    setSelectedLandmark(null);
-    setIsEditing(true);
-    setIsCreating(false);
-    setShowEditor(true);
-    setShowGraveList(false); // Close list when selecting a grave
-    setActiveMarkerType(null); // Exit add mode when clicking existing grave
+    // Show info modal instead of jumping to edit
+    setInfoElement(grave);
+    setInfoElementType('grave');
+    setShowInfoModal(true);
   };
 
   const handleLandmarkClick = (landmark: Landmark) => {
-    setSelectedLandmark(landmark);
-    setSelectedGrave(null);
-    setIsEditing(true);
-    setIsCreating(false);
-    setShowEditor(true);
-    setShowGraveList(false); // Close list when selecting a landmark
-    setActiveMarkerType(null); // Exit add mode when clicking existing landmark
+    // Show info modal instead of jumping to edit
+    setInfoElement(landmark);
+    setInfoElementType('landmark');
+    setShowInfoModal(true);
   };
 
   const handleMultipleElementsClick = (
@@ -402,7 +500,7 @@ export function CemeteryView() {
         grid: position,
         properties: {
           last_modified: getCurrentTimestamp(),
-          modified_by: getCurrentUser(),
+          modified_by: getCurrentUserOrAnonymous(),
         },
       };
 
@@ -422,7 +520,7 @@ export function CemeteryView() {
         grid: position,
         properties: {
           last_modified: getCurrentTimestamp(),
-          modified_by: getCurrentUser(),
+          modified_by: getCurrentUserOrAnonymous(),
         },
       };
 
@@ -468,7 +566,7 @@ export function CemeteryView() {
         properties: {
           ...selectedRoad.properties,
           last_modified: getCurrentTimestamp(),
-          modified_by: getCurrentUser(),
+          modified_by: getCurrentUserOrAnonymous(),
         },
       };
       setSelectedRoad(updatedRoad);
@@ -482,7 +580,7 @@ export function CemeteryView() {
         properties: {
           color: '#9ca3af', // Default gray color
           last_modified: getCurrentTimestamp(),
-          modified_by: getCurrentUser(),
+          modified_by: getCurrentUserOrAnonymous(),
         },
       };
       setSelectedRoad(newRoad);
@@ -741,6 +839,22 @@ export function CemeteryView() {
           onSelectElement={handleElementSelection}
         />
       )}
+
+      {/* Element Info Modal - read-only view before editing */}
+      <ElementInfoModal
+        isOpen={showInfoModal}
+        onClose={handleCloseInfo}
+        element={infoElement}
+        elementType={infoElementType}
+        onEdit={handleEditFromInfo}
+      />
+
+      {/* User Identification Modal - ask for user info when saving */}
+      <UserIdentificationModal
+        isOpen={showUserIdModal}
+        onSubmit={handleUserIdentification}
+        onCancel={handleUserIdCancel}
+      />
     </div>
   );
 }

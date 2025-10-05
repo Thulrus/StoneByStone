@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getCurrentUser } from '../lib/user';
+import { getCurrentUserOrAnonymous } from '../lib/user';
 import type { Cemetery } from '../types/cemetery';
 
 interface CreateCemeteryModalProps {
@@ -57,7 +57,7 @@ export function CreateCemeteryModal({
         cellSize: 50, // Default cell size
       },
       last_modified: new Date().toISOString(),
-      modified_by: getCurrentUser(),
+      modified_by: getCurrentUserOrAnonymous(),
     };
 
     onCreateCemetery(cemetery);

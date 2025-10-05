@@ -9,7 +9,7 @@ import type {
   MergeConflict,
   ConflictResolution,
 } from '../types/cemetery';
-import { getCurrentTimestamp, getCurrentUser } from '../lib/user';
+import { getCurrentTimestamp, getCurrentUserOrAnonymous } from '../lib/user';
 
 function ImportExport() {
   const [importStatus, setImportStatus] = useState<string>('');
@@ -190,7 +190,7 @@ function ImportExport() {
         uuid: 'merge',
         changes: { resolutions },
         timestamp: getCurrentTimestamp(),
-        user: getCurrentUser(),
+        user: getCurrentUserOrAnonymous(),
       });
 
       await replaceAllData(merged);

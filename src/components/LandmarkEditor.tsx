@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import type { Landmark, LandmarkType, Cemetery } from '../types/cemetery';
-import { getCurrentUser, getCurrentTimestamp } from '../lib/user';
+import React, { useState, useEffect } from 'react';
+import type { Landmark, Cemetery, LandmarkType } from '../types/cemetery';
+import { getCurrentUserOrAnonymous, getCurrentTimestamp } from '../lib/user';
 
 interface LandmarkEditorProps {
   landmark: Landmark | null;
@@ -82,7 +82,7 @@ export function LandmarkEditor({
         notes: notes.trim() || undefined,
         deleted: landmark?.properties.deleted,
         last_modified: getCurrentTimestamp(),
-        modified_by: getCurrentUser(),
+        modified_by: getCurrentUserOrAnonymous(),
       },
     };
 
