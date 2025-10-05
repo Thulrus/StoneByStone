@@ -61,6 +61,10 @@ export function MapGrid({
     x: number;
     y: number;
   } | null>(null);
+  const [lastTouchPos, setLastTouchPos] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
   const [lastTouchDistance, setLastTouchDistance] = useState<number | null>(
     null
   );
@@ -167,15 +171,15 @@ export function MapGrid({
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
       if (e.touches.length === 1) {
-        // Single touch - start dragging
+        // Single touch - start dragging (allow on all elements including graves)
         const touch = e.touches[0];
-        if (!(e.target as SVGElement).closest('.grave-marker')) {
-          setIsDragging(true);
-          setDragStart({
-            x: touch.clientX - transform.x,
-            y: touch.clientY - transform.y,
-          });
-        }
+        setIsDragging(true);
+        setDragStart({
+          x: touch.clientX - transform.x,
+          y: touch.clientY - transform.y,
+        });
+        // Record touch start position for click detection
+        setMouseDownPos({ x: touch.clientX, y: touch.clientY });
       } else if (e.touches.length === 2) {
         // Two touches - start pinch zoom
         setIsDragging(false);
@@ -199,6 +203,8 @@ export function MapGrid({
           x: touch.clientX - dragStart.x,
           y: touch.clientY - dragStart.y,
         }));
+        // Track last touch position for drag detection
+        setLastTouchPos({ x: touch.clientX, y: touch.clientY });
       } else if (e.touches.length === 2) {
         // Two touches - pinch zoom
         const currentDistance = getTouchDistance(e.touches);
@@ -239,6 +245,11 @@ export function MapGrid({
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
     setLastTouchDistance(null);
+    // Clear positions after a short delay to allow click handlers to fire and check for drag
+    setTimeout(() => {
+      setMouseDownPos(null);
+      setLastTouchPos(null);
+    }, 0);
   }, []);
 
   // Center view initially
@@ -356,6 +367,18 @@ export function MapGrid({
         }
       }
 
+      // Also check for touch drag (lastTouchPos indicates touch was moved)
+      if (lastTouchPos && mouseDownPos) {
+        const touchDragDistance = Math.sqrt(
+          Math.pow(lastTouchPos.x - mouseDownPos.x, 2) +
+            Math.pow(lastTouchPos.y - mouseDownPos.y, 2)
+        );
+        // If touch moved more than 5 pixels, it was a drag, not a tap
+        if (touchDragDistance >= 5) {
+          return;
+        }
+      }
+
       // Don't interact during road selection mode
       if (addMode === 'street') return;
 
@@ -382,6 +405,7 @@ export function MapGrid({
     [
       addMode,
       mouseDownPos,
+      lastTouchPos,
       getElementsAtPosition,
       onGraveClick,
       onLandmarkClick,
