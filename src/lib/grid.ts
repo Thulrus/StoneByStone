@@ -251,6 +251,8 @@ export function resizeGrid(params: GridResizeParams): GridResizeResult {
   let newValidCells: Set<string> | undefined = undefined;
   if (cemetery.grid.validCells && cemetery.grid.validCells.size > 0) {
     newValidCells = new Set<string>();
+
+    // First, adjust existing valid cells to their new positions
     cemetery.grid.validCells.forEach((cellKey: string) => {
       const [rowStr, colStr] = cellKey.split(',');
       const row = parseInt(rowStr, 10);
@@ -268,6 +270,42 @@ export function resizeGrid(params: GridResizeParams): GridResizeResult {
         newValidCells.add(`${newPos.row},${newPos.col}`);
       }
     });
+
+    // Then, add ONLY the newly created cells from the resize operation
+    // These are cells that didn't exist in the old grid dimensions
+    const oldRows = cemetery.grid.rows;
+    const oldCols = cemetery.grid.cols;
+
+    if (direction === 'bottom' && count > 0) {
+      // New rows added at bottom
+      for (let row = oldRows; row < newRows; row++) {
+        for (let col = 0; col < newCols; col++) {
+          newValidCells.add(`${row},${col}`);
+        }
+      }
+    } else if (direction === 'right' && count > 0) {
+      // New columns added at right
+      for (let row = 0; row < newRows; row++) {
+        for (let col = oldCols; col < newCols; col++) {
+          newValidCells.add(`${row},${col}`);
+        }
+      }
+    } else if (direction === 'top' && count > 0) {
+      // New rows added at top (rows 0 to count-1 are new)
+      for (let row = 0; row < count; row++) {
+        for (let col = 0; col < newCols; col++) {
+          newValidCells.add(`${row},${col}`);
+        }
+      }
+    } else if (direction === 'left' && count > 0) {
+      // New columns added at left (cols 0 to count-1 are new)
+      for (let row = 0; row < newRows; row++) {
+        for (let col = 0; col < count; col++) {
+          newValidCells.add(`${row},${col}`);
+        }
+      }
+    }
+    // If count < 0 (removing rows/cols), no new cells to add
   }
 
   // Create updated cemetery

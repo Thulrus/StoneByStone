@@ -187,9 +187,9 @@ export function GraveList({
                 onClick={() => onSelectGrave(grave)}
                 className={`p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
                   selectedGrave?.uuid === grave.uuid
-                    ? 'bg-blue-50 dark:bg-blue-900'
+                    ? 'bg-highlight-blue-bg-light dark:bg-highlight-blue-bg-dark'
                     : highlightedGraveUuid === grave.uuid
-                      ? 'bg-yellow-50 dark:bg-yellow-900'
+                      ? 'bg-highlight-yellow-bg-light dark:bg-highlight-yellow-bg-dark'
                       : ''
                 }`}
               >

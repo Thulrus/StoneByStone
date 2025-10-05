@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
+import { getStoredTheme, applyTheme } from './lib/theme';
+
+// Apply theme immediately on load to prevent flash
+applyTheme(getStoredTheme());
 
 // Register service worker for PWA support
 if ('serviceWorker' in navigator) {

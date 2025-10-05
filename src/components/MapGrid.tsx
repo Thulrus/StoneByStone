@@ -15,6 +15,7 @@ import type {
   MarkerType,
   GridPosition,
 } from '../types/cemetery';
+import { colors } from '../lib/colors';
 
 export interface MapGridRef {
   zoomIn: () => void;
@@ -616,6 +617,35 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
         <g
           transform={`translate(${transform.x}, ${transform.y}) scale(${transform.scale})`}
         >
+          {/* Valid cells background (grass green) */}
+          <g className="valid-cells-background">
+            {Array.from({ length: cemetery.grid.rows }).map((_, row) =>
+              Array.from({ length: cemetery.grid.cols }).map((_, col) => {
+                const cellKey = `${row},${col}`;
+                const isValid = cemetery.grid.validCells
+                  ? cemetery.grid.validCells.has(cellKey)
+                  : true; // All cells valid if no validCells defined
+
+                if (!isValid) return null; // Don't render invalid cells
+
+                const x = PADDING + col * CELL_SIZE;
+                const y = PADDING + row * CELL_SIZE;
+
+                return (
+                  <rect
+                    key={`bg-${row}-${col}`}
+                    x={x}
+                    y={y}
+                    width={CELL_SIZE}
+                    height={CELL_SIZE}
+                    className="fill-cemetery-grass-light dark:fill-cemetery-grass-dark"
+                    pointerEvents="none"
+                  />
+                );
+              })
+            )}
+          </g>
+
           {/* Grid lines */}
           <g className="grid-lines">
             {Array.from({ length: cemetery.grid.rows + 1 }).map((_, i) => (
@@ -625,7 +655,8 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                 y1={PADDING + i * CELL_SIZE}
                 x2={PADDING + cemetery.grid.cols * CELL_SIZE}
                 y2={PADDING + i * CELL_SIZE}
-                stroke="#cbd5e0"
+                stroke="currentColor"
+                className="text-gray-400 dark:text-gray-600"
                 strokeWidth="1"
               />
             ))}
@@ -636,7 +667,8 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                 y1={PADDING}
                 x2={PADDING + i * CELL_SIZE}
                 y2={PADDING + cemetery.grid.rows * CELL_SIZE}
-                stroke="#cbd5e0"
+                stroke="currentColor"
+                className="text-gray-400 dark:text-gray-600"
                 strokeWidth="1"
               />
             ))}
@@ -662,7 +694,7 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                       y={y}
                       width={CELL_SIZE}
                       height={CELL_SIZE}
-                      fill="rgba(0, 0, 0, 0.8)"
+                      className="fill-cemetery-invalid"
                       pointerEvents="none"
                     />
                   );
@@ -1053,7 +1085,7 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                       cy={y + 20}
                       r={22}
                       fill="none"
-                      stroke="rgba(234, 179, 8, 0.8)"
+                      stroke={colors.highlight.yellow.ring}
                       strokeWidth={3}
                       pointerEvents="none"
                     >
@@ -1078,8 +1110,8 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                       width={labelWidth}
                       height={28}
                       rx={4}
-                      fill="rgba(234, 179, 8, 0.95)"
-                      stroke="rgba(161, 98, 7, 0.8)"
+                      fill={colors.highlight.yellow.light}
+                      stroke={colors.highlight.yellow.border}
                       strokeWidth={2}
                       pointerEvents="none"
                     />
@@ -1091,7 +1123,7 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                       textAnchor="middle"
                       fontSize="13"
                       fontWeight="600"
-                      fill="#1f2937"
+                      fill={colors.text.dark}
                       pointerEvents="none"
                     >
                       {displayName}
@@ -1100,7 +1132,7 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                     {/* Small pointer arrow from label to grave */}
                     <path
                       d={`M ${labelX - 4} ${labelY + 8} L ${labelX + 4} ${labelY + 8} L ${labelX} ${labelY + 12} Z`}
-                      fill="rgba(234, 179, 8, 0.95)"
+                      fill={colors.highlight.yellow.light}
                       pointerEvents="none"
                     />
                   </>
