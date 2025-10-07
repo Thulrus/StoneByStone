@@ -1,16 +1,17 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import type {
   CemeteryData,
   Grave,
   Landmark,
   Road,
+  Group,
   MarkerType,
   GridPosition,
 } from '../types/cemetery';
 import type { GridDirection } from '../lib/grid';
 import { MapGrid } from '../components/MapGrid';
 import type { MapGridRef } from '../components/MapGrid';
-import { GraveList } from '../components/GraveList';
+import { TabbedList } from '../components/TabbedList';
 import { GraveEditor } from '../components/GraveEditor';
 import { LandmarkEditor } from '../components/LandmarkEditor';
 import { RoadEditor } from '../components/RoadEditor';
@@ -27,6 +28,7 @@ import {
   saveOrUpdateRoad,
   appendChangeLog,
   batchUpdateCemeteryAndElements,
+  getGravesByGroupId,
 } from '../lib/idb';
 import {
   getCurrentUserOrAnonymous,
@@ -121,6 +123,9 @@ export function CemeteryView() {
     useState<Set<string> | null>(null);
   const [showGridShapeConfirm, setShowGridShapeConfirm] = useState(false);
 
+  // State for group selection and highlighting
+  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
+
   // Ref for MapGrid zoom controls
   const mapGridRef = useRef<MapGridRef>(null);
 
@@ -214,6 +219,36 @@ export function CemeteryView() {
       console.warn('Spatial conflicts detected:', conflicts);
     }
   };
+
+  // Calculate group member counts
+  const groupMemberCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    if (!cemeteryData) return counts;
+
+    const groups = cemeteryData.groups || [];
+    const activeGraves = cemeteryData.graves.filter(
+      (g) => !g.properties.deleted
+    );
+
+    for (const group of groups) {
+      if (group.properties.deleted) continue;
+      const memberCount = activeGraves.filter((g) =>
+        g.properties.group_ids?.includes(group.uuid)
+      ).length;
+      counts.set(group.uuid, memberCount);
+    }
+
+    return counts;
+  }, [cemeteryData]);
+
+  // Handle group selection - highlight all members
+  const handleGroupSelection = useCallback(async (group: Group) => {
+    setSelectedGroup(group);
+    // Load all graves in this group and highlight them
+    const members = await getGravesByGroupId(group.uuid);
+    const memberUuids = new Set(members.map((g) => g.uuid));
+    setHighlightedGraves(memberUuids);
+  }, []);
 
   // Helper to execute save action with user identification check
   const withUserIdentification = async (
@@ -663,6 +698,46 @@ export function CemeteryView() {
     mapGridRef.current?.resetView();
   };
 
+  const handleGoToLocation = (
+    element: Grave | Landmark | Road,
+    elementType: 'grave' | 'landmark' | 'road'
+  ) => {
+    // Close the info modal
+    setShowInfoModal(false);
+
+    // Get the grid position to center on
+    let gridPos: GridPosition | null = null;
+
+    if (elementType === 'grave') {
+      gridPos = (element as Grave).grid;
+    } else if (elementType === 'landmark') {
+      gridPos = (element as Landmark).grid;
+    } else if (elementType === 'road') {
+      // For roads, center on the first cell
+      const road = element as Road;
+      if (road.cells.length > 0) {
+        gridPos = road.cells[0];
+      }
+    }
+
+    // Center the map on the position
+    if (gridPos) {
+      mapGridRef.current?.centerOn(gridPos.row, gridPos.col);
+
+      // Highlight the element briefly
+      if (elementType === 'grave') {
+        setHighlightedGraves(new Set([(element as Grave).uuid]));
+        setListHighlightedGrave(element as Grave);
+
+        // Clear highlight after 3 seconds
+        setTimeout(() => {
+          setHighlightedGraves(new Set());
+          setListHighlightedGrave(null);
+        }, 3000);
+      }
+    }
+  };
+
   const handleRoadClick = (road: Road) => {
     // Show info modal instead of jumping to edit
     setInfoElement(road);
@@ -1027,32 +1102,25 @@ export function CemeteryView() {
         </div>
       )}
 
-      {/* Grave List Sidebar */}
+      {/* List Sidebar with Tabs */}
       <div
         className={`${
           showGraveList ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0 absolute lg:relative z-10 w-80 h-full border-r border-gray-200 dark:border-gray-700 flex flex-col bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out`}
       >
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-            {cemeteryData.cemetery.name}
-          </h2>
-          {spatialConflicts.size > 0 && (
-            <button
-              onClick={() => setShowConflicts(!showConflicts)}
-              className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium text-sm"
-            >
-              ⚠ {spatialConflicts.size} Spatial Conflict
-              {spatialConflicts.size > 1 ? 's' : ''}
-            </button>
-          )}
-        </div>
-        <GraveList
+        <TabbedList
           graves={cemeteryData.graves}
+          groups={cemeteryData.groups || []}
           selectedGrave={selectedGrave}
+          selectedGroup={selectedGroup}
           onSelectGrave={handleGraveListSelection}
-          onSearch={setHighlightedGraves}
+          onSelectGroup={handleGroupSelection}
+          onGraveSearch={setHighlightedGraves}
           highlightedGraveUuid={listHighlightedGrave?.uuid || null}
+          groupMemberCounts={groupMemberCounts}
+          cemeteryName={cemeteryData.cemetery.name}
+          spatialConflictsCount={spatialConflicts.size}
+          onShowConflicts={() => setShowConflicts(!showConflicts)}
         />
       </div>
 
@@ -1223,6 +1291,14 @@ export function CemeteryView() {
         element={infoElement}
         elementType={infoElementType}
         onEdit={handleEditFromInfo}
+        onGoToLocation={handleGoToLocation}
+        onNavigateToGrave={(grave) => {
+          // Close current modal and open the selected grave
+          setShowInfoModal(false);
+          setInfoElement(grave);
+          setInfoElementType('grave');
+          setShowInfoModal(true);
+        }}
       />
 
       {/* User Identification Modal - ask for user info when saving */}

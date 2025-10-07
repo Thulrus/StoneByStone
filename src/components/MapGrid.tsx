@@ -21,6 +21,7 @@ export interface MapGridRef {
   zoomIn: () => void;
   zoomOut: () => void;
   resetView: () => void;
+  centerOn: (row: number, col: number) => void;
 }
 
 interface MapGridProps {
@@ -224,6 +225,27 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
     },
     resetView: () => {
       setTransform({ x: 0, y: 0, scale: 1 });
+    },
+    centerOn: (row: number, col: number) => {
+      if (!svgRef.current) return;
+
+      // Calculate the center position of the cell in SVG coordinates
+      const cellCenterX = col * CELL_SIZE + CELL_SIZE / 2;
+      const cellCenterY = row * CELL_SIZE + CELL_SIZE / 2;
+
+      // Get container dimensions
+      const containerRect = svgRef.current.getBoundingClientRect();
+      const containerCenterX = containerRect.width / 2;
+      const containerCenterY = containerRect.height / 2;
+
+      // Calculate transform to center the cell
+      // We want: cellCenter * scale + translate = containerCenter
+      // So: translate = containerCenter - cellCenter * scale
+      setTransform((prev) => ({
+        ...prev,
+        x: containerCenterX - cellCenterX * prev.scale,
+        y: containerCenterY - cellCenterY * prev.scale,
+      }));
     },
   }));
 

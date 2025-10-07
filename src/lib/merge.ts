@@ -1,6 +1,7 @@
 import type {
   CemeteryData,
   Grave,
+  Group,
   MergeResult,
   MergeConflict,
   ChangeLogEntry,
@@ -51,6 +52,7 @@ function mergeGraves(
     'inscription',
     'notes',
     'deleted',
+    'group_ids',
   ];
 
   // Compare top-level fields
@@ -240,10 +242,42 @@ export function applyMergeResult(
       ? incoming.cemetery
       : local.cemetery;
 
+  // Merge groups (prefer incoming if newer, or add new groups)
+  const groupMap = new Map<string, Group>();
+
+  // Start with local groups
+  if (local.groups) {
+    for (const group of local.groups) {
+      groupMap.set(group.uuid, group);
+    }
+  }
+
+  // Merge or add incoming groups
+  if (incoming.groups) {
+    for (const incomingGroup of incoming.groups) {
+      const localGroup = groupMap.get(incomingGroup.uuid);
+
+      if (!localGroup) {
+        // New group - add it
+        groupMap.set(incomingGroup.uuid, incomingGroup);
+      } else {
+        // Existing group - use newer version
+        const winner = compareTimestamps(
+          localGroup.properties.last_modified,
+          incomingGroup.properties.last_modified
+        );
+        if (winner === 'incoming') {
+          groupMap.set(incomingGroup.uuid, incomingGroup);
+        }
+      }
+    }
+  }
+
   return {
     schema_version: incoming.schema_version,
     cemetery,
     graves: Array.from(graveMap.values()),
+    groups: Array.from(groupMap.values()),
     change_log: mergedChanges,
   };
 }

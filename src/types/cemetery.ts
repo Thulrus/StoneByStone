@@ -51,6 +51,7 @@ export interface GraveProperties {
   inscription?: string;
   notes?: string;
   deleted?: boolean;
+  group_ids?: string[]; // Array of group UUIDs this grave belongs to
   last_modified: string; // ISO8601
   modified_by: string;
 }
@@ -96,6 +97,20 @@ export interface Road {
   properties: RoadProperties;
 }
 
+export interface GroupProperties {
+  name: string;
+  description?: string;
+  color?: string; // Hex color for visual distinction (e.g., '#3b82f6')
+  deleted?: boolean;
+  last_modified: string; // ISO8601
+  modified_by: string;
+}
+
+export interface Group {
+  uuid: string;
+  properties: GroupProperties;
+}
+
 export type ChangeOperation = 'set' | 'delete';
 
 export interface ChangeLogEntry {
@@ -112,6 +127,7 @@ export interface CemeteryData {
   graves: Grave[];
   landmarks?: Landmark[]; // Optional for backward compatibility
   roads?: Road[]; // Optional for backward compatibility
+  groups?: Group[]; // Optional for backward compatibility
   change_log: ChangeLogEntry[];
 }
 

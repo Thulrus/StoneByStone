@@ -142,6 +142,62 @@
                 "type": "boolean",
                 "description": "Whether the grave record is marked as deleted"
               },
+              "group_ids": {
+                "type": "array",
+                "description": "Array of group UUIDs this grave belongs to",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                }
+              },
+              "last_modified": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When this record was last modified"
+              },
+              "modified_by": {
+                "type": "string",
+                "description": "User who last modified this record"
+              }
+            }
+          }
+        }
+      }
+    },
+    "groups": {
+      "type": "array",
+      "description": "List of groups for organizing graves",
+      "items": {
+        "type": "object",
+        "required": ["uuid", "properties"],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "description": "Unique group identifier (UUID v4)",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "properties": {
+            "type": "object",
+            "required": ["name", "last_modified", "modified_by"],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the group"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the group"
+              },
+              "color": {
+                "type": "string",
+                "description": "Hex color for visual distinction",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "deleted": {
+                "type": "boolean",
+                "description": "Whether the group is marked as deleted"
+              },
               "last_modified": {
                 "type": "string",
                 "format": "date-time",

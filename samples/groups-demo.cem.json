@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0.0",
+  "cemetery": {
+    "id": "groups-demo",
+    "name": "Groups Demo Cemetery",
+    "grid": {
+      "rows": 5,
+      "cols": 5
+    },
+    "last_modified": "2025-10-06T20:20:00.000Z",
+    "modified_by": "demo-user"
+  },
+  "graves": [
+    {
+      "uuid": "11111111-1111-4111-a111-111111111111",
+      "grid": {
+        "row": 0,
+        "col": 0
+      },
+      "properties": {
+        "name": "John Smith",
+        "birth": "1920-05-15",
+        "death": "1995-08-20",
+        "group_ids": [
+          "aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa",
+          "bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb"
+        ],
+        "last_modified": "2025-10-06T20:20:00.000Z",
+        "modified_by": "demo-user"
+      }
+    },
+    {
+      "uuid": "22222222-2222-4222-a222-222222222222",
+      "grid": {
+        "row": 0,
+        "col": 1
+      },
+      "properties": {
+        "name": "Mary Smith",
+        "birth": "1922-03-10",
+        "death": "1998-12-05",
+        "group_ids": [
+          "aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa",
+          "bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb"
+        ],
+        "last_modified": "2025-10-06T20:20:00.000Z",
+        "modified_by": "demo-user"
+      }
+    },
+    {
+      "uuid": "33333333-3333-4333-a333-333333333333",
+      "grid": {
+        "row": 1,
+        "col": 0
+      },
+      "properties": {
+        "name": "Robert Smith Jr.",
+        "birth": "1945-07-22",
+        "death": "2010-04-15",
+        "group_ids": ["aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa"],
+        "last_modified": "2025-10-06T20:20:00.000Z",
+        "modified_by": "demo-user"
+      }
+    },
+    {
+      "uuid": "44444444-4444-4444-a444-444444444444",
+      "grid": {
+        "row": 2,
+        "col": 0
+      },
+      "properties": {
+        "name": "Sarah Johnson",
+        "birth": "1935-11-08",
+        "death": "2005-06-30",
+        "group_ids": ["bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb"],
+        "last_modified": "2025-10-06T20:20:00.000Z",
+        "modified_by": "demo-user"
+      }
+    },
+    {
+      "uuid": "55555555-5555-4555-a555-555555555555",
+      "grid": {
+        "row": 2,
+        "col": 1
+      },
+      "properties": {
+        "name": "David Johnson",
+        "birth": "1930-09-12",
+        "death": "2000-03-25",
+        "group_ids": ["bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb"],
+        "last_modified": "2025-10-06T20:20:00.000Z",
+        "modified_by": "demo-user"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "uuid": "aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa",
+      "properties": {
+        "name": "Smith Family",
+        "description": "Members of the Smith family",
+        "color": "#3b82f6",
+        "last_modified": "2025-10-06T20:20:00.000Z",
+        "modified_by": "demo-user"
+      }
+    },
+    {
+      "uuid": "bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb",
+      "properties": {
+        "name": "Section A - North",
+        "description": "Graves located in the northern part of Section A",
+        "color": "#10b981",
+        "last_modified": "2025-10-06T20:20:00.000Z",
+        "modified_by": "demo-user"
+      }
+    }
+  ],
+  "change_log": [
+    {
+      "op": "set",
+      "uuid": "11111111-1111-4111-a111-111111111111",
+      "changes": {},
+      "timestamp": "2025-10-06T20:20:00.000Z",
+      "user": "demo-user"
+    },
+    {
+      "op": "set",
+      "uuid": "22222222-2222-4222-a222-222222222222",
+      "changes": {},
+      "timestamp": "2025-10-06T20:20:00.000Z",
+      "user": "demo-user"
+    },
+    {
+      "op": "set",
+      "uuid": "33333333-3333-4333-a333-333333333333",
+      "changes": {},
+      "timestamp": "2025-10-06T20:20:00.000Z",
+      "user": "demo-user"
+    },
+    {
+      "op": "set",
+      "uuid": "44444444-4444-4444-a444-444444444444",
+      "changes": {},
+      "timestamp": "2025-10-06T20:20:00.000Z",
+      "user": "demo-user"
+    },
+    {
+      "op": "set",
+      "uuid": "55555555-5555-4555-a555-555555555555",
+      "changes": {},
+      "timestamp": "2025-10-06T20:20:00.000Z",
+      "user": "demo-user"
+    }
+  ]
+}

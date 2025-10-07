@@ -4,6 +4,7 @@ import type {
   Grave,
   Landmark,
   Road,
+  Group,
   ChangeLogEntry,
   CemeteryData,
 } from '../types/cemetery';
@@ -29,6 +30,10 @@ interface CemeteryDB extends DBSchema {
     key: string;
     value: Road;
   };
+  groups: {
+    key: string;
+    value: Group;
+  };
   change_log: {
     key: number;
     value: ChangeLogEntry & { id?: number };
@@ -45,7 +50,7 @@ export async function openDB(): Promise<IDBPDatabase<CemeteryDB>> {
     return dbInstance;
   }
 
-  dbInstance = await idbOpenDB<CemeteryDB>('cemetery-db', 3, {
+  dbInstance = await idbOpenDB<CemeteryDB>('cemetery-db', 4, {
     upgrade(db, oldVersion) {
       // Create object stores
       if (!db.objectStoreNames.contains('cemetery')) {
@@ -69,6 +74,11 @@ export async function openDB(): Promise<IDBPDatabase<CemeteryDB>> {
       // Add roads store in version 3
       if (oldVersion < 3 && !db.objectStoreNames.contains('roads')) {
         db.createObjectStore('roads', { keyPath: 'uuid' });
+      }
+
+      // Add groups store in version 4
+      if (oldVersion < 4 && !db.objectStoreNames.contains('groups')) {
+        db.createObjectStore('groups', { keyPath: 'uuid' });
       }
     },
   });
@@ -109,6 +119,7 @@ export async function loadCemetery(): Promise<CemeteryData | null> {
   const graves = await db.getAll('graves');
   const landmarks = await db.getAll('landmarks');
   const roads = await db.getAll('roads');
+  const groups = await db.getAll('groups');
   const change_log = await db.getAll('change_log');
 
   return {
@@ -117,6 +128,7 @@ export async function loadCemetery(): Promise<CemeteryData | null> {
     graves,
     landmarks,
     roads,
+    groups,
     change_log,
   };
 }
@@ -274,7 +286,7 @@ export async function getGraveHistory(uuid: string): Promise<ChangeLogEntry[]> {
 }
 
 /**
- * Clear all graves, landmarks, roads, and change logs (but keep cemetery metadata)
+ * Clear all graves, landmarks, roads, groups, and change logs (but keep cemetery metadata)
  * Used when creating a new empty cemetery
  */
 export async function clearAllData(): Promise<void> {
@@ -282,6 +294,7 @@ export async function clearAllData(): Promise<void> {
   await db.clear('graves');
   await db.clear('landmarks');
   await db.clear('roads');
+  await db.clear('groups');
   await db.clear('change_log');
 }
 
@@ -296,6 +309,7 @@ export async function replaceAllData(data: CemeteryData): Promise<void> {
   await db.clear('graves');
   await db.clear('landmarks');
   await db.clear('roads');
+  await db.clear('groups');
   await db.clear('change_log');
 
   // Load new data
@@ -314,6 +328,12 @@ export async function replaceAllData(data: CemeteryData): Promise<void> {
   if (data.roads) {
     for (const road of data.roads) {
       await saveOrUpdateRoad(road);
+    }
+  }
+
+  if (data.groups) {
+    for (const group of data.groups) {
+      await saveOrUpdateGroup(group);
     }
   }
 
@@ -380,4 +400,72 @@ export async function batchUpdateCemeteryAndElements(
   }
 
   await tx.done;
+}
+
+/**
+ * Save or update a group
+ */
+export async function saveOrUpdateGroup(group: Group): Promise<void> {
+  const db = await openDB();
+  await db.put('groups', group);
+}
+
+/**
+ * Get all groups
+ */
+export async function getAllGroups(): Promise<Group[]> {
+  const db = await openDB();
+  return db.getAll('groups');
+}
+
+/**
+ * Get a single group by UUID
+ */
+export async function getGroup(uuid: string): Promise<Group | undefined> {
+  const db = await openDB();
+  return db.get('groups', uuid);
+}
+
+/**
+ * Delete a group (actually just marks as deleted)
+ */
+export async function deleteGroup(uuid: string): Promise<void> {
+  const db = await openDB();
+  const group = await db.get('groups', uuid);
+  if (group) {
+    group.properties.deleted = true;
+    await db.put('groups', group);
+  }
+}
+
+/**
+ * Get all graves that belong to a specific group
+ */
+export async function getGravesByGroupId(groupId: string): Promise<Grave[]> {
+  const db = await openDB();
+  const allGraves = await db.getAll('graves');
+  return allGraves.filter(
+    (grave) =>
+      grave.properties.group_ids &&
+      grave.properties.group_ids.includes(groupId) &&
+      !grave.properties.deleted
+  );
+}
+
+/**
+ * Get all groups that a specific grave belongs to
+ */
+export async function getGroupsForGrave(graveUuid: string): Promise<Group[]> {
+  const db = await openDB();
+  const grave = await db.get('graves', graveUuid);
+  if (!grave || !grave.properties.group_ids) {
+    return [];
+  }
+
+  const allGroups = await db.getAll('groups');
+  return allGroups.filter(
+    (group) =>
+      grave.properties.group_ids!.includes(group.uuid) &&
+      !group.properties.deleted
+  );
 }

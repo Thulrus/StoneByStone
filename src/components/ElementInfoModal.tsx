@@ -1,4 +1,6 @@
-import type { Grave, Landmark, Road } from '../types/cemetery';
+import type { Grave, Landmark, Road, Group } from '../types/cemetery';
+import { getGroupsForGrave, getGravesByGroupId } from '../lib/idb';
+import { useEffect, useState } from 'react';
 
 type Element = Grave | Landmark | Road;
 
@@ -8,6 +10,11 @@ interface ElementInfoModalProps {
   element: Element | null;
   elementType: 'grave' | 'landmark' | 'road' | null;
   onEdit: () => void;
+  onNavigateToGrave?: (grave: Grave) => void; // Optional callback to navigate to another grave
+  onGoToLocation?: (
+    element: Element,
+    elementType: 'grave' | 'landmark' | 'road'
+  ) => void; // Optional callback to center map on element
 }
 
 export function ElementInfoModal({
@@ -16,7 +23,42 @@ export function ElementInfoModal({
   element,
   elementType,
   onEdit,
+  onNavigateToGrave,
+  onGoToLocation,
 }: ElementInfoModalProps) {
+  const [graveGroups, setGraveGroups] = useState<Group[]>([]);
+  const [groupMembers, setGroupMembers] = useState<Map<string, Grave[]>>(
+    new Map()
+  );
+
+  useEffect(() => {
+    if (!isOpen || !element || elementType !== 'grave') {
+      setGraveGroups([]);
+      setGroupMembers(new Map());
+      return;
+    }
+
+    const loadGroupData = async () => {
+      const grave = element as Grave;
+      const groups = await getGroupsForGrave(grave.uuid);
+      setGraveGroups(groups);
+
+      // Load members for each group
+      const membersMap = new Map<string, Grave[]>();
+      for (const group of groups) {
+        const members = await getGravesByGroupId(group.uuid);
+        // Exclude the current grave from the list
+        membersMap.set(
+          group.uuid,
+          members.filter((m) => m.uuid !== grave.uuid)
+        );
+      }
+      setGroupMembers(membersMap);
+    };
+
+    loadGroupData();
+  }, [isOpen, element, elementType]);
+
   if (!isOpen || !element || !elementType) return null;
 
   const renderGraveInfo = (grave: Grave) => (
@@ -99,6 +141,70 @@ export function ElementInfoModal({
               {grave.geometry.coordinates[1].toFixed(6)},{' '}
               {grave.geometry.coordinates[0].toFixed(6)}
             </p>
+          </div>
+        )}
+
+        {/* Groups Section */}
+        {graveGroups.length > 0 && (
+          <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+              Groups
+            </label>
+            <div className="space-y-3">
+              {graveGroups.map((group) => {
+                const members = groupMembers.get(group.uuid) || [];
+                return (
+                  <div
+                    key={group.uuid}
+                    className="bg-gray-50 dark:bg-gray-700 rounded p-3"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <div
+                        className="w-4 h-4 rounded"
+                        style={{ backgroundColor: group.properties.color }}
+                      />
+                      <span className="font-medium text-gray-900 dark:text-white">
+                        {group.properties.name}
+                      </span>
+                    </div>
+                    {group.properties.description && (
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                        {group.properties.description}
+                      </p>
+                    )}
+                    {members.length > 0 && (
+                      <div>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                          Other members:
+                        </p>
+                        <div className="space-y-1">
+                          {members.map((member) => (
+                            <button
+                              key={member.uuid}
+                              onClick={() => onNavigateToGrave?.(member)}
+                              className="block w-full text-left px-2 py-1 text-sm text-blue-600 dark:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
+                            >
+                              {member.properties.name || (
+                                <span className="italic">Unnamed grave</span>
+                              )}
+                              {' - '}
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                Row {member.grid.row}, Col {member.grid.col}
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {members.length === 0 && (
+                      <p className="text-xs text-gray-500 dark:text-gray-400 italic">
+                        No other members in this group
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 
@@ -285,6 +391,19 @@ export function ElementInfoModal({
           {elementType === 'road' && renderRoadInfo(element as Road)}
 
           <div className="flex gap-3 mt-6">
+            {onGoToLocation && (
+              <button
+                onClick={() => {
+                  if (element && elementType) {
+                    onGoToLocation(element, elementType);
+                  }
+                }}
+                className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium"
+                title="Center map on this location"
+              >
+                📍 Go To Location
+              </button>
+            )}
             <button
               onClick={onEdit}
               className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium"
