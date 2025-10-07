@@ -4,21 +4,1672 @@
     "id": "current",
     "name": "Willow Creek Memorial Gardens",
     "grid": {
-      "rows": 15,
-      "cols": 20,
-      "cellSize": 50
+      "rows": 20,
+      "cols": 25,
+      "cellSize": 50,
+      "shape": [
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": 2
+        },
+        {
+          "row": 0,
+          "col": 3
+        },
+        {
+          "row": 0,
+          "col": 4
+        },
+        {
+          "row": 0,
+          "col": 5
+        },
+        {
+          "row": 0,
+          "col": 6
+        },
+        {
+          "row": 0,
+          "col": 7
+        },
+        {
+          "row": 0,
+          "col": 8
+        },
+        {
+          "row": 0,
+          "col": 9
+        },
+        {
+          "row": 0,
+          "col": 10
+        },
+        {
+          "row": 0,
+          "col": 11
+        },
+        {
+          "row": 0,
+          "col": 12
+        },
+        {
+          "row": 0,
+          "col": 13
+        },
+        {
+          "row": 0,
+          "col": 14
+        },
+        {
+          "row": 0,
+          "col": 15
+        },
+        {
+          "row": 0,
+          "col": 16
+        },
+        {
+          "row": 0,
+          "col": 17
+        },
+        {
+          "row": 0,
+          "col": 18
+        },
+        {
+          "row": 1,
+          "col": 1
+        },
+        {
+          "row": 1,
+          "col": 2
+        },
+        {
+          "row": 1,
+          "col": 3
+        },
+        {
+          "row": 1,
+          "col": 4
+        },
+        {
+          "row": 1,
+          "col": 5
+        },
+        {
+          "row": 1,
+          "col": 6
+        },
+        {
+          "row": 1,
+          "col": 7
+        },
+        {
+          "row": 1,
+          "col": 8
+        },
+        {
+          "row": 1,
+          "col": 9
+        },
+        {
+          "row": 1,
+          "col": 10
+        },
+        {
+          "row": 1,
+          "col": 11
+        },
+        {
+          "row": 1,
+          "col": 12
+        },
+        {
+          "row": 1,
+          "col": 13
+        },
+        {
+          "row": 1,
+          "col": 14
+        },
+        {
+          "row": 1,
+          "col": 15
+        },
+        {
+          "row": 1,
+          "col": 16
+        },
+        {
+          "row": 1,
+          "col": 17
+        },
+        {
+          "row": 1,
+          "col": 18
+        },
+        {
+          "row": 1,
+          "col": 19
+        },
+        {
+          "row": 1,
+          "col": 20
+        },
+        {
+          "row": 2,
+          "col": 2
+        },
+        {
+          "row": 2,
+          "col": 3
+        },
+        {
+          "row": 2,
+          "col": 4
+        },
+        {
+          "row": 2,
+          "col": 5
+        },
+        {
+          "row": 2,
+          "col": 6
+        },
+        {
+          "row": 2,
+          "col": 7
+        },
+        {
+          "row": 2,
+          "col": 8
+        },
+        {
+          "row": 2,
+          "col": 9
+        },
+        {
+          "row": 2,
+          "col": 10
+        },
+        {
+          "row": 2,
+          "col": 11
+        },
+        {
+          "row": 2,
+          "col": 12
+        },
+        {
+          "row": 2,
+          "col": 13
+        },
+        {
+          "row": 2,
+          "col": 14
+        },
+        {
+          "row": 2,
+          "col": 15
+        },
+        {
+          "row": 2,
+          "col": 16
+        },
+        {
+          "row": 2,
+          "col": 17
+        },
+        {
+          "row": 2,
+          "col": 18
+        },
+        {
+          "row": 2,
+          "col": 19
+        },
+        {
+          "row": 2,
+          "col": 20
+        },
+        {
+          "row": 2,
+          "col": 21
+        },
+        {
+          "row": 2,
+          "col": 22
+        },
+        {
+          "row": 3,
+          "col": 3
+        },
+        {
+          "row": 3,
+          "col": 4
+        },
+        {
+          "row": 3,
+          "col": 5
+        },
+        {
+          "row": 3,
+          "col": 6
+        },
+        {
+          "row": 3,
+          "col": 7
+        },
+        {
+          "row": 3,
+          "col": 8
+        },
+        {
+          "row": 3,
+          "col": 9
+        },
+        {
+          "row": 3,
+          "col": 10
+        },
+        {
+          "row": 3,
+          "col": 11
+        },
+        {
+          "row": 3,
+          "col": 12
+        },
+        {
+          "row": 3,
+          "col": 13
+        },
+        {
+          "row": 3,
+          "col": 14
+        },
+        {
+          "row": 3,
+          "col": 15
+        },
+        {
+          "row": 3,
+          "col": 16
+        },
+        {
+          "row": 3,
+          "col": 17
+        },
+        {
+          "row": 3,
+          "col": 18
+        },
+        {
+          "row": 3,
+          "col": 19
+        },
+        {
+          "row": 3,
+          "col": 20
+        },
+        {
+          "row": 3,
+          "col": 21
+        },
+        {
+          "row": 3,
+          "col": 22
+        },
+        {
+          "row": 3,
+          "col": 23
+        },
+        {
+          "row": 4,
+          "col": 3
+        },
+        {
+          "row": 4,
+          "col": 4
+        },
+        {
+          "row": 4,
+          "col": 5
+        },
+        {
+          "row": 4,
+          "col": 6
+        },
+        {
+          "row": 4,
+          "col": 7
+        },
+        {
+          "row": 4,
+          "col": 8
+        },
+        {
+          "row": 4,
+          "col": 9
+        },
+        {
+          "row": 4,
+          "col": 10
+        },
+        {
+          "row": 4,
+          "col": 11
+        },
+        {
+          "row": 4,
+          "col": 12
+        },
+        {
+          "row": 4,
+          "col": 13
+        },
+        {
+          "row": 4,
+          "col": 14
+        },
+        {
+          "row": 4,
+          "col": 15
+        },
+        {
+          "row": 4,
+          "col": 16
+        },
+        {
+          "row": 4,
+          "col": 17
+        },
+        {
+          "row": 4,
+          "col": 18
+        },
+        {
+          "row": 4,
+          "col": 19
+        },
+        {
+          "row": 4,
+          "col": 20
+        },
+        {
+          "row": 4,
+          "col": 21
+        },
+        {
+          "row": 4,
+          "col": 22
+        },
+        {
+          "row": 4,
+          "col": 23
+        },
+        {
+          "row": 4,
+          "col": 24
+        },
+        {
+          "row": 5,
+          "col": 4
+        },
+        {
+          "row": 5,
+          "col": 5
+        },
+        {
+          "row": 5,
+          "col": 6
+        },
+        {
+          "row": 5,
+          "col": 7
+        },
+        {
+          "row": 5,
+          "col": 8
+        },
+        {
+          "row": 5,
+          "col": 9
+        },
+        {
+          "row": 5,
+          "col": 10
+        },
+        {
+          "row": 5,
+          "col": 11
+        },
+        {
+          "row": 5,
+          "col": 12
+        },
+        {
+          "row": 5,
+          "col": 13
+        },
+        {
+          "row": 5,
+          "col": 14
+        },
+        {
+          "row": 5,
+          "col": 15
+        },
+        {
+          "row": 5,
+          "col": 16
+        },
+        {
+          "row": 5,
+          "col": 17
+        },
+        {
+          "row": 5,
+          "col": 18
+        },
+        {
+          "row": 5,
+          "col": 19
+        },
+        {
+          "row": 5,
+          "col": 20
+        },
+        {
+          "row": 5,
+          "col": 21
+        },
+        {
+          "row": 5,
+          "col": 22
+        },
+        {
+          "row": 5,
+          "col": 23
+        },
+        {
+          "row": 5,
+          "col": 24
+        },
+        {
+          "row": 6,
+          "col": 4
+        },
+        {
+          "row": 6,
+          "col": 5
+        },
+        {
+          "row": 6,
+          "col": 6
+        },
+        {
+          "row": 6,
+          "col": 7
+        },
+        {
+          "row": 6,
+          "col": 8
+        },
+        {
+          "row": 6,
+          "col": 9
+        },
+        {
+          "row": 6,
+          "col": 10
+        },
+        {
+          "row": 6,
+          "col": 11
+        },
+        {
+          "row": 6,
+          "col": 12
+        },
+        {
+          "row": 6,
+          "col": 13
+        },
+        {
+          "row": 6,
+          "col": 14
+        },
+        {
+          "row": 6,
+          "col": 15
+        },
+        {
+          "row": 6,
+          "col": 16
+        },
+        {
+          "row": 6,
+          "col": 17
+        },
+        {
+          "row": 6,
+          "col": 18
+        },
+        {
+          "row": 6,
+          "col": 19
+        },
+        {
+          "row": 6,
+          "col": 20
+        },
+        {
+          "row": 6,
+          "col": 21
+        },
+        {
+          "row": 6,
+          "col": 22
+        },
+        {
+          "row": 6,
+          "col": 23
+        },
+        {
+          "row": 6,
+          "col": 24
+        },
+        {
+          "row": 7,
+          "col": 4
+        },
+        {
+          "row": 7,
+          "col": 5
+        },
+        {
+          "row": 7,
+          "col": 6
+        },
+        {
+          "row": 7,
+          "col": 7
+        },
+        {
+          "row": 7,
+          "col": 8
+        },
+        {
+          "row": 7,
+          "col": 9
+        },
+        {
+          "row": 7,
+          "col": 10
+        },
+        {
+          "row": 7,
+          "col": 11
+        },
+        {
+          "row": 7,
+          "col": 12
+        },
+        {
+          "row": 7,
+          "col": 13
+        },
+        {
+          "row": 7,
+          "col": 14
+        },
+        {
+          "row": 7,
+          "col": 15
+        },
+        {
+          "row": 7,
+          "col": 16
+        },
+        {
+          "row": 7,
+          "col": 17
+        },
+        {
+          "row": 7,
+          "col": 18
+        },
+        {
+          "row": 7,
+          "col": 19
+        },
+        {
+          "row": 7,
+          "col": 20
+        },
+        {
+          "row": 7,
+          "col": 21
+        },
+        {
+          "row": 7,
+          "col": 22
+        },
+        {
+          "row": 7,
+          "col": 23
+        },
+        {
+          "row": 7,
+          "col": 24
+        },
+        {
+          "row": 8,
+          "col": 4
+        },
+        {
+          "row": 8,
+          "col": 5
+        },
+        {
+          "row": 8,
+          "col": 6
+        },
+        {
+          "row": 8,
+          "col": 7
+        },
+        {
+          "row": 8,
+          "col": 8
+        },
+        {
+          "row": 8,
+          "col": 9
+        },
+        {
+          "row": 8,
+          "col": 10
+        },
+        {
+          "row": 8,
+          "col": 11
+        },
+        {
+          "row": 8,
+          "col": 12
+        },
+        {
+          "row": 8,
+          "col": 13
+        },
+        {
+          "row": 8,
+          "col": 14
+        },
+        {
+          "row": 8,
+          "col": 15
+        },
+        {
+          "row": 8,
+          "col": 16
+        },
+        {
+          "row": 8,
+          "col": 17
+        },
+        {
+          "row": 8,
+          "col": 18
+        },
+        {
+          "row": 8,
+          "col": 19
+        },
+        {
+          "row": 8,
+          "col": 20
+        },
+        {
+          "row": 8,
+          "col": 21
+        },
+        {
+          "row": 8,
+          "col": 22
+        },
+        {
+          "row": 8,
+          "col": 23
+        },
+        {
+          "row": 8,
+          "col": 24
+        },
+        {
+          "row": 9,
+          "col": 4
+        },
+        {
+          "row": 9,
+          "col": 5
+        },
+        {
+          "row": 9,
+          "col": 6
+        },
+        {
+          "row": 9,
+          "col": 7
+        },
+        {
+          "row": 9,
+          "col": 8
+        },
+        {
+          "row": 9,
+          "col": 9
+        },
+        {
+          "row": 9,
+          "col": 10
+        },
+        {
+          "row": 9,
+          "col": 11
+        },
+        {
+          "row": 9,
+          "col": 12
+        },
+        {
+          "row": 9,
+          "col": 13
+        },
+        {
+          "row": 9,
+          "col": 14
+        },
+        {
+          "row": 9,
+          "col": 15
+        },
+        {
+          "row": 9,
+          "col": 16
+        },
+        {
+          "row": 9,
+          "col": 17
+        },
+        {
+          "row": 9,
+          "col": 18
+        },
+        {
+          "row": 9,
+          "col": 19
+        },
+        {
+          "row": 9,
+          "col": 20
+        },
+        {
+          "row": 9,
+          "col": 21
+        },
+        {
+          "row": 9,
+          "col": 22
+        },
+        {
+          "row": 9,
+          "col": 23
+        },
+        {
+          "row": 9,
+          "col": 24
+        },
+        {
+          "row": 10,
+          "col": 3
+        },
+        {
+          "row": 10,
+          "col": 4
+        },
+        {
+          "row": 10,
+          "col": 5
+        },
+        {
+          "row": 10,
+          "col": 6
+        },
+        {
+          "row": 10,
+          "col": 7
+        },
+        {
+          "row": 10,
+          "col": 8
+        },
+        {
+          "row": 10,
+          "col": 9
+        },
+        {
+          "row": 10,
+          "col": 10
+        },
+        {
+          "row": 10,
+          "col": 11
+        },
+        {
+          "row": 10,
+          "col": 12
+        },
+        {
+          "row": 10,
+          "col": 13
+        },
+        {
+          "row": 10,
+          "col": 14
+        },
+        {
+          "row": 10,
+          "col": 15
+        },
+        {
+          "row": 10,
+          "col": 16
+        },
+        {
+          "row": 10,
+          "col": 17
+        },
+        {
+          "row": 10,
+          "col": 18
+        },
+        {
+          "row": 10,
+          "col": 19
+        },
+        {
+          "row": 10,
+          "col": 20
+        },
+        {
+          "row": 10,
+          "col": 21
+        },
+        {
+          "row": 10,
+          "col": 22
+        },
+        {
+          "row": 10,
+          "col": 23
+        },
+        {
+          "row": 10,
+          "col": 24
+        },
+        {
+          "row": 11,
+          "col": 3
+        },
+        {
+          "row": 11,
+          "col": 4
+        },
+        {
+          "row": 11,
+          "col": 5
+        },
+        {
+          "row": 11,
+          "col": 6
+        },
+        {
+          "row": 11,
+          "col": 7
+        },
+        {
+          "row": 11,
+          "col": 8
+        },
+        {
+          "row": 11,
+          "col": 9
+        },
+        {
+          "row": 11,
+          "col": 10
+        },
+        {
+          "row": 11,
+          "col": 11
+        },
+        {
+          "row": 11,
+          "col": 12
+        },
+        {
+          "row": 11,
+          "col": 13
+        },
+        {
+          "row": 11,
+          "col": 14
+        },
+        {
+          "row": 11,
+          "col": 15
+        },
+        {
+          "row": 11,
+          "col": 16
+        },
+        {
+          "row": 11,
+          "col": 17
+        },
+        {
+          "row": 11,
+          "col": 18
+        },
+        {
+          "row": 11,
+          "col": 19
+        },
+        {
+          "row": 11,
+          "col": 20
+        },
+        {
+          "row": 11,
+          "col": 21
+        },
+        {
+          "row": 11,
+          "col": 22
+        },
+        {
+          "row": 11,
+          "col": 23
+        },
+        {
+          "row": 12,
+          "col": 3
+        },
+        {
+          "row": 12,
+          "col": 4
+        },
+        {
+          "row": 12,
+          "col": 5
+        },
+        {
+          "row": 12,
+          "col": 6
+        },
+        {
+          "row": 12,
+          "col": 7
+        },
+        {
+          "row": 12,
+          "col": 8
+        },
+        {
+          "row": 12,
+          "col": 9
+        },
+        {
+          "row": 12,
+          "col": 10
+        },
+        {
+          "row": 12,
+          "col": 11
+        },
+        {
+          "row": 12,
+          "col": 12
+        },
+        {
+          "row": 12,
+          "col": 13
+        },
+        {
+          "row": 12,
+          "col": 14
+        },
+        {
+          "row": 12,
+          "col": 15
+        },
+        {
+          "row": 12,
+          "col": 16
+        },
+        {
+          "row": 12,
+          "col": 17
+        },
+        {
+          "row": 12,
+          "col": 18
+        },
+        {
+          "row": 12,
+          "col": 19
+        },
+        {
+          "row": 12,
+          "col": 20
+        },
+        {
+          "row": 12,
+          "col": 21
+        },
+        {
+          "row": 12,
+          "col": 22
+        },
+        {
+          "row": 13,
+          "col": 2
+        },
+        {
+          "row": 13,
+          "col": 3
+        },
+        {
+          "row": 13,
+          "col": 4
+        },
+        {
+          "row": 13,
+          "col": 5
+        },
+        {
+          "row": 13,
+          "col": 6
+        },
+        {
+          "row": 13,
+          "col": 7
+        },
+        {
+          "row": 13,
+          "col": 8
+        },
+        {
+          "row": 13,
+          "col": 9
+        },
+        {
+          "row": 13,
+          "col": 10
+        },
+        {
+          "row": 13,
+          "col": 11
+        },
+        {
+          "row": 13,
+          "col": 12
+        },
+        {
+          "row": 13,
+          "col": 13
+        },
+        {
+          "row": 13,
+          "col": 14
+        },
+        {
+          "row": 13,
+          "col": 15
+        },
+        {
+          "row": 13,
+          "col": 16
+        },
+        {
+          "row": 13,
+          "col": 17
+        },
+        {
+          "row": 13,
+          "col": 18
+        },
+        {
+          "row": 13,
+          "col": 19
+        },
+        {
+          "row": 13,
+          "col": 20
+        },
+        {
+          "row": 13,
+          "col": 21
+        },
+        {
+          "row": 14,
+          "col": 2
+        },
+        {
+          "row": 14,
+          "col": 3
+        },
+        {
+          "row": 14,
+          "col": 4
+        },
+        {
+          "row": 14,
+          "col": 5
+        },
+        {
+          "row": 14,
+          "col": 6
+        },
+        {
+          "row": 14,
+          "col": 7
+        },
+        {
+          "row": 14,
+          "col": 8
+        },
+        {
+          "row": 14,
+          "col": 9
+        },
+        {
+          "row": 14,
+          "col": 10
+        },
+        {
+          "row": 14,
+          "col": 11
+        },
+        {
+          "row": 14,
+          "col": 12
+        },
+        {
+          "row": 14,
+          "col": 13
+        },
+        {
+          "row": 14,
+          "col": 14
+        },
+        {
+          "row": 14,
+          "col": 15
+        },
+        {
+          "row": 14,
+          "col": 16
+        },
+        {
+          "row": 14,
+          "col": 17
+        },
+        {
+          "row": 14,
+          "col": 18
+        },
+        {
+          "row": 14,
+          "col": 19
+        },
+        {
+          "row": 15,
+          "col": 1
+        },
+        {
+          "row": 15,
+          "col": 2
+        },
+        {
+          "row": 15,
+          "col": 3
+        },
+        {
+          "row": 15,
+          "col": 4
+        },
+        {
+          "row": 15,
+          "col": 5
+        },
+        {
+          "row": 15,
+          "col": 6
+        },
+        {
+          "row": 15,
+          "col": 7
+        },
+        {
+          "row": 15,
+          "col": 8
+        },
+        {
+          "row": 15,
+          "col": 9
+        },
+        {
+          "row": 15,
+          "col": 10
+        },
+        {
+          "row": 15,
+          "col": 11
+        },
+        {
+          "row": 15,
+          "col": 12
+        },
+        {
+          "row": 15,
+          "col": 13
+        },
+        {
+          "row": 15,
+          "col": 14
+        },
+        {
+          "row": 15,
+          "col": 15
+        },
+        {
+          "row": 15,
+          "col": 16
+        },
+        {
+          "row": 15,
+          "col": 17
+        },
+        {
+          "row": 15,
+          "col": 18
+        },
+        {
+          "row": 16,
+          "col": 1
+        },
+        {
+          "row": 16,
+          "col": 2
+        },
+        {
+          "row": 16,
+          "col": 3
+        },
+        {
+          "row": 16,
+          "col": 4
+        },
+        {
+          "row": 16,
+          "col": 5
+        },
+        {
+          "row": 16,
+          "col": 6
+        },
+        {
+          "row": 16,
+          "col": 7
+        },
+        {
+          "row": 16,
+          "col": 8
+        },
+        {
+          "row": 16,
+          "col": 9
+        },
+        {
+          "row": 16,
+          "col": 10
+        },
+        {
+          "row": 16,
+          "col": 11
+        },
+        {
+          "row": 16,
+          "col": 12
+        },
+        {
+          "row": 16,
+          "col": 13
+        },
+        {
+          "row": 16,
+          "col": 14
+        },
+        {
+          "row": 16,
+          "col": 15
+        },
+        {
+          "row": 16,
+          "col": 16
+        },
+        {
+          "row": 17,
+          "col": 0
+        },
+        {
+          "row": 17,
+          "col": 1
+        },
+        {
+          "row": 17,
+          "col": 2
+        },
+        {
+          "row": 17,
+          "col": 3
+        },
+        {
+          "row": 17,
+          "col": 4
+        },
+        {
+          "row": 17,
+          "col": 5
+        },
+        {
+          "row": 17,
+          "col": 6
+        },
+        {
+          "row": 17,
+          "col": 7
+        },
+        {
+          "row": 17,
+          "col": 8
+        },
+        {
+          "row": 17,
+          "col": 9
+        },
+        {
+          "row": 17,
+          "col": 10
+        },
+        {
+          "row": 17,
+          "col": 11
+        },
+        {
+          "row": 17,
+          "col": 12
+        },
+        {
+          "row": 17,
+          "col": 13
+        },
+        {
+          "row": 17,
+          "col": 14
+        },
+        {
+          "row": 18,
+          "col": 0
+        },
+        {
+          "row": 18,
+          "col": 1
+        },
+        {
+          "row": 18,
+          "col": 2
+        },
+        {
+          "row": 18,
+          "col": 3
+        },
+        {
+          "row": 18,
+          "col": 4
+        },
+        {
+          "row": 18,
+          "col": 5
+        },
+        {
+          "row": 18,
+          "col": 6
+        },
+        {
+          "row": 18,
+          "col": 7
+        },
+        {
+          "row": 18,
+          "col": 8
+        },
+        {
+          "row": 18,
+          "col": 9
+        },
+        {
+          "row": 18,
+          "col": 10
+        },
+        {
+          "row": 18,
+          "col": 11
+        },
+        {
+          "row": 18,
+          "col": 12
+        },
+        {
+          "row": 19,
+          "col": 0
+        },
+        {
+          "row": 19,
+          "col": 1
+        },
+        {
+          "row": 19,
+          "col": 2
+        },
+        {
+          "row": 19,
+          "col": 3
+        },
+        {
+          "row": 19,
+          "col": 4
+        },
+        {
+          "row": 19,
+          "col": 5
+        },
+        {
+          "row": 19,
+          "col": 6
+        },
+        {
+          "row": 19,
+          "col": 7
+        },
+        {
+          "row": 19,
+          "col": 8
+        },
+        {
+          "row": 19,
+          "col": 9
+        },
+        {
+          "row": 19,
+          "col": 10
+        }
+      ]
     },
-    "last_modified": "2024-10-04T12:00:00.000Z",
+    "last_modified": "2025-10-06T12:00:00.000Z",
     "modified_by": "Cemetery Administrator",
     "license": "CC0-1.0"
   },
+  "groups": [
+    {
+      "uuid": "46f7ed1f-f764-499c-9012-b84630f5c03b",
+      "properties": {
+        "name": "Thompson Family",
+        "description": "Thompson family plot - veterans and spouses",
+        "color": "#3b82f6",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "c790cf92-0fb4-4de3-bae6-64c3d7fac00e",
+      "properties": {
+        "name": "Foster Family",
+        "description": "Town founder William Foster and family",
+        "color": "#8b5cf6",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "d1b71eb1-a75b-4997-9328-c34fca018b24",
+      "properties": {
+        "name": "WWII Veterans",
+        "description": "World War II military service members",
+        "color": "#ef4444",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "db143fac-50b4-4079-b8af-747af332f6e6",
+      "properties": {
+        "name": "O'Brien Family",
+        "description": "O'Brien family - musicians and artists",
+        "color": "#10b981",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "d7caebde-5769-49ad-97d9-bdf96276db55",
+      "properties": {
+        "name": "Chen Family",
+        "description": "Chen family - bilingual inscriptions",
+        "color": "#f59e0b",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "6247d557-2bc8-424b-8e15-47a711f39c92",
+      "properties": {
+        "name": "Johnson Family",
+        "description": "Johnson family - medical professionals",
+        "color": "#06b6d4",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "f0b64818-3ca9-4351-996d-974cdd417c26",
+      "properties": {
+        "name": "Santos Family",
+        "description": "Santos family - Spanish inscriptions",
+        "color": "#ec4899",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "af6d4cd2-5826-4d93-90c5-8aee648de387",
+      "properties": {
+        "name": "First Responders",
+        "description": "Firefighters, police, EMTs, and emergency personnel",
+        "color": "#dc2626",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a9f0dac0-d321-462d-94fc-d69c1ec6fd43",
+      "properties": {
+        "name": "Educators",
+        "description": "Teachers, principals, and school staff",
+        "color": "#7c3aed",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "8ace3a00-fca8-4e7a-aefd-f8bf00768a4a",
+      "properties": {
+        "name": "Infant & Child Memorials",
+        "description": "Young children and infants",
+        "color": "#fbbf24",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "b914de30-ca8b-4aff-b716-7d2efc546822",
+      "properties": {
+        "name": "19th Century Burials",
+        "description": "Historic burials from the 1800s",
+        "color": "#6b7280",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "b05168f1-e7b2-45c7-99ba-ffea6fd7a236",
+      "properties": {
+        "name": "Veterans - All Wars",
+        "description": "All military veterans regardless of conflict",
+        "color": "#991b1b",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    }
+  ],
   "graves": [
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000001",
-      "plot": "A-1",
       "grid": {
-        "row": 2,
-        "col": 3
+        "row": 3,
+        "col": 5
       },
       "properties": {
         "name": "Margaret Elizabeth Thompson",
@@ -26,16 +1677,16 @@
         "death": "2008-11-22",
         "inscription": "Beloved Wife and Mother\nForever in Our Hearts",
         "notes": "Veteran's spouse marker present",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["46f7ed1f-f764-499c-9012-b84630f5c03b"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000002",
-      "plot": "A-2",
       "grid": {
-        "row": 2,
-        "col": 4
+        "row": 3,
+        "col": 6
       },
       "properties": {
         "name": "Robert James Thompson",
@@ -43,32 +1694,55 @@
         "death": "2012-01-30",
         "inscription": "US Navy WWII\nLoving Husband",
         "notes": "Bronze military marker",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": [
+          "46f7ed1f-f764-499c-9012-b84630f5c03b",
+          "d1b71eb1-a75b-4997-9328-c34fca018b24",
+          "b05168f1-e7b2-45c7-99ba-ffea6fd7a236"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "22672163-c3d7-4201-afb0-7141af070105",
+      "grid": {
+        "row": 3,
+        "col": 7
+      },
+      "properties": {
+        "name": "David Michael Thompson",
+        "birth": "1948-06-12",
+        "death": "2020-03-18",
+        "inscription": "Loving Son and Brother\nVietnam Veteran",
+        "notes": "US Army service",
+        "group_ids": [
+          "46f7ed1f-f764-499c-9012-b84630f5c03b",
+          "b05168f1-e7b2-45c7-99ba-ffea6fd7a236"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000003",
-      "plot": "A-3",
       "grid": {
-        "row": 2,
-        "col": 5
+        "row": 3,
+        "col": 8
       },
       "properties": {
         "name": "Emily Rose Anderson",
         "birth": "1945-12-25",
         "death": "2019-05-14",
         "inscription": "Christmas Day Baby\nAngel Among Us",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000004",
-      "plot": "B-1",
       "grid": {
-        "row": 4,
-        "col": 3
+        "row": 5,
+        "col": 5
       },
       "properties": {
         "name": "William Henry Foster",
@@ -76,32 +1750,51 @@
         "death": "1976-03-08",
         "inscription": "Town Founder\n1898-1976",
         "notes": "Large granite monument with family name",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": [
+          "c790cf92-0fb4-4de3-bae6-64c3d7fac00e",
+          "b914de30-ca8b-4aff-b716-7d2efc546822"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000005",
-      "plot": "B-2",
       "grid": {
-        "row": 4,
-        "col": 4
+        "row": 5,
+        "col": 6
       },
       "properties": {
         "name": "Sarah Jane Foster",
         "birth": "1902-04-18",
         "death": "1989-12-03",
         "inscription": "Devoted Wife\nCommunity Leader",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["c790cf92-0fb4-4de3-bae6-64c3d7fac00e"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "194fd93c-1038-47a7-936f-d1a5fe1ad3f9",
+      "grid": {
+        "row": 5,
+        "col": 7
+      },
+      "properties": {
+        "name": "William Henry Foster Jr.",
+        "birth": "1925-11-08",
+        "death": "2003-07-22",
+        "inscription": "Following in Father's Footsteps\nMayor 1968-1988",
+        "group_ids": ["c790cf92-0fb4-4de3-bae6-64c3d7fac00e"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000006",
-      "plot": "C-1",
       "grid": {
-        "row": 6,
-        "col": 8
+        "row": 7,
+        "col": 12
       },
       "properties": {
         "name": "James Michael O'Brien",
@@ -109,32 +1802,49 @@
         "death": "2020-04-10",
         "inscription": "Forever Young at Heart\nRock On",
         "notes": "Custom guitar-shaped headstone",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["db143fac-50b4-4079-b8af-747af332f6e6"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000007",
-      "plot": "C-2",
       "grid": {
-        "row": 6,
-        "col": 9
+        "row": 7,
+        "col": 13
       },
       "properties": {
         "name": "Patricia Ann O'Brien",
         "birth": "1958-02-14",
         "death": "2021-09-18",
         "inscription": "Together Again\nValentine Forever",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["db143fac-50b4-4079-b8af-747af332f6e6"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "8d8749ac-aedf-4e9d-806a-4102e927efc5",
+      "grid": {
+        "row": 7,
+        "col": 14
+      },
+      "properties": {
+        "name": "Sean Patrick O'Brien",
+        "birth": "1980-03-17",
+        "death": "2022-12-05",
+        "inscription": "Beloved Son\nMusic Was His Life",
+        "notes": "Piano keys engraved on stone",
+        "group_ids": ["db143fac-50b4-4079-b8af-747af332f6e6"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000008",
-      "plot": "D-1",
       "grid": {
-        "row": 8,
-        "col": 12
+        "row": 9,
+        "col": 17
       },
       "properties": {
         "name": "Chen Wei",
@@ -142,32 +1852,48 @@
         "death": "2015-03-25",
         "inscription": "愛與和平\nLove and Peace",
         "notes": "Bilingual inscription",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["d7caebde-5769-49ad-97d9-bdf96276db55"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000009",
-      "plot": "D-2",
       "grid": {
-        "row": 8,
-        "col": 13
+        "row": 9,
+        "col": 18
       },
       "properties": {
         "name": "Li Mei Chen",
         "birth": "1940-11-03",
         "death": "2018-07-19",
         "inscription": "永恆的母親\nEternal Mother",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["d7caebde-5769-49ad-97d9-bdf96276db55"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "21dbf35a-e1ea-4974-8993-011bc7ed064e",
+      "grid": {
+        "row": 9,
+        "col": 19
+      },
+      "properties": {
+        "name": "David Chen",
+        "birth": "1965-09-22",
+        "death": "2023-02-14",
+        "inscription": "橋樑建設者\nBridge Builder Between Cultures",
+        "group_ids": ["d7caebde-5769-49ad-97d9-bdf96276db55"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000010",
-      "plot": "E-1",
       "grid": {
-        "row": 10,
-        "col": 5
+        "row": 11,
+        "col": 8
       },
       "properties": {
         "name": "Baby Michael Rodriguez",
@@ -175,16 +1901,33 @@
         "death": "2022-01-16",
         "inscription": "Our Precious Angel\nToo Beautiful for Earth",
         "notes": "Small white marble stone with lamb",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["8ace3a00-fca8-4e7a-aefd-f8bf00768a4a"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "bcbc2af1-f6ac-48ca-8e39-6a83174dfc32",
+      "grid": {
+        "row": 11,
+        "col": 9
+      },
+      "properties": {
+        "name": "Emma Grace Wilson",
+        "birth": "2018-07-22",
+        "death": "2019-11-30",
+        "inscription": "Our Little Star\nShining Forever in Heaven",
+        "notes": "Small pink stone with angel",
+        "group_ids": ["8ace3a00-fca8-4e7a-aefd-f8bf00768a4a"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000011",
-      "plot": "F-1",
       "grid": {
-        "row": 3,
-        "col": 15
+        "row": 4,
+        "col": 20
       },
       "properties": {
         "name": "Dr. Eleanor Marie Johnson",
@@ -192,32 +1935,51 @@
         "death": "2023-06-12",
         "inscription": "Healer, Teacher, Friend\nShe Made a Difference",
         "notes": "Medical symbol engraved on stone",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": [
+          "6247d557-2bc8-424b-8e15-47a711f39c92",
+          "a9f0dac0-d321-462d-94fc-d69c1ec6fd43"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000012",
-      "plot": "F-2",
       "grid": {
-        "row": 3,
-        "col": 16
+        "row": 4,
+        "col": 21
       },
       "properties": {
         "name": "Thomas Edward Johnson",
         "birth": "1938-05-20",
         "death": "2019-02-28",
         "inscription": "Beloved Husband\nWaiting for Her Return",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["6247d557-2bc8-424b-8e15-47a711f39c92"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "48158dc1-eeb5-4ee3-a264-c06522aed0d2",
+      "grid": {
+        "row": 4,
+        "col": 22
+      },
+      "properties": {
+        "name": "Dr. Robert Allen Johnson",
+        "birth": "1968-04-15",
+        "death": "2024-08-03",
+        "inscription": "Following in Mother's Footsteps\nCardiologist and Humanitarian",
+        "group_ids": ["6247d557-2bc8-424b-8e15-47a711f39c92"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000013",
-      "plot": "G-1",
       "grid": {
-        "row": 5,
-        "col": 18
+        "row": 6,
+        "col": 23
       },
       "properties": {
         "name": "Samuel Washington Brown",
@@ -225,48 +1987,71 @@
         "death": "1952-11-07",
         "inscription": "Civil War Veteran\nGrand Army of the Republic",
         "notes": "Historic marker, very weathered",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": [
+          "b914de30-ca8b-4aff-b716-7d2efc546822",
+          "b05168f1-e7b2-45c7-99ba-ffea6fd7a236"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000014",
-      "plot": "H-1",
       "grid": {
-        "row": 11,
-        "col": 16
+        "row": 12,
+        "col": 20
       },
       "properties": {
         "name": "Maria Guadalupe Santos",
         "birth": "1950-12-12",
         "death": "2017-08-15",
         "inscription": "Madre Querida\nNos Vemos en el Cielo",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["f0b64818-3ca9-4351-996d-974cdd417c26"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000015",
-      "plot": "H-2",
       "grid": {
-        "row": 11,
-        "col": 17
+        "row": 12,
+        "col": 21
       },
       "properties": {
         "name": "Jose Miguel Santos",
         "birth": "1948-03-19",
         "death": "2020-11-22",
         "inscription": "Padre y Esposo Amado\nSiempre en Nuestros Corazones",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["f0b64818-3ca9-4351-996d-974cdd417c26"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "b69734fc-9969-453b-a018-324ceab92266",
+      "grid": {
+        "row": 12,
+        "col": 22
+      },
+      "properties": {
+        "name": "Carmen Rosa Santos",
+        "birth": "1975-05-08",
+        "death": "2021-06-17",
+        "inscription": "Hermana Querida\nMaestra de Corazón",
+        "notes": "Elementary school teacher",
+        "group_ids": [
+          "f0b64818-3ca9-4351-996d-974cdd417c26",
+          "a9f0dac0-d321-462d-94fc-d69c1ec6fd43"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000016",
-      "plot": "I-1",
       "grid": {
-        "row": 13,
-        "col": 8
+        "row": 14,
+        "col": 12
       },
       "properties": {
         "name": "Ahmed Hassan Al-Rashid",
@@ -274,16 +2059,15 @@
         "death": "2022-05-03",
         "inscription": "إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ\nPeace Be Upon Him",
         "notes": "Facing qibla direction",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000017",
-      "plot": "J-1",
       "grid": {
-        "row": 7,
-        "col": 3
+        "row": 8,
+        "col": 5
       },
       "properties": {
         "name": "Catherine Louise Miller",
@@ -291,31 +2075,34 @@
         "death": "1972-04-15",
         "inscription": "Schoolteacher 1910-1955\nShe Taught With Love",
         "notes": "Small apple engraving at base",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": [
+          "b914de30-ca8b-4aff-b716-7d2efc546822",
+          "a9f0dac0-d321-462d-94fc-d69c1ec6fd43"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000018",
-      "plot": "K-1",
       "grid": {
-        "row": 9,
-        "col": 17
+        "row": 10,
+        "col": 21
       },
       "properties": {
         "name": "Unknown Soldier",
         "inscription": "Known But to God\nRest in Peace",
         "notes": "Small cross, no dates available",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["b05168f1-e7b2-45c7-99ba-ffea6fd7a236"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000019",
-      "plot": "L-1",
       "grid": {
-        "row": 12,
-        "col": 11
+        "row": 13,
+        "col": 15
       },
       "properties": {
         "name": "Jennifer Marie Peterson",
@@ -323,16 +2110,15 @@
         "death": "2023-12-20",
         "inscription": "Loving Mother & Artist\nHer Colors Live On",
         "notes": "Colorful ceramic tiles embedded in stone",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "a1b2c3d4-0001-4000-8000-000000000020",
-      "plot": "M-1",
       "grid": {
-        "row": 4,
-        "col": 11
+        "row": 5,
+        "col": 15
       },
       "properties": {
         "name": "Daniel Joseph McCarthy",
@@ -340,7 +2126,185 @@
         "death": "2021-07-04",
         "inscription": "Firefighter, Hero, Friend\nGave His Life for Others",
         "notes": "Firefighter emblem, flag holder present",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "group_ids": ["af6d4cd2-5826-4d93-90c5-8aee648de387"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000021",
+      "grid": {
+        "row": 5,
+        "col": 16
+      },
+      "properties": {
+        "name": "Officer Maria Elena Rodriguez",
+        "birth": "1982-08-14",
+        "death": "2023-03-22",
+        "inscription": "Police Officer\nTo Protect and Serve",
+        "notes": "Badge number 247 engraved",
+        "group_ids": ["af6d4cd2-5826-4d93-90c5-8aee648de387"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000022",
+      "grid": {
+        "row": 5,
+        "col": 17
+      },
+      "properties": {
+        "name": "Paramedic James Allen Wright",
+        "birth": "1976-12-03",
+        "death": "2020-04-15",
+        "inscription": "EMT - First to Respond\nLast to Give Up",
+        "notes": "Star of Life symbol",
+        "group_ids": ["af6d4cd2-5826-4d93-90c5-8aee648de387"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000023",
+      "grid": {
+        "row": 8,
+        "col": 6
+      },
+      "properties": {
+        "name": "Principal Harold Thompson",
+        "birth": "1932-05-17",
+        "death": "2015-09-08",
+        "inscription": "Educator for 40 Years\nShaping Young Minds",
+        "notes": "Book engraving",
+        "group_ids": ["a9f0dac0-d321-462d-94fc-d69c1ec6fd43"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000024",
+      "grid": {
+        "row": 2,
+        "col": 10
+      },
+      "properties": {
+        "name": "Sergeant William Patterson",
+        "birth": "1921-01-11",
+        "death": "1945-06-06",
+        "inscription": "D-Day Hero\nSupreme Sacrifice for Freedom",
+        "notes": "KIA Normandy, France",
+        "group_ids": [
+          "d1b71eb1-a75b-4997-9328-c34fca018b24",
+          "b05168f1-e7b2-45c7-99ba-ffea6fd7a236"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000025",
+      "grid": {
+        "row": 2,
+        "col": 11
+      },
+      "properties": {
+        "name": "Captain James Morrison",
+        "birth": "1918-09-23",
+        "death": "1944-12-16",
+        "inscription": "US Army Air Corps\nBattle of the Bulge",
+        "notes": "Bronze Star recipient",
+        "group_ids": [
+          "d1b71eb1-a75b-4997-9328-c34fca018b24",
+          "b05168f1-e7b2-45c7-99ba-ffea6fd7a236"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000026",
+      "grid": {
+        "row": 2,
+        "col": 12
+      },
+      "properties": {
+        "name": "Nurse Betty Lou Anderson",
+        "birth": "1922-07-04",
+        "death": "2010-11-11",
+        "inscription": "Army Nurse Corps WWII\nAngel of Mercy",
+        "notes": "Served in Pacific Theater",
+        "group_ids": [
+          "d1b71eb1-a75b-4997-9328-c34fca018b24",
+          "b05168f1-e7b2-45c7-99ba-ffea6fd7a236"
+        ],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000027",
+      "grid": {
+        "row": 16,
+        "col": 8
+      },
+      "properties": {
+        "name": "Josephine Margaret O'Connor",
+        "birth": "1885-03-17",
+        "death": "1963-12-25",
+        "inscription": "Beloved Matriarch\nIrish Immigrant",
+        "notes": "Celtic cross design",
+        "group_ids": ["b914de30-ca8b-4aff-b716-7d2efc546822"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000028",
+      "grid": {
+        "row": 16,
+        "col": 9
+      },
+      "properties": {
+        "name": "Patrick Sean O'Connor",
+        "birth": "1880-11-22",
+        "death": "1958-08-14",
+        "inscription": "Railroad Man\nBuilt This Town",
+        "group_ids": ["b914de30-ca8b-4aff-b716-7d2efc546822"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000029",
+      "grid": {
+        "row": 18,
+        "col": 5
+      },
+      "properties": {
+        "name": "Baby Charlotte Rose Williams",
+        "birth": "2020-06-15",
+        "death": "2020-06-15",
+        "inscription": "Born Sleeping\nForever Our Angel",
+        "notes": "Tiny pink stone with rose",
+        "group_ids": ["8ace3a00-fca8-4e7a-aefd-f8bf00768a4a"],
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000030",
+      "grid": {
+        "row": 6,
+        "col": 10
+      },
+      "properties": {
+        "name": "Reverend Michael David Stone",
+        "birth": "1940-02-28",
+        "death": "2022-12-24",
+        "inscription": "Man of God\nShepherd of Souls",
+        "notes": "Served community for 50 years",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     }
@@ -351,13 +2315,13 @@
       "landmark_type": "statue",
       "grid": {
         "row": 1,
-        "col": 10
+        "col": 13
       },
       "properties": {
         "name": "Angel of Hope",
         "description": "White marble angel statue at cemetery entrance",
         "notes": "Dedicated 1965, restored 2015",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
@@ -365,14 +2329,14 @@
       "uuid": "landmark-0001-4000-8000-000000000002",
       "landmark_type": "bench",
       "grid": {
-        "row": 5,
-        "col": 10
+        "row": 6,
+        "col": 14
       },
       "properties": {
         "name": "Reflection Bench",
         "description": "Granite bench for visitors",
         "notes": "In memory of the Anderson family",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
@@ -380,14 +2344,14 @@
       "uuid": "landmark-0001-4000-8000-000000000003",
       "landmark_type": "tree",
       "grid": {
-        "row": 7,
-        "col": 6
+        "row": 8,
+        "col": 9
       },
       "properties": {
         "name": "Memorial Oak",
         "description": "Large oak tree, approximately 150 years old",
         "notes": "Protected tree, cemetery namesake",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
@@ -395,13 +2359,13 @@
       "uuid": "landmark-0001-4000-8000-000000000004",
       "landmark_type": "pine",
       "grid": {
-        "row": 13,
-        "col": 1
+        "row": 14,
+        "col": 3
       },
       "properties": {
         "name": "Evergreen Grove",
         "description": "Cluster of pine trees in southwest corner",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
@@ -409,14 +2373,14 @@
       "uuid": "landmark-0001-4000-8000-000000000005",
       "landmark_type": "building",
       "grid": {
-        "row": 1,
-        "col": 1
+        "row": 0,
+        "col": 2
       },
       "properties": {
         "name": "Cemetery Office",
         "description": "Small administrative building with records room",
         "notes": "Office hours: Mon-Fri 9AM-4PM",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
@@ -424,14 +2388,14 @@
       "uuid": "landmark-0001-4000-8000-000000000006",
       "landmark_type": "bench",
       "grid": {
-        "row": 10,
-        "col": 2
+        "row": 11,
+        "col": 4
       },
       "properties": {
         "name": "Sunset Viewing Bench",
         "description": "Wooden bench facing west",
         "notes": "Donated by Wilson family 2020",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
@@ -439,14 +2403,14 @@
       "uuid": "landmark-0001-4000-8000-000000000007",
       "landmark_type": "statue",
       "grid": {
-        "row": 14,
-        "col": 19
+        "row": 15,
+        "col": 16
       },
       "properties": {
         "name": "Eternal Peace Monument",
         "description": "Bronze statue of praying hands",
         "notes": "Veterans memorial section marker",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
@@ -454,14 +2418,103 @@
       "uuid": "landmark-0001-4000-8000-000000000008",
       "landmark_type": "tree",
       "grid": {
-        "row": 3,
-        "col": 19
+        "row": 4,
+        "col": 23
       },
       "properties": {
         "name": "Weeping Willow",
         "description": "Large weeping willow near pond area",
         "notes": "Planted in memory of Emily Whitmore, 1985",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000009",
+      "landmark_type": "bench",
+      "grid": {
+        "row": 2,
+        "col": 6
+      },
+      "properties": {
+        "name": "Thompson Family Bench",
+        "description": "Memorial bench donated by Thompson family",
+        "notes": "In loving memory of Robert and Margaret",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000010",
+      "landmark_type": "statue",
+      "grid": {
+        "row": 11,
+        "col": 10
+      },
+      "properties": {
+        "name": "Children's Memorial Garden",
+        "description": "Small angel statue surrounded by flowers",
+        "notes": "Dedicated to all children who passed too soon",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000011",
+      "landmark_type": "pine",
+      "grid": {
+        "row": 17,
+        "col": 7
+      },
+      "properties": {
+        "name": "Southern Pine Stand",
+        "description": "Group of tall pine trees marking southern boundary",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000012",
+      "landmark_type": "tree",
+      "grid": {
+        "row": 9,
+        "col": 24
+      },
+      "properties": {
+        "name": "Ancient Maple",
+        "description": "Massive maple tree, estimated 200+ years old",
+        "notes": "Pre-dates cemetery, protected landmark",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000013",
+      "landmark_type": "other",
+      "grid": {
+        "row": 19,
+        "col": 5
+      },
+      "properties": {
+        "name": "Memorial Fountain",
+        "description": "Small decorative fountain with seating area",
+        "notes": "Installed 2010, community gathering spot",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "landmark-0001-4000-8000-000000000014",
+      "landmark_type": "building",
+      "grid": {
+        "row": 0,
+        "col": 14
+      },
+      "properties": {
+        "name": "Maintenance Shed",
+        "description": "Equipment storage building",
+        "notes": "Staff only",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     }
@@ -470,109 +2523,615 @@
     {
       "uuid": "road-0001-4000-8000-000000000001",
       "cells": [
-        { "row": 0, "col": 5 },
-        { "row": 1, "col": 5 },
-        { "row": 2, "col": 5 },
-        { "row": 3, "col": 5 },
-        { "row": 4, "col": 5 },
-        { "row": 5, "col": 5 },
-        { "row": 6, "col": 5 },
-        { "row": 7, "col": 5 },
-        { "row": 8, "col": 5 },
-        { "row": 9, "col": 5 },
-        { "row": 10, "col": 5 },
-        { "row": 11, "col": 5 },
-        { "row": 12, "col": 5 },
-        { "row": 13, "col": 5 },
-        { "row": 14, "col": 5 }
+        {
+          "row": 0,
+          "col": 8
+        },
+        {
+          "row": 1,
+          "col": 8
+        },
+        {
+          "row": 2,
+          "col": 8
+        },
+        {
+          "row": 3,
+          "col": 8
+        },
+        {
+          "row": 4,
+          "col": 8
+        },
+        {
+          "row": 5,
+          "col": 8
+        },
+        {
+          "row": 6,
+          "col": 8
+        },
+        {
+          "row": 7,
+          "col": 8
+        },
+        {
+          "row": 8,
+          "col": 8
+        },
+        {
+          "row": 9,
+          "col": 8
+        },
+        {
+          "row": 10,
+          "col": 8
+        },
+        {
+          "row": 11,
+          "col": 8
+        },
+        {
+          "row": 12,
+          "col": 8
+        },
+        {
+          "row": 13,
+          "col": 8
+        },
+        {
+          "row": 14,
+          "col": 8
+        },
+        {
+          "row": 15,
+          "col": 8
+        },
+        {
+          "row": 16,
+          "col": 8
+        },
+        {
+          "row": 17,
+          "col": 8
+        },
+        {
+          "row": 18,
+          "col": 8
+        },
+        {
+          "row": 19,
+          "col": 8
+        }
       ],
       "properties": {
         "name": "Memorial Avenue",
-        "description": "Main north-south path through cemetery",
-        "color": "#9ca3af",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "description": "Main north-south path through cemetery - paved",
+        "color": "#374151",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "road-0001-4000-8000-000000000002",
       "cells": [
-        { "row": 5, "col": 0 },
-        { "row": 5, "col": 1 },
-        { "row": 5, "col": 2 },
-        { "row": 5, "col": 3 },
-        { "row": 5, "col": 4 },
-        { "row": 5, "col": 5 },
-        { "row": 5, "col": 6 },
-        { "row": 5, "col": 7 },
-        { "row": 5, "col": 8 },
-        { "row": 5, "col": 9 },
-        { "row": 5, "col": 10 },
-        { "row": 5, "col": 11 },
-        { "row": 5, "col": 12 },
-        { "row": 5, "col": 13 },
-        { "row": 5, "col": 14 },
-        { "row": 5, "col": 15 },
-        { "row": 5, "col": 16 },
-        { "row": 5, "col": 17 },
-        { "row": 5, "col": 18 },
-        { "row": 5, "col": 19 }
+        {
+          "row": 6,
+          "col": 4
+        },
+        {
+          "row": 6,
+          "col": 5
+        },
+        {
+          "row": 6,
+          "col": 6
+        },
+        {
+          "row": 6,
+          "col": 7
+        },
+        {
+          "row": 6,
+          "col": 8
+        },
+        {
+          "row": 6,
+          "col": 9
+        },
+        {
+          "row": 6,
+          "col": 10
+        },
+        {
+          "row": 6,
+          "col": 11
+        },
+        {
+          "row": 6,
+          "col": 12
+        },
+        {
+          "row": 6,
+          "col": 13
+        },
+        {
+          "row": 6,
+          "col": 14
+        },
+        {
+          "row": 6,
+          "col": 15
+        },
+        {
+          "row": 6,
+          "col": 16
+        },
+        {
+          "row": 6,
+          "col": 17
+        },
+        {
+          "row": 6,
+          "col": 18
+        },
+        {
+          "row": 6,
+          "col": 19
+        },
+        {
+          "row": 6,
+          "col": 20
+        },
+        {
+          "row": 6,
+          "col": 21
+        },
+        {
+          "row": 6,
+          "col": 22
+        },
+        {
+          "row": 6,
+          "col": 23
+        },
+        {
+          "row": 6,
+          "col": 24
+        }
       ],
       "properties": {
         "name": "Oak Tree Lane",
-        "description": "Main east-west path, runs by the large oak tree",
-        "color": "#9ca3af",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "description": "Main east-west path, runs by the large oak tree - paved",
+        "color": "#374151",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "road-0001-4000-8000-000000000003",
       "cells": [
-        { "row": 0, "col": 14 },
-        { "row": 1, "col": 14 },
-        { "row": 2, "col": 14 },
-        { "row": 3, "col": 14 },
-        { "row": 4, "col": 14 },
-        { "row": 5, "col": 14 },
-        { "row": 6, "col": 14 },
-        { "row": 7, "col": 14 },
-        { "row": 8, "col": 14 },
-        { "row": 9, "col": 14 },
-        { "row": 10, "col": 14 },
-        { "row": 11, "col": 14 },
-        { "row": 12, "col": 14 },
-        { "row": 13, "col": 14 },
-        { "row": 14, "col": 14 }
+        {
+          "row": 0,
+          "col": 18
+        },
+        {
+          "row": 1,
+          "col": 18
+        },
+        {
+          "row": 2,
+          "col": 18
+        },
+        {
+          "row": 2,
+          "col": 19
+        },
+        {
+          "row": 3,
+          "col": 19
+        },
+        {
+          "row": 4,
+          "col": 19
+        },
+        {
+          "row": 5,
+          "col": 19
+        },
+        {
+          "row": 6,
+          "col": 19
+        },
+        {
+          "row": 7,
+          "col": 19
+        },
+        {
+          "row": 8,
+          "col": 19
+        },
+        {
+          "row": 9,
+          "col": 20
+        },
+        {
+          "row": 10,
+          "col": 20
+        },
+        {
+          "row": 11,
+          "col": 20
+        },
+        {
+          "row": 12,
+          "col": 19
+        },
+        {
+          "row": 13,
+          "col": 19
+        },
+        {
+          "row": 14,
+          "col": 18
+        },
+        {
+          "row": 15,
+          "col": 17
+        }
       ],
       "properties": {
         "name": "Veterans Way",
-        "description": "Path leading to veterans section",
+        "description": "Curved path leading to veterans section - gravel",
         "color": "#9ca3af",
         "notes": "Small flags placed along path on Memorial Day",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     },
     {
       "uuid": "road-0001-4000-8000-000000000004",
       "cells": [
-        { "row": 10, "col": 5 },
-        { "row": 10, "col": 6 },
-        { "row": 10, "col": 7 },
-        { "row": 10, "col": 8 },
-        { "row": 10, "col": 9 },
-        { "row": 10, "col": 10 },
-        { "row": 10, "col": 11 },
-        { "row": 10, "col": 12 },
-        { "row": 10, "col": 13 },
-        { "row": 10, "col": 14 }
+        {
+          "row": 11,
+          "col": 5
+        },
+        {
+          "row": 11,
+          "col": 6
+        },
+        {
+          "row": 11,
+          "col": 7
+        },
+        {
+          "row": 11,
+          "col": 8
+        },
+        {
+          "row": 11,
+          "col": 9
+        },
+        {
+          "row": 11,
+          "col": 10
+        },
+        {
+          "row": 11,
+          "col": 11
+        },
+        {
+          "row": 11,
+          "col": 12
+        },
+        {
+          "row": 11,
+          "col": 13
+        },
+        {
+          "row": 11,
+          "col": 14
+        },
+        {
+          "row": 11,
+          "col": 15
+        },
+        {
+          "row": 11,
+          "col": 16
+        },
+        {
+          "row": 11,
+          "col": 17
+        },
+        {
+          "row": 11,
+          "col": 18
+        },
+        {
+          "row": 11,
+          "col": 19
+        },
+        {
+          "row": 11,
+          "col": 20
+        }
       ],
       "properties": {
         "name": "Willow Path",
-        "description": "Southern cross path",
-        "color": "#9ca3af",
-        "last_modified": "2024-10-04T12:00:00.000Z",
+        "description": "Southern cross path - paved",
+        "color": "#374151",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000005",
+      "cells": [
+        {
+          "row": 2,
+          "col": 4
+        },
+        {
+          "row": 3,
+          "col": 4
+        },
+        {
+          "row": 4,
+          "col": 4
+        },
+        {
+          "row": 5,
+          "col": 4
+        },
+        {
+          "row": 6,
+          "col": 4
+        },
+        {
+          "row": 7,
+          "col": 4
+        },
+        {
+          "row": 8,
+          "col": 4
+        },
+        {
+          "row": 9,
+          "col": 4
+        },
+        {
+          "row": 10,
+          "col": 4
+        },
+        {
+          "row": 11,
+          "col": 4
+        },
+        {
+          "row": 12,
+          "col": 4
+        },
+        {
+          "row": 13,
+          "col": 4
+        },
+        {
+          "row": 14,
+          "col": 4
+        },
+        {
+          "row": 15,
+          "col": 4
+        },
+        {
+          "row": 16,
+          "col": 4
+        }
+      ],
+      "properties": {
+        "name": "Founders Walk",
+        "description": "Western boundary path near founder's plot - brick pavers",
+        "color": "#b45309",
+        "notes": "Brick path installed 1998",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000006",
+      "cells": [
+        {
+          "row": 2,
+          "col": 14
+        },
+        {
+          "row": 3,
+          "col": 14
+        },
+        {
+          "row": 4,
+          "col": 14
+        },
+        {
+          "row": 5,
+          "col": 14
+        },
+        {
+          "row": 6,
+          "col": 14
+        },
+        {
+          "row": 7,
+          "col": 14
+        },
+        {
+          "row": 8,
+          "col": 14
+        },
+        {
+          "row": 9,
+          "col": 14
+        },
+        {
+          "row": 10,
+          "col": 14
+        },
+        {
+          "row": 11,
+          "col": 14
+        }
+      ],
+      "properties": {
+        "name": "Central Crossing",
+        "description": "Interior north-south path - paved",
+        "color": "#374151",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000007",
+      "cells": [
+        {
+          "row": 2,
+          "col": 2
+        },
+        {
+          "row": 2,
+          "col": 3
+        },
+        {
+          "row": 2,
+          "col": 4
+        }
+      ],
+      "properties": {
+        "name": "Thompson Way",
+        "description": "Small path to Thompson family plot - flagstone",
+        "color": "#6b7280",
+        "notes": "Family-maintained path",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000008",
+      "cells": [
+        {
+          "row": 4,
+          "col": 4
+        },
+        {
+          "row": 4,
+          "col": 5
+        },
+        {
+          "row": 4,
+          "col": 6
+        },
+        {
+          "row": 4,
+          "col": 7
+        },
+        {
+          "row": 4,
+          "col": 8
+        }
+      ],
+      "properties": {
+        "name": "Foster Lane",
+        "description": "Short path to founder's monument - cobblestone",
+        "color": "#78716c",
+        "notes": "Historic cobblestone path from town square",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000009",
+      "cells": [
+        {
+          "row": 15,
+          "col": 5
+        },
+        {
+          "row": 16,
+          "col": 5
+        },
+        {
+          "row": 17,
+          "col": 5
+        },
+        {
+          "row": 18,
+          "col": 5
+        },
+        {
+          "row": 19,
+          "col": 5
+        }
+      ],
+      "properties": {
+        "name": "Fountain Walk",
+        "description": "Path to memorial fountain - decorative pavers",
+        "color": "#06b6d4",
+        "notes": "Blue decorative pavers installed with fountain",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000010",
+      "cells": [
+        {
+          "row": 13,
+          "col": 10
+        },
+        {
+          "row": 14,
+          "col": 10
+        },
+        {
+          "row": 15,
+          "col": 10
+        },
+        {
+          "row": 16,
+          "col": 10
+        }
+      ],
+      "properties": {
+        "name": "Heritage Trail",
+        "description": "Path through historic section - gravel",
+        "color": "#a1a1aa",
+        "notes": "Historic markers along this path",
+        "last_modified": "2025-10-06T12:00:00.000Z",
+        "modified_by": "Cemetery Administrator"
+      }
+    },
+    {
+      "uuid": "road-0001-4000-8000-000000000011",
+      "cells": [
+        {
+          "row": 10,
+          "col": 10
+        },
+        {
+          "row": 10,
+          "col": 11
+        },
+        {
+          "row": 10,
+          "col": 12
+        }
+      ],
+      "properties": {
+        "name": "Garden Path",
+        "description": "Small path to children's memorial garden - mulch",
+        "color": "#92400e",
+        "notes": "Natural mulch path, flowers planted seasonally",
+        "last_modified": "2025-10-06T12:00:00.000Z",
         "modified_by": "Cemetery Administrator"
       }
     }
@@ -580,11 +3139,38 @@
   "change_log": [
     {
       "op": "set",
-      "uuid": "a1b2c3d4-0001-4000-8000-000000000001",
+      "uuid": "cemetery-init",
       "changes": {
-        "action": "Initial cemetery data import"
+        "action": "Initial cemetery data import with comprehensive showcase data"
       },
-      "timestamp": "2024-10-04T12:00:00.000Z",
+      "timestamp": "2025-10-06T12:00:00.000Z",
+      "user": "Cemetery Administrator"
+    },
+    {
+      "op": "set",
+      "uuid": "groups-added",
+      "changes": {
+        "action": "Added 12 groups to demonstrate grouping features"
+      },
+      "timestamp": "2025-10-06T12:15:00.000Z",
+      "user": "Cemetery Administrator"
+    },
+    {
+      "op": "set",
+      "uuid": "grid-shape-updated",
+      "changes": {
+        "action": "Updated grid to non-rectangular shape to demonstrate custom boundaries"
+      },
+      "timestamp": "2025-10-06T12:30:00.000Z",
+      "user": "Cemetery Administrator"
+    },
+    {
+      "op": "set",
+      "uuid": "roads-enhanced",
+      "changes": {
+        "action": "Added multiple road types with different colors (paved, gravel, brick, cobblestone, etc.)"
+      },
+      "timestamp": "2025-10-06T12:45:00.000Z",
       "user": "Cemetery Administrator"
     }
   ]
