@@ -82,31 +82,19 @@ const GridEditCell = React.memo(
     const x = PADDING + col * CELL_SIZE;
     const y = PADDING + row * CELL_SIZE;
 
-    // Determine fill color based on validity and hover state
-    let fillColor = 'transparent';
-    let strokeColor = 'rgba(156, 163, 175, 0.3)';
-    let strokeWidth = '1';
+    // Determine cell color based on state
+    let fillColor = 'rgba(220, 252, 231, 0.5)'; // Default: Valid cell (light green)
+    let strokeColor = 'rgba(34, 197, 94, 0.6)';
+    let strokeWidth = 1;
 
-    if (isValid) {
-      // Valid cell - green tint
-      fillColor = isHovered
-        ? 'rgba(34, 197, 94, 0.3)'
-        : 'rgba(34, 197, 94, 0.1)';
-      strokeColor = isHovered
-        ? 'rgba(34, 197, 94, 0.8)'
-        : 'rgba(34, 197, 94, 0.4)';
-    } else {
-      // Invalid cell - red tint with hatching pattern
-      fillColor = isHovered
-        ? 'rgba(239, 68, 68, 0.3)'
-        : 'rgba(239, 68, 68, 0.15)';
-      strokeColor = isHovered
-        ? 'rgba(239, 68, 68, 0.8)'
-        : 'rgba(239, 68, 68, 0.4)';
-    }
-
-    if (isHovered) {
-      strokeWidth = '2';
+    if (!isValid) {
+      // Use transparent for invalid cells
+      fillColor = 'transparent';
+      strokeColor = 'transparent';
+    } else if (isHovered) {
+      fillColor = 'rgba(34, 197, 94, 0.2)';
+      strokeColor = 'rgba(34, 197, 94, 0.8)';
+      strokeWidth = 2;
     }
 
     return (
@@ -124,7 +112,7 @@ const GridEditCell = React.memo(
           onMouseLeave={onMouseLeave}
           onClick={onClick}
         />
-        {/* Hatching pattern for invalid cells */}
+        {/* Hatching pattern for invalid cells - transparent since we want them invisible */}
         {!isValid && (
           <g>
             <line
@@ -132,7 +120,7 @@ const GridEditCell = React.memo(
               y1={y}
               x2={x + CELL_SIZE}
               y2={y + CELL_SIZE}
-              stroke="rgba(239, 68, 68, 0.3)"
+              stroke="transparent"
               strokeWidth="1"
               pointerEvents="none"
             />
@@ -141,7 +129,7 @@ const GridEditCell = React.memo(
               y1={y}
               x2={x}
               y2={y + CELL_SIZE}
-              stroke="rgba(239, 68, 68, 0.3)"
+              stroke="transparent"
               strokeWidth="1"
               pointerEvents="none"
             />
@@ -848,8 +836,8 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                         y={y}
                         width={CELL_SIZE}
                         height={CELL_SIZE}
-                        fill="#ef4444"
-                        opacity={0.3}
+                        fill="transparent"
+                        opacity={1}
                       />
                     );
                   });
