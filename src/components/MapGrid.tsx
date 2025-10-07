@@ -197,13 +197,30 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
   const width = cemetery.grid.cols * CELL_SIZE + PADDING * 2;
   const height = cemetery.grid.rows * CELL_SIZE + PADDING * 2;
 
+  // Calculate dynamic minimum zoom based on cemetery size
+  // This ensures you can always zoom out far enough to see the entire cemetery
+  const calculateMinZoom = useCallback(() => {
+    if (!svgRef.current) return 0.1;
+    const containerRect = svgRef.current.getBoundingClientRect();
+    const zoomX = containerRect.width / width;
+    const zoomY = containerRect.height / height;
+    // Use 95% of calculated zoom to add small margin
+    return Math.min(zoomX, zoomY, 1) * 0.95;
+  }, [width, height]);
+
   // Expose zoom methods to parent via ref
   useImperativeHandle(ref, () => ({
     zoomIn: () => {
-      setTransform((prev) => ({ ...prev, scale: prev.scale * 1.2 }));
+      setTransform((prev) => ({
+        ...prev,
+        scale: Math.min(prev.scale * 1.2, 5),
+      }));
     },
     zoomOut: () => {
-      setTransform((prev) => ({ ...prev, scale: prev.scale * 0.8 }));
+      setTransform((prev) => {
+        const minZoom = calculateMinZoom();
+        return { ...prev, scale: Math.max(prev.scale * 0.8, minZoom) };
+      });
     },
     resetView: () => {
       setTransform({ x: 0, y: 0, scale: 1 });
@@ -290,7 +307,12 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
       if (!svgRef.current) return;
 
       const delta = e.deltaY > 0 ? 0.9 : 1.1;
-      const newScale = Math.max(0.5, Math.min(3, transform.scale * delta));
+      const minZoom = calculateMinZoom();
+      const maxZoom = 5;
+      const newScale = Math.max(
+        minZoom,
+        Math.min(maxZoom, transform.scale * delta)
+      );
 
       // Get mouse position relative to the SVG element
       const rect = svgRef.current.getBoundingClientRect();
@@ -311,7 +333,7 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
         scale: newScale,
       });
     },
-    [transform]
+    [transform, calculateMinZoom]
   );
 
   // Touch event handlers
@@ -365,9 +387,11 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
         const currentDistance = getTouchDistance(e.touches);
         if (lastTouchDistance && transform) {
           const scaleDelta = currentDistance / lastTouchDistance;
+          const minZoom = calculateMinZoom();
+          const maxZoom = 5;
           const newScale = Math.max(
-            0.5,
-            Math.min(3, transform.scale * scaleDelta)
+            minZoom,
+            Math.min(maxZoom, transform.scale * scaleDelta)
           );
 
           // Get the center point between the two touches
@@ -394,7 +418,7 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
         setLastTouchDistance(currentDistance);
       }
     },
-    [isDragging, dragStart, lastTouchDistance, transform]
+    [isDragging, dragStart, lastTouchDistance, transform, calculateMinZoom]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -443,6 +467,65 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
       }));
     }
   }, [listHighlightedGrave, transform.scale]);
+
+  // Calculate Level of Detail based on zoom level
+  // This reduces DOM nodes when zoomed way out
+  const lodLevel = useMemo(() => {
+    if (transform.scale < 0.2) return 'minimal'; // Very zoomed out
+    if (transform.scale < 0.5) return 'low'; // Zoomed out
+    if (transform.scale < 1.5) return 'medium'; // Normal
+    return 'high'; // Zoomed in
+  }, [transform.scale]);
+
+  // Calculate visible cell range for viewport culling
+  // This dramatically improves performance for large cemeteries by only rendering visible cells
+  const visibleCells = useMemo(() => {
+    if (!svgRef.current) {
+      // Return all cells if we can't calculate viewport
+      return {
+        minRow: 0,
+        maxRow: cemetery.grid.rows - 1,
+        minCol: 0,
+        maxCol: cemetery.grid.cols - 1,
+      };
+    }
+
+    const containerRect = svgRef.current.getBoundingClientRect();
+
+    // Calculate viewport bounds in SVG coordinates
+    const viewportLeft = -transform.x / transform.scale;
+    const viewportTop = -transform.y / transform.scale;
+    const viewportRight = (containerRect.width - transform.x) / transform.scale;
+    const viewportBottom =
+      (containerRect.height - transform.y) / transform.scale;
+
+    // Convert to cell coordinates with buffer for smooth scrolling
+    const buffer = 5; // cells outside viewport to render
+    const minCol = Math.max(
+      0,
+      Math.floor((viewportLeft - PADDING) / CELL_SIZE) - buffer
+    );
+    const maxCol = Math.min(
+      cemetery.grid.cols - 1,
+      Math.ceil((viewportRight - PADDING) / CELL_SIZE) + buffer
+    );
+    const minRow = Math.max(
+      0,
+      Math.floor((viewportTop - PADDING) / CELL_SIZE) - buffer
+    );
+    const maxRow = Math.min(
+      cemetery.grid.rows - 1,
+      Math.ceil((viewportBottom - PADDING) / CELL_SIZE) + buffer
+    );
+
+    return { minRow, maxRow, minCol, maxCol };
+  }, [
+    cemetery.grid.rows,
+    cemetery.grid.cols,
+    transform.x,
+    transform.y,
+    transform.scale,
+  ]);
 
   // Create grave lookup by grid position
   const gravesByPosition = useMemo(() => {
@@ -617,125 +700,192 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
         <g
           transform={`translate(${transform.x}, ${transform.y}) scale(${transform.scale})`}
         >
-          {/* Valid cells background (grass green) */}
+          {/* Valid cells background (grass green) - skip individual cells when zoomed way out */}
           <g className="valid-cells-background">
-            {Array.from({ length: cemetery.grid.rows }).map((_, row) =>
-              Array.from({ length: cemetery.grid.cols }).map((_, col) => {
-                const cellKey = `${row},${col}`;
-                const isValid = cemetery.grid.validCells
-                  ? cemetery.grid.validCells.has(cellKey)
-                  : true; // All cells valid if no validCells defined
-
-                if (!isValid) return null; // Don't render invalid cells
-
-                const x = PADDING + col * CELL_SIZE;
-                const y = PADDING + row * CELL_SIZE;
-
-                return (
-                  <rect
-                    key={`bg-${row}-${col}`}
-                    x={x}
-                    y={y}
-                    width={CELL_SIZE}
-                    height={CELL_SIZE}
-                    className="fill-cemetery-grass-light dark:fill-cemetery-grass-dark"
-                    pointerEvents="none"
-                  />
-                );
-              })
-            )}
-          </g>
-
-          {/* Grid lines */}
-          <g className="grid-lines">
-            {Array.from({ length: cemetery.grid.rows + 1 }).map((_, i) => (
-              <line
-                key={`h-${i}`}
-                x1={PADDING}
-                y1={PADDING + i * CELL_SIZE}
-                x2={PADDING + cemetery.grid.cols * CELL_SIZE}
-                y2={PADDING + i * CELL_SIZE}
-                stroke="currentColor"
-                className="text-gray-400 dark:text-gray-600"
-                strokeWidth="1"
+            {lodLevel === 'minimal' ? (
+              // When zoomed way out, render one big rect instead of individual cells
+              <rect
+                x={PADDING}
+                y={PADDING}
+                width={cemetery.grid.cols * CELL_SIZE}
+                height={cemetery.grid.rows * CELL_SIZE}
+                fill="#86efac"
+                opacity={0.3}
               />
-            ))}
-            {Array.from({ length: cemetery.grid.cols + 1 }).map((_, i) => (
-              <line
-                key={`v-${i}`}
-                x1={PADDING + i * CELL_SIZE}
-                y1={PADDING}
-                x2={PADDING + i * CELL_SIZE}
-                y2={PADDING + cemetery.grid.rows * CELL_SIZE}
-                stroke="currentColor"
-                className="text-gray-400 dark:text-gray-600"
-                strokeWidth="1"
-              />
-            ))}
-          </g>
-
-          {/* Invalid cells overlay (show in normal view when cemetery has custom shape) */}
-          {!gridEditMode && cemetery.grid.validCells && (
-            <g className="invalid-cells-overlay">
-              {Array.from({ length: cemetery.grid.rows }).map((_, row) =>
-                Array.from({ length: cemetery.grid.cols }).map((_, col) => {
+            ) : (
+              // Normal: render individual cells
+              Array.from({
+                length: visibleCells.maxRow - visibleCells.minRow + 1,
+              }).map((_, idx) => {
+                const row = visibleCells.minRow + idx;
+                return Array.from({
+                  length: visibleCells.maxCol - visibleCells.minCol + 1,
+                }).map((_, jdx) => {
+                  const col = visibleCells.minCol + jdx;
                   const cellKey = `${row},${col}`;
-                  const isValid = cemetery.grid.validCells!.has(cellKey);
+                  const isValid = cemetery.grid.validCells
+                    ? cemetery.grid.validCells.has(cellKey)
+                    : true; // All cells valid if no validCells defined
 
-                  if (isValid) return null; // Don't render valid cells
+                  if (!isValid) return null; // Don't render invalid cells
 
                   const x = PADDING + col * CELL_SIZE;
                   const y = PADDING + row * CELL_SIZE;
 
                   return (
                     <rect
-                      key={`invalid-cell-${row}-${col}`}
+                      key={`bg-${row}-${col}`}
                       x={x}
                       y={y}
                       width={CELL_SIZE}
                       height={CELL_SIZE}
-                      className="fill-cemetery-invalid"
-                      pointerEvents="none"
+                      fill="#86efac"
+                      opacity={0.3}
                     />
                   );
-                })
-              )}
+                });
+              })
+            )}
+          </g>
+
+          {/* Grid lines - only render visible lines and clip to viewport */}
+          <g className="grid-lines">
+            {/* Horizontal lines - clipped to visible columns */}
+            {lodLevel !== 'minimal' &&
+              Array.from({
+                length: visibleCells.maxRow - visibleCells.minRow + 2,
+              }).map((_, idx) => {
+                const i = visibleCells.minRow + idx;
+                if (i > cemetery.grid.rows) return null;
+                // Clip line to visible columns for performance
+                const x1 = PADDING + visibleCells.minCol * CELL_SIZE;
+                const x2 = PADDING + (visibleCells.maxCol + 1) * CELL_SIZE;
+                return (
+                  <line
+                    key={`h-${i}`}
+                    x1={x1}
+                    y1={PADDING + i * CELL_SIZE}
+                    x2={x2}
+                    y2={PADDING + i * CELL_SIZE}
+                    stroke="#9ca3af"
+                    strokeWidth="1"
+                    opacity={lodLevel === 'low' ? 0.5 : 1}
+                  />
+                );
+              })}
+            {/* Vertical lines - clipped to visible rows */}
+            {lodLevel !== 'minimal' &&
+              Array.from({
+                length: visibleCells.maxCol - visibleCells.minCol + 2,
+              }).map((_, idx) => {
+                const i = visibleCells.minCol + idx;
+                if (i > cemetery.grid.cols) return null;
+                // Clip line to visible rows for performance
+                const y1 = PADDING + visibleCells.minRow * CELL_SIZE;
+                const y2 = PADDING + (visibleCells.maxRow + 1) * CELL_SIZE;
+                return (
+                  <line
+                    key={`v-${i}`}
+                    x1={PADDING + i * CELL_SIZE}
+                    y1={y1}
+                    x2={PADDING + i * CELL_SIZE}
+                    y2={y2}
+                    stroke="#9ca3af"
+                    strokeWidth="1"
+                    opacity={lodLevel === 'low' ? 0.5 : 1}
+                  />
+                );
+              })}
+          </g>
+
+          {/* Invalid cells overlay (show in normal view when cemetery has custom shape) - skip when zoomed way out */}
+          {!gridEditMode &&
+            cemetery.grid.validCells &&
+            lodLevel !== 'minimal' && (
+              <g className="invalid-cells-overlay">
+                {Array.from({
+                  length: visibleCells.maxRow - visibleCells.minRow + 1,
+                }).map((_, idx) => {
+                  const row = visibleCells.minRow + idx;
+                  return Array.from({
+                    length: visibleCells.maxCol - visibleCells.minCol + 1,
+                  }).map((_, jdx) => {
+                    const col = visibleCells.minCol + jdx;
+                    const cellKey = `${row},${col}`;
+                    const isValid = cemetery.grid.validCells!.has(cellKey);
+
+                    if (isValid) return null; // Don't render valid cells
+
+                    const x = PADDING + col * CELL_SIZE;
+                    const y = PADDING + row * CELL_SIZE;
+
+                    return (
+                      <rect
+                        key={`invalid-cell-${row}-${col}`}
+                        x={x}
+                        y={y}
+                        width={CELL_SIZE}
+                        height={CELL_SIZE}
+                        fill="#ef4444"
+                        opacity={0.3}
+                      />
+                    );
+                  });
+                })}
+              </g>
+            )}
+
+          {/* Row/Col labels - skip when zoomed way out (too small to read) */}
+          {lodLevel !== 'minimal' && lodLevel !== 'low' && (
+            <g className="labels text-xs fill-gray-600 dark:fill-gray-400">
+              {Array.from({
+                length: visibleCells.maxRow - visibleCells.minRow + 1,
+              }).map((_, idx) => {
+                const i = visibleCells.minRow + idx;
+                return (
+                  <text
+                    key={`row-${i}`}
+                    x={PADDING - 5}
+                    y={PADDING + i * CELL_SIZE + CELL_SIZE / 2}
+                    textAnchor="end"
+                    dominantBaseline="middle"
+                    fontSize="10"
+                  >
+                    {i}
+                  </text>
+                );
+              })}
+              {Array.from({
+                length: visibleCells.maxCol - visibleCells.minCol + 1,
+              }).map((_, idx) => {
+                const i = visibleCells.minCol + idx;
+                return (
+                  <text
+                    key={`col-${i}`}
+                    x={PADDING + i * CELL_SIZE + CELL_SIZE / 2}
+                    y={PADDING - 5}
+                    textAnchor="middle"
+                    dominantBaseline="auto"
+                    fontSize="10"
+                  >
+                    {i}
+                  </text>
+                );
+              })}
             </g>
           )}
 
-          {/* Row/Col labels */}
-          <g className="labels text-xs fill-gray-600 dark:fill-gray-400">
-            {Array.from({ length: cemetery.grid.rows }).map((_, i) => (
-              <text
-                key={`row-${i}`}
-                x={PADDING - 5}
-                y={PADDING + i * CELL_SIZE + CELL_SIZE / 2}
-                textAnchor="end"
-                dominantBaseline="middle"
-                fontSize="10"
-              >
-                {i}
-              </text>
-            ))}
-            {Array.from({ length: cemetery.grid.cols }).map((_, i) => (
-              <text
-                key={`col-${i}`}
-                x={PADDING + i * CELL_SIZE + CELL_SIZE / 2}
-                y={PADDING - 5}
-                textAnchor="middle"
-                dominantBaseline="auto"
-                fontSize="10"
-              >
-                {i}
-              </text>
-            ))}
-          </g>
-
-          {/* Clickable cells (for add mode) */}
-          {addMode && (
+          {/* Clickable cells (for add mode) - skip when zoomed way out for performance */}
+          {addMode && lodLevel !== 'minimal' && (
             <g className="clickable-cells">
-              {Array.from({ length: cemetery.grid.rows }).map((_, row) =>
-                Array.from({ length: cemetery.grid.cols }).map((_, col) => {
+              {Array.from({
+                length: visibleCells.maxRow - visibleCells.minRow + 1,
+              }).map((_, idx) => {
+                const row = visibleCells.minRow + idx;
+                return Array.from({
+                  length: visibleCells.maxCol - visibleCells.minCol + 1,
+                }).map((_, jdx) => {
+                  const col = visibleCells.minCol + jdx;
                   const x = PADDING + col * CELL_SIZE;
                   const y = PADDING + row * CELL_SIZE;
                   const isHovered =
@@ -764,16 +914,22 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                       onClick={(e) => handleCellClick(row, col, e)}
                     />
                   );
-                })
-              )}
+                });
+              })}
             </g>
           )}
 
-          {/* Grid shape editing overlay */}
-          {gridEditMode && (
+          {/* Grid shape editing overlay - only render visible cells, skip when zoomed way out */}
+          {gridEditMode && lodLevel !== 'minimal' && (
             <g className="grid-edit-overlay">
-              {Array.from({ length: cemetery.grid.rows }).map((_, row) =>
-                Array.from({ length: cemetery.grid.cols }).map((_, col) => {
+              {Array.from({
+                length: visibleCells.maxRow - visibleCells.minRow + 1,
+              }).map((_, idx) => {
+                const row = visibleCells.minRow + idx;
+                return Array.from({
+                  length: visibleCells.maxCol - visibleCells.minCol + 1,
+                }).map((_, jdx) => {
+                  const col = visibleCells.minCol + jdx;
                   const cellKey = `${row},${col}`;
                   const isHovered =
                     hoveredCell?.row === row && hoveredCell?.col === col;
@@ -797,8 +953,8 @@ export const MapGrid = forwardRef<MapGridRef, MapGridProps>(function MapGrid(
                       onClick={(e) => handleGridEditCellClick(row, col, e)}
                     />
                   );
-                })
-              )}
+                });
+              })}
             </g>
           )}
 

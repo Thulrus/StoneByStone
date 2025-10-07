@@ -24,6 +24,11 @@ export function CreateCemeteryModal({
 
   if (!isOpen) return null;
 
+  // Calculate total cells for warning messages
+  const totalCells = (parseInt(rows) || 0) * (parseInt(cols) || 0);
+  const showPerformanceWarning = totalCells > 20000;
+  const showLargeWarning = totalCells > 50000;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -37,13 +42,29 @@ export function CreateCemeteryModal({
     const rowsNum = parseInt(rows);
     const colsNum = parseInt(cols);
 
-    if (!rowsNum || rowsNum < 1 || rowsNum > 100) {
-      setError('Rows must be between 1 and 100');
+    if (!rowsNum || rowsNum < 1) {
+      setError('Rows must be at least 1');
       return;
     }
 
-    if (!colsNum || colsNum < 1 || colsNum > 100) {
-      setError('Columns must be between 1 and 100');
+    if (!colsNum || colsNum < 1) {
+      setError('Columns must be at least 1');
+      return;
+    }
+
+    // Soft limit: warn about performance but allow
+    if (rowsNum > 500 || colsNum > 500) {
+      setError(
+        'Maximum 500 rows and 500 columns allowed for performance reasons'
+      );
+      return;
+    }
+
+    // Hard limit: prevent creating extremely large cemeteries
+    if (rowsNum * colsNum > 250000) {
+      setError(
+        'Total cells cannot exceed 250,000 (e.g., 500×500). This is for performance reasons.'
+      );
       return;
     }
 
@@ -173,7 +194,7 @@ export function CreateCemeteryModal({
                     value={rows}
                     onChange={(e) => setRows(e.target.value)}
                     min="1"
-                    max="100"
+                    max="500"
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
@@ -191,7 +212,7 @@ export function CreateCemeteryModal({
                     value={cols}
                     onChange={(e) => setCols(e.target.value)}
                     min="1"
-                    max="100"
+                    max="500"
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
@@ -201,10 +222,34 @@ export function CreateCemeteryModal({
                 Your grid will have{' '}
                 <strong>
                   {parseInt(rows) || 0} × {parseInt(cols) || 0} ={' '}
-                  {(parseInt(rows) || 0) * (parseInt(cols) || 0)}
+                  {totalCells.toLocaleString()}
                 </strong>{' '}
                 total squares.
               </p>
+
+              {/* Performance warnings */}
+              {showLargeWarning && (
+                <div className="bg-orange-50 dark:bg-orange-900 border border-orange-200 dark:border-orange-700 rounded-md p-3">
+                  <p className="text-sm text-orange-800 dark:text-orange-200 font-semibold flex items-center gap-2">
+                    <span>⚠️</span>
+                    Large Cemetery Warning
+                  </p>
+                  <p className="text-sm text-orange-700 dark:text-orange-300 mt-1">
+                    This cemetery has over 50,000 cells and may experience
+                    performance issues. Consider using a smaller size for
+                    smoother operation.
+                  </p>
+                </div>
+              )}
+
+              {showPerformanceWarning && !showLargeWarning && (
+                <div className="bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-md p-3">
+                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                    <strong>Note:</strong> Large cemeteries (20,000+ cells) may
+                    have slightly reduced performance when panning and zooming.
+                  </p>
+                </div>
+              )}
 
               {error && (
                 <div className="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-md p-3">
