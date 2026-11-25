@@ -1,6 +1,6 @@
 # StoneByStone v2 — Overhaul Plan
 
-> Status: **Proposed** · Written: 2026-11-18 · Scope: full rebuild, hosted on GitHub Pages
+> Status: **Accepted** · Written: 2026-11-18 · Decisions finalized: 2026-11-25 · Scope: full rebuild, hosted on GitHub Pages
 >
 > This document is the single source of truth for the v2 rebuild. It covers the product
 > vision, the user experience, the data model, the architecture, migration from v1, and a
@@ -52,7 +52,7 @@ v1 asked the user to design an abstract grid first and then type into a form per
 is a spreadsheet with a map skin, and it does not match the physical reality of a cemetery
 or the conditions of fieldwork. v2 is rebuilt around three ideas:
 
-1. **Split capture from transcription.** In the field you only *locate* and *photograph*
+1. **Split capture from transcription.** In the field you only _locate_ and _photograph_
    each stone (~5 seconds per stone, no typing). At a desk you transcribe from the photos
    with a keyboard-first workflow (~30 seconds per stone).
 2. **Real geography, many placement aids.** A real map with aerial imagery, a
@@ -69,14 +69,41 @@ feature.
 
 ## 2. Decisions already made
 
-| Question | Decision |
-| --- | --- |
-| Primary use | **Historic cemeteries**, but must work for any cemetery (modern, active, rural, urban). |
-| Geography | **US first**, designed for **international** use from day one (data model, dates, names, imagery). |
-| Collaboration | **Mostly solo.** Must be able to **combine partial datasets** from different people into a more complete map. Real-time multi-user sync is *not* required. |
-| AI transcription | Acceptable, **low priority**, opt-in, bring-your-own key. |
-| Rebuild vs refactor | **Full rebuild.** No v1 code needs to be preserved. v1 *data* must be importable. |
-| Hosting | **GitHub Pages** (static). |
+| Question             | Decision                                                                                                                                                   |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary use          | **Historic cemeteries**, but must work for any cemetery (modern, active, rural, urban).                                                                    |
+| Geography            | **US first**, designed for **international** use from day one (data model, dates, names, imagery).                                                         |
+| Collaboration        | **Mostly solo.** Must be able to **combine partial datasets** from different people into a more complete map. Real-time multi-user sync is _not_ required. |
+| AI transcription     | Acceptable, **low priority**, opt-in, bring-your-own key.                                                                                                  |
+| Rebuild vs refactor  | **Full rebuild.** No v1 code needs to be preserved. v1 _data_ must be importable.                                                                          |
+| Hosting              | **GitHub Pages** (static).                                                                                                                                 |
+| v1 in production?    | **No real user data in v1.** v2 is built on `master` and replaces the live site from M0.                                                                   |
+| v1 IndexedDB import  | **Dropped.** Only the `.cem.json` file importer is built (§22). v1 stays recoverable at tag `v1-final`.                                                    |
+| Field devices        | **iOS and Android are both first-class.** Test on real devices at the end of M0 and during M3.                                                             |
+| Default data license | **CC BY 4.0.**                                                                                                                                             |
+| i18n library         | **Lingui.**                                                                                                                                                |
+
+### 2.1 Execution workflow
+
+- Each milestone M0–M8 is a GitHub milestone, and each task is an issue with acceptance criteria.
+- Work is mostly autonomous: commits go to `master` (or short-lived branches) with CI green.
+  Check-ins happen at each milestone boundary and before each field trial.
+- This document is the spec. When a decision changes during implementation, update it here in
+  the same commit.
+
+### 2.2 Technical resolutions (ambiguities closed before M0)
+
+| Topic                           | Resolution                                                                                                                                                                                                                                                                      |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Stamp granularity               | One stamp per **top-level field**. Object-valued fields (`name`, `position`, `address`, `inscription`, `age`, `military`, `dimensionsCm`) are atomic, so their parts never mix between writers.                                                                                 |
+| Arrays under merge              | `aliases` and `sources` merge by **set union**. All other arrays (`condition`, `symbols`, `flags`, `tags`, `relations`, ...) are last-writer-wins as a whole value, and concurrent edits surface as conflicts.                                                                  |
+| Monument → photos               | `Monument.photoIds` is **removed**, and `Photo.monumentId` is the only link. This avoids losing a photo when two devices add one concurrently. Display order is by role, then `takenAt`.                                                                                        |
+| Monument status                 | `located` / `photographed` / `transcribed` are **derived** (has a photo; has a person or inscription) and materialized on write so they can be indexed. `verified` is explicit (`verified?: Stamp`) and is cleared automatically when a transcription field changes afterwards. |
+| History volume                  | Consecutive edits to the same entity by the same contributor within 30 s are coalesced into one `HistoryEntry`.                                                                                                                                                                 |
+| Undo                            | A session undo stack of inverse patches. A merge or import records a pre-change snapshot of every record it touched, under one history group, so it can be undone as a single operation.                                                                                        |
+| "Byte-for-byte equivalent" (M1) | Deep-equal after canonical JSON serialization (sorted keys). Photos compare by `sha256`.                                                                                                                                                                                        |
+| Node / CI                       | Node 22 LTS. Playwright runs Chromium and WebKit (as a stand-in for iOS Safari) in CI.                                                                                                                                                                                          |
+| Code license                    | Open: the repo has no LICENSE file yet. Needs an owner decision before M7 publishing.                                                                                                                                                                                           |
 
 ---
 
@@ -112,7 +139,7 @@ the migration in §22.
   ground, and building it is upfront work with no payoff.
 - Data entry is form-first, in the field, on a phone — the slowest and most error-prone
   possible place to type.
-- No photos. In cemetery documentation, the photo *is* the primary record.
+- No photos. In cemetery documentation, the photo _is_ the primary record.
 - One person per grave. Couples' stones, family monuments, and footstones can't be modeled.
 - Dates are `<input type="date">`, so `1887`, `abt 1900`, `Feb 10, 1709/10`, or
   `aged 72y 3m 5d` can't be recorded.
@@ -169,7 +196,7 @@ the migration in §22.
                                               └──────────────────────────────────────┘
 ```
 
-Either mode works on any device; the split is about *what the UI optimizes for*. A user
+Either mode works on any device; the split is about _what the UI optimizes for_. A user
 with good weather and a clear stone can transcribe on the spot. A user at a desk can place
 stones on aerial imagery without ever visiting.
 
@@ -178,8 +205,8 @@ stones on aerial imagery without ever visiting.
 - **Home** — list of cemeteries on this device, with progress rings; "New cemetery";
   "Import"; backup status banner.
 - **Cemetery** — the map (or schematic view), with status coloring and a bottom sheet.
-  Tabs/modes: *Survey* (field capture), *Transcribe*, *People* (searchable index),
-  *Progress*, *Setup* (sections, rows, overlays, imagery, offline download), *Share/Export*.
+  Tabs/modes: _Survey_ (field capture), _Transcribe_, _People_ (searchable index),
+  _Progress_, _Setup_ (sections, rows, overlays, imagery, offline download), _Share/Export_.
 - **Stone detail** — photos, people on the stone, attributes, history, position editor.
 - **Person detail** — names, dates, relationships, sources, which stone.
 - **Merge review** — side-by-side candidate matches when combining datasets.
@@ -194,13 +221,15 @@ graves are ~1 m apart. GPS alone cannot place individual stones. v2 combines sev
 methods; each produces a `position.source` and an `accuracyM` estimate.
 
 ### 7.1 Aerial imagery + direct placement
+
 A real map (MapLibre GL) with aerial imagery (see §24). Rows, paths, and sometimes
 individual stones are visible. The user can place or drag any stone on the map. The map can
 be **rotated** so rows run horizontally on screen, which makes placement far easier.
 
 ### 7.2 Walk-a-row (the primary capture method)
-1. User defines a row: draw a line on the map, *or* stand at the row start and tap
-   "Row start here" (GPS), *or* just name it ("Row 4") and set geometry later.
+
+1. User defines a row: draw a line on the map, _or_ stand at the row start and tap
+   "Row start here" (GPS), _or_ just name it ("Row 4") and set geometry later.
 2. User walks the row. Each **Next stone** opens the camera; one shot (optionally a second
    for the back) creates a Monument with `address.rowId` and an incrementing `rowIndex`.
 3. Position is computed along the row line:
@@ -217,11 +246,13 @@ This gets ordering right automatically, which is the hardest thing to recover la
 thing visitors most need ("third stone from the oak in Row 4").
 
 ### 7.3 GPS averaging
+
 "Hold still" mode collects fixes for ~10 s (configurable), discards outliers, and stores the
 mean with an accuracy estimate. Shown as a circle. Used as a hint, snapped to the active row
 line where one exists. GPS is never run continuously (battery).
 
 ### 7.4 Plat map / image overlays
+
 Many historic cemeteries have a hand-drawn plat map. The user photographs or uploads it,
 then pins ≥3 control points (image point ↔ map point). The app computes an affine transform
 (least-squares, with residuals shown) and draws the image over the map with an opacity
@@ -229,16 +260,19 @@ slider. Stones can be placed by tapping the plat. Same mechanism supports **dron
 orthophotos** (a big upgrade where canopy allows) and pinning the **v1 legacy grid** (§22).
 
 ### 7.5 Schematic view (no imagery)
+
 Under heavy tree canopy (common in New England and Southern historic cemeteries), aerial
 imagery shows only treetops. The schematic view lays out Sections → Rows → stones in order
 as a clean diagram, needing no coordinates at all. Walk-a-row works identically in it.
 This view is also how v1 grid data is shown before it is pinned to the map.
 
 ### 7.6 Relative placement
+
 "Place relative to…" an existing stone or landmark: e.g. "2 m behind stone #14". Useful for
 filling gaps and for small family plots.
 
 ### 7.7 Alignment of whole datasets
+
 When two people's surveys of the same cemetery are combined, their coordinates may be
 systematically offset (different GPS days, different methods). Matched pairs of stones are
 used to compute a similarity transform and re-align the incoming dataset (§21.4).
@@ -286,20 +320,21 @@ used to compute a similarity transform and re-align the incoming dataset (§21.4
 - **Form, keyboard-first:**
   - `Tab` through fields, `Enter` = save & next, `Ctrl+Enter` = save & add another person on
     this stone, `Ctrl+.` = mark uncertain, `Ctrl+I` = insert `[illegible]`.
-  - **Inscription** box preserves line breaks, entered *as carved*.
+  - **Inscription** box preserves line breaks, entered _as carved_.
   - **People on this stone**: each with names, dates, age-at-death, relationship text.
   - **Smart date fields** accept free text and show the parsed interpretation live (§10.1).
   - **Name autocomplete** from names already in this cemetery and the imported index.
 - **Matching panel:** if the cemetery has imported index records, likely matches for the
   current stone are listed (name similarity + dates + row) — one click to link.
 - **Verify pass:** a second, faster pass (by the same or another person) that confirms each
-  transcription against the photo; moves status to *verified*.
+  transcription against the photo; moves status to _verified_.
 
 ---
 
 ## 10. Historic cemetery specifics
 
 ### 10.1 Dates
+
 A `FuzzyDate` (§19) stores structured parts plus the original text. The parser must handle:
 
 - Partial: `1887`, `Mar 1887`, `March 1887`, `3/1887`.
@@ -318,6 +353,7 @@ A `FuzzyDate` (§19) stores structured parts plus the original text. The parser 
   ambiguity flagged.
 
 ### 10.2 Names
+
 Structured name parts **plus** an `asCarved` string: given, middle, surname, maiden/birth
 surname, prefix (Rev., Dr., Capt.), suffix (Jr., Sr., 2d, III), nickname. Common
 abbreviations are recognized for search but preserved in display: `Wm.` William,
@@ -326,11 +362,13 @@ Benjamin, `Saml.` Samuel, `Eliz.` Elizabeth. Search uses phonetic matching (Soun
 Daitch–Mokotoff) so `Schmidt`/`Smith`/`Smyth` cluster.
 
 ### 10.3 Relationships carved on stones
+
 Store the carved phrase verbatim (`wife of`, `consort of`, `relict of` (= widow),
 `son of John & Mary`, `dau. of`) **and** structured links between Person records on the
 same or different stones.
 
 ### 10.4 Stone types and features worth capturing
+
 - Headstone/footstone pairs (footstones often bear only initials) — linked monuments.
 - Family plots, curbing, enclosures, fences, gates — map features that group stones.
 - Fieldstones (uninscribed) and depressions — real burials with no inscription.
@@ -345,6 +383,7 @@ same or different stones.
 - Epitaph, inscription language, script.
 
 ### 10.5 Transcription conventions
+
 Documented in-app and stored per cemetery: `[illegible]`, `[?]` after an uncertain
 character/word, `[broken]`, `/` or real line breaks, `[on back]`. Users can choose a
 convention preset; the export notes which convention was used.
@@ -361,7 +400,7 @@ convention preset; the export notes which convention was used.
   historical society, WPA/DAR survey, church register, interment card file. A column-mapping
   UI (with saved presets) creates Person records with `source: imported-index` and no stone.
   During transcription and in a dedicated **Match** view, these are matched to stones. The
-  survey becomes *verify and place* instead of *start from nothing*, and index records with
+  survey becomes _verify and place_ instead of _start from nothing_, and index records with
   no stone highlight probable unmarked or lost graves.
 - **Duplicate detection** within a dataset: same/similar name + compatible dates, or two
   stones within ~1 m with similar transcriptions. Reviewed, never auto-merged.
@@ -377,10 +416,11 @@ convention preset; the export notes which convention was used.
 
 ## 12. Sharing and combining partial datasets
 
-The explicit goal: *"if you had done part of a cemetery, you could combine that with
-someone else's partial data to make a more complete map."*
+The explicit goal: _"if you had done part of a cemetery, you could combine that with
+someone else's partial data to make a more complete map."_
 
 ### 12.1 Mechanism (no server)
+
 - **Full export** (`.sbs` zip, §20): everything including photos.
 - **Share packet**: only records changed since a chosen point (or since last shared with a
   given person), optionally without full-res photos. Small enough to email or message.
@@ -389,6 +429,7 @@ someone else's partial data to make a more complete map."*
 - Optional later: share via Web Share API / QR code for small packets; cloud sync (§27).
 
 ### 12.2 What makes merging hard and how v2 handles it
+
 1. **Same record edited in two places** → per-field Hybrid Logical Clock stamps give a
    deterministic last-writer-wins result for each field independently; true conflicts
    (both changed the same field since their common ancestor) are surfaced for review.
@@ -398,13 +439,14 @@ someone else's partial data to make a more complete map."*
    matches side by side with photos and accepts/rejects. Accepted matches are merged and an
    alias (`sameAs`) is recorded so future packets from the same partner merge automatically.
 3. **Same cemetery created independently** (different cemetery IDs) → the import flow
-   suggests "this looks like *Oak Hill Cemetery* on this device" by name similarity and
+   suggests "this looks like _Oak Hill Cemetery_ on this device" by name similarity and
    boundary overlap; the user confirms, and the cemetery IDs are aliased.
 4. **Coordinates systematically offset** → dataset alignment using accepted matched pairs
    (§21.4), previewed before applying.
 5. **Different row/section naming** → section/row mapping step in the merge wizard.
 
 ### 12.3 Merge wizard UX
+
 Summary first ("142 new stones, 37 likely duplicates, 4 conflicts"), then focused review
 queues, then apply. Every merge is a single undoable operation and is logged in history.
 
@@ -413,6 +455,7 @@ queues, then apply. Every merge is a single undoable operation and is logged in 
 ## 13. Export, publishing, and visitor mode
 
 ### 13.1 Exports
+
 - `.sbs` (native, lossless, includes photos) and `.sbs.json` (no photos).
 - **CSV** (one row per person, with stone/position columns) for spreadsheets.
 - **GeoJSON** and **KML** for GIS / Google Earth.
@@ -422,6 +465,7 @@ queues, then apply. Every merge is a single undoable operation and is logged in 
 - Optional later: GEDCOM 7 (people + burial facts) for genealogy software.
 
 ### 13.2 Publishing
+
 Finished (or partial) cemeteries can be published as read-only datasets on the same GitHub
 Pages site: `public/data/<country>/<state>/<slug>/` containing the JSON and downscaled
 photos, plus a catalog index. Initially this is a documented manual step (export a
@@ -430,6 +474,7 @@ photos, plus a catalog index. Initially this is a documented manual step (export
 consider a separate data repository if it grows).
 
 ### 13.3 Visitor mode
+
 Search a name → see the stone on the map → **"Take me there"**: live GPS position,
 compass bearing (DeviceOrientation; iOS requires an explicit permission prompt), distance,
 and plain-language hints ("Section B, Row 4, 6th stone from the east path"). Shareable link
@@ -464,7 +509,7 @@ Losing a weekend of fieldwork must be nearly impossible.
 
 Built in from the start even though the first users are in the US.
 
-- **UI translation** with ICU message format (Lingui or i18next); English first; RTL layout
+- **UI translation** with ICU message format (Lingui); English first; RTL layout
   support (logical CSS properties) for Hebrew/Arabic.
 - **Names:** flexible parts (multiple surnames, patronymics, family-name-first order);
   original script plus optional romanization; Unicode-aware search and sort (`Intl.Collator`).
@@ -482,7 +527,7 @@ Built in from the start even though the first users are in the US.
 
 - **Living people:** stones often have a surviving spouse's name and birth year pre-carved.
   The app flags persons with a birth date and no death date within the last ~100 years as
-  *possibly living*; they're excluded from public exports and published data by default.
+  _possibly living_; they're excluded from public exports and published data by default.
 - **Recent burials** (configurable, e.g. last 25 years) can be excluded from publishing.
 - **Permission:** a setup note about getting owner/sexton permission for active or private
   cemeteries; publishing asks the user to confirm they have the right to share.
@@ -532,20 +577,27 @@ All entities use **UUIDv7** (time-sortable, globally unique). Every mutable fiel
 **stamp** (Hybrid Logical Clock + contributor) for merging. Shown in TypeScript.
 
 ```ts
-type ID = string;               // UUIDv7
-type HLC = string;              // "<wallMillis>-<counter>-<nodeId>", lexically sortable
-interface Stamp { hlc: HLC; by: ID } // by = Contributor.id
+type ID = string; // UUIDv7
+type HLC = string; // "<wallMillis>-<counter>-<nodeId>", lexically sortable
+interface Stamp {
+  hlc: HLC;
+  by: ID;
+} // by = Contributor.id
 
 interface Stamped {
   id: ID;
   cemeteryId: ID;
   createdAt: HLC;
   stamps: Record<string, Stamp>; // field path -> last write
-  deleted?: Stamp;               // tombstone
-  aliases?: ID[];                // IDs merged into this record (sameAs)
+  deleted?: Stamp; // tombstone
+  aliases?: ID[]; // IDs merged into this record (sameAs)
 }
 
-interface Contributor { id: ID; displayName: string; contact?: string }
+interface Contributor {
+  id: ID;
+  displayName: string;
+  contact?: string;
+}
 
 interface Cemetery {
   id: ID;
@@ -554,20 +606,25 @@ interface Cemetery {
   altNames?: string[];
   location?: LngLat;
   boundary?: GeoJSON.Polygon | GeoJSON.MultiPolygon;
-  country?: string;                 // ISO 3166-1 alpha-2
-  adminAreas?: string[];            // e.g. ["Vermont", "Windsor County", "Reading"]
+  country?: string; // ISO 3166-1 alpha-2
+  adminAreas?: string[]; // e.g. ["Vermont", "Windsor County", "Reading"]
   established?: FuzzyDate;
   status?: 'active' | 'inactive' | 'abandoned' | 'unknown';
   denomination?: string;
   description?: string;
   accessNotes?: string;
-  license?: string;                 // SPDX id, e.g. "CC-BY-4.0"
+  license?: string; // SPDX id, e.g. "CC-BY-4.0"
   contributors: ID[];
-  externalIds?: { gnis?: string; osm?: string; findAGrave?: string; [k: string]: string | undefined };
+  externalIds?: {
+    gnis?: string;
+    osm?: string;
+    findAGrave?: string;
+    [k: string]: string | undefined;
+  };
   settings: {
-    imagery?: string;               // tile source id
+    imagery?: string; // tile source id
     units: 'metric' | 'imperial';
-    dateLocale: string;             // for numeric date parsing
+    dateLocale: string; // for numeric date parsing
     transcriptionConvention: string;
     photoMaxPx: number;
   };
@@ -575,77 +632,143 @@ interface Cemetery {
   legacy?: { v1Id?: string };
 }
 
-interface Section extends Stamped { name: string; order?: number; boundary?: GeoJSON.Polygon; notes?: string }
+interface Section extends Stamped {
+  name: string;
+  order?: number;
+  boundary?: GeoJSON.Polygon;
+  notes?: string;
+}
 
 interface Row extends Stamped {
   sectionId?: ID;
   label: string;
   order?: number;
-  line?: GeoJSON.LineString;        // optional geometry
+  line?: GeoJSON.LineString; // optional geometry
   notes?: string;
 }
 
 type PositionSource =
-  | 'gps' | 'gps-averaged' | 'map' | 'row-interpolated' | 'relative'
-  | 'overlay' | 'legacy-grid' | 'aligned' | 'imported';
+  | 'gps'
+  | 'gps-averaged'
+  | 'map'
+  | 'row-interpolated'
+  | 'relative'
+  | 'overlay'
+  | 'legacy-grid'
+  | 'aligned'
+  | 'imported';
 
-interface Position { lng: number; lat: number; accuracyM?: number; source: PositionSource }
+interface Position {
+  lng: number;
+  lat: number;
+  accuracyM?: number;
+  source: PositionSource;
+}
 
 type MonumentStatus = 'located' | 'photographed' | 'transcribed' | 'verified';
 
 interface Monument extends Stamped {
-  kind: string;                     // headstone, footstone, ledger, fieldstone, unmarked, ...
+  kind: string; // headstone, footstone, ledger, fieldstone, unmarked, ...
   position?: Position;
-  facingDeg?: number;               // direction the inscription faces
-  address?: { sectionId?: ID; rowId?: ID; rowIndex?: number; plotLabel?: string };
+  facingDeg?: number; // direction the inscription faces
+  address?: {
+    sectionId?: ID;
+    rowId?: ID;
+    rowIndex?: number;
+    plotLabel?: string;
+  };
   legacyGrid?: { row: number; col: number };
   material?: string;
   condition?: string[];
   symbols?: string[];
   dimensionsCm?: { h?: number; w?: number; d?: number };
   carver?: string;
-  inscription?: { text: string; language?: string; script?: string; convention?: string };
+  inscription?: {
+    text: string;
+    language?: string;
+    script?: string;
+    convention?: string;
+  };
   epitaph?: string;
-  photoIds: ID[];
+  // photos: query Photo by monumentId (see §2.2)
+  verified?: Stamp; // explicit; status is otherwise derived (§2.2)
   status: MonumentStatus;
-  flags?: string[];                 // needs-revisit, uncertain-position, illegible, relocated
-  relatedMonuments?: { id: ID; relation: 'footstone-of' | 'part-of' | 'replaces' }[];
-  featureIds?: ID[];                // family plot / enclosure
+  flags?: string[]; // needs-revisit, uncertain-position, illegible, relocated
+  relatedMonuments?: {
+    id: ID;
+    relation: 'footstone-of' | 'part-of' | 'replaces';
+  }[];
+  featureIds?: ID[]; // family plot / enclosure
   tags?: string[];
   notes?: string;
 }
 
 interface FuzzyDate {
-  original: string;                 // exactly what was carved/entered
-  y?: number; m?: number; d?: number;
-  qualifier?: 'exact' | 'about' | 'before' | 'after' | 'between' | 'calculated' | 'estimated';
-  y2?: number; m2?: number; d2?: number; // end of range for 'between'
+  original: string; // exactly what was carved/entered
+  y?: number;
+  m?: number;
+  d?: number;
+  qualifier?:
+    | 'exact'
+    | 'about'
+    | 'before'
+    | 'after'
+    | 'between'
+    | 'calculated'
+    | 'estimated';
+  y2?: number;
+  m2?: number;
+  d2?: number; // end of range for 'between'
   calendar?: 'gregorian' | 'julian' | 'hebrew' | string;
-  dualYear?: number;                // e.g. 1709 in "1709/10"
+  dualYear?: number; // e.g. 1709 in "1709/10"
   ambiguous?: boolean;
 }
 
 interface PersonName {
   asCarved?: string;
-  prefix?: string; given?: string; middle?: string; surname?: string;
-  birthSurname?: string; suffix?: string; nickname?: string;
-  script?: string; romanized?: string;
+  prefix?: string;
+  given?: string;
+  middle?: string;
+  surname?: string;
+  birthSurname?: string;
+  suffix?: string;
+  nickname?: string;
+  script?: string;
+  romanized?: string;
 }
 
 interface Person extends Stamped {
-  monumentId?: ID;                  // absent = unmarked / not yet matched
+  monumentId?: ID; // absent = unmarked / not yet matched
   name: PersonName;
   sex?: 'f' | 'm' | 'u';
   birth?: FuzzyDate;
   death?: FuzzyDate;
   burial?: FuzzyDate;
   age?: { y?: number; m?: number; d?: number; original: string };
-  relationshipText?: string;        // "wife of John", "relict of", "son of J & M"
-  relations?: { type: 'spouse' | 'parent' | 'child' | 'sibling' | 'other'; personId: ID }[];
-  military?: { conflict?: string; rank?: string; unit?: string; notes?: string };
+  relationshipText?: string; // "wife of John", "relict of", "son of J & M"
+  relations?: {
+    type: 'spouse' | 'parent' | 'child' | 'sibling' | 'other';
+    personId: ID;
+  }[];
+  military?: {
+    conflict?: string;
+    rank?: string;
+    unit?: string;
+    notes?: string;
+  };
   possiblyLiving?: boolean;
   occupation?: string;
-  sources?: { kind: 'stone' | 'imported-index' | 'record' | 'family' | 'ai-draft' | 'other'; ref?: string; note?: string }[];
+  sources?: {
+    kind:
+      | 'stone'
+      | 'imported-index'
+      | 'record'
+      | 'family'
+      | 'ai-draft'
+      | 'other';
+    ref?: string;
+    note?: string;
+  }[];
   matchStatus?: 'unmatched' | 'matched' | 'no-stone-found';
   externalIds?: Record<string, string>;
   notes?: string;
@@ -654,17 +777,31 @@ interface Person extends Stamped {
 interface Photo extends Stamped {
   monumentId: ID;
   role: 'front' | 'back' | 'detail' | 'context' | 'other';
-  takenAt?: string;                 // ISO 8601
+  takenAt?: string; // ISO 8601
   position?: Position;
-  width: number; height: number; bytes: number;
-  sha256: string;                   // exact-duplicate detection across merges
-  phash?: string;                   // perceptual hash for match scoring
+  width: number;
+  height: number;
+  bytes: number;
+  sha256: string; // exact-duplicate detection across merges
+  phash?: string; // perceptual hash for match scoring
   // blob + thumbnail stored in separate tables keyed by id
 }
 
 interface MapFeature extends Stamped {
-  kind: 'path' | 'road' | 'building' | 'tree' | 'gate' | 'fence' | 'wall' | 'enclosure'
-      | 'family-plot' | 'water' | 'large-monument' | 'bench' | 'other';
+  kind:
+    | 'path'
+    | 'road'
+    | 'building'
+    | 'tree'
+    | 'gate'
+    | 'fence'
+    | 'wall'
+    | 'enclosure'
+    | 'family-plot'
+    | 'water'
+    | 'large-monument'
+    | 'bench'
+    | 'other';
   geometry?: GeoJSON.Geometry;
   legacyCells?: { row: number; col: number }[]; // v1 roads before pinning
   name?: string;
@@ -674,18 +811,28 @@ interface MapFeature extends Stamped {
 interface Overlay extends Stamped {
   kind: 'plat' | 'drone' | 'legacy-grid' | 'other';
   name: string;
-  imageId?: ID;                     // blob table; absent for legacy-grid
+  imageId?: ID; // blob table; absent for legacy-grid
   grid?: { rows: number; cols: number; validCells?: string[] }; // legacy-grid only
   controlPoints: { x: number; y: number; lng: number; lat: number }[];
-  transform?: number[];             // computed affine, 6 values
+  transform?: number[]; // computed affine, 6 values
   opacity: number;
 }
 
-interface TagDef extends Stamped { name: string; color?: string; description?: string }
+interface TagDef extends Stamped {
+  name: string;
+  color?: string;
+  description?: string;
+}
 
-interface HistoryEntry {           // append-only, compactable, for the History view
-  id: ID; cemeteryId: ID; entityId: ID; entityType: string;
-  at: HLC; by: ID; op: 'create' | 'update' | 'delete' | 'merge' | 'import';
+interface HistoryEntry {
+  // append-only, compactable, for the History view
+  id: ID;
+  cemeteryId: ID;
+  entityId: ID;
+  entityType: string;
+  at: HLC;
+  by: ID;
+  op: 'create' | 'update' | 'delete' | 'merge' | 'import';
   fields?: Record<string, { from?: unknown; to?: unknown }>;
 }
 ```
@@ -701,6 +848,7 @@ Compound indexes on `[cemeteryId+status]`, `[cemeteryId+address.rowId+address.ro
 ## 20. File formats
 
 ### 20.1 `.sbs` — StoneByStone archive (zip, via `fflate`, streamed)
+
 ```
 manifest.json      { "format": "stonebystone", "formatVersion": 2, "appVersion": "...",
                      "kind": "full" | "packet" | "publish",
@@ -719,6 +867,7 @@ README.txt         human explanation of the format and license
 ### 20.2 `.sbs.json` — same content as one JSON document, no binaries.
 
 ### 20.3 Imports accepted
+
 `.sbs`, `.sbs.json`, v1 `.cem.json` (§22), CSV (with column mapper), GeoJSON (points →
 monuments with properties mapped), images (bulk photo import: EXIF GPS/time used to place
 and order stones — useful for people who photographed a cemetery with a normal camera app).
@@ -731,11 +880,13 @@ documented in `docs/FORMAT.md` (to be written in M1).
 ## 21. Sync and merge algorithm
 
 ### 21.1 Clocks
+
 Each device generates a stable `nodeId`. Every write gets an HLC timestamp (max of wall
 clock and last seen HLC, plus counter). HLCs are carried in exports, so later merges
 compare causally sensible timestamps even with skewed device clocks.
 
 ### 21.2 Same-ID merge (deterministic)
+
 For every entity present on both sides, for every field: keep the value with the greater
 stamp (ties broken by `nodeId`). Tombstones are stamps too. This is commutative,
 associative, and idempotent — merging A into B and B into A yields the same result, and
@@ -744,17 +895,19 @@ review when both sides changed it after the last known common sync with that con
 (tracked per contributor as the max HLC seen from them).
 
 ### 21.3 Cross-ID entity matching (different people, same stone)
+
 For incoming monuments without an ID/alias match, find local candidates within a radius
 `r = 3 m + 2 × (accA + accB)` and/or same section+row:
 `score = w1·spatial + w2·address + w3·nameSim + w4·dateCompat + w5·photoSim`
 where `nameSim` uses Jaro–Winkler over normalized names plus phonetic codes, `dateCompat`
 checks FuzzyDate overlap, `photoSim` uses perceptual-hash distance. Thresholds produce
-*likely*, *possible*, and *new*. Nothing is auto-merged without user confirmation in v2.0
+_likely_, _possible_, and _new_. Nothing is auto-merged without user confirmation in v2.0
 (an "accept all likely" button is fine). Accepted pairs merge field-wise (as §21.2, with the
 incoming record's stamps) and record `aliases`. Persons are matched similarly within the
 matched monuments.
 
 ### 21.4 Dataset alignment
+
 Given ≥2 accepted matched pairs with coordinates from different sources, compute a
 similarity transform (translation, rotation, uniform scale; least-squares, Umeyama method)
 from incoming → local; show residuals and a before/after preview; apply to all incoming
@@ -762,6 +915,7 @@ positions not already matched (`source: 'aligned'`). Optional; skipped when resi
 suggest no systematic offset.
 
 ### 21.5 Cemetery matching
+
 If the incoming cemetery ID is unknown, suggest local cemeteries by name similarity and
 boundary/centroid distance (< 1 km). On confirmation, the IDs are aliased.
 
@@ -773,38 +927,40 @@ v1 users (if any) must not lose data. v2 deploys at the same URL and origin, so 
 read v1's IndexedDB directly.
 
 ### 22.1 Sources
-- **IndexedDB** `cemetery-db` (schema v4): stores `cemetery` (single record, key
-  `"current"`), `graves`, `landmarks`, `roads`, `groups`, `change_log`.
-- **Files** `.cem.json`, `schema_version: "1.0.0"`, optional `landmarks`, `roads`, `groups`,
+
+- **Files only:** `.cem.json`, `schema_version: "1.0.0"`, optional `landmarks`, `roads`, `groups`,
   `change_log`. Grid shape may appear as `grid.validCells: string[]` ("row,col") **or**
   `grid.shape: {row, col}[]` (Willow Creek sample). Sets were serialized as arrays.
+- Reading v1's IndexedDB (`cemetery-db`) directly was **dropped** (§2): v1 holds no real user
+  data. Anyone who has v1 data exports a `.cem.json` from the `v1-final` build.
 
-### 22.2 Detection and flow
-On first launch, if `cemetery-db` exists and has a cemetery record, show "We found data
-from the previous version of StoneByStone — import it?" Import is read-only against the v1
-DB. After a successful import (and a suggested backup), offer to delete the old DB. The
-same converter runs on `.cem.json` files from the Import screen.
+### 22.2 Flow
+
+The Import screen detects a v1 file by `schema_version` and runs the converter. The result is a
+new cemetery (or a merge, if its aliased v1 ID already exists on the device).
 
 ### 22.3 Field mapping
-| v1 | v2 |
-| --- | --- |
-| `cemetery.id` | New UUIDv7; original stored in `legacy.v1Id` (needed because v1 ids like `"current"` are not unique). |
-| `cemetery.name`, `license` | Same. |
-| `cemetery.grid` (`rows`, `cols`, `validCells`/`shape`) | `Overlay { kind: 'legacy-grid', grid }`, unpinned. Cemetery opens in schematic view. |
-| `modified_by` strings | `Contributor` records (one per distinct string; `"anonymous"` → "Unknown (v1)"). |
-| `grave` | `Monument { kind: 'headstone' (default), legacyGrid, address.plotLabel = plot }`, status `transcribed` if any person data, else `located`. |
-| `grave.properties.name/birth/death` | One `Person` on that monument. Name split heuristically (prefix/suffix tokens recognized; last remaining token = surname), `asCarved` = original string. ISO dates → `FuzzyDate { qualifier: 'exact', original }`. |
-| `inscription` | `monument.inscription.text`. |
-| `notes` | `monument.notes`. |
-| `deleted` | Tombstone. |
-| `group_ids` | `TagDef` per group (name, color, description) and `monument.tags`. |
-| `geometry` (GeoPoint, if any) | `position { source: 'imported' }`. |
-| `last_modified` / `modified_by` | Stamps for all migrated fields, HLC derived from `last_modified`. |
-| `landmark` (bench, tree, pine, building, statue, other) | `MapFeature` with `legacyCells: [grid]`; statue → `large-monument`, pine → `tree` (+ tag "conifer"). |
-| `road.cells`, `color` | `MapFeature { kind: 'path', legacyCells }`, color kept as a style property. |
-| `change_log` | `HistoryEntry` records with `op: 'import'` context, read-only. |
+
+| v1                                                      | v2                                                                                                                                                                                                                 |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `cemetery.id`                                           | New UUIDv7; original stored in `legacy.v1Id` (needed because v1 ids like `"current"` are not unique).                                                                                                              |
+| `cemetery.name`, `license`                              | Same.                                                                                                                                                                                                              |
+| `cemetery.grid` (`rows`, `cols`, `validCells`/`shape`)  | `Overlay { kind: 'legacy-grid', grid }`, unpinned. Cemetery opens in schematic view.                                                                                                                               |
+| `modified_by` strings                                   | `Contributor` records (one per distinct string; `"anonymous"` → "Unknown (v1)").                                                                                                                                   |
+| `grave`                                                 | `Monument { kind: 'headstone' (default), legacyGrid, address.plotLabel = plot }`, status `transcribed` if any person data, else `located`.                                                                         |
+| `grave.properties.name/birth/death`                     | One `Person` on that monument. Name split heuristically (prefix/suffix tokens recognized; last remaining token = surname), `asCarved` = original string. ISO dates → `FuzzyDate { qualifier: 'exact', original }`. |
+| `inscription`                                           | `monument.inscription.text`.                                                                                                                                                                                       |
+| `notes`                                                 | `monument.notes`.                                                                                                                                                                                                  |
+| `deleted`                                               | Tombstone.                                                                                                                                                                                                         |
+| `group_ids`                                             | `TagDef` per group (name, color, description) and `monument.tags`.                                                                                                                                                 |
+| `geometry` (GeoPoint, if any)                           | `position { source: 'imported' }`.                                                                                                                                                                                 |
+| `last_modified` / `modified_by`                         | Stamps for all migrated fields, HLC derived from `last_modified`.                                                                                                                                                  |
+| `landmark` (bench, tree, pine, building, statue, other) | `MapFeature` with `legacyCells: [grid]`; statue → `large-monument`, pine → `tree` (+ tag "conifer").                                                                                                               |
+| `road.cells`, `color`                                   | `MapFeature { kind: 'path', legacyCells }`, color kept as a style property.                                                                                                                                        |
+| `change_log`                                            | `HistoryEntry` records with `op: 'import'` context, read-only.                                                                                                                                                     |
 
 ### 22.4 Pinning the legacy grid to the map
+
 "Place this grid on the map": the user taps 2 cells and the matching real-world spots
 (similarity transform), or 3+ (affine), with live preview over imagery and residuals. On
 apply: every monument with `legacyGrid` gets `position { source: 'legacy-grid',
@@ -813,8 +969,8 @@ squares) or lines. Users can also convert grid rows into `Row` records ("treat e
 row as a cemetery row") so walk-a-row and the schematic view work immediately.
 
 ### 22.5 Tests
-All four files in `samples/` become fixtures in `tests/fixtures/v1/`, plus a synthetic v1
-IndexedDB fixture (via `fake-indexeddb`). Tests assert counts, field mapping, tags,
+
+All four files in `samples/` become fixtures in `tests/fixtures/v1/`, . Tests assert counts, field mapping, tags,
 `shape`/`validCells` handling, deleted records, and idempotency (importing twice does not
 duplicate — keyed by v1 UUIDs, which are preserved as v2 aliases).
 
@@ -823,27 +979,29 @@ duplicate — keyed by v1 UUIDs, which are preserved as v2 aliases).
 ## 23. Architecture and tech stack
 
 ### 23.1 Stack
-| Concern | Choice | Notes |
-| --- | --- | --- |
-| Language/UI | TypeScript (strict), React 19 | Familiar; large ecosystem. |
-| Build | Vite | `base: '/StoneByStone/'`. |
-| Styling | Tailwind CSS v4 + a small component layer (Radix primitives for dialogs, sheets, menus) | Accessible primitives. |
-| Routing | React Router with **hash routing** | Avoids GitHub Pages deep-link 404s entirely. |
-| Storage | Dexie 4 + `dexie-react-hooks` (`useLiveQuery`) | Reactive queries; UI state in Zustand. |
-| PWA | `vite-plugin-pwa` (Workbox), `registerType: 'prompt'` | Correct scope under base path; update prompt. |
-| Map | MapLibre GL JS | Rotation, WebGL performance, raster + image sources. Lazy-loaded. |
-| Geo math | Small in-house module + selected `@turf/*` packages | Projection onto lines, distances, transforms. |
-| Zip | `fflate` | Streaming, small. |
-| Validation | Ajv (JSON Schema) for files; Zod optional for forms | |
-| Search | MiniSearch + custom normalizers (abbreviations, phonetics) | |
-| Dates | Custom FuzzyDate parser (heavily tested); `@hebcal/core` for Hebrew | |
-| IDs | `uuid` v7 | |
-| i18n | Lingui (ICU messages, compile-time extraction) | |
-| Images | Canvas/OffscreenCanvas for resize; WebGL for enhancement filters | |
-| Testing | Vitest + Testing Library; Playwright for e2e | Replaces Jest. |
-| Lint/format | ESLint (flat config) + Prettier; Husky + lint-staged | |
+
+| Concern     | Choice                                                                                  | Notes                                                             |
+| ----------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Language/UI | TypeScript (strict), React 19                                                           | Familiar; large ecosystem.                                        |
+| Build       | Vite                                                                                    | `base: '/StoneByStone/'`.                                         |
+| Styling     | Tailwind CSS v4 + a small component layer (Radix primitives for dialogs, sheets, menus) | Accessible primitives.                                            |
+| Routing     | React Router with **hash routing**                                                      | Avoids GitHub Pages deep-link 404s entirely.                      |
+| Storage     | Dexie 4 + `dexie-react-hooks` (`useLiveQuery`)                                          | Reactive queries; UI state in Zustand.                            |
+| PWA         | `vite-plugin-pwa` (Workbox), `registerType: 'prompt'`                                   | Correct scope under base path; update prompt.                     |
+| Map         | MapLibre GL JS                                                                          | Rotation, WebGL performance, raster + image sources. Lazy-loaded. |
+| Geo math    | Small in-house module + selected `@turf/*` packages                                     | Projection onto lines, distances, transforms.                     |
+| Zip         | `fflate`                                                                                | Streaming, small.                                                 |
+| Validation  | Ajv (JSON Schema) for files; Zod optional for forms                                     |                                                                   |
+| Search      | MiniSearch + custom normalizers (abbreviations, phonetics)                              |                                                                   |
+| Dates       | Custom FuzzyDate parser (heavily tested); `@hebcal/core` for Hebrew                     |                                                                   |
+| IDs         | `uuid` v7                                                                               |                                                                   |
+| i18n        | Lingui (ICU messages, compile-time extraction)                                          |                                                                   |
+| Images      | Canvas/OffscreenCanvas for resize; WebGL for enhancement filters                        |                                                                   |
+| Testing     | Vitest + Testing Library; Playwright for e2e                                            | Replaces Jest.                                                    |
+| Lint/format | ESLint (flat config) + Prettier; Husky + lint-staged                                    |                                                                   |
 
 ### 23.2 Source layout
+
 ```
 src/
   app/            shell, routing, providers, update prompt, install prompt
@@ -864,19 +1022,28 @@ src/
   ui/             design-system components (Button, Sheet, Chip, Field, Toast, ...)
   i18n/
 tests/
-  fixtures/v1/    the four v1 samples + IDB fixture
+  fixtures/v1/    the four v1 sample files
   e2e/
 schema/v2/        JSON Schemas
 docs/             this plan, FORMAT.md, CONTRIBUTING.md
 ```
+
 Rule: `domain/` never imports from `data/` or `features/`; features talk to data through
 repositories. No component file over ~300 lines.
 
 ### 23.3 Repo reset (M0)
+
 Delete v1 `src/`, the v1 `docs/*.md` feature notes, Jest config, and the old hand-written
 service worker. Keep `samples/` (moved to `tests/fixtures/v1/`), icons/branding assets,
 the GitHub Actions deploy workflow (updated), and `LICENSE` if present. Tag the last v1
 commit (`v1-final`) so it can always be recovered.
+
+Concretely, these are removed: `src/`, `dist/`, `schema/` (v1), the `docs/*.md` feature notes
+(this plan stays), `IMPLEMENTATION.md`, `PROJECT_SCAFFOLD.md`, `SETUP_GUIDE.md`, `TODO.md`,
+`setup.sh`, `.github/copilot-instructions.md`, `jest.config.cjs`, `.eslintrc.cjs`,
+`.eslintignore`, `public/service-worker.js`, `public/manifest.json` (now generated by
+vite-plugin-pwa), and the landmark PNGs in `public/`. These are kept: the icons and favicon, and
+`.github/workflows/deploy.yml` (updated). `README.md` and `CONTRIBUTING.md` are rewritten for v2.
 
 ---
 
@@ -884,14 +1051,14 @@ commit (`v1-final`) so it can always be recovered.
 
 Licensing and usage terms vary; **verify current terms for each provider before shipping**.
 
-| Source | Coverage | Use | Offline caching |
-| --- | --- | --- | --- |
-| USGS National Map `USGSImageryOnly` (NAIP-based) | US | Default imagery in the US | Public domain — caching for the cemetery area is OK |
-| Esri World Imagery | Global, high-res in many areas | Candidate default outside the US | Check Esri terms (attribution required; production use may need an ArcGIS account) |
-| OpenStreetMap standard tiles | Global | Street/context layer | **No bulk download** per OSM tile policy; online only, or use a provider that permits caching |
-| EOX Sentinel-2 cloudless | Global, ~10 m | Context only (too coarse for stones) | Check license by year |
-| Custom XYZ / WMS URL | Any | Local government orthophotos, national mapping agencies | Per that provider |
-| User image overlays (plat, drone) | Any | Placement | Stored locally (it's the user's file) |
+| Source                                           | Coverage                       | Use                                                     | Offline caching                                                                               |
+| ------------------------------------------------ | ------------------------------ | ------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| USGS National Map `USGSImageryOnly` (NAIP-based) | US                             | Default imagery in the US                               | Public domain — caching for the cemetery area is OK                                           |
+| Esri World Imagery                               | Global, high-res in many areas | Candidate default outside the US                        | Check Esri terms (attribution required; production use may need an ArcGIS account)            |
+| OpenStreetMap standard tiles                     | Global                         | Street/context layer                                    | **No bulk download** per OSM tile policy; online only, or use a provider that permits caching |
+| EOX Sentinel-2 cloudless                         | Global, ~10 m                  | Context only (too coarse for stones)                    | Check license by year                                                                         |
+| Custom XYZ / WMS URL                             | Any                            | Local government orthophotos, national mapping agencies | Per that provider                                                                             |
+| User image overlays (plat, drone)                | Any                            | Placement                                               | Stored locally (it's the user's file)                                                         |
 
 Offline download is limited to the cemetery bounding box + small buffer, zoom ~15–20,
 with a size estimate before downloading and per-cemetery deletion. Tiles go in Cache
@@ -927,6 +1094,7 @@ discovery uses the Overpass API (on explicit request). Both are optional conveni
 Each milestone ends in a deployable, usable state. Sizes are relative, not estimates.
 
 ### M0 — Reset & foundation (S)
+
 Tag `v1-final`; clear the repo per §23.3; scaffold Vite/React/TS/Tailwind/Dexie/Router
 (hash)/vite-plugin-pwa/Vitest/Playwright/Lingui; app shell, design tokens (incl. sunlight
 theme), bottom-sheet and toast components; CI.
@@ -934,13 +1102,15 @@ theme), bottom-sheet and toast components; CI.
 refresh on any route, and CI is green.
 
 ### M1 — Data core & v1 import (M)
+
 Domain types, HLC, FuzzyDate and name parsers, Dexie schema and repositories, history,
-`.sbs`/`.sbs.json` read/write with JSON Schemas, v1 importer (IDB + `.cem.json`), backup
+`.sbs`/`.sbs.json` read/write with JSON Schemas, v1 importer (`.cem.json`), backup
 indicator and storage persistence, multiple cemeteries on Home.
 **Done when:** all four v1 samples import with correct counts and fields; full export →
 wipe → import round-trips byte-for-byte equivalent data; date parser passes the test table.
 
 ### M2 — Map & cemetery setup (M)
+
 MapLibre map with imagery presets and custom sources; create cemetery by search / near me
 (Overpass boundary prefill) / drop pin; sections and rows (draw lines); stones layer with
 status colors; schematic view; offline tile download; legacy-grid pinning (§22.4); plat
@@ -949,6 +1119,7 @@ overlay with control points.
 sections/rows in under 5 minutes; the map works offline after download.
 
 ### M3 — Field capture (L) → **first field trial**
+
 In-app camera with fallback, photo pipeline (resize, thumbnail, hashes), walk-a-row
 sessions (gap/skip/insert/reverse/reorder), GPS averaging, quick chips, relative placement,
 undo, session summary, wake lock, haptics, field checklist.
@@ -956,6 +1127,7 @@ undo, session summary, wake lock, haptics, field checklist.
 with correct ordering, and nothing is lost after closing the app.
 
 ### M4 — Desk transcription (L) → **second field trial**
+
 Transcription queue, photo viewer with enhancement filters, keyboard-first form, multiple
 people per stone, FuzzyDate UI with live interpretation and age calculation, name
 autocomplete, relationships, symbols, military, conventions, verify pass.
@@ -963,6 +1135,7 @@ autocomplete, relationships, symbols, military, conventions, verify pass.
 forms in §10.1 are enterable.
 
 ### M5 — Corpus tools (M)
+
 Progress dashboard and revisit checklist; People index with search (abbreviation +
 phonetic); CSV import with column mapper and matching view; in-dataset duplicate detection;
 exports: CSV, GeoJSON, KML, printable booklet; bulk photo import using EXIF.
@@ -970,6 +1143,7 @@ exports: CSV, GeoJSON, KML, printable booklet; bulk photo import using EXIF.
 printable booklet is produced for a full cemetery.
 
 ### M6 — Sharing & merging (M)
+
 Share packets; merge wizard (summary → matches → conflicts → apply); cross-ID entity
 matching with photo/name/spatial scoring; cemetery aliasing; dataset alignment; undoable
 merges; Web Share integration.
@@ -978,12 +1152,14 @@ combine into one dataset with duplicates resolved and positions aligned, and re-
 is a no-op.
 
 ### M7 — Publishing & visitor mode (M)
+
 Publish bundle (privacy filters for possibly-living/recent), read-only published cemetery
 viewer and catalog, grave deep links, "take me there" navigation with compass.
 **Done when:** a published cemetery is browsable by URL on a phone with no app data, and a
 visitor can navigate to a specific grave.
 
 ### M8 — Extras (ongoing)
+
 AI-assisted transcription (BYO key); additional UI translations; RTL polish; Hebrew and
 other calendars; GEDCOM export; drone orthophoto (GeoTIFF) import; optional cloud sync
 exploration (§27).
@@ -995,20 +1171,21 @@ grid pinning should not slip (it's what makes v1 data useful).
 
 ## 27. Risks and open questions
 
-| Risk / question | Mitigation / next step |
-| --- | --- |
-| iOS camera and storage quirks (in-app camera reliability, eviction, quotas) | Fallback to file input; install prompt; persistence; early testing on a real iPhone in M0/M3. |
-| Photo storage volume on phones | Configurable quality, thumbnails, per-section export, storage dashboard. |
-| Imagery terms change or forbid caching | Provider abstraction, public-domain US default, custom sources, schematic view needs none. |
-| GPS too poor under canopy to help at all | Walk-a-row ordering + schematic view are designed to work with zero GPS. |
-| FuzzyDate parsing edge cases | Large, real-world test table; always store `original`; never discard input. |
-| Merge matching false positives | Never auto-merge without confirmation in v2.0; aliases make merges reversible. |
-| GitHub repo size for published data | Downscaled photos; separate data repo if needed. |
-| Scope is large | Milestones are independently useful; field trials after M3/M4 gate further work. |
-| **Open:** cloud sync for real-time collaboration? | Not needed now. If it becomes needed, evaluate a hosted backend (e.g. Supabase) or a CRDT relay; the HLC/field-stamp model already supports it. |
-| **Open:** integrate with Find a Grave / BillionGraves / FamilySearch? | No open write APIs; store external IDs/links only. Do not scrape. |
-| **Open:** default license for published data | Suggest CC BY 4.0; confirm with the primary user. |
-| **Open:** which imagery default outside the US | Decide during M2 after checking terms. |
+| Risk / question                                                             | Mitigation / next step                                                                                                                          |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| iOS camera and storage quirks (in-app camera reliability, eviction, quotas) | Fallback to file input; install prompt; persistence; early testing on a real iPhone in M0/M3.                                                   |
+| Photo storage volume on phones                                              | Configurable quality, thumbnails, per-section export, storage dashboard.                                                                        |
+| Imagery terms change or forbid caching                                      | Provider abstraction, public-domain US default, custom sources, schematic view needs none.                                                      |
+| GPS too poor under canopy to help at all                                    | Walk-a-row ordering + schematic view are designed to work with zero GPS.                                                                        |
+| FuzzyDate parsing edge cases                                                | Large, real-world test table; always store `original`; never discard input.                                                                     |
+| Merge matching false positives                                              | Never auto-merge without confirmation in v2.0; aliases make merges reversible.                                                                  |
+| GitHub repo size for published data                                         | Downscaled photos; separate data repo if needed.                                                                                                |
+| Scope is large                                                              | Milestones are independently useful; field trials after M3/M4 gate further work.                                                                |
+| **Open:** cloud sync for real-time collaboration?                           | Not needed now. If it becomes needed, evaluate a hosted backend (e.g. Supabase) or a CRDT relay; the HLC/field-stamp model already supports it. |
+| **Open:** integrate with Find a Grave / BillionGraves / FamilySearch?       | No open write APIs; store external IDs/links only. Do not scrape.                                                                               |
+| ~~Open: default license for published data~~                                | **Resolved:** CC BY 4.0 (§2).                                                                                                                   |
+| **Open:** license for the app's source code                                 | No LICENSE file exists. The owner decides before M7.                                                                                            |
+| **Open:** which imagery default outside the US                              | Decide during M2 after checking terms.                                                                                                          |
 
 ---
 
