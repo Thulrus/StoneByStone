@@ -91,6 +91,35 @@ feature.
 - This document is the spec. When a decision changes during implementation, update it here in
   the same commit.
 
+### 2.1.1 Agent sessions and handoff
+
+To keep token use low, the work is done in short, fresh agent sessions rather than one long
+one. Each session completes one **work package** (a few related issues), then hands off in
+writing. No session relies on memory of an earlier conversation; everything the next session
+needs lives in the repo and the issues.
+
+- **`docs/PROGRESS.md`** is the handoff file. It holds the work-package table with each
+  package's status, a "Next session starts here" block, and a one-line-per-session log.
+- **Picking a task:** take the first package in `PROGRESS.md` whose status is `todo` (or
+  `in-progress` with handoff notes). Read `CLAUDE.md`, `PROGRESS.md`, the package's issues, and
+  only the plan sections those issues cite. Don't read the whole plan.
+- **Claiming it:** set the package to `in-progress` and commit that before starting the work.
+  Sessions run one at a time.
+- **Scope:** stay inside the package. If you find work that belongs elsewhere, file an issue
+  or add a line to the relevant issue instead of doing it.
+- **Finishing:** close the completed issues (`Closes #N` in commits) and check off their
+  acceptance criteria. Then update `PROGRESS.md`: set the package status, rewrite the "Next
+  session starts here" block, and append a log line. Commit and push.
+- **Stopping partway:** if the session runs long or gets stuck, stop at a green commit. Leave
+  the package `in-progress`. Comment on the open issue with what's done, what's left, and any
+  traps you hit. Then update `PROGRESS.md` as above.
+- **Check-ins:** when a package finishes a milestone or comes right before a field trial,
+  mark the next package `blocked: check-in` and stop. The owner unblocks it.
+- **Model choice:** packages marked _deep_ in `PROGRESS.md` (merge rules, parsers, matching)
+  should use the strongest model. The others are fine on a faster model.
+- **Keep output small:** run tests with terse reporters, don't dump whole files or logs into
+  the conversation, and keep commit hooks quiet.
+
 ### 2.2 Technical resolutions (ambiguities closed before M0)
 
 | Topic                           | Resolution                                                                                                                                                                                                                                                                      |
