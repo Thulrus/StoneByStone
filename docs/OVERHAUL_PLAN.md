@@ -737,14 +737,7 @@ interface FuzzyDate {
   y?: number;
   m?: number;
   d?: number;
-  qualifier?:
-    | 'exact'
-    | 'about'
-    | 'before'
-    | 'after'
-    | 'between'
-    | 'calculated'
-    | 'estimated';
+  qualifier?: 'exact' | 'about' | 'before' | 'after' | 'between' | 'calculated' | 'estimated';
   y2?: number;
   m2?: number;
   d2?: number; // end of range for 'between'
@@ -788,13 +781,7 @@ interface Person extends Stamped {
   possiblyLiving?: boolean;
   occupation?: string;
   sources?: {
-    kind:
-      | 'stone'
-      | 'imported-index'
-      | 'record'
-      | 'family'
-      | 'ai-draft'
-      | 'other';
+    kind: 'stone' | 'imported-index' | 'record' | 'family' | 'ai-draft' | 'other';
     ref?: string;
     note?: string;
   }[];

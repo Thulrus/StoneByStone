@@ -1,0 +1,124 @@
+/*
+ * Design tokens (plan §17). Every theme defines the same set of --sbs-* variables.
+ * src/ui/theme.test.ts parses this file and checks WCAG 2.2 AA contrast for each theme,
+ * so keep each value a 6-digit hex color.
+ */
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --sbs-bg: #f7f5f0;
+  --sbs-surface: #ffffff;
+  --sbs-surface-2: #ebe8df;
+  --sbs-fg: #1c1f1a;
+  --sbs-fg-muted: #4d5348;
+  --sbs-border: #767b70;
+  --sbs-primary: #3d5a3a;
+  --sbs-primary-fg: #ffffff;
+  --sbs-danger: #a3261b;
+  --sbs-danger-fg: #ffffff;
+  --sbs-focus: #1d5fbf;
+  --sbs-border-width: 1px;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --sbs-bg: #141613;
+  --sbs-surface: #1f221d;
+  --sbs-surface-2: #2b2f28;
+  --sbs-fg: #ecebe5;
+  --sbs-fg-muted: #b8bbb0;
+  --sbs-border: #868b80;
+  --sbs-primary: #9cc497;
+  --sbs-primary-fg: #0f1a0e;
+  --sbs-danger: #f2a097;
+  --sbs-danger-fg: #2a0602;
+  --sbs-focus: #8fb8ff;
+  --sbs-border-width: 1px;
+}
+
+/* Sunlight: maximum contrast, larger type, thicker lines, no thin grays. */
+[data-theme='sunlight'] {
+  color-scheme: light;
+  font-size: 112.5%;
+  --sbs-bg: #ffffff;
+  --sbs-surface: #ffffff;
+  --sbs-surface-2: #f0f0f0;
+  --sbs-fg: #000000;
+  --sbs-fg-muted: #1a1a1a;
+  --sbs-border: #000000;
+  --sbs-primary: #003a00;
+  --sbs-primary-fg: #ffffff;
+  --sbs-danger: #8a0000;
+  --sbs-danger-fg: #ffffff;
+  --sbs-focus: #0033cc;
+  --sbs-border-width: 2px;
+}
+
+@theme inline {
+  --color-bg: var(--sbs-bg);
+  --color-surface: var(--sbs-surface);
+  --color-surface-2: var(--sbs-surface-2);
+  --color-fg: var(--sbs-fg);
+  --color-fg-muted: var(--sbs-fg-muted);
+  --color-border: var(--sbs-border);
+  --color-primary: var(--sbs-primary);
+  --color-primary-fg: var(--sbs-primary-fg);
+  --color-danger: var(--sbs-danger);
+  --color-danger-fg: var(--sbs-danger-fg);
+  --color-focus: var(--sbs-focus);
+  --spacing-target: 3rem;
+}
+
+@layer base {
+  html {
+    background: var(--sbs-bg);
+    color: var(--sbs-fg);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    min-height: 100dvh;
+    font-family:
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      Roboto,
+      'Noto Sans',
+      sans-serif;
+    line-height: 1.5;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--sbs-focus);
+    outline-offset: 2px;
+  }
+
+  .sbs-border {
+    border-width: var(--sbs-border-width);
+    border-color: var(--sbs-border);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes sbs-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sbs-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+}

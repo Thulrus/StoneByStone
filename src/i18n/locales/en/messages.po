@@ -1,0 +1,124 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-25 16:53-0700\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#: src/app/UpdatePrompt.tsx:45
+msgid "A new version of StoneByStone is available."
+msgstr "A new version of StoneByStone is available."
+
+#: src/app/pages/NotFoundPage.tsx:11
+msgid "Back to cemeteries"
+msgstr "Back to cemeteries"
+
+#: src/app/Layout.tsx:32
+#: src/app/pages/HomePage.tsx:9
+msgid "Cemeteries"
+msgstr "Cemeteries"
+
+#: src/app/pages/CemeteryPage.tsx:10
+msgid "Cemetery"
+msgstr "Cemetery"
+
+#: src/app/pages/CemeteryPage.tsx:13
+msgid "Cemetery {cemeteryId} will open here."
+msgstr "Cemetery {cemeteryId} will open here."
+
+#: src/ui/Dialog.tsx:58
+msgid "Close"
+msgstr "Close"
+
+#: src/app/pages/SettingsPage.tsx:49
+msgid "Dark"
+msgstr "Dark"
+
+#: src/ui/Toaster.tsx:43
+msgid "Dismiss"
+msgstr "Dismiss"
+
+#: src/app/InstallPrompt.tsx:30
+msgid "In Safari, tap the Share button, then “Add to Home Screen”. Your survey data is only safe from automatic clean-up once the app is on your home screen."
+msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your survey data is only safe from automatic clean-up once the app is on your home screen."
+
+#: src/app/InstallPrompt.tsx:49
+msgid "Install"
+msgstr "Install"
+
+#: src/app/InstallPrompt.tsx:26
+msgid "Install StoneByStone"
+msgstr "Install StoneByStone"
+
+#: src/app/InstallPrompt.tsx:43
+msgid "Install the app so it opens offline and keeps your survey data safe."
+msgstr "Install the app so it opens offline and keeps your survey data safe."
+
+#: src/app/pages/SettingsPage.tsx:65
+msgid "Language"
+msgstr "Language"
+
+#: src/app/UpdatePrompt.tsx:55
+msgid "Later"
+msgstr "Later"
+
+#: src/app/pages/SettingsPage.tsx:48
+msgid "Light"
+msgstr "Light"
+
+#: src/app/Layout.tsx:51
+#: src/app/Layout.tsx:64
+msgid "Main"
+msgstr "Main"
+
+#: src/app/pages/SettingsPage.tsx:47
+#: src/app/pages/SettingsPage.tsx:54
+msgid "Match device"
+msgstr "Match device"
+
+#: src/app/pages/HomePage.tsx:13
+msgid "No cemeteries on this device yet."
+msgstr "No cemeteries on this device yet."
+
+#: src/app/InstallPrompt.tsx:53
+msgid "Not now"
+msgstr "Not now"
+
+#: src/ui/Toaster.tsx:14
+msgid "Notifications"
+msgstr "Notifications"
+
+#: src/app/InstallPrompt.tsx:37
+msgid "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
+msgstr "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
+
+#: src/app/pages/NotFoundPage.tsx:8
+msgid "Page not found"
+msgstr "Page not found"
+
+#: src/app/UpdatePrompt.tsx:33
+msgid "Ready to work offline"
+msgstr "Ready to work offline"
+
+#: src/app/UpdatePrompt.tsx:48
+msgid "Reload"
+msgstr "Reload"
+
+#: src/app/Layout.tsx:33
+#: src/app/pages/SettingsPage.tsx:61
+msgid "Settings"
+msgstr "Settings"
+
+#: src/app/Layout.tsx:47
+msgid "Skip to content"
+msgstr "Skip to content"
+
+#: src/app/pages/SettingsPage.tsx:50
+msgid "Sunlight (high contrast)"
+msgstr "Sunlight (high contrast)"
+
+#: src/app/pages/SettingsPage.tsx:63
+msgid "Theme"
+msgstr "Theme"

@@ -30,3 +30,9 @@ coverage
 .env
 .env.local
 .env.production
+
+# v2 tooling
+dev-dist
+playwright-report
+test-results
+blob-report
