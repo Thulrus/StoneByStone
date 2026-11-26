@@ -140,6 +140,7 @@ msgid "{px} px"
 msgstr "{px} px"
 
 #: src/features/capture/PhotoStrip.tsx:34
+#: src/features/stones/detail/PhotosSection.tsx:23
 msgid "{role} photo"
 msgstr "{role} photo"
 
@@ -163,9 +164,17 @@ msgstr "1200 px (smallest files)"
 msgid "1600 px (recommended)"
 msgstr "1600 px (recommended)"
 
+#: src/features/stones/detail/labels.ts:10
+msgid "a nearby stone or landmark"
+msgstr "a nearby stone or landmark"
+
 #: src/app/UpdatePrompt.tsx:45
 msgid "A new version of StoneByStone is available."
 msgstr "A new version of StoneByStone is available."
+
+#: src/features/stones/detail/labels.ts:11
+msgid "a plat or drone image"
+msgstr "a plat or drone image"
 
 #. placeholder {0}: result.accuracyM
 #: src/features/capture/HoldStill.tsx:115
@@ -184,7 +193,12 @@ msgstr "Add a custom source"
 msgid "Add a plat map or drone image"
 msgstr "Add a plat map or drone image"
 
-#: src/features/stones/StoneSheet.tsx:110
+#: src/features/stones/detail/PeopleSection.tsx:70
+msgid "Add person"
+msgstr "Add person"
+
+#: src/features/stones/detail/PhotosSection.tsx:80
+#: src/features/stones/StoneSheet.tsx:112
 msgid "Add photo"
 msgstr "Add photo"
 
@@ -230,6 +244,14 @@ msgstr "Adjust pins for {name}"
 msgid "After stone {0}"
 msgstr "After stone {0}"
 
+#: src/features/stones/StoneSheet.tsx:124
+msgid "All details"
+msgstr "All details"
+
+#: src/features/stones/detail/labels.ts:14
+msgid "an import"
+msgstr "an import"
+
 #: src/features/settings/AboutPanel.tsx:30
 msgid "An update was found. Tap Reload when the banner appears."
 msgstr "An update was found. Tap Reload when the banner appears."
@@ -250,6 +272,10 @@ msgstr "Attribution"
 msgid "Average error: {rms} m"
 msgstr "Average error: {rms} m"
 
+#: src/features/stones/detail/labels.ts:7
+msgid "averaged GPS"
+msgstr "averaged GPS"
+
 #: src/features/capture/labels.ts:10
 msgid "Back"
 msgstr "Back"
@@ -258,10 +284,20 @@ msgstr "Back"
 msgid "Back along the row"
 msgstr "Back along the row"
 
+#. placeholder {0}: cemetery.name
+#: src/features/stones/detail/StoneDetail.tsx:52
+msgid "Back to {0}"
+msgstr "Back to {0}"
+
 #: src/app/pages/CemeteryPage.tsx:28
 #: src/app/pages/NotFoundPage.tsx:11
+#: src/app/pages/StonePage.tsx:49
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
+
+#: src/features/stones/detail/PositionSection.tsx:72
+msgid "Back to its row position"
+msgstr "Back to its row position"
 
 #: src/features/share/useBackupReminder.ts:27
 msgid "Back up"
@@ -362,6 +398,7 @@ msgstr "Can't check:"
 #: src/features/map/OfflinePanel.tsx:109
 #: src/features/map/RowDrawer.tsx:76
 #: src/features/overlays/PinPanel.tsx:68
+#: src/features/stones/PlaceOnMap.tsx:39
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -390,6 +427,14 @@ msgstr "Cemetery"
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
+#: src/features/stones/detail/labels.ts:19
+msgid "Changed"
+msgstr "Changed"
+
+#: src/features/stones/detail/HistorySection.tsx:33
+msgid "Changes"
+msgstr "Changes"
+
 #: src/features/cemeteries/FieldChecklist.tsx:103
 msgid "Check again"
 msgstr "Check again"
@@ -401,10 +446,6 @@ msgstr "Check for updates"
 #: src/features/settings/AboutPanel.tsx:67
 msgid "Checking…"
 msgstr "Checking…"
-
-#: src/features/capture/walk/QuickTray.tsx:58
-msgid "Choices"
-msgstr "Choices"
 
 #: src/ui/Dialog.tsx:59
 msgid "Close"
@@ -418,7 +459,8 @@ msgstr "Close camera"
 msgid "Concrete"
 msgstr "Concrete"
 
-#: src/features/capture/walk/QuickTray.tsx:45
+#: src/features/capture/walk/QuickTray.tsx:31
+#: src/features/stones/detail/AttributesSection.tsx:24
 msgid "Condition"
 msgstr "Condition"
 
@@ -480,6 +522,10 @@ msgstr "Cracked"
 msgid "Create"
 msgstr "Create"
 
+#: src/features/stones/detail/labels.ts:18
+msgid "Created"
+msgstr "Created"
+
 #: src/features/stones/attribute-labels.ts:19
 msgid "Cross"
 msgstr "Cross"
@@ -496,8 +542,13 @@ msgstr "Data"
 msgid "Data protected from browser clean-up"
 msgstr "Data protected from browser clean-up"
 
+#: src/features/stones/detail/labels.ts:13
+msgid "dataset alignment"
+msgstr "dataset alignment"
+
 #: src/features/cemeteries/CemeteryList.tsx:91
 #: src/features/cemeteries/setup/SectionBlock.tsx:69
+#: src/features/stones/detail/PhotosSection.tsx:57
 msgid "Delete"
 msgstr "Delete"
 
@@ -515,6 +566,10 @@ msgstr "Delete {0}?"
 msgid "Delete {name}"
 msgstr "Delete {name}"
 
+#: src/features/stones/detail/PhotosSection.tsx:47
+msgid "Delete {role} photo"
+msgstr "Delete {role} photo"
+
 #: src/features/map/OfflinePanel.tsx:142
 msgid "Delete offline map"
 msgstr "Delete offline map"
@@ -522,6 +577,10 @@ msgstr "Delete offline map"
 #: src/features/cemeteries/setup/RowItem.tsx:118
 msgid "Delete row"
 msgstr "Delete row"
+
+#: src/features/stones/detail/labels.ts:20
+msgid "Deleted"
+msgstr "Deleted"
 
 #: src/features/cemeteries/CemeteryList.tsx:59
 #: src/features/overlays/OverlaysPanel.tsx:43
@@ -542,11 +601,15 @@ msgstr "Deleted section {0}. Its rows are now unsectioned."
 msgid "Detail"
 msgstr "Detail"
 
-#: src/features/capture/walk/QuickTray.tsx:82
+#: src/features/capture/walk/QuickTray.tsx:40
 msgid "Detail type"
 msgstr "Detail type"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:90
+#: src/features/stones/detail/AttributesSection.tsx:32
+msgid "Details"
+msgstr "Details"
+
+#: src/features/cemeteries/CemeteryTabs.tsx:104
 #: src/features/schematic/SchematicView.tsx:80
 msgid "Diagram"
 msgstr "Diagram"
@@ -602,6 +665,10 @@ msgstr "Drop a pin on the map"
 #: src/features/stones/RelativePlacer.tsx:178
 msgid "E"
 msgstr "E"
+
+#: src/features/stones/detail/AttributesSection.tsx:73
+msgid "Earlier"
+msgstr "Earlier"
 
 #: src/features/cemeteries/setup/RowItem.tsx:74
 msgid "Edit line"
@@ -673,7 +740,8 @@ msgstr "Fieldstone"
 msgid "First row"
 msgstr "First row"
 
-#: src/features/capture/walk/QuickTray.tsx:46
+#: src/features/capture/walk/QuickTray.tsx:32
+#: src/features/stones/detail/AttributesSection.tsx:25
 msgid "Flags"
 msgstr "Flags"
 
@@ -700,6 +768,14 @@ msgstr "Free space: this browser can't tell."
 #: src/features/stones/RelativePlacer.tsx:114
 msgid "From"
 msgstr "From"
+
+#: src/features/stones/detail/PositionSection.tsx:42
+msgid "From {source}"
+msgstr "From {source}"
+
+#: src/features/stones/detail/PositionSection.tsx:44
+msgid "From {source}, within about ±{acc} m"
+msgstr "From {source}, within about ±{acc} m"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:124
 msgid "from OpenStreetMap."
@@ -739,6 +815,10 @@ msgstr "Good"
 msgid "Government / military"
 msgstr "Government / military"
 
+#: src/features/stones/detail/labels.ts:6
+msgid "GPS"
+msgstr "GPS"
+
 #: src/app/pages/SettingsPage.tsx:47
 msgid "GPS \"Hold still\" time"
 msgstr "GPS \"Hold still\" time"
@@ -769,11 +849,16 @@ msgstr "Headstone"
 msgid "Highest zoom level"
 msgstr "Highest zoom level"
 
+#: src/features/stones/detail/HistorySection.tsx:31
+msgid "History"
+msgstr "History"
+
 #: src/features/capture/HoldStill.tsx:25
 msgid "Hold still"
 msgstr "Hold still"
 
-#: src/features/stones/StoneSheet.tsx:113
+#: src/features/stones/detail/PositionSection.tsx:59
+#: src/features/stones/StoneSheet.tsx:115
 msgid "Hold still here (GPS)"
 msgstr "Hold still here (GPS)"
 
@@ -805,6 +890,10 @@ msgstr "Imagery"
 #: src/features/cemeteries/ImportButton.tsx:59
 msgid "Import"
 msgstr "Import"
+
+#: src/features/stones/detail/labels.ts:22
+msgid "Imported"
+msgstr "Imported"
 
 #. placeholder {0}: file.name
 #: src/features/cemeteries/ImportButton.tsx:28
@@ -847,6 +936,10 @@ msgstr "Install the app so it opens offline and keeps your survey data safe."
 msgid "It disappears from this list. Its records stay on the device and in any backups, and you can undo right away."
 msgstr "It disappears from this list. Its records stay on the device and in any backups, and you can undo right away."
 
+#: src/features/stones/detail/labels.ts:9
+msgid "its place in the row"
+msgstr "its place in the row"
+
 #: src/features/capture/walk/WalkStart.tsx:116
 msgid "Just name it; place it later"
 msgstr "Just name it; place it later"
@@ -872,6 +965,7 @@ msgid "Last photo"
 msgstr "Last photo"
 
 #: src/app/UpdatePrompt.tsx:55
+#: src/features/stones/detail/AttributesSection.tsx:76
 msgid "Later"
 msgstr "Later"
 
@@ -924,7 +1018,7 @@ msgstr "Made {n} rows from the grid"
 msgid "Main"
 msgstr "Main"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:89
+#: src/features/cemeteries/CemeteryTabs.tsx:103
 msgid "Map"
 msgstr "Map"
 
@@ -962,9 +1056,14 @@ msgstr "Marble"
 msgid "Match device"
 msgstr "Match device"
 
-#: src/features/capture/walk/QuickTray.tsx:44
+#: src/features/capture/walk/QuickTray.tsx:30
+#: src/features/stones/detail/AttributesSection.tsx:23
 msgid "Material"
 msgstr "Material"
+
+#: src/features/stones/detail/labels.ts:21
+msgid "Merged"
+msgstr "Merged"
 
 #: src/features/settings/CemeteryDefaultsForm.tsx:30
 msgid "Metres"
@@ -1020,13 +1119,17 @@ msgid "N"
 msgstr "N"
 
 #: src/features/capture/walk/QuickName.tsx:38
-#: src/features/capture/walk/QuickTray.tsx:47
+#: src/features/capture/walk/QuickTray.tsx:33
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:80
 #: src/features/cemeteries/WelcomeCard.tsx:42
 #: src/features/map/CustomSourceForm.tsx:64
 #: src/features/settings/ContributorForm.tsx:37
 msgid "Name"
 msgstr "Name"
+
+#: src/features/stones/detail/PeopleSection.tsx:26
+msgid "Name as carved"
+msgstr "Name as carved"
 
 #: src/features/stones/RelativePlacer.tsx:178
 msgid "NE"
@@ -1074,6 +1177,10 @@ msgstr "No GPS fixes came in. Check that location is on, then try again."
 msgid "no line"
 msgstr "no line"
 
+#: src/features/stones/detail/AttributesSection.tsx:55
+msgid "No row"
+msgstr "No row"
+
 #: src/features/schematic/SchematicView.tsx:84
 msgid "No rows or stones yet. Add rows in Setup."
 msgstr "No rows or stones yet. Add rows in Setup."
@@ -1103,7 +1210,8 @@ msgstr "Not now"
 msgid "Not on the map yet"
 msgstr "Not on the map yet"
 
-#: src/features/stones/StoneSheet.tsx:100
+#: src/features/stones/detail/PositionSection.tsx:54
+#: src/features/stones/StoneSheet.tsx:102
 msgid "Not placed on the map yet."
 msgstr "Not placed on the map yet."
 
@@ -1211,20 +1319,41 @@ msgstr "Path"
 msgid "Pedestal / die-on-base"
 msgstr "Pedestal / die-on-base"
 
+#: src/features/stones/detail/PeopleSection.tsx:52
+msgid "People"
+msgstr "People"
+
+#: src/features/stones/detail/HistorySection.tsx:24
+msgid "person"
+msgstr "person"
+
+#: src/features/stones/detail/PeopleSection.tsx:21
+msgid "Person {n}"
+msgstr "Person {n}"
+
 #: src/features/capture/Camera.tsx:109
 msgid "Phone camera"
 msgstr "Phone camera"
+
+#: src/features/stones/detail/HistorySection.tsx:25
+msgid "photo"
+msgstr "photo"
 
 #: src/features/capture/useSavePhoto.ts:56
 #: src/features/capture/walk/WalkCamera.tsx:93
 msgid "Photo added"
 msgstr "Photo added"
 
+#: src/features/stones/detail/PhotosSection.tsx:51
+msgid "Photo deleted"
+msgstr "Photo deleted"
+
 #: src/features/settings/CemeteryDefaultsForm.tsx:35
 msgid "Photo quality"
 msgstr "Photo quality"
 
 #: src/features/capture/Camera.tsx:135
+#: src/features/stones/detail/PhotosSection.tsx:29
 msgid "Photo type"
 msgstr "Photo type"
 
@@ -1233,6 +1362,7 @@ msgid "Photographed"
 msgstr "Photographed"
 
 #: src/features/settings/StoragePanel.tsx:96
+#: src/features/stones/detail/PhotosSection.tsx:72
 msgid "Photos"
 msgstr "Photos"
 
@@ -1252,8 +1382,14 @@ msgstr "Pin placed. Tap the map to move it."
 msgid "Place grid on map"
 msgstr "Place grid on map"
 
+#: src/features/stones/detail/PositionSection.tsx:68
+#: src/features/stones/PlaceOnMap.tsx:32
+msgid "Place on the map"
+msgstr "Place on the map"
+
+#: src/features/stones/detail/PositionSection.tsx:62
 #: src/features/stones/RelativePlacer.tsx:99
-#: src/features/stones/StoneSheet.tsx:116
+#: src/features/stones/StoneSheet.tsx:118
 msgid "Place relative to…"
 msgstr "Place relative to…"
 
@@ -1273,12 +1409,16 @@ msgstr "Placed {n} stones from the v1 grid"
 msgid "Places found"
 msgstr "Places found"
 
+#: src/features/stones/detail/labels.ts:8
+msgid "placing on the map"
+msgstr "placing on the map"
+
 #: src/features/overlays/OverlaysPanel.tsx:54
 msgid "Plat maps and drone images"
 msgstr "Plat maps and drone images"
 
 #. placeholder {0}: stone.address.plotLabel
-#: src/features/stones/StoneSheet.tsx:77
+#: src/features/stones/StoneSheet.tsx:79
 msgid "Plot {0}"
 msgstr "Plot {0}"
 
@@ -1295,8 +1435,12 @@ msgstr "Point {num}: off by {0} m"
 msgid "point on the image"
 msgstr "point on the image"
 
+#: src/features/stones/detail/PositionSection.tsx:37
+msgid "Position"
+msgstr "Position"
+
 #. placeholder {0}: Math.round(stone.position.accuracyM)
-#: src/features/stones/StoneSheet.tsx:105
+#: src/features/stones/StoneSheet.tsx:107
 msgid "Position within about ±{0} m"
 msgstr "Position within about ±{0} m"
 
@@ -1326,6 +1470,7 @@ msgid "Reload"
 msgstr "Reload"
 
 #: src/features/map/ImageryPicker.tsx:89
+#: src/features/stones/detail/PeopleSection.tsx:39
 msgid "Remove"
 msgstr "Remove"
 
@@ -1337,9 +1482,17 @@ msgstr "Remove gap"
 msgid "Remove line"
 msgstr "Remove line"
 
+#: src/features/stones/detail/PeopleSection.tsx:36
+msgid "Remove person {n}"
+msgstr "Remove person {n}"
+
 #: src/features/overlays/PinPanel.tsx:51
 msgid "Remove point {num}"
 msgstr "Remove point {num}"
+
+#: src/features/stones/detail/PositionSection.tsx:72
+msgid "Remove position"
+msgstr "Remove position"
 
 #: src/features/cemeteries/setup/RowItem.tsx:92
 #: src/features/cemeteries/setup/SectionBlock.tsx:66
@@ -1379,6 +1532,7 @@ msgid "Road"
 msgstr "Road"
 
 #: src/features/capture/walk/WalkStart.tsx:86
+#: src/features/stones/detail/AttributesSection.tsx:48
 msgid "Row"
 msgstr "Row"
 
@@ -1386,6 +1540,12 @@ msgstr "Row"
 #: src/features/cemeteries/setup/RowItem.tsx:83
 msgid "Row {0}"
 msgstr "Row {0}"
+
+#. placeholder {0}: layout.labelOf(placeRow)
+#. placeholder {1}: (placing?.address?.rowIndex ?? 0) + 1
+#: src/features/cemeteries/CemeteryTabs.tsx:48
+msgid "row {0}, stone {1}"
+msgstr "row {0}, stone {1}"
 
 #: src/features/capture/walk/WalkStart.tsx:94
 msgid "Row {name} ({n} stones)"
@@ -1395,7 +1555,8 @@ msgstr "Row {name} ({n} stones)"
 msgid "Row {name}, stone {n}"
 msgstr "Row {name}, stone {n}"
 
-#: src/features/stones/StoneSheet.tsx:62
+#: src/features/stones/detail/StoneDetail.tsx:45
+#: src/features/stones/StoneSheet.tsx:64
 msgid "Row {rowName}"
 msgstr "Row {rowName}"
 
@@ -1412,10 +1573,11 @@ msgid "Row {rowName} done"
 msgstr "Row {rowName} done"
 
 #. placeholder {0}: index + 1
-#: src/features/stones/StoneSheet.tsx:62
+#: src/features/stones/StoneSheet.tsx:64
 msgid "Row {rowName}, stone {0}"
 msgstr "Row {rowName}, stone {0}"
 
+#: src/features/stones/detail/StoneDetail.tsx:46
 #: src/features/stones/RelativePlacer.tsx:54
 msgid "Row {rowName}, stone {n}"
 msgstr "Row {rowName}, stone {n}"
@@ -1506,7 +1668,7 @@ msgstr "Save name"
 msgid "Saved"
 msgstr "Saved"
 
-#: src/features/capture/walk/QuickTray.tsx:139
+#: src/features/capture/walk/QuickTray.tsx:71
 msgid "Saved as you tap."
 msgstr "Saved as you tap."
 
@@ -1562,7 +1724,7 @@ msgstr "Set the cemetery's location or draw a row line first."
 msgid "Settings"
 msgstr "Settings"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:91
+#: src/features/cemeteries/CemeteryTabs.tsx:105
 msgid "Setup"
 msgstr "Setup"
 
@@ -1603,9 +1765,14 @@ msgstr "Starting camera…"
 msgid "Status key"
 msgstr "Status key"
 
+#: src/features/stones/detail/HistorySection.tsx:23
+msgid "stone"
+msgstr "stone"
+
+#: src/features/stones/detail/StoneDetail.tsx:47
 #: src/features/stones/RelativePlacer.tsx:56
-#: src/features/stones/StoneSheet.tsx:77
-#: src/features/stones/StoneSheet.tsx:155
+#: src/features/stones/StoneSheet.tsx:79
+#: src/features/stones/StoneSheet.tsx:163
 msgid "Stone"
 msgstr "Stone"
 
@@ -1628,6 +1795,10 @@ msgstr "Stone {0} skipped"
 msgid "Stone {n}"
 msgstr "Stone {n}"
 
+#: src/features/stones/detail/AttributesSection.tsx:66
+msgid "Stone {n} in the row"
+msgstr "Stone {n} in the row"
+
 #: src/features/capture/walk/WalkPanel.tsx:130
 msgid "Stone {n} skipped"
 msgstr "Stone {n} skipped"
@@ -1636,13 +1807,21 @@ msgstr "Stone {n} skipped"
 msgid "Stone added"
 msgstr "Stone added"
 
-#: src/features/capture/walk/QuickTray.tsx:81
+#: src/features/capture/walk/QuickTray.tsx:39
 msgid "Stone details"
 msgstr "Stone details"
 
-#: src/features/stones/StoneSheet.tsx:144
+#: src/app/pages/StonePage.tsx:46
+msgid "Stone not found"
+msgstr "Stone not found"
+
+#: src/features/stones/StoneSheet.tsx:152
 msgid "Stone placed by GPS"
 msgstr "Stone placed by GPS"
+
+#: src/features/stones/PlaceOnMap.tsx:19
+msgid "Stone placed on the map"
+msgstr "Stone placed on the map"
 
 #. placeholder {0}: nameOf(ref)
 #: src/features/stones/RelativePlacer.tsx:74
@@ -1706,6 +1885,10 @@ msgstr "Tablet"
 msgid "Take photo"
 msgstr "Take photo"
 
+#: src/features/stones/PlaceOnMap.tsx:36
+msgid "Tap the map where {name} is."
+msgstr "Tap the map where {name} is."
+
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:113
 msgid "Tap the map where the cemetery is."
 msgstr "Tap the map where the cemetery is."
@@ -1751,6 +1934,14 @@ msgstr "The in-app camera isn't available here. Use your phone's camera app."
 #: src/features/map/CustomSourceForm.tsx:102
 msgid "The provider's terms allow saving tiles for offline use"
 msgstr "The provider's terms allow saving tiles for offline use"
+
+#: src/features/cemeteries/CemeteryTabs.tsx:49
+msgid "the stone"
+msgstr "the stone"
+
+#: src/features/stones/detail/labels.ts:12
+msgid "the v1 grid"
+msgstr "the v1 grid"
 
 #: src/features/map/CustomSourceForm.tsx:70
 msgid "The WMS service address, without GetMap parameters"
@@ -1813,8 +2004,9 @@ msgstr "Tree"
 msgid "Try again"
 msgstr "Try again"
 
-#: src/features/capture/walk/QuickTray.tsx:43
+#: src/features/capture/walk/QuickTray.tsx:29
 #: src/features/map/CustomSourceForm.tsx:55
+#: src/features/stones/detail/AttributesSection.tsx:22
 msgid "Type"
 msgstr "Type"
 
@@ -1837,8 +2029,10 @@ msgstr "Uncertain position"
 #: src/features/overlays/ImagePinWorkspace.tsx:36
 #: src/features/overlays/OverlayLayers.tsx:66
 #: src/features/overlays/OverlaysPanel.tsx:44
+#: src/features/stones/detail/PhotosSection.tsx:52
+#: src/features/stones/PlaceOnMap.tsx:20
 #: src/features/stones/RelativePlacer.tsx:75
-#: src/features/stones/StoneSheet.tsx:145
+#: src/features/stones/StoneSheet.tsx:153
 msgid "Undo"
 msgstr "Undo"
 
@@ -1858,7 +2052,7 @@ msgstr "Units and photo quality apply to cemeteries you create from now on."
 msgid "Unnamed cemetery"
 msgstr "Unnamed cemetery"
 
-#: src/features/stones/StoneSheet.tsx:55
+#: src/features/stones/StoneSheet.tsx:57
 msgid "Unnamed person"
 msgstr "Unnamed person"
 
@@ -1885,7 +2079,7 @@ msgstr "Using your phone's camera app."
 msgid "v1 grid"
 msgstr "v1 grid"
 
-#: src/features/stones/StoneSheet.tsx:66
+#: src/features/stones/StoneSheet.tsx:68
 msgid "v1 grid row {r}, column {c}"
 msgstr "v1 grid row {r}, column {c}"
 
@@ -1905,7 +2099,7 @@ msgstr "Version"
 msgid "Veteran marker / flag holder"
 msgstr "Veteran marker / flag holder"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:88
+#: src/features/cemeteries/CemeteryTabs.tsx:102
 msgid "View"
 msgstr "View"
 
@@ -1919,7 +2113,7 @@ msgstr "Waiting for GPS…"
 
 #: src/features/capture/walk/WalkPanel.tsx:94
 #: src/features/capture/walk/WalkStart.tsx:77
-#: src/features/cemeteries/CemeteryTabs.tsx:95
+#: src/features/cemeteries/CemeteryTabs.tsx:109
 msgid "Walk a row"
 msgstr "Walk a row"
 

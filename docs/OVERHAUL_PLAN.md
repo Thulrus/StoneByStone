@@ -237,6 +237,12 @@ stones on aerial imagery without ever visiting.
   Tabs/modes: _Survey_ (field capture), _Transcribe_, _People_ (searchable index),
   _Progress_, _Setup_ (sections, rows, overlays, imagery, offline download), _Share/Export_.
 - **Stone detail** — photos, people on the stone, attributes, history, position editor.
+  (M3: `#/cemetery/:id/stone/:stoneId`, opened from the stone sheet's "All details". Photos:
+  add, change type, delete. People: names only until the M4 form. Attributes: the same chip
+  groups as the camera, as normal undoable edits. Row: change row, move earlier or later.
+  Position: hold still, relative, "Place on the map" (a tap tool on the cemetery map via
+  `?place=<stoneId>`, source `map`), and back to its row position. History: entries for the
+  stone, its people and its photos.)
 - **Person detail** — names, dates, relationships, sources, which stone.
 - **Merge review** — side-by-side candidate matches when combining datasets.
 - **Settings** — contributor name, units, language, photo quality, storage usage, AI key.

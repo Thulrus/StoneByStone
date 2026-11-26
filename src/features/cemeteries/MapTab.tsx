@@ -11,10 +11,12 @@ export interface MapTabProps extends Omit<CemeteryMapProps, 'tool'> {
   onPinDone: () => void;
   /** An active walk-a-row session's panel. */
   walk?: ReactNode;
+  /** Another map tool (placing one stone), taking the map's taps. */
+  tool?: CemeteryMapProps['tool'];
 }
 
 /** The map, or a pinning or walk-a-row session on it. */
-export function MapTab({ overlays, pinId, onPinDone, walk, ...map }: MapTabProps) {
+export function MapTab({ overlays, pinId, onPinDone, walk, tool, ...map }: MapTabProps) {
   const pinning = overlays.find((o) => o.id === pinId);
   if (pinning?.kind === 'legacy-grid') {
     return <GridPinWorkspace key={pinning.id} grid={pinning} onDone={onPinDone} {...map} />;
@@ -34,7 +36,7 @@ export function MapTab({ overlays, pinId, onPinDone, walk, ...map }: MapTabProps
     <CemeteryMap
       {...map}
       overlays={overlays}
-      tool={walk ? { map: null, panel: walk } : undefined}
+      tool={tool ?? (walk ? { map: null, panel: walk } : undefined)}
     />
   );
 }

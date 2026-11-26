@@ -138,3 +138,28 @@ test('walk summary counts what this walk added', async () => {
   await add({ flags: ['needs-revisit'] });
   expect(await walkSummary(store, row, since)).toEqual({ stones: 2, photos: 0, skipped: 1 });
 });
+
+test('stone detail: move to another row, clear a position back to the row layout', async () => {
+  const { moveToRow, clearPosition } = await import('./stone-edit');
+  const { placeStone } = await import('./placement');
+  const { store, row, add, order, xOf } = await setup();
+  const a = await add();
+  const b = await add();
+  const other = await store.rows.create({ cemeteryId: row.cemeteryId, label: '5' });
+  await moveToRow(store, a.id, other.id);
+  expect(await order()).toEqual([null, b.id]);
+  expect((await store.monuments.get(a.id))?.address).toMatchObject({
+    rowId: other.id,
+    rowIndex: 0,
+  });
+  expect((await store.monuments.get(a.id))?.position).toBeUndefined();
+  await store.undo();
+  expect(await order()).toEqual([a.id, b.id]);
+
+  const [lng, lat] = east(7);
+  await placeStone(store, b.id, { lng, lat, source: 'map' });
+  expect(await xOf(b.id)).toBe(7);
+  await clearPosition(store, b.id);
+  expect(await xOf(b.id)).toBe(20);
+  expect((await store.monuments.get(b.id))?.position?.source).toBe('row-interpolated');
+});

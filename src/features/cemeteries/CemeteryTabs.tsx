@@ -1,5 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import { useRef, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
+import { stonePath } from '../../app/paths';
 import type { Cemetery, ID, MapFeature, Monument, Overlay } from '../../domain';
 import { Button } from '../../ui/Button';
 import { cn } from '../../ui/cn';
@@ -9,6 +11,7 @@ import { OfflinePanel } from '../map/OfflinePanel';
 import { GridActions } from '../overlays/GridActions';
 import { OverlaysPanel } from '../overlays/OverlaysPanel';
 import { SchematicView } from '../schematic/SchematicView';
+import { usePlaceOnMap } from '../stones/PlaceOnMap';
 import { StoneSheet } from '../stones/StoneSheet';
 import { FieldChecklist } from './FieldChecklist';
 import { MapTab } from './MapTab';
@@ -35,7 +38,18 @@ export function CemeteryTabs({
   initialTab: Tab;
 }) {
   const { t } = useLingui();
-  const [current, setTab] = useState<Tab>(initialTab);
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+  // "Place on the map" from the stone detail screen: `?place=<stoneId>`.
+  const placing = stones.find((m) => m.id === params.get('place'));
+  const [current, setTab] = useState<Tab>(placing ? 'map' : initialTab);
+  const placeRow = layout.rows.find((r) => r.id === placing?.address?.rowId);
+  const placeName = placeRow
+    ? t`row ${layout.labelOf(placeRow)}, stone ${(placing?.address?.rowIndex ?? 0) + 1}`
+    : t`the stone`;
+  const placeTool = usePlaceOnMap(placing?.id, placeName, () => {
+    if (placing) void navigate(stonePath(cemetery.id, placing.id));
+  });
   const [activeRowId, setActiveRowId] = useState<ID>();
   const [drawRowId, setDrawRowId] = useState<ID>();
   const [stoneId, setStoneId] = useState<ID>();
@@ -90,7 +104,7 @@ export function CemeteryTabs({
           {tabButton('diagram', t`Diagram`)}
           {tabButton('setup', t`Setup`)}
         </div>
-        {current !== 'setup' && !walkRow && !drawRowId ? (
+        {current !== 'setup' && !walkRow && !drawRowId && !placing ? (
           <Button size="lg" onClick={() => setWalkStart(true)}>
             {t`Walk a row`}
           </Button>
@@ -105,6 +119,7 @@ export function CemeteryTabs({
             overlays={overlays}
             selectedStoneId={highlighted}
             walk={walkPanel}
+            tool={placeTool}
             onSelectStone={setStoneId}
             labelOf={layout.labelOf}
             activeRowId={activeRowId}
