@@ -1114,16 +1114,43 @@ vite-plugin-pwa), and the landmark PNGs in `public/`. These are kept: the icons 
 
 ## 24. Map imagery and tile sources
 
-Licensing and usage terms vary; **verify current terms for each provider before shipping**.
+Licensing and usage terms vary. Terms were **checked on 2026-11-25** (WP4, #25) and the
+presets in `src/features/map/imagery.ts` follow the table below. Re-check before each release
+that changes imagery.
 
-| Source                                           | Coverage                       | Use                                                     | Offline caching                                                                               |
-| ------------------------------------------------ | ------------------------------ | ------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| USGS National Map `USGSImageryOnly` (NAIP-based) | US                             | Default imagery in the US                               | Public domain — caching for the cemetery area is OK                                           |
-| Esri World Imagery                               | Global, high-res in many areas | Candidate default outside the US                        | Check Esri terms (attribution required; production use may need an ArcGIS account)            |
-| OpenStreetMap standard tiles                     | Global                         | Street/context layer                                    | **No bulk download** per OSM tile policy; online only, or use a provider that permits caching |
-| EOX Sentinel-2 cloudless                         | Global, ~10 m                  | Context only (too coarse for stones)                    | Check license by year                                                                         |
-| Custom XYZ / WMS URL                             | Any                            | Local government orthophotos, national mapping agencies | Per that provider                                                                             |
-| User image overlays (plat, drone)                | Any                            | Placement                                               | Stored locally (it's the user's file)                                                         |
+| Source                                           | Coverage                       | Use                                                      | Offline caching                                                                |
+| ------------------------------------------------ | ------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| USGS National Map `USGSImageryOnly` (NAIP-based) | US                             | **Default inside the US**                                | Public domain; the service allows tile export. Caching the cemetery area is OK |
+| Esri World Imagery                               | Global, high-res in many areas | Optional, **needs the user's own ArcGIS API key**        | No. Online only (the terms don't grant offline storage)                        |
+| OpenStreetMap standard tiles                     | Global                         | **Default outside the US** (street context only)         | **No.** The OSM tile policy forbids "download for offline" and prefetching     |
+| EOX Sentinel-2 cloudless                         | Global, ~10 m                  | Not offered: too coarse for stones; 2018+ is NC-licensed | —                                                                              |
+| Custom XYZ / WMS URL                             | Any                            | Local government orthophotos, national mapping agencies  | Only when the user states the provider's terms allow it                        |
+| User image overlays (plat, drone)                | Any                            | Placement                                                | Stored locally (it's the user's file)                                          |
+
+What the checks found:
+
+- **USGS** (`basemap.nationalmap.gov/.../USGSImageryOnly/MapServer`): USDA NAIP orthoimagery
+  (0.6–1 m), credited "USGS The National Map: Orthoimagery". The cache is built to 1:9,028
+  (about z16), so the preset sets `maxzoom: 16` and MapLibre over-zooms. Alaska uses 10 m SPOT
+  imagery, which is coarse.
+- **Esri**: the keyless `server.arcgisonline.com` URLs are licensed only with Esri software or
+  an ArcGIS subscription, so a public app can't use them anonymously. The preset uses the
+  ArcGIS Static Basemap Tiles service (`arcgis/imagery`, 512 px tiles) with a key the user
+  enters. The key stays in the device `settings` table and never goes into exports. Attribution:
+  "Powered by Esri" plus the data credits.
+- **OSM**: attribution must always be visible; browsers must send a valid Referer (we set no
+  restrictive `Referrer-Policy`); no bulk or offline download.
+- **Nominatim**: at most 1 request/s; identify via Referer; cache results; **no autocomplete**
+  (search runs only on submit).
+- **Overpass** (`overpass-api.de`): fine for occasional interactive queries; run only on an
+  explicit tap.
+
+**Non-US default (resolves the §27 open question):** no global aerial source we checked allows
+keyless use in a public app. Outside the US the default is OpenStreetMap for context. If the
+user has entered an Esri key, Esri imagery becomes the default instead. Users can also add their
+national mapping agency's orthophoto WMS/XYZ service, and the schematic view (§7.5) needs no
+imagery at all. The US check uses coarse bounding boxes (CONUS, Alaska, Hawaii, territories),
+so a cemetery just over the Canadian border may default to USGS; the user can switch.
 
 Offline download is limited to the cemetery bounding box + small buffer, zoom ~15–20,
 with a size estimate before downloading and per-cemetery deletion. Tiles go in Cache
@@ -1250,7 +1277,7 @@ grid pinning should not slip (it's what makes v1 data useful).
 | **Open:** integrate with Find a Grave / BillionGraves / FamilySearch?       | No open write APIs; store external IDs/links only. Do not scrape.                                                                               |
 | ~~Open: default license for published data~~                                | **Resolved:** CC BY 4.0 (§2).                                                                                                                   |
 | **Open:** license for the app's source code                                 | No LICENSE file exists. The owner decides before M7.                                                                                            |
-| **Open:** which imagery default outside the US                              | Decide during M2 after checking terms.                                                                                                          |
+| ~~Open: which imagery default outside the US~~                              | **Resolved (M2):** OpenStreetMap context, or Esri with the user's key; custom national sources. See §24.                                        |
 
 ---
 

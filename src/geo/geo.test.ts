@@ -1,6 +1,8 @@
 import fc from 'fast-check';
 import {
   applyAffine,
+  bboxOf,
+  pointInPolygon,
   bearingDeg,
   composeAffine,
   distanceM,
@@ -293,5 +295,66 @@ describe('rows horizontal', () => {
   it('averages row axes, ignoring direction', () => {
     expect(meanAxisBearing([toward(30), toward(210), toward(30)])).toBeCloseTo(30, 6);
     expect(meanAxisBearing([])).toBeUndefined();
+  });
+});
+
+describe('bbox and point in polygon', () => {
+  const square = {
+    type: 'Polygon' as const,
+    coordinates: [
+      [
+        [0, 0],
+        [10, 0],
+        [10, 10],
+        [0, 10],
+        [0, 0],
+      ],
+      [
+        [4, 4],
+        [6, 4],
+        [6, 6],
+        [4, 6],
+        [4, 4],
+      ],
+    ],
+  };
+
+  it('boxes mixed geometry', () => {
+    expect(
+      bboxOf([
+        square,
+        undefined,
+        {
+          type: 'LineString',
+          coordinates: [
+            [-1, 2],
+            [3, 12],
+          ],
+        },
+      ]),
+    ).toEqual([-1, 0, 10, 12]);
+    expect(bboxOf([])).toBeUndefined();
+  });
+
+  it('respects holes', () => {
+    expect(pointInPolygon([1, 1], square)).toBe(true);
+    expect(pointInPolygon([5, 5], square)).toBe(false);
+    expect(pointInPolygon([11, 5], square)).toBe(false);
+    expect(
+      pointInPolygon([21, 1], {
+        type: 'MultiPolygon',
+        coordinates: [
+          square.coordinates,
+          [
+            [
+              [20, 0],
+              [22, 0],
+              [22, 2],
+              [20, 0],
+            ],
+          ],
+        ],
+      }),
+    ).toBe(true);
   });
 });

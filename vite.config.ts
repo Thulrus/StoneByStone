@@ -33,7 +33,9 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,webmanifest}'],
+        globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,woff2,webmanifest}'],
+        // The map chunk (~1.1 MB) and its worker must be precached so the map works offline.
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
         globIgnores: ['icon.png'],
         navigateFallback: `${base}index.html`,
         cleanupOutdatedCaches: true,
