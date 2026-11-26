@@ -69,19 +69,19 @@ feature.
 
 ## 2. Decisions already made
 
-| Question             | Decision                                                                                                                                                   |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Primary use          | **Historic cemeteries**, but must work for any cemetery (modern, active, rural, urban).                                                                    |
-| Geography            | **US first**, designed for **international** use from day one (data model, dates, names, imagery).                                                         |
-| Collaboration        | **Mostly solo.** Must be able to **combine partial datasets** from different people into a more complete map. Real-time multi-user sync is _not_ required. |
-| AI transcription     | Acceptable, **low priority**, opt-in, bring-your-own key.                                                                                                  |
-| Rebuild vs refactor  | **Full rebuild.** No v1 code needs to be preserved. v1 _data_ must be importable.                                                                          |
-| Hosting              | **GitHub Pages** (static).                                                                                                                                 |
-| v1 in production?    | **No real user data in v1.** v2 is built on `master` and replaces the live site from M0.                                                                   |
-| v1 IndexedDB import  | **Dropped.** Only the `.cem.json` file importer is built (§22). v1 stays recoverable at tag `v1-final`.                                                    |
-| Field devices        | **iOS and Android are both first-class.** Test on real devices at the end of M0 and during M3.                                                             |
-| Default data license | **CC BY 4.0.**                                                                                                                                             |
-| i18n library         | **Lingui.**                                                                                                                                                |
+| Question             | Decision                                                                                                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Primary use          | **Historic cemeteries**, but must work for any cemetery (modern, active, rural, urban).                                                                                                                            |
+| Geography            | **US first**, designed for **international** use from day one (data model, dates, names, imagery).                                                                                                                 |
+| Collaboration        | **Mostly solo.** Must be able to **combine partial datasets** from different people into a more complete map. Real-time multi-user sync is _not_ required.                                                         |
+| AI transcription     | Acceptable, **low priority**, opt-in, bring-your-own key.                                                                                                                                                          |
+| Rebuild vs refactor  | **Full rebuild.** No v1 code needs to be preserved. v1 _data_ must be importable.                                                                                                                                  |
+| Hosting              | **GitHub Pages** (static).                                                                                                                                                                                         |
+| v1 in production?    | **No real user data in v1.** v2 is built on `master` and replaces the live site from M0.                                                                                                                           |
+| v1 IndexedDB import  | **Dropped.** Only the `.cem.json` file importer is built (§22). v1 stays recoverable at tag `v1-final`.                                                                                                            |
+| Field devices        | **iOS and Android are both first-class.** Real-device tests run on Android at the end of M0 and during M3. iPhone testing is optional (#80) because the owner has no iPhone, and CI's WebKit run stands in for it. |
+| Default data license | **CC BY 4.0.**                                                                                                                                                                                                     |
+| i18n library         | **Lingui.**                                                                                                                                                                                                        |
 
 ### 2.1 Execution workflow
 
@@ -1200,7 +1200,7 @@ grid pinning should not slip (it's what makes v1 data useful).
 
 | Risk / question                                                             | Mitigation / next step                                                                                                                          |
 | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| iOS camera and storage quirks (in-app camera reliability, eviction, quotas) | Fallback to file input; install prompt; persistence; early testing on a real iPhone in M0/M3.                                                   |
+| iOS camera and storage quirks (in-app camera reliability, eviction, quotas) | Fallback to file input; install prompt; persistence; WebKit in CI; real-iPhone testing is optional (#80), since no iPhone is available.         |
 | Photo storage volume on phones                                              | Configurable quality, thumbnails, per-section export, storage dashboard.                                                                        |
 | Imagery terms change or forbid caching                                      | Provider abstraction, public-domain US default, custom sources, schematic view needs none.                                                      |
 | GPS too poor under canopy to help at all                                    | Walk-a-row ordering + schematic view are designed to work with zero GPS.                                                                        |
