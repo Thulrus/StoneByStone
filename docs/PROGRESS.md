@@ -5,45 +5,69 @@ Update this file at the end of every session.
 
 ## Next session starts here
 
-**WP7 (M3: row controls, GPS averaging, chips, relative placement, polish, checklist, stone
-detail) is `todo`.** Start with #36. WP6 is done; its device checks (below) can be tried any
-time before field trial #1 (#43).
+**WP7 is done. M3 is complete. Next: field trial #1 (#43, owner), so WP8 is
+`blocked: check-in`.** Stop and tell the owner. Don't start WP8 until they unblock it.
 
-Owner device checks still open (Android, installed app):
+Owner checks before or during field trial #1 (Android, installed app):
 
+- **#43 (the M3 bar):** capture a 30-stone row one-handed in under 5 minutes, offline, in
+  the right order, and nothing lost after closing the app.
 - **#33:** a photo is ready (stone appears, "Stone N saved") within about 1 s of the shutter.
-- **#34:** the in-app camera opens and shoots in the installed app; "Phone camera" switches to
-  the system camera app and back.
+- **#34:** the in-app camera opens and shoots; "Phone camera" switches to the system camera
+  app and back.
 - **#32 (from M2):** plat overlay on the phone (Setup → "Add a plat map or drone image").
+- New in WP7, worth trying in the field: Gap/Skip/Insert/Reverse/Reorder during a walk,
+  quick chips and quick name in the camera, "Hold still here (GPS)" and "Place relative to…"
+  on the stone sheet, the screen staying on during a walk (and sleeping after "End walk"),
+  the end-of-walk summary, Setup → "Before you go out", and the stone detail screen
+  ("All details").
 
-Notes for WP7+:
+Notes for WP8+:
 
-- **Walk-a-row:** `geo/row-layout.ts` (`layoutRow`, `isotonic`, `effectiveRowLine`) is pure.
-  `data/walk.ts` has `captureStone` (stone + photo + re-space, one undo step), `relayoutRow`
-  (joins the current operation), `endRowHere`, and `get/setRowStart` (device setting
-  `walk:start:<rowId>`). A stone's GPS fix is its first photo's `position`. Gaps are missing
-  `rowIndex` values. #36 can add Gap as "skip an index", and Insert/Reverse/Reorder as
-  `rowIndex` rewrites followed by `relayoutRow`, all in one `store.run`. Only `row-interpolated`
-  (or missing) positions are rewritten.
-- **Capture UI:** `features/capture/` has `Camera` (generic full-screen camera with roles,
-  `actions` slot, `lastPhoto`, phone-camera fallback via the `systemCamera` pref),
-  `walk/useWalkCapture` (a serial queue: shutter order = stone order; `generation` detaches a
-  pending stone on Next stone), `WalkCamera`, `WalkPanel` (under the map via the `tool` slot,
-  above the diagram), and `WalkStart`. `CemeteryTabs` holds the walk state. Toasts cover the
-  shutter on phones, so the camera shows its own "Stone N saved · Undo". Keep #40's capture
-  feedback in the camera too.
-- **Photos:** `features/capture/pipeline.ts` (runs in `photo.worker.ts` via `process.ts`),
-  `data/photos.ts` (`preparePhoto` outside a transaction, then `writePhoto` inside one, or
-  `addPhoto`). `useSavePhoto` adds a photo to an existing stone (StoneSheet → Add photo).
-  `PhotoStrip`/`BlobImage` show thumbnails.
-- **Binary rows store bytes** (`data/blobs.ts`: `toBlobRow`, `rowBlob`, `rowSize`), so
-  WebKit e2e can store photos. The overlay e2e is still skipped on WebKit, but now because a
-  tap in the pin workspace times out there (not investigated).
-- `quickFix()` (`features/capture/gps.ts`) is one fresh fix (`maximumAge: 0`). #37's
-  averaging should build on it. Never use `watchPosition`.
+- **Row controls** (plan §7.2): `data/row-controls.ts` (`reverseRow`, `moveStone`).
+  `captureStone` takes `at` (insert, shifting later stones unless the slot is a gap), `gaps`
+  and `flags` (Skip = `needs-revisit`, no photo). `useWalkCapture` reads placement (insert
+  point, reversed walk, pending gaps) at the shutter press. Reverse renumbers the row and
+  reverses its line, so nothing moves. After it, new stones in that walk go before stone 1, and
+  "Row end here" moves the line start (`endRowHere(..., { atStart })`).
+- **Undo:** `store.run(..., { undoable: 'join' })` adds to the latest undo step. Quick chips
+  and quick name use it (`data/quick.ts`), so the in-camera Undo removes the stone with its
+  details.
+- **Placement:** `data/placement.ts` `placeStone` (one undo step; the row is re-spaced with
+  the stone as an anchor). `data/stone-edit.ts` `moveToRow`, `clearPosition`. `geo/average.ts`
+  (hold still: `averageFixes`, `snapToLine`, `circleRing`); `geo/relative.ts`. The
+  hold-still time is a pref (`holdStillSeconds`, Settings). `StonesLayer` draws the
+  selected stone's accuracy circle.
+- **Attributes:** vocabularies in `domain/attributes.ts`, labels in
+  `features/stones/attribute-labels.ts`, one chip group component `AttributeChips` (camera
+  tray `QuickTray` uses `tone="dark"`). M4's keyboard form (#46) can reuse it.
+- **Stone detail:** route `cemetery/:id/stone/:stoneId` (`stonePath`), `StonePage` →
+  `features/stones/detail/*`. People are names only. The full person form is M4 (#46/#48).
+  "Place on the map" is `?place=<stoneId>` on the cemetery route (`usePlaceOnMap` tool in
+  `CemeteryTabs`).
+- **Field:** `useWakeLock(active)` (`features/capture/`), `WalkSummary` (`data/walk-summary.ts`),
+  `FieldChecklist` + pure `field-checklist.ts` in Setup.
+- **Tests:** `tests/e2e/walk-controls.spec.ts` (all controls, chips, hold still with a 5 s
+  pref, relative, summary, a fake wake lock) and `stone-detail.spec.ts`. The checklist is
+  checked in `offline.spec.ts` (fake `getBattery`). A modal sheet hides the toast region from
+  the accessibility tree, so check the sheet's own text instead of a toast.
+- All three e2e projects passed locally in the Playwright Docker image (41 passed, 1 skipped).
+- `Setup.test.tsx` "deletes a row with undo" failed 2 of 5 full runs this session, then
+  passed 6 in a row. It now has 5 s timeouts. If it still fails, look at the ⋯ menu sheet.
+
+Notes from WP6 (still true):
+
+- **Walk-a-row core:** `geo/row-layout.ts` (`layoutRow`, `isotonic`, `effectiveRowLine`) is
+  pure. A stone's GPS fix is its first photo's `position`. Only `row-interpolated` (or
+  missing) positions are rewritten by `relayoutRow`.
+- **Capture UI:** `Camera` (roles, `actions` and `tray` slots, phone-camera fallback via the
+  `systemCamera` pref), `useWalkCapture` (serial queue: shutter order = stone order). Toasts
+  cover the shutter on phones, so the camera shows its own feedback.
+- **Photos:** `features/capture/pipeline.ts` in a worker; `data/photos.ts` (`preparePhoto`,
+  `writePhoto`, `addPhoto`); binary rows store bytes (`data/blobs.ts`).
+- `quickFix()` is one fresh fix; `holdStill()` loops it. Never use `watchPosition`.
 - In e2e, the camera's fallback input is `getByTestId('camera-file')` after tapping
-  "Phone camera". Mocked GPS: `test.use({ geolocation, permissions: ['geolocation'] })` and
-  `context.setGeolocation` before each shot.
+  "Phone camera". Mocked GPS: `test.use({ geolocation, permissions: ['geolocation'] })`.
 
 Older notes (WP6 and earlier):
 
@@ -94,27 +118,27 @@ Older notes (WP6 and earlier):
 
 Status values: `todo` · `in-progress` · `done` · `blocked: check-in`
 
-| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status      |
-| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ----------- |
-| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done        |
-| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done        |
-| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done        |
-| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done        |
-| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | done        |
-| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | done        |
-| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | done        |
-| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | in-progress |
-| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | todo        |
-| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | todo        |
-| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | todo        |
-| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo        |
-| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | todo        |
-| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | todo        |
-| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | todo        |
-| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo        |
-| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo        |
-| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo        |
-| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo        |
+| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status |
+| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ------ |
+| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done   |
+| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done   |
+| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done   |
+| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done   |
+| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | done   |
+| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | done   |
+| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | done   |
+| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | done   |
+| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | todo   |
+| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | todo   |
+| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | todo   |
+| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo   |
+| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | todo   |
+| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | todo   |
+| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | todo   |
+| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo   |
+| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo   |
+| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo   |
+| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo   |
 
 Packages that end a milestone (WP0, WP3, WP5, WP9, WP11, WP13, WP14) finish with a check-in
 before the next package starts.
@@ -138,3 +162,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-25 · M2 check-in (partial) · Owner on Android: 10k stones smooth (#28), offline map works in airplane mode (#30), Willow Creek grid pinned on a real map (#31). Plat overlay (#32) not tried (no image). Fixed two bugs the owner found: map controls drew over the stone sheet (dialogs now z-40), and the row ⋯ menu opened off screen on phones (now a bottom sheet). Owner to confirm unblocking WP6.
 - 2026-11-26 · M2 check-in · Owner unblocked WP6. Plat overlay (#32) device check deferred; still open with the owner.
 - 2026-11-26 · WP6 · Photo pipeline in a worker: resize, ≤20 KB thumbnail, sha256, pHash, EXIF time/GPS (#33). In-app camera with roles, haptics, phone-camera fallback, Add photo on the stone sheet (#34). Walk-a-row: start by GPS/draw/name, Next stone → photo → next rowIndex, isotonic GPS fit, Row end re-spacing, in-camera Undo (#35). Binary rows now store bytes, so WebKit can store photos. 725 unit + 33 e2e (all 3 projects) green. Owner device checks for #33/#34 open.
+- 2026-11-26 · WP7 · Row controls: gap, skip, insert, reverse, reorder (#36). GPS hold-still averaging with outlier rejection, row snapping and accuracy circle (#37). Quick chips and quick name with surname carry-over (#38). Relative placement (#39). Wake lock, haptics, end-of-walk summary with backup (#40). Field prep checklist (#41). Stone detail screen (#42). 762 unit + 41 e2e (all 3 projects) green. M3 complete; WP8 blocked on field trial #1 (#43).
