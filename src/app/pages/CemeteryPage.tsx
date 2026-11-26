@@ -2,10 +2,12 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router';
-import type { Cemetery, ID } from '../../domain';
+import type { Cemetery, ID, Monument } from '../../domain';
 import { LayoutEditor } from '../../features/cemeteries/setup/LayoutEditor';
 import { useLayout, type Layout } from '../../features/cemeteries/useLayout';
 import { CemeteryMap } from '../../features/map/CemeteryMap';
+import { StoneSheet } from '../../features/stones/StoneSheet';
+import { useStones } from '../../features/stones/useStones';
 import { cn } from '../../ui/cn';
 import { useStore } from '../store-context';
 
@@ -37,12 +39,14 @@ export function CemeteryPage() {
 
 function CemeteryView({ cemetery }: { cemetery: Cemetery }) {
   const layout = useLayout(cemetery.id);
-  if (!layout) return null;
+  const stones = useStones(cemetery.id);
+  if (!layout || !stones) return null;
   // A new cemetery opens on Setup so the first job, adding rows, is in front of the user.
   return (
     <CemeteryTabs
       cemetery={cemetery}
       layout={layout}
+      stones={stones}
       initialTab={layout.rows.length === 0 ? 'setup' : 'map'}
     />
   );
@@ -51,16 +55,19 @@ function CemeteryView({ cemetery }: { cemetery: Cemetery }) {
 function CemeteryTabs({
   cemetery,
   layout,
+  stones,
   initialTab,
 }: {
   cemetery: Cemetery;
   layout: Layout;
+  stones: Monument[];
   initialTab: Tab;
 }) {
   const { t } = useLingui();
   const [current, setTab] = useState<Tab>(initialTab);
   const [activeRowId, setActiveRowId] = useState<ID>();
   const [drawRowId, setDrawRowId] = useState<ID>();
+  const [stoneId, setStoneId] = useState<ID>();
 
   const tabButton = (id: Tab, label: string) => (
     <button
@@ -91,6 +98,9 @@ function CemeteryTabs({
           <CemeteryMap
             cemetery={cemetery}
             rows={layout.rows}
+            stones={stones}
+            selectedStoneId={stoneId}
+            onSelectStone={setStoneId}
             labelOf={layout.labelOf}
             activeRowId={activeRowId}
             onSelectRow={(id) => setActiveRowId((a) => (a === id ? undefined : id))}
@@ -118,6 +128,12 @@ function CemeteryTabs({
           />
         </div>
       )}
+      <StoneSheet
+        stone={stones.find((m) => m.id === stoneId)}
+        rows={layout.rows}
+        labelOf={layout.labelOf}
+        onClose={() => setStoneId(undefined)}
+      />
     </div>
   );
 }

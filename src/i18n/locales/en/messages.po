@@ -127,7 +127,7 @@ msgstr "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
 msgid "Attribution"
 msgstr "Attribution"
 
-#: src/app/pages/CemeteryPage.tsx:30
+#: src/app/pages/CemeteryPage.tsx:32
 #: src/app/pages/NotFoundPage.tsx:11
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
@@ -189,7 +189,7 @@ msgstr "Cemeteries on this device"
 msgid "Cemetery"
 msgstr "Cemetery"
 
-#: src/app/pages/CemeteryPage.tsx:27
+#: src/app/pages/CemeteryPage.tsx:29
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
@@ -402,12 +402,16 @@ msgstr "Light"
 msgid "Loading map…"
 msgstr "Loading map…"
 
+#: src/features/stones/labels.ts:6
+msgid "Located"
+msgstr "Located"
+
 #: src/app/Layout.tsx:68
 #: src/app/Layout.tsx:82
 msgid "Main"
 msgstr "Main"
 
-#: src/app/pages/CemeteryPage.tsx:85
+#: src/app/pages/CemeteryPage.tsx:92
 msgid "Map"
 msgstr "Map"
 
@@ -416,7 +420,7 @@ msgid "Map background for this cemetery"
 msgstr "Map background for this cemetery"
 
 #. placeholder {0}: cemetery.name
-#: src/features/map/CemeteryMap.tsx:51
+#: src/features/map/CemeteryMap.tsx:57
 msgid "Map of {0}"
 msgstr "Map of {0}"
 
@@ -495,6 +499,10 @@ msgstr "No section"
 msgid "Not now"
 msgstr "Not now"
 
+#: src/features/stones/StoneSheet.tsx:72
+msgid "Not placed on the map yet."
+msgstr "Not placed on the map yet."
+
 #: src/features/cemeteries/create/PlaceFinder.tsx:111
 msgid "not tagged as a cemetery"
 msgstr "not tagged as a cemetery"
@@ -540,6 +548,10 @@ msgstr "Page not found"
 msgid "Photo quality"
 msgstr "Photo quality"
 
+#: src/features/stones/labels.ts:7
+msgid "Photographed"
+msgstr "Photographed"
+
 #: src/features/settings/StoragePanel.tsx:96
 msgid "Photos"
 msgstr "Photos"
@@ -551,6 +563,11 @@ msgstr "Pin placed. Tap the map to move it."
 #: src/features/cemeteries/create/PlaceFinder.tsx:93
 msgid "Places found"
 msgstr "Places found"
+
+#. placeholder {0}: stone.address.plotLabel
+#: src/features/stones/StoneSheet.tsx:50
+msgid "Plot {0}"
+msgstr "Plot {0}"
 
 #: src/features/settings/StoragePanel.tsx:122
 #: src/features/share/BackupBanner.tsx:26
@@ -589,6 +606,15 @@ msgstr "Rename row"
 #: src/features/cemeteries/setup/SectionBlock.tsx:98
 msgid "Rename section"
 msgstr "Rename section"
+
+#: src/features/stones/StoneSheet.tsx:36
+msgid "Row {rowName}"
+msgstr "Row {rowName}"
+
+#. placeholder {0}: index + 1
+#: src/features/stones/StoneSheet.tsx:36
+msgid "Row {rowName}, stone {0}"
+msgstr "Row {rowName}, stone {0}"
 
 #: src/features/cemeteries/setup/RowItem.tsx:110
 msgid "Row label"
@@ -656,7 +682,7 @@ msgstr "Section name"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/app/pages/CemeteryPage.tsx:86
+#: src/app/pages/CemeteryPage.tsx:93
 msgid "Setup"
 msgstr "Setup"
 
@@ -667,6 +693,14 @@ msgstr "Shown on the map. Check the provider's terms."
 #: src/app/Layout.tsx:62
 msgid "Skip to content"
 msgstr "Skip to content"
+
+#: src/features/stones/StatusLegend.tsx:10
+msgid "Status key"
+msgstr "Status key"
+
+#: src/features/stones/StoneSheet.tsx:50
+msgid "Stone"
+msgstr "Stone"
 
 #: src/features/settings/StoragePanel.tsx:38
 msgid "Storage"
@@ -750,6 +784,10 @@ msgstr "Tiles (XYZ)"
 msgid "Time to back up"
 msgstr "Time to back up"
 
+#: src/features/stones/labels.ts:8
+msgid "Transcribed"
+msgstr "Transcribed"
+
 #: src/features/map/CustomSourceForm.tsx:55
 msgid "Type"
 msgstr "Type"
@@ -777,13 +815,25 @@ msgstr "Units and photo quality apply to cemeteries you create from now on."
 msgid "Unnamed cemetery"
 msgstr "Unnamed cemetery"
 
+#: src/features/stones/StoneSheet.tsx:29
+msgid "Unnamed person"
+msgstr "Unnamed person"
+
 #. placeholder {0}: fmt(quota.usage)
 #. placeholder {1}: fmt(quota.quota)
 #: src/features/settings/StoragePanel.tsx:44
 msgid "Using {0} of about {1} ({pct})."
 msgstr "Using {0} of about {1} ({pct})."
 
-#: src/app/pages/CemeteryPage.tsx:84
+#: src/features/stones/StoneSheet.tsx:40
+msgid "v1 grid row {r}, column {c}"
+msgstr "v1 grid row {r}, column {c}"
+
+#: src/features/stones/labels.ts:9
+msgid "Verified"
+msgstr "Verified"
+
+#: src/app/pages/CemeteryPage.tsx:91
 msgid "View"
 msgstr "View"
 

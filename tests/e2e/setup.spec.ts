@@ -1,26 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
-
-// A 1×1 grey PNG, so imagery requests never leave the machine.
-const TILE = Buffer.from(
-  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGO4evXqfwAH8gNMGjzm+gAAAABJRU5ErkJggg==',
-  'base64',
-);
-
-async function stubTiles(page: Page) {
-  await page.route(/basemap\.nationalmap\.gov|tile\.openstreetmap\.org|arcgis/, (route) =>
-    route.fulfill({ status: 200, contentType: 'image/png', body: TILE }),
-  );
-}
-
-/** Tap the map canvas at a fraction of its size, once the map has loaded its imagery. */
-async function tapMap(page: Page, fx: number, fy: number) {
-  await expect(page.locator('.maplibregl-ctrl-attrib')).toContainText(/USGS|OpenStreetMap/);
-  const canvas = page.locator('.maplibregl-canvas');
-  await canvas.scrollIntoViewIfNeeded();
-  const box = await canvas.boundingBox();
-  if (!box) throw new Error('no map canvas');
-  await page.mouse.click(box.x + box.width * fx, box.y + box.height * fy);
-}
+import { expect, test } from '@playwright/test';
+import { stubTiles, tapMap, TILE } from './helpers';
 
 test('set up a new cemetery with sections, rows and a row line in under 5 minutes', async ({
   page,
