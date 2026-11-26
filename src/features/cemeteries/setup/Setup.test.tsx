@@ -66,15 +66,20 @@ describe('cemetery setup', () => {
     await waitFor(async () => expect(await rowLabels(store, cem.id)).toEqual(['A', 'C', 'B']));
   });
 
+  // Generous timeouts: this one has timed out under full-suite load.
   it('deletes a row with undo', async () => {
     const { store, cem } = await open();
     await userEvent.click(await screen.findByRole('button', { name: 'Add row' }));
-    await screen.findByRole('button', { name: 'Move row 1 up' });
+    await screen.findByRole('button', { name: 'Move row 1 up' }, { timeout: 5000 });
     await userEvent.click(screen.getByText('⋯'));
     await userEvent.click(screen.getByRole('button', { name: 'Delete row' }));
-    await waitFor(async () => expect(await rowLabels(store, cem.id)).toEqual([]));
-    await userEvent.click(await screen.findByRole('button', { name: 'Undo' }));
-    await waitFor(async () => expect(await rowLabels(store, cem.id)).toEqual(['1']));
+    await waitFor(async () => expect(await rowLabels(store, cem.id)).toEqual([]), {
+      timeout: 5000,
+    });
+    await userEvent.click(await screen.findByRole('button', { name: 'Undo' }, { timeout: 5000 }));
+    await waitFor(async () => expect(await rowLabels(store, cem.id)).toEqual(['1']), {
+      timeout: 5000,
+    });
   });
 
   it('switches to the map', async () => {
