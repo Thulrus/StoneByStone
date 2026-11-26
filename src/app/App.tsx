@@ -7,6 +7,7 @@ import { directionOf } from '../i18n/locales';
 import { Toaster } from '../ui/Toaster';
 import { usePrefs } from './prefs';
 import { createAppRouter } from './routes';
+import { StoreGate } from './StoreGate';
 import { UpdatePrompt } from './UpdatePrompt';
 import { useApplyTheme } from './useApplyTheme';
 
@@ -25,7 +26,9 @@ export function App() {
   return (
     <I18nProvider i18n={i18n}>
       <Direction.Provider dir={directionOf(locale)}>
-        <RouterProvider router={router} />
+        <StoreGate>
+          <RouterProvider router={router} />
+        </StoreGate>
         <UpdatePrompt />
         <Toaster />
       </Direction.Provider>

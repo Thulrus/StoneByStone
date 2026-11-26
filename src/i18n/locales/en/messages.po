@@ -44,7 +44,7 @@ msgstr "Dismiss"
 msgid "In Safari, tap the Share button, then “Add to Home Screen”. Your survey data is only safe from automatic clean-up once the app is on your home screen."
 msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your survey data is only safe from automatic clean-up once the app is on your home screen."
 
-#: src/app/InstallPrompt.tsx:49
+#: src/app/InstallPrompt.tsx:47
 msgid "Install"
 msgstr "Install"
 
@@ -52,11 +52,11 @@ msgstr "Install"
 msgid "Install StoneByStone"
 msgstr "Install StoneByStone"
 
-#: src/app/InstallPrompt.tsx:43
+#: src/app/InstallPrompt.tsx:41
 msgid "Install the app so it opens offline and keeps your survey data safe."
 msgstr "Install the app so it opens offline and keeps your survey data safe."
 
-#: src/app/pages/SettingsPage.tsx:65
+#: src/app/pages/SettingsPage.tsx:71
 msgid "Language"
 msgstr "Language"
 
@@ -82,9 +82,14 @@ msgstr "Match device"
 msgid "No cemeteries on this device yet."
 msgstr "No cemeteries on this device yet."
 
-#: src/app/InstallPrompt.tsx:53
+#: src/app/InstallPrompt.tsx:51
 msgid "Not now"
 msgstr "Not now"
+
+#. placeholder {0}: state.message
+#: src/app/StoreGate.tsx:76
+msgid "Nothing has been changed. Details: {0}"
+msgstr "Nothing has been changed. Details: {0}"
 
 #: src/ui/Toaster.tsx:14
 msgid "Notifications"
@@ -119,6 +124,20 @@ msgstr "Skip to content"
 msgid "Sunlight (high contrast)"
 msgstr "Sunlight (high contrast)"
 
-#: src/app/pages/SettingsPage.tsx:63
+#. placeholder {0}: state.found
+#. placeholder {1}: state.supported
+#: src/app/StoreGate.tsx:68
+msgid "The data on this device was saved by a newer version of StoneByStone (data version {0}; this version reads up to {1}). Nothing has been changed. Reload the page to get the latest version."
+msgstr "The data on this device was saved by a newer version of StoneByStone (data version {0}; this version reads up to {1}). Nothing has been changed. Reload the page to get the latest version."
+
+#: src/app/pages/SettingsPage.tsx:64
 msgid "Theme"
 msgstr "Theme"
+
+#: src/app/StoreGate.tsx:61
+msgid "This app is out of date"
+msgstr "This app is out of date"
+
+#: src/app/StoreGate.tsx:63
+msgid "Your data could not be opened"
+msgstr "Your data could not be opened"

@@ -833,6 +833,8 @@ interface MapFeature extends Stamped {
   legacyCells?: { row: number; col: number }[]; // v1 roads before pinning
   name?: string;
   notes?: string;
+  tags?: ID[]; // TagDef ids (v1 pines get "conifer")
+  style?: { color?: string }; // v1 road colors
 }
 
 interface Overlay extends Stamped {
@@ -861,6 +863,7 @@ interface HistoryEntry {
   by: ID;
   op: 'create' | 'update' | 'delete' | 'merge' | 'import';
   fields?: Record<string, { from?: unknown; to?: unknown }>;
+  group?: ID; // shared by all entries of one import/merge (undone as one step)
 }
 ```
 
@@ -869,6 +872,15 @@ interface HistoryEntry {
 `features`, `overlays`, `tags`, `contributors`, `history`, `settings`, `tileMeta`.
 Compound indexes on `[cemeteryId+status]`, `[cemeteryId+address.rowId+address.rowIndex]`,
 `[cemeteryId+name.surname]`. Map tiles live in Cache Storage, not IndexedDB.
+
+Implementation notes (M1): `settings` holds `nodeId`, `clock` (HLC state), `contributorId`,
+`lastSeen` (per-contributor max HLC) and `schemaVersion`. Dexie 4 will open a database whose
+version is newer than the code declares, so `openDatabase()` first probes the raw IndexedDB
+version and the stored `schemaVersion` and refuses (`NewerSchemaError`) before Dexie touches
+it. `status` is materialized but never stamped. Undo of an edit writes the old values back as
+new stamped writes; undo of a create is a tombstone; undo of a delete removes the local
+tombstone; undo of an import/merge group restores snapshots exactly and drops the group's
+history entries.
 
 ---
 

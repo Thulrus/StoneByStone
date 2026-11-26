@@ -286,6 +286,10 @@ export interface MapFeature extends Stamped {
   legacyCells?: { row: number; col: number }[];
   name?: string;
   notes?: string;
+  /** TagDef ids (v1 pines get a "conifer" tag, §22.3). */
+  tags?: ID[];
+  /** Display style; v1 road colors are kept here. */
+  style?: { color?: string };
 }
 
 export interface ControlPoint {
@@ -326,4 +330,6 @@ export interface HistoryEntry {
   by: ID;
   op: HistoryOp;
   fields?: Record<string, { from?: unknown; to?: unknown }>;
+  /** Shared by every entry of one import or merge, so it can be undone as one operation. */
+  group?: ID;
 }
