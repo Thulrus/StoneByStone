@@ -126,6 +126,7 @@ export function TranscribeView({
             key={current.id}
             stone={current}
             canPrevious={pos > 0}
+            dateLocale={cemetery.settings.dateLocale}
             onDraft={(d) => (draft.current = d)}
             whereOf={(id) => stoneLabel(id ? byId.get(id) : undefined)}
             onNext={() => goTo(ids[pos + 1])}

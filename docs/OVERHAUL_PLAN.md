@@ -493,6 +493,14 @@ Implementation notes (M1, `src/domain/dates/`):
   `bet 1880 and 1885`, `10 Feb 1709/10`, `1790 O.S.`) that `parseDate` reads back to the same
   parts. Localized display is the UI's job.
 
+Implementation notes (M4, `features/transcribe/date-preview.ts`): under each Born / Died / Age
+field the desk form shows how the text was read, in the UI language (`about March 3, 1850`,
+`between 1880 and 1885`, `… · dual dated 1709/10`), with a warning when day and month could
+swap (the other reading is shown; the cemetery's `dateLocale` decides), for old-style Jan–Mar
+years, and for `inst.`/`ult.` without a month. With Born blank, the birth calculated from Died
+and Age is shown under Born and saved (`qualifier: 'calculated'`). It stays blank in the form
+and is recalculated whenever Died or Age changes; typing a Born replaces it.
+
 ### 10.2 Names
 
 Structured name parts **plus** an `asCarved` string: given, middle, surname, maiden/birth

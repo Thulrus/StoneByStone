@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+#: src/features/transcribe/date-preview.ts:40
+msgid "\"inst.\" means this month and \"ult.\" last month: add the month and year if the stone gives them."
+msgstr "\"inst.\" means this month and \"ult.\" last month: add the month and year if the stone gives them."
+
 #: src/features/capture/HoldStill.tsx:119
 msgid "({dropped} dropped as outliers)"
 msgstr "({dropped} dropped as outliers)"
@@ -26,6 +30,16 @@ msgstr "(no name yet)"
 #: src/features/capture/walk/RowOrderDialogs.tsx:106
 msgid "(skipped)"
 msgstr "(skipped)"
+
+#. placeholder {0}: age.d
+#: src/features/transcribe/date-preview.ts:101
+msgid "{0, plural, one {# day} other {# days}}"
+msgstr "{0, plural, one {# day} other {# days}}"
+
+#. placeholder {0}: age.m
+#: src/features/transcribe/date-preview.ts:100
+msgid "{0, plural, one {# month} other {# months}}"
+msgstr "{0, plural, one {# month} other {# months}}"
 
 #. placeholder {0}: status.unbacked
 #: src/features/share/BackupBanner.tsx:45
@@ -61,6 +75,11 @@ msgstr "{0, plural, one {# stone is not backed up} other {# stones are not backe
 #: src/features/cemeteries/CemeteryList.tsx:32
 msgid "{0, plural, one {# stone} other {# stones}}"
 msgstr "{0, plural, one {# stone} other {# stones}}"
+
+#. placeholder {0}: age.y
+#: src/features/transcribe/date-preview.ts:99
+msgid "{0, plural, one {# year} other {# years}}"
+msgstr "{0, plural, one {# year} other {# years}}"
 
 #. placeholder {0}: capture.gaps
 #: src/features/capture/walk/WalkPanel.tsx:117
@@ -139,7 +158,7 @@ msgstr "{name}: about {count} tiles, roughly {size}."
 msgid "{pct} transcribed"
 msgstr "{pct} transcribed"
 
-#: src/features/transcribe/TranscribeView.tsx:145
+#: src/features/transcribe/TranscribeView.tsx:146
 msgid "{position} of {total}"
 msgstr "{position} of {total}"
 
@@ -152,6 +171,10 @@ msgstr "{px} px"
 #: src/features/transcribe/PhotoPane.tsx:38
 msgid "{role} photo"
 msgstr "{role} photo"
+
+#: src/features/transcribe/date-preview.ts:61
+msgid "{start} (calculated)"
+msgstr "{start} (calculated)"
 
 #: src/features/cemeteries/setup/RowItem.tsx:54
 msgid "{stones, plural, one {# stone} other {# stones}}"
@@ -185,6 +208,10 @@ msgstr "A new version of StoneByStone is available."
 msgid "a plat or drone image"
 msgstr "a plat or drone image"
 
+#: src/features/transcribe/date-preview.ts:52
+msgid "about {start}"
+msgstr "about {start}"
+
 #. placeholder {0}: result.accuracyM
 #: src/features/capture/HoldStill.tsx:115
 msgid "About ±{0} m from {n} fixes"
@@ -202,7 +229,7 @@ msgstr "Add a custom source"
 msgid "Add a plat map or drone image"
 msgstr "Add a plat map or drone image"
 
-#: src/features/transcribe/TranscribeForm.tsx:232
+#: src/features/transcribe/TranscribeForm.tsx:236
 msgid "Add another person"
 msgstr "Add another person"
 
@@ -252,14 +279,26 @@ msgstr "Adjust grid on map"
 msgid "Adjust pins for {name}"
 msgstr "Adjust pins for {name}"
 
+#: src/features/transcribe/date-preview.ts:58
+msgid "after {start}"
+msgstr "after {start}"
+
 #. placeholder {0}: numberOf(m)
 #: src/features/capture/walk/RowOrderDialogs.tsx:59
 msgid "After stone {0}"
 msgstr "After stone {0}"
 
-#: src/features/transcribe/PersonFields.tsx:59
+#: src/features/transcribe/PersonFields.tsx:76
 msgid "Age"
 msgstr "Age"
+
+#: src/features/transcribe/date-preview.ts:132
+msgid "age {words}"
+msgstr "age {words}"
+
+#: src/features/transcribe/date-preview.ts:131
+msgid "age {words} (\"in the Nth year\" is one less)"
+msgstr "age {words} (\"in the Nth year\" is one less)"
 
 #: src/features/stones/StoneSheet.tsx:124
 msgid "All details"
@@ -359,6 +398,14 @@ msgstr "Battery {pct}%, charging"
 msgid "Battery: this browser can't tell. Charge the phone before you go."
 msgstr "Battery: this browser can't tell. Charge the phone before you go."
 
+#: src/features/transcribe/date-preview.ts:55
+msgid "before {start}"
+msgstr "before {start}"
+
+#: src/features/transcribe/date-preview.ts:85
+msgid "Before 1752 the year began in March, so January to March may belong to the year before."
+msgstr "Before 1752 the year began in March, so January to March may belong to the year before."
+
 #: src/features/capture/walk/RowOrderDialogs.tsx:52
 msgid "Before stone 1"
 msgstr "Before stone 1"
@@ -371,11 +418,15 @@ msgstr "Before you go out"
 msgid "Bench"
 msgstr "Bench"
 
+#: src/features/transcribe/date-preview.ts:68
+msgid "between {start} and {end}"
+msgstr "between {start} and {end}"
+
 #: src/features/transcribe/viewer/FilterControls.tsx:102
 msgid "Black point"
 msgstr "Black point"
 
-#: src/features/transcribe/PersonFields.tsx:57
+#: src/features/transcribe/PersonFields.tsx:74
 msgid "Born"
 msgstr "Born"
 
@@ -414,6 +465,10 @@ msgstr "Building"
 #: src/features/settings/AboutPanel.tsx:57
 msgid "Built"
 msgstr "Built"
+
+#: src/features/transcribe/date-preview.ts:141
+msgid "Calculated from the age: {at}"
+msgstr "Calculated from the age: {at}"
 
 #: src/features/capture/Camera.tsx:79
 msgid "Camera permission was refused. You can still use your phone's camera app."
@@ -595,6 +650,10 @@ msgstr "Data protected from browser clean-up"
 msgid "dataset alignment"
 msgstr "dataset alignment"
 
+#: src/features/transcribe/date-preview.ts:90
+msgid "Day and month could be the other way round ({other}). Read using this cemetery's date order."
+msgstr "Day and month could be the other way round ({other}). Read using this cemetery's date order."
+
 #: src/features/cemeteries/CemeteryList.tsx:91
 #: src/features/cemeteries/setup/SectionBlock.tsx:69
 #: src/features/stones/detail/PhotosSection.tsx:57
@@ -664,7 +723,7 @@ msgstr "Details"
 msgid "Diagram"
 msgstr "Diagram"
 
-#: src/features/transcribe/PersonFields.tsx:58
+#: src/features/transcribe/PersonFields.tsx:75
 msgid "Died"
 msgstr "Died"
 
@@ -716,6 +775,10 @@ msgstr "Drawing {rowName}"
 msgid "Drop a pin on the map"
 msgstr "Drop a pin on the map"
 
+#: src/features/transcribe/date-preview.ts:77
+msgid "dual dated {dual}, new-style year {year}"
+msgstr "dual dated {dual}, new-style year {year}"
+
 #: src/features/stones/RelativePlacer.tsx:178
 msgid "E"
 msgstr "E"
@@ -757,7 +820,7 @@ msgstr "Enter a name."
 msgid "Enter a valid web address."
 msgstr "Enter a valid web address."
 
-#: src/features/transcribe/TranscribeForm.tsx:236
+#: src/features/transcribe/TranscribeForm.tsx:240
 msgid "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain [?]. Ctrl+I: insert [illegible]."
 msgstr "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain [?]. Ctrl+I: insert [illegible]."
 
@@ -765,7 +828,7 @@ msgstr "Enter in a one-line field: save & next. Ctrl+Enter: add another person. 
 msgid "Enter the WMS layer name."
 msgstr "Enter the WMS layer name."
 
-#: src/features/transcribe/TranscribeForm.tsx:206
+#: src/features/transcribe/TranscribeForm.tsx:210
 msgid "Epitaph"
 msgstr "Epitaph"
 
@@ -776,6 +839,10 @@ msgstr "Esri API key"
 #: src/features/map/ImageryPicker.tsx:74
 msgid "Esri World Imagery needs your own ArcGIS key. It stays on this device."
 msgstr "Esri World Imagery needs your own ArcGIS key. It stays on this device."
+
+#: src/features/transcribe/date-preview.ts:64
+msgid "estimated {start}"
+msgstr "estimated {start}"
 
 #: src/features/overlays/GridActions.tsx:16
 msgid "Every grid stone is already in a row"
@@ -939,6 +1006,10 @@ msgstr "Grid row {row}, column {col}"
 msgid "Headstone"
 msgstr "Headstone"
 
+#: src/features/transcribe/date-preview.ts:34
+msgid "Hebrew date. Kept as typed; conversion comes later."
+msgstr "Hebrew date. Kept as typed; conversion comes later."
+
 #: src/features/map/CustomSourceForm.tsx:90
 msgid "Highest zoom level"
 msgstr "Highest zoom level"
@@ -1006,7 +1077,7 @@ msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your sur
 msgid "In-app camera"
 msgstr "In-app camera"
 
-#: src/features/transcribe/TranscribeForm.tsx:176
+#: src/features/transcribe/TranscribeForm.tsx:179
 msgid "Inscription, as carved"
 msgstr "Inscription, as carved"
 
@@ -1042,6 +1113,10 @@ msgstr "It disappears from this list. Its records stay on the device and in any 
 msgid "its place in the row"
 msgstr "its place in the row"
 
+#: src/features/transcribe/date-preview.ts:79
+msgid "Julian (old style)"
+msgstr "Julian (old style)"
+
 #: src/features/capture/walk/WalkStart.tsx:116
 msgid "Just name it; place it later"
 msgstr "Just name it; place it later"
@@ -1049,6 +1124,10 @@ msgstr "Just name it; place it later"
 #: src/features/settings/StoragePanel.tsx:73
 msgid "Keep my data"
 msgstr "Keep my data"
+
+#: src/features/transcribe/date-preview.ts:38
+msgid "Kept as typed."
+msgstr "Kept as typed."
 
 #: src/features/stones/attribute-labels.ts:77
 msgid "Landmark"
@@ -1111,7 +1190,7 @@ msgstr "Limestone"
 msgid "Link {who} to…"
 msgstr "Link {who} to…"
 
-#: src/features/transcribe/PersonFields.tsx:65
+#: src/features/transcribe/PersonFields.tsx:82
 msgid "Link to a person…"
 msgstr "Link to a person…"
 
@@ -1261,7 +1340,7 @@ msgstr "Name"
 msgid "Name as carved"
 msgstr "Name as carved"
 
-#: src/features/transcribe/PersonFields.tsx:55
+#: src/features/transcribe/PersonFields.tsx:72
 msgid "Name, as carved"
 msgstr "Name, as carved"
 
@@ -1368,6 +1447,14 @@ msgstr "Not on the map yet"
 #: src/features/stones/StoneSheet.tsx:102
 msgid "Not placed on the map yet."
 msgstr "Not placed on the map yet."
+
+#: src/features/transcribe/date-preview.ts:45
+msgid "Not read as a date. It will be kept as typed."
+msgstr "Not read as a date. It will be kept as typed."
+
+#: src/features/transcribe/date-preview.ts:134
+msgid "Not read as an age. It will be kept as typed."
+msgstr "Not read as an age. It will be kept as typed."
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:111
 msgid "not tagged as a cemetery"
@@ -1491,11 +1578,11 @@ msgid "person"
 msgstr "person"
 
 #: src/features/stones/detail/PeopleSection.tsx:26
-#: src/features/transcribe/PersonFields.tsx:54
+#: src/features/transcribe/PersonFields.tsx:71
 msgid "Person {n}"
 msgstr "Person {n}"
 
-#: src/features/transcribe/TranscribeForm.tsx:128
+#: src/features/transcribe/TranscribeForm.tsx:131
 msgid "Person removed"
 msgstr "Person removed"
 
@@ -1626,7 +1713,7 @@ msgstr "Preparing…"
 msgid "Presets"
 msgstr "Presets"
 
-#: src/features/transcribe/TranscribeForm.tsx:229
+#: src/features/transcribe/TranscribeForm.tsx:233
 msgid "Previous"
 msgstr "Previous"
 
@@ -1651,7 +1738,7 @@ msgstr "Ready:"
 msgid "Recorded on every stone and photo you add, so merged datasets show who did what."
 msgstr "Recorded on every stone and photo you add, so merged datasets show who did what."
 
-#: src/features/transcribe/PersonFields.tsx:60
+#: src/features/transcribe/PersonFields.tsx:77
 msgid "Relationship"
 msgstr "Relationship"
 
@@ -1673,7 +1760,7 @@ msgid "Remove line"
 msgstr "Remove line"
 
 #: src/features/stones/detail/PeopleSection.tsx:41
-#: src/features/transcribe/PersonFields.tsx:68
+#: src/features/transcribe/PersonFields.tsx:85
 msgid "Remove person {n}"
 msgstr "Remove person {n}"
 
@@ -1845,7 +1932,7 @@ msgstr "Sandstone"
 msgid "Save"
 msgstr "Save"
 
-#: src/features/transcribe/TranscribeForm.tsx:220
+#: src/features/transcribe/TranscribeForm.tsx:224
 msgid "Save & next"
 msgstr "Save & next"
 
@@ -2248,7 +2335,7 @@ msgstr "Transcribed"
 msgid "Transcribed, not verified"
 msgstr "Transcribed, not verified"
 
-#: src/features/transcribe/TranscribeForm.tsx:165
+#: src/features/transcribe/TranscribeForm.tsx:168
 msgid "Transcription"
 msgstr "Transcription"
 
@@ -2279,7 +2366,7 @@ msgstr "Turn right"
 msgid "Type"
 msgstr "Type"
 
-#: src/features/transcribe/TranscribeForm.tsx:118
+#: src/features/transcribe/TranscribeForm.tsx:121
 msgid "Type a name first"
 msgstr "Type a name first"
 
@@ -2307,7 +2394,7 @@ msgstr "Uncertain position"
 #: src/features/stones/PlaceOnMap.tsx:20
 #: src/features/stones/RelativePlacer.tsx:75
 #: src/features/stones/StoneSheet.tsx:159
-#: src/features/transcribe/TranscribeForm.tsx:130
+#: src/features/transcribe/TranscribeForm.tsx:133
 msgid "Undo"
 msgstr "Undo"
 
@@ -2441,7 +2528,7 @@ msgstr "Which way"
 msgid "White point"
 msgstr "White point"
 
-#: src/features/transcribe/PersonFields.tsx:60
+#: src/features/transcribe/PersonFields.tsx:77
 msgid "wife of John"
 msgstr "wife of John"
 

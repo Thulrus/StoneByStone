@@ -4,15 +4,23 @@ import type { PersonDraft } from '../../data/transcribe';
 import type { ID } from '../../domain';
 import { Button } from '../../ui/Button';
 import { RelationsList } from '../people/RelationsList';
+import { readPerson, type Reading } from './date-preview';
 
-function Input({
+export function Input({
   label,
   kind = 'text',
+  reading,
   ...rest
-}: { label: string; kind?: 'text' | 'date' } & InputHTMLAttributes<HTMLInputElement> & {
+}: {
+  label: string;
+  kind?: 'text' | 'date';
+  reading?: Reading;
+} & InputHTMLAttributes<HTMLInputElement> & {
     ref?: Ref<HTMLInputElement>;
   }) {
   const id = useId();
+  const hint = useId();
+  const hintId = reading ? hint : undefined;
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={id} className="text-sm font-medium">
@@ -23,9 +31,16 @@ function Input({
         data-kind={kind}
         autoComplete="off"
         spellCheck={false}
+        aria-describedby={hintId}
         className="min-h-12 rounded-lg bg-surface px-3 text-base text-fg sbs-border"
         {...rest}
       />
+      {reading ? (
+        <div id={hintId} className="text-sm" data-testid="date-reading">
+          <p className="text-fg-muted">{reading.text}</p>
+          {reading.warning ? <p className="font-medium text-danger">{reading.warning}</p> : null}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -37,13 +52,16 @@ export interface PersonFieldsProps {
   onRemove: () => void;
   onLink: () => void;
   whereOf: (monumentId: ID | undefined) => string;
+  /** Cemetery setting that orders numeric dates. */
+  dateLocale: string;
   nameRef?: Ref<HTMLInputElement>;
 }
 
 /** One person on the stone, as carved (plan §9). Enter in any field is Save & next. */
 export function PersonFields(props: PersonFieldsProps) {
-  const { person, n, onChange, onRemove, onLink, whereOf, nameRef } = props;
-  const { t } = useLingui();
+  const { person, n, onChange, onRemove, onLink, whereOf, nameRef, dateLocale } = props;
+  const { t, i18n } = useLingui();
+  const read = readPerson(i18n, person, dateLocale);
   const field = (k: keyof Omit<PersonDraft, 'id'>) => ({
     value: person[k],
     onChange: (e: { currentTarget: { value: string } }) =>
@@ -54,9 +72,9 @@ export function PersonFields(props: PersonFieldsProps) {
       <legend className="px-1 font-medium">{t`Person ${n}`}</legend>
       <Input ref={nameRef} label={t`Name, as carved`} {...field('name')} />
       <div className="grid grid-cols-2 gap-3">
-        <Input label={t`Born`} kind="date" {...field('born')} />
-        <Input label={t`Died`} kind="date" {...field('died')} />
-        <Input label={t`Age`} kind="date" {...field('age')} />
+        <Input label={t`Born`} kind="date" reading={read.born} {...field('born')} />
+        <Input label={t`Died`} kind="date" reading={read.died} {...field('died')} />
+        <Input label={t`Age`} kind="date" reading={read.age} {...field('age')} />
         <Input label={t`Relationship`} placeholder={t`wife of John`} {...field('relationship')} />
       </div>
       <RelationsList personId={person.id} whereOf={whereOf} />

@@ -1,5 +1,5 @@
 /** Desk-mode transcription writes (plan §9). Each save is one undo step. */
-import { parseAge, parseDate, parseName, type ID, type Person } from '../domain';
+import { calculateBirth, parseAge, parseDate, parseName, type ID, type Person } from '../domain';
 import type { Store } from './store';
 
 /** One person on the stone, as typed. `id` is made up front, so a re-save never duplicates. */
@@ -33,7 +33,8 @@ export const emptyPerson = (id: ID): PersonDraft => ({
 export const personDraft = (p: Person): PersonDraft => ({
   id: p.id,
   name: p.name.asCarved ?? [p.name.given, p.name.surname].filter(Boolean).join(' '),
-  born: p.birth?.original ?? '',
+  // A birth calculated from the age shows as blank, so it's recalculated when those change.
+  born: p.birth?.qualifier === 'calculated' && p.age ? '' : (p.birth?.original ?? ''),
   died: p.death?.original ?? '',
   age: p.age?.original ?? '',
   relationship: p.relationshipText ?? '',
@@ -48,11 +49,18 @@ function personPatch(d: PersonDraft, was: PersonDraft | undefined, dateLocale: s
   const changed = (k: keyof PersonDraft) => !was || was[k].trim() !== d[k].trim();
   const text = (k: keyof PersonDraft) => d[k].trim();
   if (changed('name')) patch.name = text('name') ? parseName(text('name')) : {};
-  if (changed('born'))
-    patch.birth = text('born') ? parseDate(text('born'), { dateLocale }) : undefined;
-  if (changed('died'))
-    patch.death = text('died') ? parseDate(text('died'), { dateLocale }) : undefined;
-  if (changed('age')) patch.age = text('age') ? parseAge(text('age')) : undefined;
+  const death = text('died') ? parseDate(text('died'), { dateLocale }) : undefined;
+  const age = text('age') ? (parseAge(text('age')) ?? { original: text('age') }) : undefined;
+  if (changed('died')) patch.death = death;
+  if (changed('age')) patch.age = age;
+  // Born left blank: calculated from the death date and age (plan §10.1).
+  if (changed('born') || (!text('born') && (changed('died') || changed('age')))) {
+    patch.birth = text('born')
+      ? parseDate(text('born'), { dateLocale })
+      : death && age
+        ? calculateBirth(death, age)
+        : undefined;
+  }
   if (changed('relationship')) patch.relationshipText = text('relationship') || undefined;
   return patch;
 }

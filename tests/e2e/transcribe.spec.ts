@@ -111,6 +111,7 @@ test('a whole stone transcribed without the mouse', async ({ page }, testInfo) =
   await k.press('Tab');
   await k.type('Mar. 3, 1850');
   await k.press('Control+.');
+  await expect(form.getByText('about March 3, 1850', { exact: true })).toBeVisible();
   await k.press('Tab');
   await k.type('40 yrs');
   await k.press('Tab');

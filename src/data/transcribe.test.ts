@@ -3,6 +3,7 @@ import { expect, test } from 'vitest';
 import { defaultCemeterySettings } from '../domain';
 import { freshStore } from './test/helpers';
 import {
+  personDraft,
   emptyPerson,
   saveInscription,
   saveTranscription,
@@ -70,4 +71,19 @@ test('people are parsed, re-saved without duplicates, and removed when emptied',
   // A new id, not the tombstoned one (a tombstone wins on merge).
   expect(renamed[p.id]).toBe(again[0]?.id);
   expect(renamed[p.id]).not.toBe(p.id);
+});
+
+test('a blank Born is calculated from Died and Age, and follows them', async () => {
+  const { store, m } = await setup();
+  const p = { ...emptyPerson(store.newId()), name: 'Eli Hart', died: '1887', age: 'Æ 72' };
+  const draft: TranscriptionDraft = { inscription: '', epitaph: '', people: [p] };
+  await saveTranscription(store, m.id, draft);
+  const [saved] = await store.persons.byMonument(m.id);
+  expect(saved?.birth).toMatchObject({ y: 1815, qualifier: 'calculated' });
+  expect(saved && personDraft(saved).born).toBe('');
+
+  await saveTranscription(store, m.id, { ...draft, people: [{ ...p, age: '70' }] });
+  expect((await store.persons.get(p.id))?.birth).toMatchObject({ y: 1817 });
+  await saveTranscription(store, m.id, { ...draft, people: [{ ...p, age: '70', born: '1816' }] });
+  expect((await store.persons.get(p.id))?.birth).toEqual({ original: '1816', y: 1816 });
 });
