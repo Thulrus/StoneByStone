@@ -2,7 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { useStore } from '../../app/store-context';
-import type { Monument, PhotoRole, Row } from '../../domain';
+import type { MapFeature, Monument, PhotoRole, Row } from '../../domain';
 import { Button } from '../../ui/Button';
 import { Sheet } from '../../ui/Sheet';
 import { placeStone } from '../../data/placement';
@@ -12,6 +12,7 @@ import { HoldStill } from '../capture/HoldStill';
 import { PhotoStrip } from '../capture/PhotoStrip';
 import { useSavePhoto } from '../capture/useSavePhoto';
 import { STATUS_LABEL } from './labels';
+import { RelativePlacer } from './RelativePlacer';
 import { StatusIcon } from './StatusIcon';
 
 export interface StoneSheetProps {
@@ -19,10 +20,22 @@ export interface StoneSheetProps {
   rows: readonly Row[];
   labelOf: (r: Row) => string;
   onClose: () => void;
+  /** For "Place relative to…". */
+  stones?: readonly Monument[];
+  features?: readonly MapFeature[];
+  units?: 'metric' | 'imperial';
 }
 
 /** Summary of the selected stone in a bottom sheet (full stone detail is #42). */
-export function StoneSheet({ stone, rows, labelOf, onClose }: StoneSheetProps) {
+export function StoneSheet({
+  stone,
+  rows,
+  labelOf,
+  onClose,
+  stones = [],
+  features = [],
+  units = 'metric',
+}: StoneSheetProps) {
   const { t } = useLingui();
   const store = useStore();
   const people = useLiveQuery(
@@ -32,6 +45,7 @@ export function StoneSheet({ stone, rows, labelOf, onClose }: StoneSheetProps) {
   const [camera, setCamera] = useState(false);
   const [role, setRole] = useState<PhotoRole>('front');
   const [holding, setHolding] = useState(false);
+  const [relative, setRelative] = useState(false);
   const savePhoto = useSavePhoto();
   const row = rows.find((r) => r.id === stone?.address?.rowId);
   const names = (people ?? []).map(
@@ -98,10 +112,26 @@ export function StoneSheet({ stone, rows, labelOf, onClose }: StoneSheetProps) {
               <Button variant="secondary" size="lg" onClick={() => setHolding(true)}>
                 <Trans>Hold still here (GPS)</Trans>
               </Button>
+              <Button variant="secondary" size="lg" onClick={() => setRelative(true)}>
+                <Trans>Place relative to…</Trans>
+              </Button>
             </div>
           </div>
         ) : null}
       </Sheet>
+      {stone ? (
+        <RelativePlacer
+          key={stone.id}
+          stone={stone}
+          stones={stones}
+          features={features}
+          rows={rows}
+          labelOf={labelOf}
+          units={units}
+          open={relative}
+          onOpenChange={setRelative}
+        />
+      ) : null}
       {stone ? (
         <HoldStill
           open={holding}

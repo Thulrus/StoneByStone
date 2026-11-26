@@ -194,6 +194,9 @@ export function CemeteryTabs({
         rows={layout.rows}
         labelOf={layout.labelOf}
         onClose={() => setStoneId(undefined)}
+        stones={stones}
+        features={features}
+        units={cemetery.settings.units}
       />
     </div>
   );

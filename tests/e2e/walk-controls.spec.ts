@@ -148,6 +148,21 @@ test('row controls: gap, skip, insert, reverse, reorder', async ({ page }, testI
   const hold = page.getByRole('dialog', { name: 'Hold still' });
   await hold.getByRole('button', { name: 'Use this position' }).click({ timeout: 20_000 });
   await expect(sheet).toContainText('Position within about ±');
+
+  // Stone 4 placed relative to its neighbour, stone 5 (default: the nearest in its row).
+  await sheet.getByRole('button', { name: 'Close' }).click();
+  await page.getByRole('button', { name: 'Row C, stone 4: Photographed' }).click();
+  await sheet.getByRole('button', { name: 'Place relative to…' }).click();
+  const rel = page.getByRole('dialog', { name: 'Place relative to…' });
+  await expect(rel.getByRole('combobox', { name: 'From' })).toHaveValue(/.+/);
+  await expect(rel.getByRole('combobox', { name: 'From' }).locator('option:checked')).toHaveText(
+    'Row C, stone 5',
+  );
+  await rel.getByRole('button', { name: '3', exact: true }).click();
+  await rel.getByRole('button', { name: 'W', exact: true }).click();
+  await rel.getByRole('button', { name: 'Place stone' }).click();
+  await expect(rel).toHaveCount(0);
+  await expect(page.getByRole('dialog')).toContainText('Position within about ±');
 });
 
 test('quick chips and quick name, with the surname carried over', async ({ page }, testInfo) => {

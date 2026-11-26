@@ -336,6 +336,15 @@ This view is also how v1 grid data is shown before it is pinned to the map.
 "Place relative to…" an existing stone or landmark: e.g. "2 m behind stone #14". Useful for
 filling gaps and for small family plots.
 
+Implementation (M3, `geo/relative.ts`, `features/stones/RelativePlacer`): the stone sheet's
+"Place relative to…" picks a reference (any placed stone, its row neighbours first, or a map
+feature's point or vertex mean). It picks a distance from chips and −/+ in the cemetery's
+units, and a direction: 8 compass points, or along, back, left or right of the reference's
+row line. The position is stored as `relative`. Its accuracy is the root sum of squares of
+the reference's accuracy (3 m if unknown), 10% of the distance, and distance × sin(direction
+error), with 22.5° for compass points and 15° for row directions. A stone in a row becomes an
+anchor when the row is re-spaced.
+
 ### 7.7 Alignment of whole datasets
 
 When two people's surveys of the same cemetery are combined, their coordinates may be

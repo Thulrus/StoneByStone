@@ -1,6 +1,12 @@
 import { msg } from '@lingui/core/macro';
 import type { MessageDescriptor } from '@lingui/core';
-import type { CAPTURE_FLAGS, CONDITIONS, MATERIALS, MONUMENT_KINDS } from '../../domain';
+import type {
+  CAPTURE_FLAGS,
+  CONDITIONS,
+  MapFeatureKind,
+  MATERIALS,
+  MONUMENT_KINDS,
+} from '../../domain';
 
 export const KIND_LABEL: Record<(typeof MONUMENT_KINDS)[number], MessageDescriptor> = {
   headstone: msg`Headstone`,
@@ -53,4 +59,20 @@ export const FLAG_LABEL: Record<(typeof CAPTURE_FLAGS)[number], MessageDescripto
   'needs-revisit': msg`Needs revisit`,
   'uncertain-position': msg`Uncertain position`,
   'veteran-marker': msg`Veteran marker / flag holder`,
+};
+
+export const FEATURE_LABEL: Record<MapFeatureKind, MessageDescriptor> = {
+  path: msg`Path`,
+  road: msg`Road`,
+  building: msg`Building`,
+  tree: msg`Tree`,
+  gate: msg`Gate`,
+  fence: msg`Fence`,
+  wall: msg`Wall`,
+  enclosure: msg`Enclosure`,
+  'family-plot': msg`Family plot`,
+  water: msg`Water`,
+  'large-monument': msg`Large monument`,
+  bench: msg`Bench`,
+  other: msg`Landmark`,
 };
