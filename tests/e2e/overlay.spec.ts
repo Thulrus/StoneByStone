@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { makeStonesDocument } from '../fixtures/stones';
-import { skipWelcome, stubTiles, tapMap, importFile } from './helpers';
+import { skipWelcome, stubTiles, tapMap, importFile, dismissToasts } from './helpers';
 
 const image = fileURLToPath(new URL('../../public/icon-512.png', import.meta.url));
 
@@ -41,10 +41,12 @@ test('pin a plat image with three points, fade it, and place a stone on it', asy
   await expect(page.getByText(/Point 3: off by/)).toBeVisible();
   await page.getByRole('button', { name: 'Apply' }).click();
   await expect(page.getByText('icon-512 is on the map').first()).toBeVisible();
+  await dismissToasts(page);
 
   await page.getByRole('button', { name: 'Place stones' }).click();
   await tapMap(page, 0.5, 0.35);
   await expect(page.getByText('Stone added').first()).toBeVisible();
+  await dismissToasts(page);
   await page.getByRole('button', { name: 'Done placing' }).click();
 
   await page.getByRole('tab', { name: 'Setup' }).click();

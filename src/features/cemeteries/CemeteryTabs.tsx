@@ -1,5 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { Cemetery, ID, MapFeature, Monument, Overlay } from '../../domain';
 import { cn } from '../../ui/cn';
 import { OfflinePanel } from '../map/OfflinePanel';
@@ -9,6 +9,7 @@ import { SchematicView } from '../schematic/SchematicView';
 import { StoneSheet } from '../stones/StoneSheet';
 import { MapTab } from './MapTab';
 import { LayoutEditor } from './setup/LayoutEditor';
+import { useFillViewport } from './useFillViewport';
 import type { Layout } from './useLayout';
 
 export type Tab = 'map' | 'diagram' | 'setup';
@@ -36,6 +37,8 @@ export function CemeteryTabs({
   const [stoneId, setStoneId] = useState<ID>();
   const [pinId, setPinId] = useState<ID>();
   const grid = overlays.find((o) => o.kind === 'legacy-grid');
+  const mapPanel = useRef<HTMLDivElement>(null);
+  useFillViewport(mapPanel, current === 'map');
 
   const tabButton = (id: Tab, label: string) => (
     <button
@@ -68,11 +71,7 @@ export function CemeteryTabs({
         </div>
       </div>
       {current === 'map' ? (
-        <div
-          role="tabpanel"
-          // Fits between the tabs and the phone's bottom bar, so no map control sits under it.
-          className="h-[calc(100dvh-16rem-env(safe-area-inset-bottom))] min-h-80 overflow-hidden rounded-xl md:h-[calc(100dvh-10.5rem)]"
-        >
+        <div ref={mapPanel} role="tabpanel" className="min-h-80 overflow-hidden rounded-xl">
           <MapTab
             cemetery={cemetery}
             rows={layout.rows}

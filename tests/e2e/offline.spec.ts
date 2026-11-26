@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import { makeStonesDocument } from '../fixtures/stones';
-import { stubTiles, skipWelcome, importFile } from './helpers';
+import { stubTiles, skipWelcome, importFile, dismissToasts } from './helpers';
 
 const cachedTiles = (page: Page) =>
   page.evaluate(async () => (await (await caches.open('sbs-tiles-usgs-imagery')).keys()).length);
@@ -25,6 +25,7 @@ test('download a US cemetery for offline use, then delete it', async ({ page }, 
   const before = fetched.length;
   await panel.getByRole('button', { name: 'Download for offline' }).click();
   await expect(page.getByText('Map saved for offline use').first()).toBeVisible();
+  await dismissToasts(page);
   await expect(panel).toContainText(/Saved for offline: \d+ tiles/);
   const n = await cachedTiles(page);
   expect(n).toBeGreaterThan(0);

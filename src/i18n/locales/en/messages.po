@@ -342,12 +342,12 @@ msgstr "Deleted row {0}"
 msgid "Deleted section {0}. Its rows are now unsectioned."
 msgstr "Deleted section {0}. Its rows are now unsectioned."
 
-#: src/features/cemeteries/CemeteryTabs.tsx:66
+#: src/features/cemeteries/CemeteryTabs.tsx:69
 #: src/features/schematic/SchematicView.tsx:80
 msgid "Diagram"
 msgstr "Diagram"
 
-#: src/ui/Toaster.tsx:43
+#: src/ui/Toaster.tsx:63
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -545,7 +545,7 @@ msgstr "Made {n} rows from the grid"
 msgid "Main"
 msgstr "Main"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:65
+#: src/features/cemeteries/CemeteryTabs.tsx:68
 msgid "Map"
 msgstr "Map"
 
@@ -674,7 +674,7 @@ msgstr "Nothing found. Try another search, or drop a pin."
 msgid "Nothing has been changed. Details: {0}"
 msgstr "Nothing has been changed. Details: {0}"
 
-#: src/ui/Toaster.tsx:14
+#: src/ui/Toaster.tsx:28
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -925,7 +925,7 @@ msgstr "Set the cemetery's location or draw a row line first."
 msgid "Settings"
 msgstr "Settings"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:67
+#: src/features/cemeteries/CemeteryTabs.tsx:70
 msgid "Setup"
 msgstr "Setup"
 
@@ -1119,7 +1119,7 @@ msgstr "Verified"
 msgid "Version"
 msgstr "Version"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:64
+#: src/features/cemeteries/CemeteryTabs.tsx:67
 msgid "View"
 msgstr "View"
 

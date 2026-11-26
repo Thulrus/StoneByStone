@@ -80,6 +80,7 @@ export function Layout() {
       </main>
       <nav
         aria-label={t`Main`}
+        data-bottom-bar
         className="sticky bottom-0 flex justify-around bg-surface pb-[env(safe-area-inset-bottom)] sbs-border border-x-0 border-b-0 md:hidden"
       >
         {nav}

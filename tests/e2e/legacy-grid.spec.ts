@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
-import { skipWelcome, stubTiles, tapMap, importFile } from './helpers';
+import { skipWelcome, stubTiles, tapMap, importFile, dismissToasts } from './helpers';
 
 const fixture = fileURLToPath(
   new URL('../fixtures/v1/willow-creek-example.cem.json', import.meta.url),
@@ -26,6 +26,7 @@ test('pin the Willow Creek v1 grid onto imagery, then make its rows', async ({ p
   await expect(page.getByRole('button', { name: 'Remove point 2' })).toBeVisible();
   await page.getByRole('button', { name: 'Apply' }).click();
   await expect(page.getByText('Placed 37 stones from the v1 grid').first()).toBeVisible();
+  await dismissToasts(page);
   await expect(page.getByRole('list', { name: 'Status key' })).toBeVisible();
 
   await page.getByRole('tab', { name: 'Diagram' }).click();
