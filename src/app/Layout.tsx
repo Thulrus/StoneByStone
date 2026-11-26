@@ -1,6 +1,13 @@
 import { useLingui } from '@lingui/react/macro';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { useEffect } from 'react';
 import { NavLink, Outlet, useNavigation } from 'react-router';
+import { listCemeteries } from '../data/cemeteries';
+import { ensurePersisted } from '../features/settings/storage';
+import { BackupIndicator } from '../features/share/BackupBanner';
+import { useBackupReminder } from '../features/share/useBackupReminder';
 import { cn } from '../ui/cn';
+import { useStore } from './store-context';
 
 function NavItem({ to, icon, label }: { to: string; icon: string; label: string }) {
   return (
@@ -26,6 +33,14 @@ function NavItem({ to, icon, label }: { to: string; icon: string; label: string 
 export function Layout() {
   const { t } = useLingui();
   const navigation = useNavigation();
+  const store = useStore();
+  const hasData = useLiveQuery(async () => (await listCemeteries(store)).length > 0, [store]);
+  useBackupReminder();
+
+  // Ask the browser to keep our data once there is something worth keeping (plan §14).
+  useEffect(() => {
+    if (hasData) void ensurePersisted();
+  }, [hasData]);
 
   const nav = (
     <>
@@ -48,9 +63,12 @@ export function Layout() {
       </a>
       <header className="sticky top-0 z-10 flex items-center justify-between gap-4 bg-surface px-4 pt-[env(safe-area-inset-top)] sbs-border border-x-0 border-t-0">
         <span className="py-3 text-lg font-bold">StoneByStone</span>
-        <nav aria-label={t`Main`} className="hidden gap-1 md:flex">
-          {nav}
-        </nav>
+        <div className="flex items-center gap-2">
+          <BackupIndicator />
+          <nav aria-label={t`Main`} className="hidden gap-1 md:flex">
+            {nav}
+          </nav>
+        </div>
       </header>
       <main
         id="main"

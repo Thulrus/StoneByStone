@@ -7,38 +7,193 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+#: src/features/settings/StoragePanel.tsx:107
+msgid "(deleted)"
+msgstr "(deleted)"
+
+#. placeholder {0}: status.unbacked
+#: src/features/share/BackupBanner.tsx:45
+msgid "{0, plural, one {# not backed up} other {# not backed up}}"
+msgstr "{0, plural, one {# not backed up} other {# not backed up}}"
+
+#. placeholder {0}: status.unbacked
+#: src/features/share/BackupBanner.tsx:17
+msgid "{0, plural, one {# stone is not backed up} other {# stones are not backed up}}"
+msgstr "{0, plural, one {# stone is not backed up} other {# stones are not backed up}}"
+
+#. placeholder {0}: progress.total
+#: src/features/cemeteries/CemeteryList.tsx:32
+msgid "{0, plural, one {# stone} other {# stones}}"
+msgstr "{0, plural, one {# stone} other {# stones}}"
+
+#. placeholder {0}: r.created
+#. placeholder {1}: r.updated
+#. placeholder {2}: r.unchanged
+#: src/features/cemeteries/ImportButton.tsx:29
+msgid "{0} new, {1} updated, {2} unchanged."
+msgstr "{0} new, {1} updated, {2} unchanged."
+
+#: src/features/share/useBackup.ts:35
+msgid "{n} file(s) downloaded."
+msgstr "{n} file(s) downloaded."
+
+#: src/features/share/useBackup.ts:34
+msgid "{n} file(s) shared."
+msgstr "{n} file(s) shared."
+
+#. placeholder {0}: r.folder ?? ''
+#: src/features/share/useBackup.ts:32
+msgid "{n} file(s) written to the folder “{0}”."
+msgstr "{n} file(s) written to the folder “{0}”."
+
+#: src/features/share/useBackupReminder.ts:26
+msgid "{n} stone(s) on this device are not in any backup."
+msgstr "{n} stone(s) on this device are not in any backup."
+
+#: src/features/cemeteries/CemeteryList.tsx:23
+#: src/features/cemeteries/CemeteryList.tsx:34
+msgid "{pct} transcribed"
+msgstr "{pct} transcribed"
+
+#: src/features/settings/CemeteryDefaultsForm.tsx:19
+msgid "{px} px"
+msgstr "{px} px"
+
+#: src/features/settings/CemeteryDefaultsForm.tsx:17
+msgid "1200 px (smallest files)"
+msgstr "1200 px (smallest files)"
+
+#: src/features/settings/CemeteryDefaultsForm.tsx:18
+msgid "1600 px (recommended)"
+msgstr "1600 px (recommended)"
+
 #: src/app/UpdatePrompt.tsx:45
 msgid "A new version of StoneByStone is available."
 msgstr "A new version of StoneByStone is available."
 
+#: src/app/pages/CemeteryPage.tsx:23
 #: src/app/pages/NotFoundPage.tsx:11
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
 
-#: src/app/Layout.tsx:32
-#: src/app/pages/HomePage.tsx:9
+#: src/features/share/useBackupReminder.ts:27
+msgid "Back up"
+msgstr "Back up"
+
+#: src/features/settings/StoragePanel.tsx:122
+msgid "Back up everything"
+msgstr "Back up everything"
+
+#: src/features/share/BackupBanner.tsx:26
+msgid "Back up now"
+msgstr "Back up now"
+
+#: src/features/share/useBackup.ts:45
+#: src/features/share/useBackup.ts:68
+msgid "Backup failed"
+msgstr "Backup failed"
+
+#: src/features/share/useBackup.ts:29
+msgid "Backup saved"
+msgstr "Backup saved"
+
+#: src/features/cemeteries/CemeteryList.tsx:88
+#: src/features/cemeteries/NewCemeteryDialog.tsx:53
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/app/Layout.tsx:47
+#: src/app/pages/HomePage.tsx:14
 msgid "Cemeteries"
 msgstr "Cemeteries"
 
-#: src/app/pages/CemeteryPage.tsx:10
+#: src/features/cemeteries/CemeteryList.tsx:75
+msgid "Cemeteries on this device"
+msgstr "Cemeteries on this device"
+
+#: src/features/settings/StoragePanel.tsx:90
 msgid "Cemetery"
 msgstr "Cemetery"
 
-#: src/app/pages/CemeteryPage.tsx:13
-msgid "Cemetery {cemeteryId} will open here."
-msgstr "Cemetery {cemeteryId} will open here."
+#: src/app/pages/CemeteryPage.tsx:20
+msgid "Cemetery not found"
+msgstr "Cemetery not found"
 
 #: src/ui/Dialog.tsx:58
 msgid "Close"
 msgstr "Close"
 
-#: src/app/pages/SettingsPage.tsx:49
+#: src/features/settings/ContributorForm.tsx:44
+msgid "Contact (optional)"
+msgstr "Contact (optional)"
+
+#. placeholder {0}: file.name
+#: src/features/cemeteries/ImportButton.tsx:36
+msgid "Could not import {0}"
+msgstr "Could not import {0}"
+
+#: src/features/cemeteries/NewCemeteryDialog.tsx:56
+msgid "Create"
+msgstr "Create"
+
+#: src/app/pages/SettingsPage.tsx:16
 msgid "Dark"
 msgstr "Dark"
+
+#: src/features/settings/StoragePanel.tsx:93
+msgid "Data"
+msgstr "Data"
+
+#: src/features/cemeteries/CemeteryList.tsx:91
+msgid "Delete"
+msgstr "Delete"
+
+#. placeholder {0}: cemetery.name
+#: src/features/cemeteries/CemeteryList.tsx:39
+msgid "Delete {0}"
+msgstr "Delete {0}"
+
+#. placeholder {0}: deleting?.name ?? ''
+#: src/features/cemeteries/CemeteryList.tsx:83
+msgid "Delete {0}?"
+msgstr "Delete {0}?"
+
+#: src/features/cemeteries/CemeteryList.tsx:59
+msgid "Deleted {name}"
+msgstr "Deleted {name}"
 
 #: src/ui/Toaster.tsx:43
 msgid "Dismiss"
 msgstr "Dismiss"
+
+#: src/features/settings/ContributorForm.tsx:45
+msgid "Email or phone, included when you share a file."
+msgstr "Email or phone, included when you share a file."
+
+#: src/features/cemeteries/NewCemeteryDialog.tsx:24
+msgid "Enter a name."
+msgstr "Enter a name."
+
+#: src/features/settings/CemeteryDefaultsForm.tsx:29
+msgid "Feet and inches"
+msgstr "Feet and inches"
+
+#: src/features/share/BackupBanner.tsx:22
+msgid "If this device is lost or the browser clears its data, they are gone."
+msgstr "If this device is lost or the browser clears its data, they are gone."
+
+#: src/features/cemeteries/ImportButton.tsx:59
+msgid "Import"
+msgstr "Import"
+
+#. placeholder {0}: file.name
+#: src/features/cemeteries/ImportButton.tsx:28
+msgid "Imported {0}"
+msgstr "Imported {0}"
+
+#: src/features/cemeteries/ImportButton.tsx:59
+msgid "Importing…"
+msgstr "Importing…"
 
 #: src/app/InstallPrompt.tsx:30
 msgid "In Safari, tap the Share button, then “Add to Home Screen”. Your survey data is only safe from automatic clean-up once the app is on your home screen."
@@ -56,7 +211,15 @@ msgstr "Install StoneByStone"
 msgid "Install the app so it opens offline and keeps your survey data safe."
 msgstr "Install the app so it opens offline and keeps your survey data safe."
 
-#: src/app/pages/SettingsPage.tsx:71
+#: src/features/cemeteries/CemeteryList.tsx:84
+msgid "It disappears from this list. Its records stay on the device and in any backups, and you can undo right away."
+msgstr "It disappears from this list. Its records stay on the device and in any backups, and you can undo right away."
+
+#: src/features/settings/StoragePanel.tsx:73
+msgid "Keep my data"
+msgstr "Keep my data"
+
+#: src/app/pages/SettingsPage.tsx:39
 msgid "Language"
 msgstr "Language"
 
@@ -64,30 +227,46 @@ msgstr "Language"
 msgid "Later"
 msgstr "Later"
 
-#: src/app/pages/SettingsPage.tsx:48
+#: src/app/pages/SettingsPage.tsx:15
 msgid "Light"
 msgstr "Light"
 
-#: src/app/Layout.tsx:51
-#: src/app/Layout.tsx:64
+#: src/app/Layout.tsx:68
+#: src/app/Layout.tsx:82
 msgid "Main"
 msgstr "Main"
 
-#: src/app/pages/SettingsPage.tsx:47
-#: src/app/pages/SettingsPage.tsx:54
+#: src/app/pages/SettingsPage.tsx:14
+#: src/app/pages/SettingsPage.tsx:21
 msgid "Match device"
 msgstr "Match device"
 
-#: src/app/pages/HomePage.tsx:13
-msgid "No cemeteries on this device yet."
-msgstr "No cemeteries on this device yet."
+#: src/features/settings/CemeteryDefaultsForm.tsx:30
+msgid "Metres"
+msgstr "Metres"
+
+#: src/features/cemeteries/NewCemeteryDialog.tsx:42
+#: src/features/cemeteries/WelcomeCard.tsx:42
+#: src/features/settings/ContributorForm.tsx:37
+msgid "Name"
+msgstr "Name"
+
+#: src/features/cemeteries/NewCemeteryDialog.tsx:37
+#: src/features/cemeteries/NewCemeteryDialog.tsx:39
+msgid "New cemetery"
+msgstr "New cemetery"
+
+#: src/features/cemeteries/CemeteryList.tsx:68
+msgid "No cemeteries on this device yet. Create one, or import a file."
+msgstr "No cemeteries on this device yet. Create one, or import a file."
 
 #: src/app/InstallPrompt.tsx:51
+#: src/features/cemeteries/WelcomeCard.tsx:53
 msgid "Not now"
 msgstr "Not now"
 
 #. placeholder {0}: state.message
-#: src/app/StoreGate.tsx:76
+#: src/app/StoreGate.tsx:65
 msgid "Nothing has been changed. Details: {0}"
 msgstr "Nothing has been changed. Details: {0}"
 
@@ -99,45 +278,157 @@ msgstr "Notifications"
 msgid "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
 msgstr "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
 
+#: src/features/settings/CemeteryDefaultsForm.tsx:16
+msgid "Original size (largest files)"
+msgstr "Original size (largest files)"
+
 #: src/app/pages/NotFoundPage.tsx:8
 msgid "Page not found"
 msgstr "Page not found"
+
+#: src/features/settings/CemeteryDefaultsForm.tsx:35
+msgid "Photo quality"
+msgstr "Photo quality"
+
+#: src/features/settings/StoragePanel.tsx:96
+msgid "Photos"
+msgstr "Photos"
+
+#: src/features/settings/StoragePanel.tsx:122
+#: src/features/share/BackupBanner.tsx:26
+msgid "Preparing…"
+msgstr "Preparing…"
 
 #: src/app/UpdatePrompt.tsx:33
 msgid "Ready to work offline"
 msgstr "Ready to work offline"
 
+#: src/features/settings/ContributorForm.tsx:38
+msgid "Recorded on every stone and photo you add, so merged datasets show who did what."
+msgstr "Recorded on every stone and photo you add, so merged datasets show who did what."
+
 #: src/app/UpdatePrompt.tsx:48
 msgid "Reload"
 msgstr "Reload"
 
-#: src/app/Layout.tsx:33
-#: src/app/pages/SettingsPage.tsx:61
+#: src/features/cemeteries/WelcomeCard.tsx:50
+msgid "Save"
+msgstr "Save"
+
+#: src/features/share/useBackup.ts:41
+msgid "Save it"
+msgstr "Save it"
+
+#: src/features/settings/ContributorForm.tsx:52
+msgid "Save name"
+msgstr "Save name"
+
+#: src/features/settings/ContributorForm.tsx:28
+msgid "Saved"
+msgstr "Saved"
+
+#: src/features/cemeteries/WelcomeCard.tsx:43
+msgid "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
+msgstr "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
+
+#: src/app/Layout.tsx:48
+#: src/app/pages/SettingsPage.tsx:28
 msgid "Settings"
 msgstr "Settings"
 
-#: src/app/Layout.tsx:47
+#: src/app/Layout.tsx:62
 msgid "Skip to content"
 msgstr "Skip to content"
 
-#: src/app/pages/SettingsPage.tsx:50
+#: src/features/settings/StoragePanel.tsx:38
+msgid "Storage"
+msgstr "Storage"
+
+#: src/features/settings/StoragePanel.tsx:56
+msgid "Storage is almost full. Back up, then lower the photo quality or remove cemeteries you have finished."
+msgstr "Storage is almost full. Back up, then lower the photo quality or remove cemeteries you have finished."
+
+#: src/features/settings/StoragePanel.tsx:86
+msgid "Storage per cemetery"
+msgstr "Storage per cemetery"
+
+#: src/features/settings/StoragePanel.tsx:51
+msgid "Storage used"
+msgstr "Storage used"
+
+#: src/app/pages/SettingsPage.tsx:17
 msgid "Sunlight (high contrast)"
 msgstr "Sunlight (high contrast)"
 
+#: src/features/settings/StoragePanel.tsx:79
+msgid "The browser has agreed to keep this app’s data."
+msgstr "The browser has agreed to keep this app’s data."
+
+#: src/features/settings/StoragePanel.tsx:68
+msgid "The browser may clear this app’s data when space runs low. Installing the app helps."
+msgstr "The browser may clear this app’s data when space runs low. Installing the app helps."
+
 #. placeholder {0}: state.found
 #. placeholder {1}: state.supported
-#: src/app/StoreGate.tsx:68
+#: src/app/StoreGate.tsx:57
 msgid "The data on this device was saved by a newer version of StoneByStone (data version {0}; this version reads up to {1}). Nothing has been changed. Reload the page to get the latest version."
 msgstr "The data on this device was saved by a newer version of StoneByStone (data version {0}; this version reads up to {1}). Nothing has been changed. Reload the page to get the latest version."
 
-#: src/app/pages/SettingsPage.tsx:64
+#: src/app/pages/CemeteryPage.tsx:32
+msgid "The map for this cemetery arrives in a later update."
+msgstr "The map for this cemetery arrives in a later update."
+
+#: src/app/pages/SettingsPage.tsx:32
 msgid "Theme"
 msgstr "Theme"
 
-#: src/app/StoreGate.tsx:61
+#: src/features/share/useBackup.ts:63
+msgid "There is nothing to back up yet."
+msgstr "There is nothing to back up yet."
+
+#: src/app/StoreGate.tsx:50
 msgid "This app is out of date"
 msgstr "This app is out of date"
 
-#: src/app/StoreGate.tsx:63
+#: src/features/share/useBackupReminder.ts:25
+msgid "Time to back up"
+msgstr "Time to back up"
+
+#: src/features/cemeteries/CemeteryList.tsx:60
+#: src/features/cemeteries/ImportButton.tsx:30
+msgid "Undo"
+msgstr "Undo"
+
+#: src/features/settings/CemeteryDefaultsForm.tsx:25
+msgid "Units"
+msgstr "Units"
+
+#: src/features/settings/CemeteryDefaultsForm.tsx:42
+msgid "Units and photo quality apply to cemeteries you create from now on."
+msgstr "Units and photo quality apply to cemeteries you create from now on."
+
+#. placeholder {0}: fmt(quota.usage)
+#. placeholder {1}: fmt(quota.quota)
+#: src/features/settings/StoragePanel.tsx:44
+msgid "Using {0} of about {1} ({pct})."
+msgstr "Using {0} of about {1} ({pct})."
+
+#: src/features/cemeteries/ImportButton.tsx:32
+msgid "Warning"
+msgstr "Warning"
+
+#: src/features/cemeteries/WelcomeCard.tsx:38
+msgid "Welcome! What’s your name?"
+msgstr "Welcome! What’s your name?"
+
+#: src/features/share/useBackup.ts:40
+msgid "Your backup is ready"
+msgstr "Your backup is ready"
+
+#: src/app/StoreGate.tsx:52
 msgid "Your data could not be opened"
 msgstr "Your data could not be opened"
+
+#: src/features/settings/ContributorForm.tsx:34
+msgid "Your name"
+msgstr "Your name"

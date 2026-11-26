@@ -2,36 +2,36 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { renderWithProviders } from '../test/render';
+import { renderWithStore } from '../test/render';
 import { resolveTheme, usePrefs } from './prefs';
 import { routes } from './routes';
 
-function renderAt(path: string) {
+async function renderAt(path: string) {
   const router = createMemoryRouter(routes, { initialEntries: [path] });
-  renderWithProviders(<RouterProvider router={router} />);
+  await renderWithStore(<RouterProvider router={router} />);
   return router;
 }
 
 describe('routes', () => {
   it('renders Home at /', async () => {
-    renderAt('/');
+    await renderAt('/');
     expect(await screen.findByRole('heading', { name: 'Cemeteries' })).toBeInTheDocument();
   });
 
   it('lazy-loads Settings', async () => {
-    renderAt('/settings');
+    await renderAt('/settings');
     expect(await screen.findByRole('heading', { name: 'Settings' })).toBeInTheDocument();
   });
 
   it('shows a not-found page for unknown routes', async () => {
-    renderAt('/nope');
+    await renderAt('/nope');
     expect(await screen.findByRole('heading', { name: 'Page not found' })).toBeInTheDocument();
   });
 });
 
 describe('theme preference', () => {
   it('persists the chosen theme', async () => {
-    renderAt('/settings');
+    await renderAt('/settings');
     await userEvent.click(await screen.findByRole('radio', { name: 'Sunlight (high contrast)' }));
     expect(usePrefs.getState().theme).toBe('sunlight');
     expect(JSON.parse(localStorage.getItem('stonebystone:prefs') ?? '{}').state.theme).toBe(

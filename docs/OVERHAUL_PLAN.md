@@ -540,6 +540,16 @@ Losing a weekend of fieldwork must be nearly impossible.
 - **Never destructive:** deletes are tombstones; history per record; merges undoable.
 - **Schema migrations** are versioned and tested; the app refuses to open data from a newer
   schema version rather than corrupting it.
+- **Implementation notes (M1):** a backup stores `backup:<cemeteryId>` = `{ hlc, at }` in
+  `settings`, with the HLC taken _before_ the export is collected. A stone is "not backed up"
+  when it, or a person or photo linked to it, has a stamp (or `createdAt`/tombstone) newer
+  than that HLC; imported records keep their original stamps, so they only count when newer.
+  The reminder is a toast on app start when unsaved work exists, the affected cemetery's last
+  backup is ≥ 3 days old (or missing), and no reminder was shown in the last 24 h. One tap
+  exports every live cemetery as its own `.sbs`: Web Share on coarse-pointer devices, else a
+  remembered folder (`backupFolder` handle) via File System Access, else a download. If the
+  export outlasts the tap's user activation, a toast offers a fresh tap to deliver it.
+  `navigator.storage.persist()` is requested once a cemetery exists (and after create/import).
 - **DB namespacing:** v2's IndexedDB is named `stonebystone` (not generic), because all
   GitHub Pages projects under `thulrus.github.io` share one origin.
 
@@ -874,7 +884,11 @@ Compound indexes on `[cemeteryId+status]`, `[cemeteryId+address.rowId+address.ro
 `[cemeteryId+name.surname]`. Map tiles live in Cache Storage, not IndexedDB.
 
 Implementation notes (M1): `settings` holds `nodeId`, `clock` (HLC state), `contributorId`,
-`lastSeen` (per-contributor max HLC) and `schemaVersion`. Dexie 4 will open a database whose
+`lastSeen` (per-contributor max HLC) and `schemaVersion`; WP3 added `cemeteryDefaults`
+(`units`, `photoMaxPx` copied into new cemeteries), `onboarded` (first-launch name prompt
+answered or skipped), `backup:<cemeteryId>`, `backupRemindedAt` and `backupFolder` (§14).
+"Original" photo quality is stored as `photoMaxPx: 1000000` (`PHOTO_ORIGINAL_PX`) so the
+schema's integer ≥ 1 rule holds and nothing is ever downscaled. Dexie 4 will open a database whose
 version is newer than the code declares, so `openDatabase()` first probes the raw IndexedDB
 version and the stored `schemaVersion` and refuses (`NewerSchemaError`) before Dexie touches
 it. `status` is materialized but never stamped. Undo of an edit writes the old values back as

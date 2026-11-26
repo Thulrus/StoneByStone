@@ -1,43 +1,10 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import type { ReactNode } from 'react';
+import { CemeteryDefaultsForm } from '../../features/settings/CemeteryDefaultsForm';
+import { ContributorForm } from '../../features/settings/ContributorForm';
+import { StoragePanel } from '../../features/settings/StoragePanel';
 import { LOCALE_NAMES, SUPPORTED_LOCALES } from '../../i18n/locales';
+import { RadioGroup } from '../../ui/RadioGroup';
 import { usePrefs, type ThemePref } from '../prefs';
-
-function RadioGroup<T extends string>({
-  legend,
-  name,
-  value,
-  options,
-  onChange,
-}: {
-  legend: ReactNode;
-  name: string;
-  value: T;
-  options: Array<{ value: T; label: ReactNode }>;
-  onChange: (value: T) => void;
-}) {
-  return (
-    <fieldset className="flex flex-col gap-1">
-      <legend className="mb-2 text-lg font-semibold">{legend}</legend>
-      {options.map((o) => (
-        <label
-          key={o.value}
-          className="flex min-h-12 cursor-pointer items-center gap-3 rounded-lg px-3 hover:bg-surface-2"
-        >
-          <input
-            type="radio"
-            name={name}
-            value={o.value}
-            checked={value === o.value}
-            onChange={() => onChange(o.value)}
-            className="size-5 accent-primary"
-          />
-          {o.label}
-        </label>
-      ))}
-    </fieldset>
-  );
-}
 
 export function SettingsPage() {
   const { t } = useLingui();
@@ -56,10 +23,11 @@ export function SettingsPage() {
   ];
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex max-w-prose flex-col gap-8">
       <h1 className="text-2xl font-bold">
         <Trans>Settings</Trans>
       </h1>
+      <ContributorForm />
       <RadioGroup
         legend={t`Theme`}
         name="theme"
@@ -74,6 +42,8 @@ export function SettingsPage() {
         options={locales}
         onChange={setLocale}
       />
+      <CemeteryDefaultsForm />
+      <StoragePanel />
     </div>
   );
 }
