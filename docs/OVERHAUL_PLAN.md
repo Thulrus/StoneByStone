@@ -911,7 +911,11 @@ README.txt         human explanation of the format and license
 monuments with properties mapped), images (bulk photo import: EXIF GPS/time used to place
 and order stones — useful for people who photographed a cemetery with a normal camera app).
 
-JSON Schemas live in `schema/v2/` and are validated with Ajv on import. The format is
+JSON Schemas (draft-07) live in `schema/v2/` (one per entity, plus `manifest.json`,
+`common.json` and `document.json` for `.sbs.json`) and are validated with Ajv on import.
+In `.sbs` zips, JSON is deflated and images are stored uncompressed. An import merges every
+record by id as one undoable group, skips photos whose bytes don't match `sha256`, and
+detects the file type by content (`data/import.ts`). The format is
 documented in `docs/FORMAT.md` (to be written in M1).
 
 ---
@@ -997,6 +1001,14 @@ new cemetery (or a merge, if its aliased v1 ID already exists on the device).
 | `landmark` (bench, tree, pine, building, statue, other) | `MapFeature` with `legacyCells: [grid]`; statue → `large-monument`, pine → `tree` (+ tag "conifer").                                                                                                               |
 | `road.cells`, `color`                                   | `MapFeature { kind: 'path', legacyCells }`, color kept as a style property.                                                                                                                                        |
 | `change_log`                                            | `HistoryEntry` records with `op: 'import'` context, read-only.                                                                                                                                                     |
+
+Identity rules (settled in M1): monuments, tags and features keep their v1 UUID in
+`aliases`; persons get `v1-person:<grave uuid>`, the grid overlay `v1-grid`, the pine tag
+`v1-tag:conifer`. Re-import first looks for a monument holding one of the file's grave UUIDs
+(then `legacy.v1Id` + name) and reuses the ids it finds, so the same-ID merge is a no-op.
+Contributors and history entries get deterministic UUIDv8 ids (SHA-256 of the name, or of
+the change-log entry), so every device derives the same ones. The converted data is
+validated against the v2 schemas before it is written.
 
 ### 22.4 Pinning the legacy grid to the map
 
