@@ -7,10 +7,13 @@ import { endRowHere, getRowStart, rowStones, setRowStart } from '../../../data/w
 import type { ID, Row } from '../../../domain';
 import { Button } from '../../../ui/Button';
 import { toast } from '../../../ui/toast-store';
+import { haptic } from '../camera';
 import { quickFix } from '../gps';
+import { useWakeLock } from '../useWakeLock';
 import { InsertDialog, ReorderDialog } from './RowOrderDialogs';
 import { useWalkCapture } from './useWalkCapture';
 import { WalkCamera } from './WalkCamera';
+import { WalkSummary } from './WalkSummary';
 
 export interface WalkPanelProps {
   row: Row;
@@ -27,6 +30,11 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
   const [camera, setCamera] = useState(false);
   const [locating, setLocating] = useState(false);
   const [dialog, setDialog] = useState<'insert' | 'reorder'>();
+  const [since] = useState(() => store.device.clock.now());
+  const [rowEnded, setRowEnded] = useState(false);
+  const [ended, setEnded] = useState(false);
+  // The screen stays on for the walk only (plan §17).
+  useWakeLock(!ended);
   const capture = useWalkCapture(row, true);
   const info = useLiveQuery(async () => {
     const stones = await rowStones(store, row);
@@ -47,10 +55,12 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
     const fix = await quickFix(15_000);
     setLocating(false);
     if (!fix) return toast({ title: t`Couldn't get your location`, tone: 'error' });
+    haptic();
     if (action === 'start') {
       await setRowStart(store, row.id, fix);
       toast({ title: t`Row start set` });
     } else if (await endRowHere(store, row.id, fix, { atStart: capture.reversed })) {
+      setRowEnded(true);
       toast({
         title: t`Row end set; stones re-spaced`,
         action: { label: t`Undo`, onAction: () => void store.undo() },
@@ -60,6 +70,7 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
 
   const reverse = async () => {
     if (!(await reverseRow(store, row.id))) return;
+    haptic();
     capture.setReversed(!capture.reversed);
     toast({
       title: t`Row reversed: stone 1 is now at the other end`,
@@ -95,14 +106,33 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
         <Trans>Next stone</Trans>
       </Button>
       <div className="flex flex-wrap gap-2" role="group" aria-label={t`Row controls`}>
-        <Button variant="secondary" onClick={() => capture.setGaps(capture.gaps + 1)}>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            haptic();
+            capture.setGaps(capture.gaps + 1);
+          }}
+        >
           {capture.gaps > 0 ? (
             <Plural value={capture.gaps} one="Gap (# before next)" other="Gap (# before next)" />
           ) : (
             <Trans>Gap</Trans>
           )}
         </Button>
-        <Button variant="secondary" onClick={capture.skip}>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            haptic();
+            // Inside the camera the camera shows this; here a toast does.
+            void capture.skip().then((n) => {
+              if (n === undefined) return;
+              toast({
+                title: t`Stone ${n} skipped`,
+                action: { label: t`Undo`, onAction: () => void capture.undoLast() },
+              });
+            });
+          }}
+        >
           <Trans>Skip</Trans>
         </Button>
         <Button variant="secondary" disabled={count === 0} onClick={() => setDialog('insert')}>
@@ -125,7 +155,7 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
             <Trans>Row start here</Trans>
           </Button>
         )}
-        <Button variant="ghost" onClick={onEnd}>
+        <Button variant="ghost" onClick={() => setEnded(true)}>
           <Trans>End walk</Trans>
         </Button>
       </div>
@@ -139,6 +169,14 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
           capture.setInsertAt(at);
           setCamera(true);
         }}
+      />
+      <WalkSummary
+        open={ended}
+        row={row}
+        rowName={rowName}
+        since={since}
+        rowEnded={rowEnded}
+        onDone={onEnd}
       />
       <ReorderDialog
         row={row}

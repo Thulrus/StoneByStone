@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import type { PhotoRole } from '../../../domain';
 import { Button } from '../../../ui/Button';
 import { Camera } from '../Camera';
+import { haptic } from '../camera';
 import { QuickTray } from './QuickTray';
 import type { WalkCapture } from './useWalkCapture';
 
@@ -111,12 +112,24 @@ export function WalkCamera({
             </span>
           ) : null}
           {!adding && capture.insertAt === undefined ? (
-            <Button variant="secondary" onClick={() => setGaps(gaps + 1)}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                haptic();
+                setGaps(gaps + 1);
+              }}
+            >
               <Trans>Gap</Trans>
             </Button>
           ) : null}
           {!adding ? (
-            <Button variant="secondary" onClick={capture.skip}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                haptic();
+                void capture.skip();
+              }}
+            >
               <Trans>Skip</Trans>
             </Button>
           ) : null}
@@ -124,6 +137,7 @@ export function WalkCamera({
             <Button
               size="lg"
               onClick={() => {
+                haptic();
                 nextStone();
                 setRole('front');
               }}

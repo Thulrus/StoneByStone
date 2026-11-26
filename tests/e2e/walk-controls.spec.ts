@@ -56,6 +56,29 @@ async function rowOrder(page: Page): Promise<number[]> {
 
 test('row controls: gap, skip, insert, reverse, reorder', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
+  // A fake Screen Wake Lock that counts locks held.
+  await page.addInitScript(() => {
+    const w = window as unknown as { wakeHeld: number };
+    w.wakeHeld = 0;
+    Object.defineProperty(navigator, 'wakeLock', {
+      configurable: true,
+      value: {
+        request: () => {
+          w.wakeHeld++;
+          const s = {
+            released: false,
+            release: () => {
+              if (!s.released) w.wakeHeld--;
+              s.released = true;
+              return Promise.resolve();
+            },
+          };
+          return Promise.resolve(s);
+        },
+      },
+    });
+  });
+  const wakeHeld = () => page.evaluate(() => (window as unknown as { wakeHeld: number }).wakeHeld);
   await page.addInitScript(() =>
     localStorage.setItem(
       'stonebystone:prefs',
@@ -78,6 +101,7 @@ test('row controls: gap, skip, insert, reverse, reorder', async ({ page }, testI
   await start.getByRole('button', { name: 'Start' }).click();
   const panel = page.getByRole('region', { name: 'Walk a row' });
   const controls = panel.getByRole('group', { name: 'Row controls' });
+  await expect.poll(wakeHeld).toBe(1);
 
   const camera = page.getByRole('dialog', { name: /Row C · stone/ });
   const input = camera.getByTestId('camera-file');
@@ -138,6 +162,12 @@ test('row controls: gap, skip, insert, reverse, reorder', async ({ page }, testI
 
   // The skipped stone shows as located (no photo) in the diagram.
   await panel.getByRole('button', { name: 'End walk' }).click();
+  const summary = page.getByRole('dialog', { name: 'Row C done' });
+  await expect(summary).toContainText('5 stones captured');
+  await expect(summary).toContainText('1 skipped (flagged to revisit)');
+  await expect(summary).toContainText('Row end not set');
+  await expect.poll(wakeHeld).toBe(0);
+  await summary.getByRole('button', { name: 'Done' }).click();
   await page.getByRole('tab', { name: 'Diagram' }).click();
   await expect(page.getByRole('button', { name: 'Row C, stone 5: Located' })).toBeVisible();
 

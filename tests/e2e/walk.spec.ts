@@ -118,6 +118,12 @@ test('walk a new row from a GPS start: stones in order, back photo, row end', as
   ).toBeVisible();
   await dismissToasts(page);
   await panel.getByRole('button', { name: 'End walk' }).click();
+  const summary = page.getByRole('dialog', { name: 'Row W done' });
+  await expect(summary).toContainText('4 stones captured');
+  await expect(summary).toContainText('5 photos');
+  await expect(summary).toContainText('Row end set');
+  await expect(summary.getByRole('button', { name: 'Back up now' })).toBeVisible();
+  await summary.getByRole('button', { name: 'Done' }).click();
 
   // Positions along the row increase with the stone number.
   const order = await page.evaluate(async () => {

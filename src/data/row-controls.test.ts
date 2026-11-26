@@ -128,3 +128,13 @@ test('placing a stone by averaged GPS anchors its row', async () => {
   await store.undo();
   expect(await xOf(b.id)).toBe(10);
 });
+
+test('walk summary counts what this walk added', async () => {
+  const { walkSummary } = await import('./walk-summary');
+  const { store, row, add } = await setup();
+  await add();
+  const since = store.device.clock.now();
+  await add();
+  await add({ flags: ['needs-revisit'] });
+  expect(await walkSummary(store, row, since)).toEqual({ stones: 2, photos: 0, skipped: 1 });
+});

@@ -384,6 +384,13 @@ used to compute a similarity transform and re-align the incoming dataset (§21.4
 - **Undo toast** after every capture ("Stone #15 added · Undo").
 - **Session summary** at the end: stones captured, rows completed, photos, storage used,
   reminder to back up.
+- Implementation (M3): a walk-a-row is the session. The screen wake lock (`useWakeLock`) is
+  held from the start of the walk until "End walk", and asked for again when the app returns
+  to the foreground. "End walk" opens the summary for that walk: stones and photos since it
+  started, skipped stones, whether the row end was set, device storage used, and the
+  one-tap backup banner. Inside the camera, capture feedback and Undo stay in the camera.
+  Toasts are for actions taken with the camera closed. Shutter, Gap, Skip, Next stone,
+  Reverse and row start/end vibrate.
 
 ---
 

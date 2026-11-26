@@ -22,8 +22,8 @@ export interface WalkCapture {
   /** Empty plots (Gap) to leave before the next new stone. */
   gaps: number;
   setGaps: (n: number) => void;
-  /** Skip: a photo-less stone in the next slot, flagged for a revisit. */
-  skip: () => void;
+  /** Skip: a photo-less stone in the next slot, flagged for a revisit. Resolves to its number. */
+  skip: () => Promise<number | undefined>;
   /** Where the next new stone goes while inserting (it advances after each one). */
   insertAt: number | undefined;
   setInsertAt: (at: number | undefined) => void;
@@ -136,18 +136,21 @@ export function useWalkCapture(row: Row, useGps: boolean): WalkCapture {
     nextStone();
     const where = takePlacement();
     setPending((n) => n + 1);
+    let saved: number | undefined;
     queue.current = queue.current.then(async () => {
       try {
         const m = await captureStone(store, { rowId: row.id, flags: ['needs-revisit'], ...where });
         const n = (m.address?.rowIndex ?? 0) + 1;
         lastStone.current = { id: m.id, n };
         setLastSaved({ kind: 'skip', stoneNumber: n });
+        saved = n;
       } catch {
         toast({ title: t`Couldn't save that stone`, tone: 'error' });
       } finally {
         setPending((n) => n - 1);
       }
     });
+    return queue.current.then(() => saved);
   }, [nextStone, takePlacement, store, row.id, t]);
 
   const undoLast = useCallback(async () => {
