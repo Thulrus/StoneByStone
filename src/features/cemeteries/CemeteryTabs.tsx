@@ -10,6 +10,7 @@ import { GridActions } from '../overlays/GridActions';
 import { OverlaysPanel } from '../overlays/OverlaysPanel';
 import { SchematicView } from '../schematic/SchematicView';
 import { StoneSheet } from '../stones/StoneSheet';
+import { FieldChecklist } from './FieldChecklist';
 import { MapTab } from './MapTab';
 import { LayoutEditor } from './setup/LayoutEditor';
 import { useFillViewport } from './useFillViewport';
@@ -168,6 +169,7 @@ export function CemeteryTabs({
               setTab('map');
             }}
           />
+          <FieldChecklist cemetery={cemetery} rows={layout.rows} />
           <OfflinePanel cemetery={cemetery} rows={layout.rows} stones={stones} />
         </div>
       )}

@@ -358,6 +358,12 @@ used to compute a similarity transform and re-align the incoming dataset (§21.4
 - **Before going out:** "Prepare for offline" downloads map tiles for the cemetery's
   boundary at zooms ~15–20 (where the provider's terms allow; §24), and confirms storage
   is persisted. A checklist screen: battery, storage free, tiles cached, rows planned.
+  Implementation (M3): "Before you go out" in the Setup tab
+  (`features/cemeteries/field-checklist.ts` for the rules). It covers battery (Battery Status
+  API where it exists; ≥ 50% or charging), free storage (quota − usage ≥ 500 MB), tiles saved
+  for the cemetery's current imagery, persisted storage (with a "Protect data" button), and
+  rows planned. Anything the browser can't report shows as "can't check", not as a failure.
+  The same goes for imagery whose terms forbid offline use, because the diagram works offline.
 - **In-app camera** (`getUserMedia`), large shutter at thumb height, haptic confirm, instant
   return to the map with the new stone highlighted. Falls back to
   `<input type="file" accept="image/*" capture="environment">` on browsers where the in-app

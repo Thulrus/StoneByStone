@@ -80,9 +80,17 @@ msgstr "{0} m. Tap to add a bend, or drag a point to adjust."
 msgid "{0} new, {1} updated, {2} unchanged."
 msgstr "{0} new, {1} updated, {2} unchanged."
 
+#: src/features/cemeteries/FieldChecklist.tsx:122
+msgid "{free} free for photos"
+msgstr "{free} free for photos"
+
 #: src/features/capture/walk/WalkCamera.tsx:108
 msgid "{gaps, plural, one {# empty plot before it} other {# empty plots before it}}"
 msgstr "{gaps, plural, one {# empty plot before it} other {# empty plots before it}}"
+
+#: src/features/cemeteries/FieldChecklist.tsx:163
+msgid "{n, plural, one {# row planned} other {# rows planned}}"
+msgstr "{n, plural, one {# row planned} other {# rows planned}}"
 
 #: src/features/share/useBackup.ts:35
 msgid "{n} file(s) downloaded."
@@ -138,6 +146,10 @@ msgstr "{role} photo"
 #: src/features/cemeteries/setup/RowItem.tsx:54
 msgid "{stones, plural, one {# stone} other {# stones}}"
 msgstr "{stones, plural, one {# stone} other {# stones}}"
+
+#: src/features/cemeteries/FieldChecklist.tsx:165
+msgid "{withLine, plural, one {# with a line on the map} other {# with a line on the map}}"
+msgstr "{withLine, plural, one {# with a line on the map} other {# with a line on the map}}"
 
 #: src/features/capture/walk/WalkPanel.tsx:96
 msgid "<0>Walking row {rowName}</0> · {count} stones"
@@ -272,9 +284,25 @@ msgstr "Backup failed"
 msgid "Backup saved"
 msgstr "Backup saved"
 
+#: src/features/cemeteries/FieldChecklist.tsx:114
+msgid "Battery {pct}%"
+msgstr "Battery {pct}%"
+
+#: src/features/cemeteries/FieldChecklist.tsx:112
+msgid "Battery {pct}%, charging"
+msgstr "Battery {pct}%, charging"
+
+#: src/features/cemeteries/FieldChecklist.tsx:110
+msgid "Battery: this browser can't tell. Charge the phone before you go."
+msgstr "Battery: this browser can't tell. Charge the phone before you go."
+
 #: src/features/capture/walk/RowOrderDialogs.tsx:52
 msgid "Before stone 1"
 msgstr "Before stone 1"
+
+#: src/features/cemeteries/FieldChecklist.tsx:100
+msgid "Before you go out"
+msgstr "Before you go out"
 
 #: src/features/stones/attribute-labels.ts:76
 msgid "Bench"
@@ -324,6 +352,10 @@ msgstr "Camera preview"
 msgid "can be saved for offline use"
 msgstr "can be saved for offline use"
 
+#: src/features/cemeteries/FieldChecklist.tsx:84
+msgid "Can't check:"
+msgstr "Can't check:"
+
 #: src/features/cemeteries/CemeteryList.tsx:88
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:127
 #: src/features/cemeteries/setup/TextPrompt.tsx:44
@@ -357,6 +389,10 @@ msgstr "Cemetery"
 #: src/app/pages/CemeteryPage.tsx:25
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
+
+#: src/features/cemeteries/FieldChecklist.tsx:103
+msgid "Check again"
+msgstr "Check again"
 
 #: src/features/settings/AboutPanel.tsx:67
 msgid "Check for updates"
@@ -456,6 +492,10 @@ msgstr "Dark"
 msgid "Data"
 msgstr "Data"
 
+#: src/features/cemeteries/FieldChecklist.tsx:144
+msgid "Data protected from browser clean-up"
+msgstr "Data protected from browser clean-up"
+
 #: src/features/cemeteries/CemeteryList.tsx:91
 #: src/features/cemeteries/setup/SectionBlock.tsx:69
 msgid "Delete"
@@ -506,7 +546,7 @@ msgstr "Detail"
 msgid "Detail type"
 msgstr "Detail type"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:89
+#: src/features/cemeteries/CemeteryTabs.tsx:90
 #: src/features/schematic/SchematicView.tsx:80
 msgid "Diagram"
 msgstr "Diagram"
@@ -620,6 +660,10 @@ msgstr "Feet and inches"
 msgid "Fence"
 msgstr "Fence"
 
+#: src/features/cemeteries/FieldChecklist.tsx:106
+msgid "Field checklist"
+msgstr "Field checklist"
+
 #: src/features/stones/attribute-labels.ts:22
 #: src/features/stones/attribute-labels.ts:40
 msgid "Fieldstone"
@@ -648,6 +692,10 @@ msgstr "For example https://example.org/tiles/{z}/{x}/{y}.png"
 #: src/features/stones/attribute-labels.ts:25
 msgid "Fragment"
 msgstr "Fragment"
+
+#: src/features/cemeteries/FieldChecklist.tsx:120
+msgid "Free space: this browser can't tell."
+msgstr "Free space: this browser can't tell."
 
 #: src/features/stones/RelativePlacer.tsx:114
 msgid "From"
@@ -876,7 +924,7 @@ msgstr "Made {n} rows from the grid"
 msgid "Main"
 msgstr "Main"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:88
+#: src/features/cemeteries/CemeteryTabs.tsx:89
 msgid "Map"
 msgstr "Map"
 
@@ -884,10 +932,18 @@ msgstr "Map"
 msgid "Map background for this cemetery"
 msgstr "Map background for this cemetery"
 
+#: src/features/cemeteries/FieldChecklist.tsx:136
+msgid "Map not saved for offline yet. Use \"Download for offline\" below."
+msgstr "Map not saved for offline yet. Use \"Download for offline\" below."
+
 #. placeholder {0}: cemetery.name
 #: src/features/map/CemeteryMap.tsx:65
 msgid "Map of {0}"
 msgstr "Map of {0}"
+
+#: src/features/cemeteries/FieldChecklist.tsx:134
+msgid "Map saved for offline ({tileCount} tiles)"
+msgstr "Map saved for offline ({tileCount} tiles)"
 
 #: src/features/map/OfflinePanel.tsx:65
 msgid "Map saved for offline use"
@@ -980,6 +1036,10 @@ msgstr "NE"
 msgid "needs an API key"
 msgstr "needs an API key"
 
+#: src/features/cemeteries/FieldChecklist.tsx:84
+msgid "Needs attention:"
+msgstr "Needs attention:"
+
 #: src/features/stones/attribute-labels.ts:59
 msgid "Needs revisit"
 msgstr "Needs revisit"
@@ -1017,6 +1077,10 @@ msgstr "no line"
 #: src/features/schematic/SchematicView.tsx:84
 msgid "No rows or stones yet. Add rows in Setup."
 msgstr "No rows or stones yet. Add rows in Setup."
+
+#: src/features/cemeteries/FieldChecklist.tsx:160
+msgid "No rows planned. Add them above, or start a new row when you walk."
+msgstr "No rows planned. Add them above, or start a new row when you walk."
 
 #: src/features/cemeteries/setup/RowItem.tsx:102
 msgid "No section"
@@ -1088,6 +1152,10 @@ msgstr "Offline map"
 msgid "Offline map deleted"
 msgstr "Offline map deleted"
 
+#: src/features/cemeteries/FieldChecklist.tsx:130
+msgid "Offline map: no imagery chosen."
+msgstr "Offline map: no imagery chosen."
+
 #: src/features/cemeteries/setup/RowItem.tsx:53
 msgid "on map"
 msgstr "on map"
@@ -1100,6 +1168,10 @@ msgstr "On the map, average error {0} m"
 #: src/features/map/ImageryPicker.tsx:42
 msgid "online only"
 msgstr "online only"
+
+#: src/features/cemeteries/FieldChecklist.tsx:124
+msgid "Only {free} free. Back up and remove old cemeteries to make room."
+msgstr "Only {free} free. Back up and remove old cemeteries to make room."
 
 #: src/features/overlays/OverlaysPanel.tsx:71
 msgid "Opacity"
@@ -1233,9 +1305,17 @@ msgstr "Position within about ±{0} m"
 msgid "Preparing…"
 msgstr "Preparing…"
 
+#: src/features/cemeteries/FieldChecklist.tsx:153
+msgid "Protect data"
+msgstr "Protect data"
+
 #: src/app/UpdatePrompt.tsx:33
 msgid "Ready to work offline"
 msgstr "Ready to work offline"
+
+#: src/features/cemeteries/FieldChecklist.tsx:84
+msgid "Ready:"
+msgstr "Ready:"
 
 #: src/features/settings/ContributorForm.tsx:38
 msgid "Recorded on every stone and photo you add, so merged datasets show who did what."
@@ -1482,7 +1562,7 @@ msgstr "Set the cemetery's location or draw a row line first."
 msgid "Settings"
 msgstr "Settings"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:90
+#: src/features/cemeteries/CemeteryTabs.tsx:91
 msgid "Setup"
 msgstr "Setup"
 
@@ -1585,6 +1665,10 @@ msgstr "Storage is almost full. Back up, then lower the photo quality or remove 
 msgid "Storage per cemetery"
 msgstr "Storage per cemetery"
 
+#: src/features/cemeteries/FieldChecklist.tsx:142
+msgid "Storage protection: this browser can't tell."
+msgstr "Storage protection: this browser can't tell."
+
 #: src/features/settings/StoragePanel.tsx:51
 msgid "Storage used"
 msgstr "Storage used"
@@ -1646,6 +1730,10 @@ msgstr "The area is too large to download ({count} tiles)."
 msgid "The browser has agreed to keep this app’s data."
 msgstr "The browser has agreed to keep this app’s data."
 
+#: src/features/cemeteries/FieldChecklist.tsx:146
+msgid "The browser may clear this app's data when space runs low."
+msgstr "The browser may clear this app's data when space runs low."
+
 #: src/features/settings/StoragePanel.tsx:68
 msgid "The browser may clear this app’s data when space runs low. Installing the app helps."
 msgstr "The browser may clear this app’s data when space runs low. Installing the app helps."
@@ -1687,6 +1775,10 @@ msgstr "This app is out of date"
 #: src/features/map/LazyMap.tsx:14
 msgid "This device can't show the map. Sections and rows still work without it."
 msgstr "This device can't show the map. Sections and rows still work without it."
+
+#: src/features/cemeteries/FieldChecklist.tsx:132
+msgid "This imagery can't be saved for offline use. The diagram works offline."
+msgstr "This imagery can't be saved for offline use. The diagram works offline."
 
 #: src/features/capture/walk/WalkSummary.tsx:47
 msgid "This walk"
@@ -1813,7 +1905,7 @@ msgstr "Version"
 msgid "Veteran marker / flag holder"
 msgstr "Veteran marker / flag holder"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:87
+#: src/features/cemeteries/CemeteryTabs.tsx:88
 msgid "View"
 msgstr "View"
 
@@ -1827,7 +1919,7 @@ msgstr "Waiting for GPS…"
 
 #: src/features/capture/walk/WalkPanel.tsx:94
 #: src/features/capture/walk/WalkStart.tsx:77
-#: src/features/cemeteries/CemeteryTabs.tsx:94
+#: src/features/cemeteries/CemeteryTabs.tsx:95
 msgid "Walk a row"
 msgstr "Walk a row"
 
