@@ -149,3 +149,100 @@ test('row controls: gap, skip, insert, reverse, reorder', async ({ page }, testI
   await hold.getByRole('button', { name: 'Use this position' }).click({ timeout: 20_000 });
   await expect(sheet).toContainText('Position within about ±');
 });
+
+test('quick chips and quick name, with the surname carried over', async ({ page }, testInfo) => {
+  test.setTimeout(60_000);
+  const file = testInfo.outputPath('one.sbs.json');
+  await writeFile(file, JSON.stringify(makeStonesDocument({ rows: 1, perRow: 1 })));
+  await stubTiles(page);
+  await page.goto('./');
+  await skipWelcome(page);
+  await importFile(page, file);
+  await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
+  await page.getByRole('button', { name: 'Walk a row' }).click();
+  const start = page.getByRole('dialog', { name: 'Walk a row' });
+  await start.getByRole('radio', { name: 'New row' }).check();
+  await start.getByLabel('Row name').fill('Q');
+  await start.getByRole('radio', { name: /Just name it/ }).check();
+  await start.getByRole('button', { name: 'Start' }).click();
+  await page
+    .getByRole('region', { name: 'Walk a row' })
+    .getByRole('button', { name: 'Next stone' })
+    .click();
+
+  const camera = page.getByRole('dialog', { name: /Row Q · stone/ });
+  await camera.getByRole('button', { name: 'Phone camera' }).click();
+  const photo = await jpeg(page);
+  const shoot = async (n: number) => {
+    await camera
+      .getByTestId('camera-file')
+      .setInputFiles({ name: 'p.jpg', mimeType: 'image/jpeg', buffer: photo });
+    await expect(camera.getByText(`Stone ${n} saved`)).toBeVisible({ timeout: 15_000 });
+  };
+  await shoot(1);
+  const tray = camera.getByRole('region', { name: 'Stone details' });
+  const tab = (name: string) => tray.getByRole('tab', { name }).click();
+  const chip = (name: string) => tray.getByRole('button', { name, exact: true });
+  await expect(chip('Headstone')).toHaveAttribute('aria-pressed', 'true');
+  await chip('Obelisk').click();
+  await tab('Material');
+  await chip('Slate').click();
+  await tab('Condition');
+  await chip('Tilted').click();
+  await chip('Sunken').click();
+  await tab('Flags');
+  await chip('Needs revisit').click();
+  await tab('Name');
+  await tray.getByRole('textbox', { name: 'Name' }).fill('John Smith');
+  await tray.getByRole('textbox', { name: 'Name' }).press('Enter');
+  await tab('Type');
+  await expect(chip('Obelisk')).toHaveAttribute('aria-pressed', 'true');
+  await camera.getByRole('button', { name: 'Next stone' }).click();
+
+  await shoot(2);
+  await tab('Name');
+  await tray.getByRole('button', { name: 'Same surname: Smith' }).click();
+  await expect(tray.getByRole('textbox', { name: 'Name' })).toHaveValue('Smith');
+  await camera.getByRole('button', { name: 'Close camera' }).click();
+
+  const saved = await page.evaluate(async () => {
+    const open = indexedDB.open('stonebystone');
+    const db = await new Promise<IDBDatabase>((r) => (open.onsuccess = () => r(open.result)));
+    const all = <T>(table: string) =>
+      new Promise<T[]>((r) => {
+        const q = db.transaction(table).objectStore(table).getAll();
+        q.onsuccess = () => r(q.result as T[]);
+      });
+    const stones = await all<{
+      id: string;
+      kind: string;
+      material?: string;
+      condition?: string[];
+      flags?: string[];
+    }>('monuments');
+    const people = await all<{ monumentId?: string; name: { surname?: string; given?: string } }>(
+      'persons',
+    );
+    db.close();
+    const first = [...stones].sort((a, b) => (a.id < b.id ? -1 : 1)).at(-2);
+    return {
+      first: first && {
+        kind: first.kind,
+        material: first.material,
+        condition: first.condition,
+        flags: first.flags,
+      },
+      names: people.map((p) => p.name).sort((a, b) => (a.given ?? '').localeCompare(b.given ?? '')),
+    };
+  });
+  expect(saved.first).toEqual({
+    kind: 'obelisk',
+    material: 'slate',
+    condition: ['sunken', 'tilted'],
+    flags: ['needs-revisit'],
+  });
+  expect(saved.names).toEqual([
+    { asCarved: 'Smith', surname: 'Smith' },
+    expect.objectContaining({ given: 'John', surname: 'Smith' }),
+  ]);
+});

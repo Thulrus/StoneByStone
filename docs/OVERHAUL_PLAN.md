@@ -366,6 +366,12 @@ used to compute a similarity transform and re-align the incoming dataset (§21.4
   - Flags: needs revisit, uncertain position, veteran marker/flag holder.
 - **Optional quick name** field with on-device keyboard dictation; surname carried over from
   the previous stone as a suggestion.
+- Implementation (M3): vocabularies are stable ids in `domain/attributes.ts`. Type and
+  material are single choice, condition and flags multiple. In the walk camera, a tray with
+  one group tab at a time sits above the photo types. Chip and name edits join the stone's
+  capture undo step, so the in-camera Undo removes the stone with its details. A quick name
+  makes or renames the stone's first person (source `stone`). The surname suggestion stores a
+  surname-only name.
 - **Undo toast** after every capture ("Stone #15 added · Undo").
 - **Session summary** at the end: stones captured, rows completed, photos, storage used,
   reminder to back up.

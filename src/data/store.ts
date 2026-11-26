@@ -104,7 +104,12 @@ export class Store {
   async run<R>(
     label: string,
     fn: (ctx: OpContext) => Promise<R>,
-    opts: { kind?: OpContext['kind']; op?: OpContext['op']; undoable?: boolean } = {},
+    opts: {
+      kind?: OpContext['kind'];
+      op?: OpContext['op'];
+      /** `false`: no undo step. `'join'`: part of the latest undo step (or a new one). */
+      undoable?: boolean | 'join';
+    } = {},
   ): Promise<R> {
     const current = Dexie.currentTransaction;
     const active = current ? contexts.get(current) : undefined;
@@ -124,7 +129,11 @@ export class Store {
       await saveClock(this.db, this.device.clock);
       return r;
     });
-    if (opts.undoable !== false) {
+    const top = this.undoStack.peek();
+    if (opts.undoable === 'join' && top && top.kind === 'edit') {
+      const have = new Set(top.snapshots.map((x) => `${x.table}:${x.id}`));
+      for (const [key, snap] of ctx.snapshots) if (!have.has(key)) top.snapshots.push(snap);
+    } else if (opts.undoable !== false) {
       this.undoStack.push({
         id: ctx.group ?? this.newId(),
         label,

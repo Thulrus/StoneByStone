@@ -20,6 +20,8 @@ export interface CameraProps {
   title: ReactNode;
   /** Extra buttons above the shutter (walk-a-row: Next stone, Gap, Skip). */
   actions?: ReactNode;
+  /** Full-width content above the photo types, e.g. quick chips for the stone just taken. */
+  tray?: ReactNode;
   /** Thumbnail of the last photo taken, as an object URL. */
   lastPhoto?: string | undefined;
 }
@@ -30,7 +32,7 @@ export interface CameraProps {
  * unavailable, or when the user prefers it.
  */
 export function Camera(props: CameraProps) {
-  const { open, onClose, onCapture, role, onRoleChange, title, actions, lastPhoto } = props;
+  const { open, onClose, onCapture, role, onRoleChange, title, actions, tray, lastPhoto } = props;
   const { t } = useLingui();
   const systemCamera = usePrefs((s) => s.systemCamera);
   const setSystemCamera = usePrefs((s) => s.setSystemCamera);
@@ -125,6 +127,8 @@ export function Camera(props: CameraProps) {
             ) : null}
             {flash ? <div aria-hidden="true" className="absolute inset-0 bg-white/70" /> : null}
           </div>
+
+          {tray}
 
           <div
             role="radiogroup"

@@ -65,7 +65,7 @@ msgstr "{0} m. Tap to add a bend, or drag a point to adjust."
 msgid "{0} new, {1} updated, {2} unchanged."
 msgstr "{0} new, {1} updated, {2} unchanged."
 
-#: src/features/capture/walk/WalkCamera.tsx:95
+#: src/features/capture/walk/WalkCamera.tsx:107
 msgid "{gaps, plural, one {# empty plot before it} other {# empty plots before it}}"
 msgstr "{gaps, plural, one {# empty plot before it} other {# empty plots before it}}"
 
@@ -265,6 +265,18 @@ msgstr "boundary available"
 msgid "Boundary from OpenStreetMap. Tap the map to move the pin."
 msgstr "Boundary from OpenStreetMap. Tap the map to move the pin."
 
+#: src/features/stones/attribute-labels.ts:12
+msgid "Box tomb"
+msgstr "Box tomb"
+
+#: src/features/stones/attribute-labels.ts:43
+msgid "Broken"
+msgstr "Broken"
+
+#: src/features/stones/attribute-labels.ts:28
+msgid "Brownstone"
+msgstr "Brownstone"
+
 #: src/features/settings/AboutPanel.tsx:51
 msgid "Build"
 msgstr "Build"
@@ -273,11 +285,11 @@ msgstr "Build"
 msgid "Built"
 msgstr "Built"
 
-#: src/features/capture/Camera.tsx:77
+#: src/features/capture/Camera.tsx:79
 msgid "Camera permission was refused. You can still use your phone's camera app."
 msgstr "Camera permission was refused. You can still use your phone's camera app."
 
-#: src/features/capture/Camera.tsx:117
+#: src/features/capture/Camera.tsx:119
 msgid "Camera preview"
 msgstr "Camera preview"
 
@@ -293,6 +305,10 @@ msgstr "can be saved for offline use"
 #: src/features/overlays/PinPanel.tsx:68
 msgid "Cancel"
 msgstr "Cancel"
+
+#: src/features/stones/attribute-labels.ts:31
+msgid "Cast iron"
+msgstr "Cast iron"
 
 #: src/app/Layout.tsx:47
 #: src/app/pages/HomePage.tsx:14
@@ -323,13 +339,25 @@ msgstr "Check for updates"
 msgid "Checking…"
 msgstr "Checking…"
 
+#: src/features/capture/walk/QuickTray.tsx:58
+msgid "Choices"
+msgstr "Choices"
+
 #: src/ui/Dialog.tsx:59
 msgid "Close"
 msgstr "Close"
 
-#: src/features/capture/Camera.tsx:94
+#: src/features/capture/Camera.tsx:96
 msgid "Close camera"
 msgstr "Close camera"
+
+#: src/features/stones/attribute-labels.ts:33
+msgid "Concrete"
+msgstr "Concrete"
+
+#: src/features/capture/walk/QuickTray.tsx:45
+msgid "Condition"
+msgstr "Condition"
 
 #: src/features/settings/ContributorForm.tsx:44
 msgid "Contact (optional)"
@@ -381,9 +409,17 @@ msgstr "Couldn't save that photo"
 msgid "Couldn't save that stone"
 msgstr "Couldn't save that stone"
 
+#: src/features/stones/attribute-labels.ts:42
+msgid "Cracked"
+msgstr "Cracked"
+
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:130
 msgid "Create"
 msgstr "Create"
+
+#: src/features/stones/attribute-labels.ts:13
+msgid "Cross"
+msgstr "Cross"
 
 #: src/app/pages/SettingsPage.tsx:17
 msgid "Dark"
@@ -438,6 +474,10 @@ msgstr "Deleted section {0}. Its rows are now unsectioned."
 #: src/features/capture/labels.ts:11
 msgid "Detail"
 msgstr "Detail"
+
+#: src/features/capture/walk/QuickTray.tsx:82
+msgid "Detail type"
+msgstr "Detail type"
 
 #: src/features/cemeteries/CemeteryTabs.tsx:89
 #: src/features/schematic/SchematicView.tsx:80
@@ -525,17 +565,42 @@ msgstr "Esri World Imagery needs your own ArcGIS key. It stays on this device."
 msgid "Every grid stone is already in a row"
 msgstr "Every grid stone is already in a row"
 
+#: src/features/stones/attribute-labels.ts:44
+msgid "Fallen"
+msgstr "Fallen"
+
 #: src/features/settings/CemeteryDefaultsForm.tsx:29
 msgid "Feet and inches"
 msgstr "Feet and inches"
+
+#: src/features/stones/attribute-labels.ts:16
+#: src/features/stones/attribute-labels.ts:34
+msgid "Fieldstone"
+msgstr "Fieldstone"
 
 #: src/features/cemeteries/setup/AddRowsForm.tsx:40
 msgid "First row"
 msgstr "First row"
 
+#: src/features/capture/walk/QuickTray.tsx:46
+msgid "Flags"
+msgstr "Flags"
+
+#: src/features/stones/attribute-labels.ts:14
+msgid "Flat marker"
+msgstr "Flat marker"
+
+#: src/features/stones/attribute-labels.ts:7
+msgid "Footstone"
+msgstr "Footstone"
+
 #: src/features/map/CustomSourceForm.tsx:69
 msgid "For example https://example.org/tiles/{z}/{x}/{y}.png"
 msgstr "For example https://example.org/tiles/{z}/{x}/{y}.png"
+
+#: src/features/stones/attribute-labels.ts:19
+msgid "Fragment"
+msgstr "Fragment"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:124
 msgid "from OpenStreetMap."
@@ -545,7 +610,7 @@ msgstr "from OpenStreetMap."
 msgid "Front"
 msgstr "Front"
 
-#: src/features/capture/walk/WalkCamera.tsx:103
+#: src/features/capture/walk/WalkCamera.tsx:115
 #: src/features/capture/walk/WalkPanel.tsx:102
 #: src/features/schematic/StoneButton.tsx:42
 msgid "Gap"
@@ -555,9 +620,21 @@ msgstr "Gap"
 msgid "Getting your location…"
 msgstr "Getting your location…"
 
+#: src/features/stones/attribute-labels.ts:39
+msgid "Good"
+msgstr "Good"
+
+#: src/features/stones/attribute-labels.ts:17
+msgid "Government / military"
+msgstr "Government / military"
+
 #: src/app/pages/SettingsPage.tsx:47
 msgid "GPS \"Hold still\" time"
 msgstr "GPS \"Hold still\" time"
+
+#: src/features/stones/attribute-labels.ts:25
+msgid "Granite"
+msgstr "Granite"
 
 #: src/features/overlays/GridPinWorkspace.tsx:53
 msgid "grid cell"
@@ -572,6 +649,10 @@ msgstr "Grid row {0}, column {1}"
 #: src/features/overlays/GridPicker.tsx:34
 msgid "Grid row {row}, column {col}"
 msgstr "Grid row {row}, column {col}"
+
+#: src/features/stones/attribute-labels.ts:6
+msgid "Headstone"
+msgstr "Headstone"
 
 #: src/features/map/CustomSourceForm.tsx:90
 msgid "Highest zoom level"
@@ -597,6 +678,10 @@ msgstr "I'm standing at the row start (GPS)"
 msgid "If this device is lost or the browser clears its data, they are gone."
 msgstr "If this device is lost or the browser clears its data, they are gone."
 
+#: src/features/stones/attribute-labels.ts:47
+msgid "Illegible"
+msgstr "Illegible"
+
 #: src/features/map/ImageryPicker.tsx:46
 #: src/features/map/MapToolbar.tsx:27
 msgid "Imagery"
@@ -619,7 +704,7 @@ msgstr "Importing…"
 msgid "In Safari, tap the Share button, then “Add to Home Screen”. Your survey data is only safe from automatic clean-up once the app is on your home screen."
 msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your survey data is only safe from automatic clean-up once the app is on your home screen."
 
-#: src/features/capture/Camera.tsx:107
+#: src/features/capture/Camera.tsx:109
 msgid "In-app camera"
 msgstr "In-app camera"
 
@@ -659,7 +744,7 @@ msgstr "Keep my data"
 msgid "Language"
 msgstr "Language"
 
-#: src/features/capture/Camera.tsx:171
+#: src/features/capture/Camera.tsx:175
 msgid "Last photo"
 msgstr "Last photo"
 
@@ -671,9 +756,21 @@ msgstr "Later"
 msgid "Layer"
 msgstr "Layer"
 
+#: src/features/stones/attribute-labels.ts:10
+msgid "Ledger"
+msgstr "Ledger"
+
+#: src/features/stones/attribute-labels.ts:41
+msgid "Lichen / growth"
+msgstr "Lichen / growth"
+
 #: src/app/pages/SettingsPage.tsx:16
 msgid "Light"
 msgstr "Light"
+
+#: src/features/stones/attribute-labels.ts:29
+msgid "Limestone"
+msgstr "Limestone"
 
 #: src/features/map/LazyMap.tsx:23
 msgid "Loading map…"
@@ -713,14 +810,26 @@ msgstr "Map saved for offline use"
 msgid "Map: tap to place the cemetery"
 msgstr "Map: tap to place the cemetery"
 
+#: src/features/stones/attribute-labels.ts:24
+msgid "Marble"
+msgstr "Marble"
+
 #: src/app/pages/SettingsPage.tsx:15
 #: src/app/pages/SettingsPage.tsx:22
 msgid "Match device"
 msgstr "Match device"
 
+#: src/features/capture/walk/QuickTray.tsx:44
+msgid "Material"
+msgstr "Material"
+
 #: src/features/settings/CemeteryDefaultsForm.tsx:30
 msgid "Metres"
 msgstr "Metres"
+
+#: src/features/stones/attribute-labels.ts:49
+msgid "Missing"
+msgstr "Missing"
 
 #. placeholder {0}: row.label
 #: src/features/cemeteries/setup/RowItem.tsx:78
@@ -759,6 +868,8 @@ msgstr "Move stone {n} later"
 msgid "My location"
 msgstr "My location"
 
+#: src/features/capture/walk/QuickName.tsx:38
+#: src/features/capture/walk/QuickTray.tsx:47
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:80
 #: src/features/cemeteries/WelcomeCard.tsx:42
 #: src/features/map/CustomSourceForm.tsx:64
@@ -769,6 +880,10 @@ msgstr "Name"
 #: src/features/map/ImageryPicker.tsx:40
 msgid "needs an API key"
 msgstr "needs an API key"
+
+#: src/features/stones/attribute-labels.ts:53
+msgid "Needs revisit"
+msgstr "Needs revisit"
 
 #: src/app/pages/HomePage.tsx:22
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:75
@@ -783,7 +898,7 @@ msgstr "New row"
 msgid "New section"
 msgstr "New section"
 
-#: src/features/capture/walk/WalkCamera.tsx:119
+#: src/features/capture/walk/WalkCamera.tsx:131
 #: src/features/capture/walk/WalkPanel.tsx:95
 msgid "Next stone"
 msgstr "Next stone"
@@ -854,6 +969,10 @@ msgstr "Now tap the same spot on the map for point {n}."
 msgid "Now tap where the row ends."
 msgstr "Now tap where the row ends."
 
+#: src/features/stones/attribute-labels.ts:9
+msgid "Obelisk"
+msgstr "Obelisk"
+
 #: src/features/map/OfflinePanel.tsx:153
 msgid "Offline map"
 msgstr "Offline map"
@@ -883,11 +1002,17 @@ msgstr "Opacity"
 msgid "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
 msgstr "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
 
+#: src/features/capture/walk/QuickName.tsx:45
+msgid "Optional — tap the mic to dictate"
+msgstr "Optional — tap the mic to dictate"
+
 #: src/features/settings/CemeteryDefaultsForm.tsx:16
 msgid "Original size (largest files)"
 msgstr "Original size (largest files)"
 
 #: src/features/capture/labels.ts:13
+#: src/features/stones/attribute-labels.ts:20
+#: src/features/stones/attribute-labels.ts:35
 msgid "Other"
 msgstr "Other"
 
@@ -899,12 +1024,16 @@ msgstr "Overlay image: tap a point you can also find on the map"
 msgid "Page not found"
 msgstr "Page not found"
 
-#: src/features/capture/Camera.tsx:107
+#: src/features/stones/attribute-labels.ts:15
+msgid "Pedestal / die-on-base"
+msgstr "Pedestal / die-on-base"
+
+#: src/features/capture/Camera.tsx:109
 msgid "Phone camera"
 msgstr "Phone camera"
 
 #: src/features/capture/useSavePhoto.ts:56
-#: src/features/capture/walk/WalkCamera.tsx:80
+#: src/features/capture/walk/WalkCamera.tsx:92
 msgid "Photo added"
 msgstr "Photo added"
 
@@ -912,7 +1041,7 @@ msgstr "Photo added"
 msgid "Photo quality"
 msgstr "Photo quality"
 
-#: src/features/capture/Camera.tsx:131
+#: src/features/capture/Camera.tsx:135
 msgid "Photo type"
 msgstr "Photo type"
 
@@ -1000,7 +1129,7 @@ msgstr "Reload"
 msgid "Remove"
 msgstr "Remove"
 
-#: src/features/capture/walk/WalkCamera.tsx:97
+#: src/features/capture/walk/WalkCamera.tsx:109
 msgid "Remove gap"
 msgstr "Remove gap"
 
@@ -1033,6 +1162,10 @@ msgstr "Reorder stones"
 msgid "Reorder…"
 msgstr "Reorder…"
 
+#: src/features/stones/attribute-labels.ts:48
+msgid "Repaired"
+msgstr "Repaired"
+
 #: src/features/capture/walk/WalkPanel.tsx:112
 msgid "Reverse direction"
 msgstr "Reverse direction"
@@ -1058,11 +1191,11 @@ msgstr "Row {name}, stone {n}"
 msgid "Row {rowName}"
 msgstr "Row {rowName}"
 
-#: src/features/capture/walk/WalkCamera.tsx:47
+#: src/features/capture/walk/WalkCamera.tsx:49
 msgid "Row {rowName} · stone {currentNumber}"
 msgstr "Row {rowName} · stone {currentNumber}"
 
-#: src/features/capture/walk/WalkCamera.tsx:48
+#: src/features/capture/walk/WalkCamera.tsx:50
 msgid "Row {rowName} · stone {nextNumber}"
 msgstr "Row {rowName} · stone {nextNumber}"
 
@@ -1112,6 +1245,14 @@ msgstr "Rows horizontal"
 msgid "Rows without a section"
 msgstr "Rows without a section"
 
+#: src/features/capture/walk/QuickName.tsx:59
+msgid "Same surname: {lastSurname}"
+msgstr "Same surname: {lastSurname}"
+
+#: src/features/stones/attribute-labels.ts:27
+msgid "Sandstone"
+msgstr "Sandstone"
+
 #: src/features/cemeteries/setup/TextPrompt.tsx:47
 #: src/features/cemeteries/WelcomeCard.tsx:50
 msgid "Save"
@@ -1137,6 +1278,10 @@ msgstr "Save name"
 msgid "Saved"
 msgstr "Saved"
 
+#: src/features/capture/walk/QuickTray.tsx:139
+msgid "Saved as you tap."
+msgstr "Saved as you tap."
+
 #: src/features/map/OfflinePanel.tsx:64
 msgid "Saved for offline, but {failed} tiles failed"
 msgstr "Saved for offline, but {failed} tiles failed"
@@ -1152,7 +1297,7 @@ msgstr "Saved for offline: {0} tiles, {1}, on {2}."
 msgid "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
 msgstr "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
 
-#: src/features/capture/walk/WalkCamera.tsx:59
+#: src/features/capture/walk/WalkCamera.tsx:61
 msgid "Saving…"
 msgstr "Saving…"
 
@@ -1193,7 +1338,7 @@ msgstr "Setup"
 msgid "Shown on the map. Check the provider's terms."
 msgstr "Shown on the map. Check the provider's terms."
 
-#: src/features/capture/walk/WalkCamera.tsx:108
+#: src/features/capture/walk/WalkCamera.tsx:120
 #: src/features/capture/walk/WalkPanel.tsx:106
 msgid "Skip"
 msgstr "Skip"
@@ -1201,6 +1346,10 @@ msgstr "Skip"
 #: src/app/Layout.tsx:62
 msgid "Skip to content"
 msgstr "Skip to content"
+
+#: src/features/stones/attribute-labels.ts:26
+msgid "Slate"
+msgstr "Slate"
 
 #: src/features/capture/HoldStill.tsx:124
 msgid "Snapped onto the row line."
@@ -1214,7 +1363,7 @@ msgstr "Stand at the stone and keep the phone still… {left} s"
 msgid "Start"
 msgstr "Start"
 
-#: src/features/capture/Camera.tsx:73
+#: src/features/capture/Camera.tsx:75
 msgid "Starting camera…"
 msgstr "Starting camera…"
 
@@ -1233,12 +1382,12 @@ msgid "Stone {0} not in a row"
 msgstr "Stone {0} not in a row"
 
 #. placeholder {0}: lastSaved.stoneNumber
-#: src/features/capture/walk/WalkCamera.tsx:76
+#: src/features/capture/walk/WalkCamera.tsx:88
 msgid "Stone {0} saved"
 msgstr "Stone {0} saved"
 
 #. placeholder {0}: lastSaved.stoneNumber
-#: src/features/capture/walk/WalkCamera.tsx:78
+#: src/features/capture/walk/WalkCamera.tsx:90
 msgid "Stone {0} skipped"
 msgstr "Stone {0} skipped"
 
@@ -1249,6 +1398,10 @@ msgstr "Stone {n}"
 #: src/features/overlays/OverlayLayers.tsx:65
 msgid "Stone added"
 msgstr "Stone added"
+
+#: src/features/capture/walk/QuickTray.tsx:81
+msgid "Stone details"
+msgstr "Stone details"
 
 #: src/features/stones/StoneSheet.tsx:114
 msgid "Stone placed by GPS"
@@ -1278,11 +1431,23 @@ msgstr "Storage used"
 msgid "street map, online only"
 msgstr "street map, online only"
 
+#: src/features/stones/attribute-labels.ts:45
+msgid "Sunken"
+msgstr "Sunken"
+
 #: src/app/pages/SettingsPage.tsx:18
 msgid "Sunlight (high contrast)"
 msgstr "Sunlight (high contrast)"
 
-#: src/features/capture/Camera.tsx:161
+#: src/features/stones/attribute-labels.ts:11
+msgid "Table / altar"
+msgstr "Table / altar"
+
+#: src/features/stones/attribute-labels.ts:8
+msgid "Tablet"
+msgstr "Tablet"
+
+#: src/features/capture/Camera.tsx:165
 msgid "Take photo"
 msgstr "Take photo"
 
@@ -1293,6 +1458,10 @@ msgstr "Tap the map where the cemetery is."
 #: src/features/map/RowDrawer.tsx:57
 msgid "Tap where the row starts."
 msgstr "Tap where the row starts."
+
+#: src/features/stones/attribute-labels.ts:18
+msgid "Temporary marker"
+msgstr "Temporary marker"
 
 #: src/features/map/CustomSourceForm.tsx:25
 msgid "The address must start with https://"
@@ -1316,7 +1485,7 @@ msgstr "The browser may clear this app’s data when space runs low. Installing 
 msgid "The data on this device was saved by a newer version of StoneByStone (data version {0}; this version reads up to {1}). Nothing has been changed. Reload the page to get the latest version."
 msgstr "The data on this device was saved by a newer version of StoneByStone (data version {0}; this version reads up to {1}). Nothing has been changed. Reload the page to get the latest version."
 
-#: src/features/capture/Camera.tsx:79
+#: src/features/capture/Camera.tsx:81
 msgid "The in-app camera isn't available here. Use your phone's camera app."
 msgstr "The in-app camera isn't available here. Use your phone's camera app."
 
@@ -1352,6 +1521,10 @@ msgstr "This device can't show the map. Sections and rows still work without it.
 msgid "Tiles (XYZ)"
 msgstr "Tiles (XYZ)"
 
+#: src/features/stones/attribute-labels.ts:46
+msgid "Tilted"
+msgstr "Tilted"
+
 #: src/features/share/useBackupReminder.ts:25
 msgid "Time to back up"
 msgstr "Time to back up"
@@ -1369,13 +1542,18 @@ msgstr "Treat grid rows as cemetery rows"
 msgid "Try again"
 msgstr "Try again"
 
+#: src/features/capture/walk/QuickTray.tsx:43
 #: src/features/map/CustomSourceForm.tsx:55
 msgid "Type"
 msgstr "Type"
 
+#: src/features/stones/attribute-labels.ts:54
+msgid "Uncertain position"
+msgstr "Uncertain position"
+
 #: src/features/capture/useSavePhoto.ts:57
 #: src/features/capture/walk/RowOrderDialogs.tsx:90
-#: src/features/capture/walk/WalkCamera.tsx:89
+#: src/features/capture/walk/WalkCamera.tsx:101
 #: src/features/capture/walk/WalkPanel.tsx:56
 #: src/features/capture/walk/WalkPanel.tsx:67
 #: src/features/cemeteries/CemeteryList.tsx:60
@@ -1425,7 +1603,7 @@ msgstr "Use this position"
 msgid "Using {0} of about {1} ({pct})."
 msgstr "Using {0} of about {1} ({pct})."
 
-#: src/features/capture/Camera.tsx:72
+#: src/features/capture/Camera.tsx:74
 msgid "Using your phone's camera app."
 msgstr "Using your phone's camera app."
 
@@ -1450,6 +1628,10 @@ msgstr "Verified"
 msgid "Version"
 msgstr "Version"
 
+#: src/features/stones/attribute-labels.ts:55
+msgid "Veteran marker / flag holder"
+msgstr "Veteran marker / flag holder"
+
 #: src/features/cemeteries/CemeteryTabs.tsx:87
 msgid "View"
 msgstr "View"
@@ -1468,6 +1650,10 @@ msgstr "Walk a row"
 msgid "Warning"
 msgstr "Warning"
 
+#: src/features/stones/attribute-labels.ts:40
+msgid "Weathered"
+msgstr "Weathered"
+
 #: src/features/cemeteries/WelcomeCard.tsx:38
 msgid "Welcome! What’s your name?"
 msgstr "Welcome! What’s your name?"
@@ -1483,6 +1669,10 @@ msgstr "Where is the row?"
 #: src/features/map/CustomSourceForm.tsx:61
 msgid "WMS"
 msgstr "WMS"
+
+#: src/features/stones/attribute-labels.ts:32
+msgid "Wood"
+msgstr "Wood"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:107
 msgid "You are here"
@@ -1503,3 +1693,7 @@ msgstr "Your data could not be opened"
 #: src/features/settings/ContributorForm.tsx:34
 msgid "Your name"
 msgstr "Your name"
+
+#: src/features/stones/attribute-labels.ts:30
+msgid "Zinc (white bronze)"
+msgstr "Zinc (white bronze)"

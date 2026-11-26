@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import type { PhotoRole } from '../../../domain';
 import { Button } from '../../../ui/Button';
 import { Camera } from '../Camera';
+import { QuickTray } from './QuickTray';
 import type { WalkCapture } from './useWalkCapture';
 
 export interface WalkCameraProps {
@@ -28,6 +29,7 @@ export function WalkCamera({
   const { t } = useLingui();
   const [role, setRole] = useState<PhotoRole>('front');
   const [thumb, setThumb] = useState<string>();
+  const [lastSurname, setLastSurname] = useState<string>();
   const { current, pending, lastThumb, lastSaved, shoot, nextStone, undoLast, gaps, setGaps } =
     capture;
 
@@ -64,6 +66,16 @@ export function WalkCamera({
       role={role}
       onRoleChange={setRole}
       lastPhoto={thumb}
+      tray={
+        current ? (
+          <QuickTray
+            key={current}
+            monumentId={current}
+            lastSurname={lastSurname}
+            onSurname={setLastSurname}
+          />
+        ) : undefined
+      }
       onCapture={(blob, r) => {
         shoot(blob, r);
         if (!adding && r === 'front') setRole('back');
