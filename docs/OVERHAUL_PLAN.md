@@ -288,6 +288,18 @@ else start → the fix farthest from it. Until the row end, the start fix is a d
 re-spacing) is one undo step. Inside the camera, feedback and Undo show in the camera itself,
 because a toast would cover the shutter on a phone.
 
+Row controls (M3, `data/row-controls.ts` and `captureStone` options), each one undo step that
+re-spaces the row. **Gap** adds an empty slot before the next stone (pending in the walk until
+that stone is shot, and removable until then; a trailing gap with no stone after it is
+dropped). **Skip** makes a stone without a photo in the next slot, flagged `needs-revisit`.
+**Insert** puts new stones after a chosen one, shifting later stones up unless the slot is a
+gap, and keeps inserting after each new stone until the camera closes. **Reverse direction**
+numbers the row from the other end (index i → last − i, gaps mirrored) and reverses the row
+line too (a row without a drawn line gets its current line, reversed), so nothing moves on
+the map. For the rest of that walk, new stones go before stone 1 and "Row end here" moves the
+line's start. **Reorder** moves a stone one slot earlier or later (swapping with a neighbour or
+sliding into a gap). It uses buttons, not drag, so it works with gloves and a keyboard.
+
 ### 7.3 GPS averaging
 
 "Hold still" mode collects fixes for ~10 s (configurable), discards outliers, and stores the

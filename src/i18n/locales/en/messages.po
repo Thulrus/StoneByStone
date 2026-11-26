@@ -11,6 +11,14 @@ msgstr ""
 msgid "(deleted)"
 msgstr "(deleted)"
 
+#: src/features/capture/walk/WalkPanel.tsx:90
+msgid "(new stones go before stone 1)"
+msgstr "(new stones go before stone 1)"
+
+#: src/features/capture/walk/RowOrderDialogs.tsx:106
+msgid "(skipped)"
+msgstr "(skipped)"
+
 #. placeholder {0}: status.unbacked
 #: src/features/share/BackupBanner.tsx:45
 msgid "{0, plural, one {# not backed up} other {# not backed up}}"
@@ -31,6 +39,11 @@ msgstr "{0, plural, one {# stone is not backed up} other {# stones are not backe
 msgid "{0, plural, one {# stone} other {# stones}}"
 msgstr "{0, plural, one {# stone} other {# stones}}"
 
+#. placeholder {0}: capture.gaps
+#: src/features/capture/walk/WalkPanel.tsx:100
+msgid "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
+msgstr "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
+
 #. placeholder {0}: Math.round(c.distanceM)
 #: src/features/cemeteries/create/PlaceFinder.tsx:108
 msgid "{0} m away"
@@ -47,6 +60,10 @@ msgstr "{0} m. Tap to add a bend, or drag a point to adjust."
 #: src/features/cemeteries/ImportButton.tsx:29
 msgid "{0} new, {1} updated, {2} unchanged."
 msgstr "{0} new, {1} updated, {2} unchanged."
+
+#: src/features/capture/walk/WalkCamera.tsx:95
+msgid "{gaps, plural, one {# empty plot before it} other {# empty plots before it}}"
+msgstr "{gaps, plural, one {# empty plot before it} other {# empty plots before it}}"
 
 #: src/features/share/useBackup.ts:35
 msgid "{n} file(s) downloaded."
@@ -94,7 +111,7 @@ msgstr "{role} photo"
 msgid "{stones, plural, one {# stone} other {# stones}}"
 msgstr "{stones, plural, one {# stone} other {# stones}}"
 
-#: src/features/capture/walk/WalkPanel.tsx:62
+#: src/features/capture/walk/WalkPanel.tsx:85
 msgid "<0>Walking row {rowName}</0> · {count} stones"
 msgstr "<0>Walking row {rowName}</0> · {count} stones"
 
@@ -163,6 +180,11 @@ msgstr "Adjust grid on map"
 msgid "Adjust pins for {name}"
 msgstr "Adjust pins for {name}"
 
+#. placeholder {0}: numberOf(m)
+#: src/features/capture/walk/RowOrderDialogs.tsx:59
+msgid "After stone {0}"
+msgstr "After stone {0}"
+
 #: src/features/settings/AboutPanel.tsx:30
 msgid "An update was found. Tap Reload when the banner appears."
 msgstr "An update was found. Tap Reload when the banner appears."
@@ -212,6 +234,10 @@ msgstr "Backup failed"
 #: src/features/share/useBackup.ts:29
 msgid "Backup saved"
 msgstr "Backup saved"
+
+#: src/features/capture/walk/RowOrderDialogs.tsx:52
+msgid "Before stone 1"
+msgstr "Before stone 1"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:110
 msgid "boundary available"
@@ -304,7 +330,7 @@ msgstr "Could not import {0}"
 msgid "Couldn't check for updates. Are you online?"
 msgstr "Couldn't check for updates. Are you online?"
 
-#: src/features/capture/walk/WalkPanel.tsx:46
+#: src/features/capture/walk/WalkPanel.tsx:49
 #: src/features/map/LocateButton.tsx:19
 msgid "Couldn't get your location"
 msgstr "Couldn't get your location"
@@ -329,9 +355,13 @@ msgstr "Couldn't read that image"
 msgid "Couldn't read that photo"
 msgstr "Couldn't read that photo"
 
-#: src/features/capture/walk/useWalkCapture.ts:85
+#: src/features/capture/walk/useWalkCapture.ts:126
 msgid "Couldn't save that photo"
 msgstr "Couldn't save that photo"
+
+#: src/features/capture/walk/useWalkCapture.ts:146
+msgid "Couldn't save that stone"
+msgstr "Couldn't save that stone"
 
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:130
 msgid "Create"
@@ -448,7 +478,7 @@ msgstr "Edit line"
 msgid "Email or phone, included when you share a file."
 msgstr "Email or phone, included when you share a file."
 
-#: src/features/capture/walk/WalkPanel.tsx:80
+#: src/features/capture/walk/WalkPanel.tsx:129
 msgid "End walk"
 msgstr "End walk"
 
@@ -497,6 +527,8 @@ msgstr "from OpenStreetMap."
 msgid "Front"
 msgstr "Front"
 
+#: src/features/capture/walk/WalkCamera.tsx:103
+#: src/features/capture/walk/WalkPanel.tsx:102
 #: src/features/schematic/StoneButton.tsx:42
 msgid "Gap"
 msgstr "Gap"
@@ -560,6 +592,14 @@ msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your sur
 #: src/features/capture/Camera.tsx:107
 msgid "In-app camera"
 msgstr "In-app camera"
+
+#: src/features/capture/walk/RowOrderDialogs.tsx:45
+msgid "Insert a stone"
+msgstr "Insert a stone"
+
+#: src/features/capture/walk/WalkPanel.tsx:109
+msgid "Insert…"
+msgstr "Insert…"
 
 #: src/app/InstallPrompt.tsx:47
 msgid "Install"
@@ -677,6 +717,14 @@ msgstr "Move section {0} down"
 msgid "Move section {0} up"
 msgstr "Move section {0} up"
 
+#: src/features/capture/walk/RowOrderDialogs.tsx:112
+msgid "Move stone {n} earlier"
+msgstr "Move stone {n} earlier"
+
+#: src/features/capture/walk/RowOrderDialogs.tsx:120
+msgid "Move stone {n} later"
+msgstr "Move stone {n} later"
+
 #: src/features/map/LocateButton.tsx:31
 msgid "My location"
 msgstr "My location"
@@ -705,8 +753,8 @@ msgstr "New row"
 msgid "New section"
 msgstr "New section"
 
-#: src/features/capture/walk/WalkCamera.tsx:92
-#: src/features/capture/walk/WalkPanel.tsx:67
+#: src/features/capture/walk/WalkCamera.tsx:119
+#: src/features/capture/walk/WalkPanel.tsx:95
 msgid "Next stone"
 msgstr "Next stone"
 
@@ -822,7 +870,7 @@ msgid "Phone camera"
 msgstr "Phone camera"
 
 #: src/features/capture/useSavePhoto.ts:56
-#: src/features/capture/walk/WalkCamera.tsx:77
+#: src/features/capture/walk/WalkCamera.tsx:80
 msgid "Photo added"
 msgstr "Photo added"
 
@@ -913,6 +961,10 @@ msgstr "Reload"
 msgid "Remove"
 msgstr "Remove"
 
+#: src/features/capture/walk/WalkCamera.tsx:97
+msgid "Remove gap"
+msgstr "Remove gap"
+
 #: src/features/map/RowDrawer.tsx:72
 msgid "Remove line"
 msgstr "Remove line"
@@ -933,6 +985,18 @@ msgstr "Rename row"
 #: src/features/cemeteries/setup/SectionBlock.tsx:98
 msgid "Rename section"
 msgstr "Rename section"
+
+#: src/features/capture/walk/RowOrderDialogs.tsx:86
+msgid "Reorder stones"
+msgstr "Reorder stones"
+
+#: src/features/capture/walk/WalkPanel.tsx:115
+msgid "Reorder…"
+msgstr "Reorder…"
+
+#: src/features/capture/walk/WalkPanel.tsx:112
+msgid "Reverse direction"
+msgstr "Reverse direction"
 
 #: src/features/capture/walk/WalkStart.tsx:86
 msgid "Row"
@@ -955,11 +1019,11 @@ msgstr "Row {name}, stone {n}"
 msgid "Row {rowName}"
 msgstr "Row {rowName}"
 
-#: src/features/capture/walk/WalkCamera.tsx:46
+#: src/features/capture/walk/WalkCamera.tsx:47
 msgid "Row {rowName} · stone {currentNumber}"
 msgstr "Row {rowName} · stone {currentNumber}"
 
-#: src/features/capture/walk/WalkCamera.tsx:47
+#: src/features/capture/walk/WalkCamera.tsx:48
 msgid "Row {rowName} · stone {nextNumber}"
 msgstr "Row {rowName} · stone {nextNumber}"
 
@@ -968,11 +1032,15 @@ msgstr "Row {rowName} · stone {nextNumber}"
 msgid "Row {rowName}, stone {0}"
 msgstr "Row {rowName}, stone {0}"
 
-#: src/features/capture/walk/WalkPanel.tsx:72
+#: src/features/capture/walk/WalkPanel.tsx:97
+msgid "Row controls"
+msgstr "Row controls"
+
+#: src/features/capture/walk/WalkPanel.tsx:121
 msgid "Row end here"
 msgstr "Row end here"
 
-#: src/features/capture/walk/WalkPanel.tsx:52
+#: src/features/capture/walk/WalkPanel.tsx:55
 msgid "Row end set; stones re-spaced"
 msgstr "Row end set; stones re-spaced"
 
@@ -984,12 +1052,16 @@ msgstr "Row label"
 msgid "Row name"
 msgstr "Row name"
 
-#: src/features/capture/walk/WalkPanel.tsx:76
+#: src/features/capture/walk/WalkPanel.tsx:65
+msgid "Row reversed: stone 1 is now at the other end"
+msgstr "Row reversed: stone 1 is now at the other end"
+
+#: src/features/capture/walk/WalkPanel.tsx:125
 #: src/features/capture/walk/WalkStart.tsx:80
 msgid "Row start here"
 msgstr "Row start here"
 
-#: src/features/capture/walk/WalkPanel.tsx:49
+#: src/features/capture/walk/WalkPanel.tsx:52
 msgid "Row start set"
 msgstr "Row start set"
 
@@ -1041,7 +1113,7 @@ msgstr "Saved for offline: {0} tiles, {1}, on {2}."
 msgid "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
 msgstr "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
 
-#: src/features/capture/walk/WalkCamera.tsx:58
+#: src/features/capture/walk/WalkCamera.tsx:59
 msgid "Saving…"
 msgstr "Saving…"
 
@@ -1082,6 +1154,11 @@ msgstr "Setup"
 msgid "Shown on the map. Check the provider's terms."
 msgstr "Shown on the map. Check the provider's terms."
 
+#: src/features/capture/walk/WalkCamera.tsx:108
+#: src/features/capture/walk/WalkPanel.tsx:106
+msgid "Skip"
+msgstr "Skip"
+
 #: src/app/Layout.tsx:62
 msgid "Skip to content"
 msgstr "Skip to content"
@@ -1109,13 +1186,26 @@ msgid "Stone {0} not in a row"
 msgstr "Stone {0} not in a row"
 
 #. placeholder {0}: lastSaved.stoneNumber
-#: src/features/capture/walk/WalkCamera.tsx:75
+#: src/features/capture/walk/WalkCamera.tsx:76
 msgid "Stone {0} saved"
 msgstr "Stone {0} saved"
+
+#. placeholder {0}: lastSaved.stoneNumber
+#: src/features/capture/walk/WalkCamera.tsx:78
+msgid "Stone {0} skipped"
+msgstr "Stone {0} skipped"
+
+#: src/features/capture/walk/RowOrderDialogs.tsx:103
+msgid "Stone {n}"
+msgstr "Stone {n}"
 
 #: src/features/overlays/OverlayLayers.tsx:65
 msgid "Stone added"
 msgstr "Stone added"
+
+#: src/features/capture/walk/RowOrderDialogs.tsx:95
+msgid "Stones in order"
+msgstr "Stones in order"
 
 #: src/features/settings/StoragePanel.tsx:38
 msgid "Storage"
@@ -1228,8 +1318,10 @@ msgid "Type"
 msgstr "Type"
 
 #: src/features/capture/useSavePhoto.ts:57
-#: src/features/capture/walk/WalkCamera.tsx:80
-#: src/features/capture/walk/WalkPanel.tsx:53
+#: src/features/capture/walk/RowOrderDialogs.tsx:90
+#: src/features/capture/walk/WalkCamera.tsx:89
+#: src/features/capture/walk/WalkPanel.tsx:56
+#: src/features/capture/walk/WalkPanel.tsx:67
 #: src/features/cemeteries/CemeteryList.tsx:60
 #: src/features/cemeteries/ImportButton.tsx:30
 #: src/features/cemeteries/setup/RowItem.tsx:34
@@ -1301,7 +1393,7 @@ msgstr "Version"
 msgid "View"
 msgstr "View"
 
-#: src/features/capture/walk/WalkPanel.tsx:60
+#: src/features/capture/walk/WalkPanel.tsx:83
 #: src/features/capture/walk/WalkStart.tsx:77
 #: src/features/cemeteries/CemeteryTabs.tsx:94
 msgid "Walk a row"

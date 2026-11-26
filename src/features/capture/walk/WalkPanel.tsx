@@ -1,12 +1,14 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { useStore } from '../../../app/store-context';
+import { reverseRow } from '../../../data/row-controls';
 import { endRowHere, getRowStart, rowStones, setRowStart } from '../../../data/walk';
 import type { ID, Row } from '../../../domain';
 import { Button } from '../../../ui/Button';
 import { toast } from '../../../ui/toast-store';
 import { quickFix } from '../gps';
+import { InsertDialog, ReorderDialog } from './RowOrderDialogs';
 import { useWalkCapture } from './useWalkCapture';
 import { WalkCamera } from './WalkCamera';
 
@@ -24,6 +26,7 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
   const store = useStore();
   const [camera, setCamera] = useState(false);
   const [locating, setLocating] = useState(false);
+  const [dialog, setDialog] = useState<'insert' | 'reorder'>();
   const capture = useWalkCapture(row, true);
   const info = useLiveQuery(async () => {
     const stones = await rowStones(store, row);
@@ -47,7 +50,7 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
     if (action === 'start') {
       await setRowStart(store, row.id, fix);
       toast({ title: t`Row start set` });
-    } else if (await endRowHere(store, row.id, fix)) {
+    } else if (await endRowHere(store, row.id, fix, { atStart: capture.reversed })) {
       toast({
         title: t`Row end set; stones re-spaced`,
         action: { label: t`Undo`, onAction: () => void store.undo() },
@@ -55,17 +58,63 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
     }
   };
 
+  const reverse = async () => {
+    if (!(await reverseRow(store, row.id))) return;
+    capture.setReversed(!capture.reversed);
+    toast({
+      title: t`Row reversed: stone 1 is now at the other end`,
+      action: {
+        label: t`Undo`,
+        onAction: () => {
+          void store.undo();
+          capture.setReversed(capture.reversed);
+        },
+      },
+    });
+  };
+
   const count = info?.count ?? 0;
+  const nextNumber = capture.reversed
+    ? 1
+    : capture.insertAt !== undefined
+      ? capture.insertAt + 1
+      : (info?.next ?? 0) + capture.gaps + 1;
   return (
     <section aria-label={t`Walk a row`} className="flex flex-col gap-3 bg-surface p-3 sbs-border">
       <p className="text-lg">
         <Trans>
           <span className="font-semibold">Walking row {rowName}</span> · {count} stones
         </Trans>
+        {capture.reversed ? (
+          <span className="ms-2 text-base text-fg-muted">
+            <Trans>(new stones go before stone 1)</Trans>
+          </span>
+        ) : null}
       </p>
       <Button size="lg" onClick={() => setCamera(true)}>
         <Trans>Next stone</Trans>
       </Button>
+      <div className="flex flex-wrap gap-2" role="group" aria-label={t`Row controls`}>
+        <Button variant="secondary" onClick={() => capture.setGaps(capture.gaps + 1)}>
+          {capture.gaps > 0 ? (
+            <Plural value={capture.gaps} one="Gap (# before next)" other="Gap (# before next)" />
+          ) : (
+            <Trans>Gap</Trans>
+          )}
+        </Button>
+        <Button variant="secondary" onClick={capture.skip}>
+          <Trans>Skip</Trans>
+        </Button>
+        <Button variant="secondary" disabled={count === 0} onClick={() => setDialog('insert')}>
+          <Trans>Insert…</Trans>
+        </Button>
+        <Button variant="secondary" disabled={count === 0} onClick={() => void reverse()}>
+          <Trans>Reverse direction</Trans>
+        </Button>
+        <Button variant="secondary" disabled={count < 2} onClick={() => setDialog('reorder')}>
+          <Trans>Reorder…</Trans>
+        </Button>
+      </div>
       <div className="flex flex-wrap gap-2">
         {hasStart ? (
           <Button variant="secondary" disabled={locating} onClick={() => void atHere('end')}>
@@ -80,14 +129,31 @@ export function WalkPanel({ row, rowName, onEnd, onCaptured }: WalkPanelProps) {
           <Trans>End walk</Trans>
         </Button>
       </div>
+      <InsertDialog
+        row={row}
+        open={dialog === 'insert'}
+        onOpenChange={(o) => setDialog(o ? 'insert' : undefined)}
+        onPick={(at) => {
+          setDialog(undefined);
+          capture.setGaps(0);
+          capture.setInsertAt(at);
+          setCamera(true);
+        }}
+      />
+      <ReorderDialog
+        row={row}
+        open={dialog === 'reorder'}
+        onOpenChange={(o) => setDialog(o ? 'reorder' : undefined)}
+      />
       <WalkCamera
         open={camera}
         onClose={() => {
           setCamera(false);
           capture.nextStone();
+          capture.setInsertAt(undefined);
         }}
         rowName={rowName}
-        nextNumber={(info?.next ?? 0) + 1}
+        nextNumber={nextNumber}
         currentNumber={currentIndex === undefined ? undefined : currentIndex + 1}
         capture={capture}
       />

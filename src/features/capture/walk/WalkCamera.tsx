@@ -1,4 +1,4 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useState } from 'react';
 import type { PhotoRole } from '../../../domain';
 import { Button } from '../../../ui/Button';
@@ -28,7 +28,8 @@ export function WalkCamera({
   const { t } = useLingui();
   const [role, setRole] = useState<PhotoRole>('front');
   const [thumb, setThumb] = useState<string>();
-  const { current, pending, lastThumb, lastSaved, shoot, nextStone, undoLast } = capture;
+  const { current, pending, lastThumb, lastSaved, shoot, nextStone, undoLast, gaps, setGaps } =
+    capture;
 
   useEffect(() => {
     if (!lastThumb) return;
@@ -73,6 +74,8 @@ export function WalkCamera({
             <span className="flex items-center gap-2" role="status">
               {lastSaved.kind === 'stone' ? (
                 <Trans>Stone {lastSaved.stoneNumber} saved</Trans>
+              ) : lastSaved.kind === 'skip' ? (
+                <Trans>Stone {lastSaved.stoneNumber} skipped</Trans>
               ) : (
                 <Trans>Photo added</Trans>
               )}
@@ -86,6 +89,24 @@ export function WalkCamera({
                 <Trans>Undo</Trans>
               </Button>
             </span>
+          ) : null}
+          {gaps > 0 ? (
+            <span className="flex items-center gap-2" role="status">
+              <Plural value={gaps} one="# empty plot before it" other="# empty plots before it" />
+              <Button variant="secondary" onClick={() => setGaps(gaps - 1)}>
+                <Trans>Remove gap</Trans>
+              </Button>
+            </span>
+          ) : null}
+          {!adding && capture.insertAt === undefined ? (
+            <Button variant="secondary" onClick={() => setGaps(gaps + 1)}>
+              <Trans>Gap</Trans>
+            </Button>
+          ) : null}
+          {!adding ? (
+            <Button variant="secondary" onClick={capture.skip}>
+              <Trans>Skip</Trans>
+            </Button>
           ) : null}
           {adding ? (
             <Button
