@@ -47,7 +47,7 @@ Status values: `todo` · `in-progress` · `done` · `blocked: check-in`
 | WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done             |
 | WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done             |
 | WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done             |
-| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | todo             |
+| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | in-progress      |
 | WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | todo             |
 | WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | todo             |
 | WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | todo             |
