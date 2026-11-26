@@ -28,6 +28,8 @@ export function useFillViewport(ref: RefObject<HTMLElement | null>, active = tru
     return () => {
       window.removeEventListener('resize', fit);
       ro?.disconnect();
+      // React may reuse this element for another tab's panel; don't leave it a fixed height.
+      el.style.height = '';
     };
   }, [ref, active]);
 }
