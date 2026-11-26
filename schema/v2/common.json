@@ -1,0 +1,273 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/common.json",
+  "title": "Shared definitions",
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "UUID (v7 for new records)."
+    },
+    "alias": {
+      "type": "string",
+      "minLength": 1,
+      "description": "An id merged into this record, or a legacy (v1) id."
+    },
+    "hlc": {
+      "type": "string",
+      "pattern": "^\\d{15}-\\d{5}-[0-9a-f]{16}$",
+      "description": "Hybrid logical clock: <wallMillis>-<counter>-<nodeId>."
+    },
+    "stamp": {
+      "type": "object",
+      "properties": {
+        "hlc": {
+          "$ref": "common.json#/definitions/hlc"
+        },
+        "by": {
+          "$ref": "common.json#/definitions/id"
+        }
+      },
+      "required": ["hlc", "by"],
+      "additionalProperties": false
+    },
+    "stamps": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "common.json#/definitions/stamp"
+      },
+      "description": "Top-level field name -> last write."
+    },
+    "record": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "common.json#/definitions/id"
+        },
+        "stamps": {
+          "$ref": "common.json#/definitions/stamps"
+        },
+        "deleted": {
+          "$ref": "common.json#/definitions/stamp"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "$ref": "common.json#/definitions/alias"
+          }
+        }
+      },
+      "required": ["id", "stamps"]
+    },
+    "cemeteryRecord": {
+      "allOf": [
+        {
+          "$ref": "common.json#/definitions/record"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "cemeteryId": {
+              "$ref": "common.json#/definitions/id"
+            },
+            "createdAt": {
+              "$ref": "common.json#/definitions/hlc"
+            }
+          },
+          "required": ["cemeteryId", "createdAt"]
+        }
+      ]
+    },
+    "lngLat": {
+      "type": "object",
+      "properties": {
+        "lng": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "lat": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        }
+      },
+      "required": ["lng", "lat"]
+    },
+    "position": {
+      "allOf": [
+        {
+          "$ref": "common.json#/definitions/lngLat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "accuracyM": {
+              "type": "number",
+              "minimum": 0
+            },
+            "source": {
+              "enum": [
+                "gps",
+                "gps-averaged",
+                "map",
+                "row-interpolated",
+                "relative",
+                "overlay",
+                "legacy-grid",
+                "aligned",
+                "imported"
+              ]
+            }
+          },
+          "required": ["source"]
+        }
+      ]
+    },
+    "fuzzyDate": {
+      "type": "object",
+      "properties": {
+        "original": {
+          "type": "string"
+        },
+        "y": {
+          "type": "integer"
+        },
+        "m": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "d": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 31
+        },
+        "qualifier": {
+          "enum": ["exact", "about", "before", "after", "between", "calculated", "estimated"]
+        },
+        "y2": {
+          "type": "integer"
+        },
+        "m2": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "d2": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 31
+        },
+        "calendar": {
+          "type": "string"
+        },
+        "dualYear": {
+          "type": "integer"
+        },
+        "ambiguous": {
+          "type": "boolean"
+        }
+      },
+      "required": ["original"]
+    },
+    "personName": {
+      "type": "object",
+      "properties": {
+        "asCarved": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "given": {
+          "type": "string"
+        },
+        "middle": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "birthSurname": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "script": {
+          "type": "string"
+        },
+        "romanized": {
+          "type": "string"
+        }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "Point",
+            "MultiPoint",
+            "LineString",
+            "MultiLineString",
+            "Polygon",
+            "MultiPolygon",
+            "GeometryCollection"
+          ]
+        },
+        "coordinates": {
+          "type": "array"
+        },
+        "geometries": {
+          "type": "array"
+        }
+      },
+      "required": ["type"],
+      "description": "GeoJSON geometry (RFC 7946), WGS 84."
+    },
+    "polygon": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "Polygon"
+        },
+        "coordinates": {
+          "type": "array"
+        }
+      },
+      "required": ["type", "coordinates"]
+    },
+    "lineString": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "LineString"
+        },
+        "coordinates": {
+          "type": "array"
+        }
+      },
+      "required": ["type", "coordinates"]
+    },
+    "cell": {
+      "type": "object",
+      "properties": {
+        "row": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "col": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["row", "col"],
+      "additionalProperties": false
+    }
+  }
+}

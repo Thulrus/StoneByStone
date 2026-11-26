@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/feature.json",
+  "title": "MapFeature",
+  "description": "A path, building, tree, enclosure, ...",
+  "allOf": [
+    {
+      "$ref": "common.json#/definitions/cemeteryRecord"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "path",
+            "road",
+            "building",
+            "tree",
+            "gate",
+            "fence",
+            "wall",
+            "enclosure",
+            "family-plot",
+            "water",
+            "large-monument",
+            "bench",
+            "other"
+          ]
+        },
+        "geometry": {
+          "$ref": "common.json#/definitions/geometry"
+        },
+        "legacyCells": {
+          "type": "array",
+          "items": {
+            "$ref": "common.json#/definitions/cell"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "common.json#/definitions/id"
+          }
+        },
+        "style": {
+          "type": "object",
+          "properties": {
+            "color": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": ["kind"]
+    }
+  ]
+}

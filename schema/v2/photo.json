@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/photo.json",
+  "title": "Photo",
+  "description": "Photo metadata. The image is photos/<id>.jpg in a .sbs archive.",
+  "allOf": [
+    {
+      "$ref": "common.json#/definitions/cemeteryRecord"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "monumentId": {
+          "$ref": "common.json#/definitions/id"
+        },
+        "role": {
+          "enum": ["front", "back", "detail", "context", "other"]
+        },
+        "takenAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "position": {
+          "$ref": "common.json#/definitions/position"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "phash": {
+          "type": "string"
+        }
+      },
+      "required": ["monumentId", "role", "width", "height", "bytes", "sha256"]
+    }
+  ]
+}

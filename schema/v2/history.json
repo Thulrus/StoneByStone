@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/history.json",
+  "title": "HistoryEntry",
+  "description": "Append-only change log entry.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "common.json#/definitions/id"
+    },
+    "cemeteryId": {
+      "$ref": "common.json#/definitions/id"
+    },
+    "entityId": {
+      "$ref": "common.json#/definitions/id"
+    },
+    "entityType": {
+      "type": "string"
+    },
+    "at": {
+      "$ref": "common.json#/definitions/hlc"
+    },
+    "by": {
+      "$ref": "common.json#/definitions/id"
+    },
+    "op": {
+      "enum": ["create", "update", "delete", "merge", "import"]
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "from": {},
+          "to": {}
+        }
+      }
+    },
+    "group": {
+      "$ref": "common.json#/definitions/id"
+    }
+  },
+  "required": ["id", "cemeteryId", "entityId", "entityType", "at", "by", "op"]
+}

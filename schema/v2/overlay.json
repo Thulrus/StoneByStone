@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/overlay.json",
+  "title": "Overlay",
+  "description": "A plat map, drone image, or the v1 legacy grid.",
+  "allOf": [
+    {
+      "$ref": "common.json#/definitions/cemeteryRecord"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": ["plat", "drone", "legacy-grid", "other"]
+        },
+        "name": {
+          "type": "string"
+        },
+        "imageId": {
+          "$ref": "common.json#/definitions/id"
+        },
+        "grid": {
+          "type": "object",
+          "properties": {
+            "rows": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "cols": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "validCells": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^\\d+,\\d+$"
+              }
+            }
+          },
+          "required": ["rows", "cols"]
+        },
+        "controlPoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "lng": {
+                "type": "number"
+              },
+              "lat": {
+                "type": "number"
+              }
+            },
+            "required": ["x", "y", "lng", "lat"]
+          }
+        },
+        "transform": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 6,
+          "maxItems": 6
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": ["kind", "name", "controlPoints", "opacity"]
+    }
+  ]
+}

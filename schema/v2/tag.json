@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/tag.json",
+  "title": "TagDef",
+  "description": "A user-defined tag.",
+  "allOf": [
+    {
+      "$ref": "common.json#/definitions/cemeteryRecord"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "color": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": ["name"]
+    }
+  ]
+}

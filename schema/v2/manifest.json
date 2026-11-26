@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/manifest.json",
+  "title": "Manifest",
+  "description": "manifest.json: what the archive holds and who made it.",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "stonebystone"
+    },
+    "formatVersion": {
+      "const": 2
+    },
+    "appVersion": {
+      "type": "string"
+    },
+    "kind": {
+      "enum": ["full", "packet", "publish"]
+    },
+    "cemeteryId": {
+      "$ref": "common.json#/definitions/id"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "createdBy": {
+      "$ref": "contributor.json"
+    },
+    "since": {
+      "$ref": "common.json#/definitions/hlc"
+    },
+    "counts": {
+      "type": "object",
+      "properties": {
+        "sections": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "monuments": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "persons": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "photos": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "features": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "overlays": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tags": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "contributors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "history": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "photoQuality": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Long edge in px of included photos; 0 = none included."
+    }
+  },
+  "required": [
+    "format",
+    "formatVersion",
+    "appVersion",
+    "kind",
+    "cemeteryId",
+    "createdAt",
+    "createdBy",
+    "counts"
+  ]
+}

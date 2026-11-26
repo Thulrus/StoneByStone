@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/cemetery.json",
+  "title": "Cemetery",
+  "description": "The cemetery record (cemetery.json).",
+  "allOf": [
+    {
+      "$ref": "common.json#/definitions/record"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "altNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "location": {
+          "$ref": "common.json#/definitions/lngLat"
+        },
+        "boundary": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": ["Polygon", "MultiPolygon"]
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          },
+          "required": ["type", "coordinates"]
+        },
+        "country": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "adminAreas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "established": {
+          "$ref": "common.json#/definitions/fuzzyDate"
+        },
+        "status": {
+          "enum": ["active", "inactive", "abandoned", "unknown"]
+        },
+        "denomination": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "accessNotes": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string",
+          "description": "SPDX id, e.g. CC-BY-4.0."
+        },
+        "contributors": {
+          "type": "array",
+          "items": {
+            "$ref": "common.json#/definitions/id"
+          }
+        },
+        "externalIds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "imagery": {
+              "type": "string"
+            },
+            "units": {
+              "enum": ["metric", "imperial"]
+            },
+            "dateLocale": {
+              "type": "string"
+            },
+            "transcriptionConvention": {
+              "type": "string"
+            },
+            "photoMaxPx": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": ["units", "dateLocale", "transcriptionConvention", "photoMaxPx"]
+        },
+        "legacy": {
+          "type": "object",
+          "properties": {
+            "v1Id": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": ["name", "contributors", "settings"]
+    }
+  ]
+}

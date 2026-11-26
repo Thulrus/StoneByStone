@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/person.json",
+  "title": "Person",
+  "description": "A person named on a stone or in an index.",
+  "allOf": [
+    {
+      "$ref": "common.json#/definitions/cemeteryRecord"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "monumentId": {
+          "$ref": "common.json#/definitions/id"
+        },
+        "name": {
+          "$ref": "common.json#/definitions/personName"
+        },
+        "sex": {
+          "enum": ["f", "m", "u"]
+        },
+        "birth": {
+          "$ref": "common.json#/definitions/fuzzyDate"
+        },
+        "death": {
+          "$ref": "common.json#/definitions/fuzzyDate"
+        },
+        "burial": {
+          "$ref": "common.json#/definitions/fuzzyDate"
+        },
+        "age": {
+          "type": "object",
+          "properties": {
+            "y": {
+              "type": "number"
+            },
+            "m": {
+              "type": "number"
+            },
+            "d": {
+              "type": "number"
+            },
+            "original": {
+              "type": "string"
+            }
+          },
+          "required": ["original"]
+        },
+        "relationshipText": {
+          "type": "string"
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["spouse", "parent", "child", "sibling", "other"]
+              },
+              "personId": {
+                "$ref": "common.json#/definitions/id"
+              }
+            },
+            "required": ["type", "personId"]
+          }
+        },
+        "military": {
+          "type": "object",
+          "properties": {
+            "conflict": {
+              "type": "string"
+            },
+            "rank": {
+              "type": "string"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "possiblyLiving": {
+          "type": "boolean"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": ["stone", "imported-index", "record", "family", "ai-draft", "other"]
+              },
+              "ref": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": ["kind"]
+          }
+        },
+        "matchStatus": {
+          "enum": ["unmatched", "matched", "no-stone-found"]
+        },
+        "externalIds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": ["name"]
+    }
+  ]
+}

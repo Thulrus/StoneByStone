@@ -12,7 +12,7 @@ export async function freshStore(start = Date.UTC(2026, 0, 1)) {
   return { db, store, name, time, advance: (ms: number) => (time.now += ms) };
 }
 
-export async function dump(db: StoneDB, tables = ENTITY_TABLES) {
+export async function dump(db: StoneDB, tables: readonly string[] = ENTITY_TABLES) {
   const out: Record<string, unknown[]> = {};
   for (const t of tables) out[t] = await db.table(t).toArray();
   return out;

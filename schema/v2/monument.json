@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/monument.json",
+  "title": "Monument",
+  "description": "A stone or marker (or an unmarked grave).",
+  "allOf": [
+    {
+      "$ref": "common.json#/definitions/cemeteryRecord"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "position": {
+          "$ref": "common.json#/definitions/position"
+        },
+        "facingDeg": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 360
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "sectionId": {
+              "$ref": "common.json#/definitions/id"
+            },
+            "rowId": {
+              "$ref": "common.json#/definitions/id"
+            },
+            "rowIndex": {
+              "type": "number"
+            },
+            "plotLabel": {
+              "type": "string"
+            }
+          }
+        },
+        "legacyGrid": {
+          "$ref": "common.json#/definitions/cell"
+        },
+        "material": {
+          "type": "string"
+        },
+        "condition": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "symbols": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dimensionsCm": {
+          "type": "object",
+          "properties": {
+            "h": {
+              "type": "number"
+            },
+            "w": {
+              "type": "number"
+            },
+            "d": {
+              "type": "number"
+            }
+          }
+        },
+        "carver": {
+          "type": "string"
+        },
+        "inscription": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            },
+            "script": {
+              "type": "string"
+            },
+            "convention": {
+              "type": "string"
+            }
+          },
+          "required": ["text"]
+        },
+        "epitaph": {
+          "type": "string"
+        },
+        "verified": {
+          "$ref": "common.json#/definitions/stamp"
+        },
+        "status": {
+          "enum": ["located", "photographed", "transcribed", "verified"],
+          "description": "Derived; re-computed on import."
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relatedMonuments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "common.json#/definitions/id"
+              },
+              "relation": {
+                "enum": ["footstone-of", "part-of", "replaces"]
+              }
+            },
+            "required": ["id", "relation"]
+          }
+        },
+        "featureIds": {
+          "type": "array",
+          "items": {
+            "$ref": "common.json#/definitions/id"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "common.json#/definitions/id"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": ["kind", "status"]
+    }
+  ]
+}

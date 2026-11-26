@@ -21,7 +21,9 @@ export type TableName =
   | 'contributors'
   | 'photoBlobs'
   | 'photoThumbs'
-  | 'overlayBlobs';
+  | 'overlayBlobs'
+  | 'settings'
+  | 'history';
 
 export interface Snapshot {
   table: TableName;

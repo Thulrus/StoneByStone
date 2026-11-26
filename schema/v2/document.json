@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/document.json",
+  "title": "StoneByStone .sbs.json document",
+  "description": "The whole archive as one JSON document, without binaries.",
+  "type": "object",
+  "properties": {
+    "manifest": {
+      "$ref": "manifest.json"
+    },
+    "cemetery": {
+      "$ref": "cemetery.json"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "section.json"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "row.json"
+          }
+        },
+        "monuments": {
+          "type": "array",
+          "items": {
+            "$ref": "monument.json"
+          }
+        },
+        "persons": {
+          "type": "array",
+          "items": {
+            "$ref": "person.json"
+          }
+        },
+        "photos": {
+          "type": "array",
+          "items": {
+            "$ref": "photo.json"
+          }
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "feature.json"
+          }
+        },
+        "overlays": {
+          "type": "array",
+          "items": {
+            "$ref": "overlay.json"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "tag.json"
+          }
+        },
+        "contributors": {
+          "type": "array",
+          "items": {
+            "$ref": "contributor.json"
+          }
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "$ref": "history.json"
+          }
+        }
+      },
+      "required": [
+        "sections",
+        "rows",
+        "monuments",
+        "persons",
+        "photos",
+        "features",
+        "overlays",
+        "tags",
+        "contributors",
+        "history"
+      ]
+    }
+  },
+  "required": ["manifest", "cemetery", "data"]
+}

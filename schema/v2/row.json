@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thulrus.github.io/StoneByStone/schema/v2/row.json",
+  "title": "Row",
+  "description": "A row of monuments.",
+  "allOf": [
+    {
+      "$ref": "common.json#/definitions/cemeteryRecord"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "sectionId": {
+          "$ref": "common.json#/definitions/id"
+        },
+        "label": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number"
+        },
+        "line": {
+          "$ref": "common.json#/definitions/lineString"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": ["label"]
+    }
+  ]
+}
