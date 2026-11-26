@@ -1,9 +1,9 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { cemeteryPath } from '../../app/paths';
 import { useStore } from '../../app/store-context';
-import { saveInscription } from '../../data/transcribe';
+import { saveTranscription, type TranscriptionDraft } from '../../data/transcribe';
 import type { Cemetery, ID, Monument, Row } from '../../domain';
 import { Button } from '../../ui/Button';
 import { toast } from '../../ui/toast-store';
@@ -12,6 +12,7 @@ import { STATUS_LABEL } from '../stones/labels';
 import { FilterSelect } from './FilterSelect';
 import { NeighbourStrip } from './NeighbourStrip';
 import { PhotoPane } from './PhotoPane';
+import { TranscribeForm } from './TranscribeForm';
 import { buildQueue, DEFAULT_FILTER, type QueueFilter } from './queue';
 
 export interface TranscribeViewProps {
@@ -47,42 +48,40 @@ export function TranscribeView({
     initialStoneId && ids.includes(initialStoneId) ? initialStoneId : ids[0],
   );
   const current = currentId ? byId.get(currentId) : undefined;
-  const [draft, setDraft] = useState(current?.inscription?.text ?? '');
-  const saving = useRef(Promise.resolve());
-  const textArea = useRef<HTMLTextAreaElement>(null);
+  // The open stone's edits, if any; read when moving away by any route.
+  const draft = useRef<TranscriptionDraft | undefined>(undefined);
+  const saving = useRef<Promise<Record<ID, ID>>>(Promise.resolve({}));
   const pos = currentId ? ids.indexOf(currentId) : -1;
 
-  useEffect(() => {
-    textArea.current?.focus();
-  }, [currentId]);
-
-  const save = () => {
-    if (!current) return;
+  const save = (): Promise<Record<ID, ID>> => {
+    const d = draft.current;
+    if (!current || !d) return saving.current;
     const id = current.id;
-    const text = draft;
     saving.current = saving.current
-      .then(() => saveInscription(store, id, text))
+      .then(() => saveTranscription(store, id, d))
       .catch(() => {
         toast({ title: t`Couldn't save that stone`, tone: 'error' });
+        return {};
       });
+    return saving.current;
   };
 
   /** Save, then show `id` (or the end of the list). */
   const goTo = (id: ID | undefined) => {
-    save();
+    void save();
+    draft.current = undefined;
     setCurrentId(id);
-    setDraft((id && byId.get(id)?.inscription?.text) || '');
     setParams(id ? { stone: id } : {}, { replace: true });
   };
 
   const setFilter = (f: QueueFilter) => {
-    save();
+    void save();
+    draft.current = undefined;
     const next = buildQueue(stones, rows, f);
     setFilterState(f);
     setIds(next);
     const keep = currentId && next.includes(currentId) ? currentId : next[0];
     setCurrentId(keep);
-    setDraft((keep && byId.get(keep)?.inscription?.text) || '');
   };
 
   const row = rows.find((r) => r.id === current?.address?.rowId);
@@ -129,52 +128,32 @@ export function TranscribeView({
             <PhotoPane key={current.id} monumentId={current.id} />
             <NeighbourStrip stone={current} stones={stones} inQueue={queued} onPick={goTo} />
           </div>
-          <form
-            aria-label={t`Transcription`}
-            className="flex flex-col gap-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-              goTo(ids[pos + 1]);
+          <TranscribeForm
+            key={current.id}
+            stone={current}
+            canPrevious={pos > 0}
+            onDraft={(d) => (draft.current = d)}
+            onNext={() => goTo(ids[pos + 1])}
+            onPrevious={() => goTo(ids[pos - 1])}
+            onSaveNow={(d) => {
+              draft.current = d;
+              const done = save();
+              draft.current = undefined;
+              return done;
             }}
-          >
-            <div className="flex flex-col gap-1">
-              <h2 className="text-xl font-semibold">{where}</h2>
-              <p className="flex items-center gap-2 text-fg-muted">
-                <StatusIcon status={current.status} />
-                {t(STATUS_LABEL[current.status])} ·{' '}
-                <Trans>
-                  {position} of {total}
-                </Trans>
-              </p>
-            </div>
-            <label className="flex flex-col gap-1">
-              <span className="font-medium">
-                <Trans>Inscription, as carved</Trans>
-              </span>
-              <textarea
-                ref={textArea}
-                value={draft}
-                rows={8}
-                spellCheck={false}
-                onChange={(e) => setDraft(e.currentTarget.value)}
-                className="rounded-lg bg-surface p-3 font-mono text-base text-fg sbs-border"
-              />
-            </label>
-            <div className="flex flex-wrap gap-2">
-              <Button type="submit" size="lg">
-                <Trans>Save & next</Trans>
-              </Button>
-              <Button
-                type="button"
-                variant="secondary"
-                size="lg"
-                disabled={pos <= 0}
-                onClick={() => goTo(ids[pos - 1])}
-              >
-                <Trans>Previous</Trans>
-              </Button>
-            </div>
-          </form>
+            header={
+              <div className="flex flex-col gap-1">
+                <h2 className="text-xl font-semibold">{where}</h2>
+                <p className="flex items-center gap-2 text-fg-muted">
+                  <StatusIcon status={current.status} />
+                  {t(STATUS_LABEL[current.status])} ·{' '}
+                  <Trans>
+                    {position} of {total}
+                  </Trans>
+                </p>
+              </div>
+            }
+          />
         </div>
       )}
     </div>

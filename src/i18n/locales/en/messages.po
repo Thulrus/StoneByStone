@@ -135,7 +135,7 @@ msgstr "{name}: about {count} tiles, roughly {size}."
 msgid "{pct} transcribed"
 msgstr "{pct} transcribed"
 
-#: src/features/transcribe/TranscribeView.tsx:145
+#: src/features/transcribe/TranscribeView.tsx:150
 msgid "{position} of {total}"
 msgstr "{position} of {total}"
 
@@ -198,6 +198,10 @@ msgstr "Add a custom source"
 msgid "Add a plat map or drone image"
 msgstr "Add a plat map or drone image"
 
+#: src/features/transcribe/TranscribeForm.tsx:184
+msgid "Add another person"
+msgstr "Add another person"
+
 #: src/features/stones/detail/PeopleSection.tsx:70
 msgid "Add person"
 msgstr "Add person"
@@ -249,6 +253,10 @@ msgstr "Adjust pins for {name}"
 msgid "After stone {0}"
 msgstr "After stone {0}"
 
+#: src/features/transcribe/PersonFields.tsx:52
+msgid "Age"
+msgstr "Age"
+
 #: src/features/stones/StoneSheet.tsx:124
 msgid "All details"
 msgstr "All details"
@@ -295,7 +303,7 @@ msgstr "Back along the row"
 
 #. placeholder {0}: cemetery.name
 #: src/features/stones/detail/StoneDetail.tsx:52
-#: src/features/transcribe/TranscribeView.tsx:105
+#: src/features/transcribe/TranscribeView.tsx:104
 msgid "Back to {0}"
 msgstr "Back to {0}"
 
@@ -310,7 +318,7 @@ msgstr "Back to cemeteries"
 msgid "Back to its row position"
 msgstr "Back to its row position"
 
-#: src/features/transcribe/TranscribeView.tsx:123
+#: src/features/transcribe/TranscribeView.tsx:122
 msgid "Back to the first stone"
 msgstr "Back to the first stone"
 
@@ -362,6 +370,10 @@ msgstr "Bench"
 #: src/features/transcribe/viewer/FilterControls.tsx:102
 msgid "Black point"
 msgstr "Black point"
+
+#: src/features/transcribe/PersonFields.tsx:50
+msgid "Born"
+msgstr "Born"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:110
 msgid "boundary available"
@@ -539,7 +551,7 @@ msgid "Couldn't save that photo"
 msgstr "Couldn't save that photo"
 
 #: src/features/capture/walk/useWalkCapture.ts:159
-#: src/features/transcribe/TranscribeView.tsx:66
+#: src/features/transcribe/TranscribeView.tsx:63
 msgid "Couldn't save that stone"
 msgstr "Couldn't save that stone"
 
@@ -644,6 +656,10 @@ msgstr "Details"
 msgid "Diagram"
 msgstr "Diagram"
 
+#: src/features/transcribe/PersonFields.tsx:51
+msgid "Died"
+msgstr "Died"
+
 #: src/ui/Toaster.tsx:63
 msgid "Dismiss"
 msgstr "Dismiss"
@@ -733,9 +749,17 @@ msgstr "Enter a name."
 msgid "Enter a valid web address."
 msgstr "Enter a valid web address."
 
+#: src/features/transcribe/TranscribeForm.tsx:188
+msgid "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain [?]. Ctrl+I: insert [illegible]."
+msgstr "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain [?]. Ctrl+I: insert [illegible]."
+
 #: src/features/map/CustomSourceForm.tsx:27
 msgid "Enter the WMS layer name."
 msgstr "Enter the WMS layer name."
+
+#: src/features/transcribe/TranscribeForm.tsx:158
+msgid "Epitaph"
+msgstr "Epitaph"
 
 #: src/features/map/ImageryPicker.tsx:73
 msgid "Esri API key"
@@ -970,7 +994,7 @@ msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your sur
 msgid "In-app camera"
 msgstr "In-app camera"
 
-#: src/features/transcribe/TranscribeView.tsx:152
+#: src/features/transcribe/TranscribeForm.tsx:131
 msgid "Inscription, as carved"
 msgstr "Inscription, as carved"
 
@@ -1209,6 +1233,10 @@ msgstr "Name"
 msgid "Name as carved"
 msgstr "Name as carved"
 
+#: src/features/transcribe/PersonFields.tsx:48
+msgid "Name, as carved"
+msgstr "Name, as carved"
+
 #: src/features/stones/RelativePlacer.tsx:178
 msgid "NE"
 msgstr "NE"
@@ -1283,7 +1311,7 @@ msgstr "No rows planned. Add them above, or start a new row when you walk."
 msgid "No section"
 msgstr "No section"
 
-#: src/features/transcribe/TranscribeView.tsx:115
+#: src/features/transcribe/TranscribeView.tsx:114
 msgid "No stones in this list. Choose another list above."
 msgstr "No stones in this list. Choose another list above."
 
@@ -1422,6 +1450,7 @@ msgid "person"
 msgstr "person"
 
 #: src/features/stones/detail/PeopleSection.tsx:21
+#: src/features/transcribe/PersonFields.tsx:47
 msgid "Person {n}"
 msgstr "Person {n}"
 
@@ -1552,7 +1581,7 @@ msgstr "Preparing…"
 msgid "Presets"
 msgstr "Presets"
 
-#: src/features/transcribe/TranscribeView.tsx:174
+#: src/features/transcribe/TranscribeForm.tsx:181
 msgid "Previous"
 msgstr "Previous"
 
@@ -1576,6 +1605,10 @@ msgstr "Ready:"
 #: src/features/settings/ContributorForm.tsx:38
 msgid "Recorded on every stone and photo you add, so merged datasets show who did what."
 msgstr "Recorded on every stone and photo you add, so merged datasets show who did what."
+
+#: src/features/transcribe/PersonFields.tsx:53
+msgid "Relationship"
+msgstr "Relationship"
 
 #: src/app/UpdatePrompt.tsx:48
 msgid "Reload"
@@ -1673,7 +1706,7 @@ msgstr "Row {name}, stone {n}"
 
 #: src/features/stones/detail/StoneDetail.tsx:45
 #: src/features/stones/StoneSheet.tsx:64
-#: src/features/transcribe/TranscribeView.tsx:94
+#: src/features/transcribe/TranscribeView.tsx:93
 msgid "Row {rowName}"
 msgstr "Row {rowName}"
 
@@ -1696,7 +1729,7 @@ msgstr "Row {rowName}, stone {0}"
 
 #: src/features/stones/detail/StoneDetail.tsx:46
 #: src/features/stones/RelativePlacer.tsx:54
-#: src/features/transcribe/TranscribeView.tsx:95
+#: src/features/transcribe/TranscribeView.tsx:94
 msgid "Row {rowName}, stone {n}"
 msgstr "Row {rowName}, stone {n}"
 
@@ -1766,7 +1799,7 @@ msgstr "Sandstone"
 msgid "Save"
 msgstr "Save"
 
-#: src/features/transcribe/TranscribeView.tsx:165
+#: src/features/transcribe/TranscribeForm.tsx:172
 msgid "Save & next"
 msgstr "Save & next"
 
@@ -1903,7 +1936,7 @@ msgstr "stone"
 #: src/features/stones/RelativePlacer.tsx:56
 #: src/features/stones/StoneSheet.tsx:79
 #: src/features/stones/StoneSheet.tsx:169
-#: src/features/transcribe/TranscribeView.tsx:96
+#: src/features/transcribe/TranscribeView.tsx:95
 msgid "Stone"
 msgstr "Stone"
 
@@ -2041,7 +2074,7 @@ msgstr "Tap where the row starts."
 msgid "Temporary marker"
 msgstr "Temporary marker"
 
-#: src/features/transcribe/TranscribeView.tsx:120
+#: src/features/transcribe/TranscribeView.tsx:119
 msgid "That's the end of the list."
 msgstr "That's the end of the list."
 
@@ -2141,7 +2174,7 @@ msgstr "Top/bottom width"
 
 #: src/features/cemeteries/CemeteryTabs.tsx:117
 #: src/features/stones/StoneSheet.tsx:130
-#: src/features/transcribe/TranscribeView.tsx:108
+#: src/features/transcribe/TranscribeView.tsx:107
 msgid "Transcribe"
 msgstr "Transcribe"
 
@@ -2153,7 +2186,7 @@ msgstr "Transcribed"
 msgid "Transcribed, not verified"
 msgstr "Transcribed, not verified"
 
-#: src/features/transcribe/TranscribeView.tsx:133
+#: src/features/transcribe/TranscribeForm.tsx:120
 msgid "Transcription"
 msgstr "Transcription"
 
@@ -2331,6 +2364,10 @@ msgstr "Which way"
 #: src/features/transcribe/viewer/FilterControls.tsx:103
 msgid "White point"
 msgstr "White point"
+
+#: src/features/transcribe/PersonFields.tsx:53
+msgid "wife of John"
+msgstr "wife of John"
 
 #: src/features/map/CustomSourceForm.tsx:61
 msgid "WMS"

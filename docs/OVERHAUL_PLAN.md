@@ -449,6 +449,16 @@ photo. Nothing is saved to the photo. Canvas density is capped at 2×. Without W
 image with the CSS-filter subset (brightness, contrast, grey, invert, rotate). 60 fps is
 checked on a real GPU with `playwright.gpu.config.ts` (CI's software GL can't measure it).
 
+Form (M4, `TranscribeForm`, `data/transcribe.ts` `saveTranscription`): inscription, one block
+per person (name as carved, born, died, age, relationship), epitaph. **Enter** is Save & next
+in one-line fields only; in the inscription and epitaph it's a real line break (§10.5), so
+Tab out first. **Ctrl+.** puts `[?]` after the word at the caret (or the selection); in a
+date or age it adds a trailing `?`, which the parser reads as "about". **Ctrl+I** inserts
+`[illegible]`. Both edit through the browser, so its own undo works. **Ctrl+Enter** saves
+and adds a person. People get their ids up front, so saving again never duplicates them; a
+person emptied out is removed, and one typed again afterwards gets a new id (a tombstone
+always wins on merge, §21.2).
+
 ---
 
 ## 10. Historic cemetery specifics

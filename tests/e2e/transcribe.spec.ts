@@ -81,3 +81,54 @@ test('the stone sheet opens desk mode on that stone', async ({ page }, testInfo)
   await expect(page.getByLabel('Show')).toHaveValue('all');
   await expect(form.getByLabel('Inscription, as carved')).toHaveValue('Stone 3');
 });
+
+test('a whole stone transcribed without the mouse', async ({ page }, testInfo) => {
+  const file = testInfo.outputPath('kbd.sbs.json');
+  await writeFile(file, JSON.stringify(makeStonesDocument({ rows: 1, perRow: 2 })));
+  await stubTiles(page);
+  await page.goto('./');
+  await skipWelcome(page);
+  await importFile(page, file);
+  await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
+  await page.getByRole('link', { name: 'Transcribe' }).click();
+  await page.getByLabel('Show').selectOption({ label: 'No photo yet' });
+  const form = page.getByRole('form', { name: 'Transcription' });
+  await expect(form.getByRole('heading', { level: 2 })).toHaveText('Row 1, stone 1');
+
+  const k = page.keyboard;
+  const box = form.getByLabel('Inscription, as carved');
+  await expect(box).toBeFocused();
+  await k.type('IN MEMORY OF');
+  await k.press('Enter'); // a real line break in the inscription
+  await k.type('MARY ');
+  await k.press('Control+i');
+  await k.type(' BROWN');
+  await k.press('Tab');
+  await k.type('Mary Brown');
+  await k.press('Control+.');
+  await k.press('Tab');
+  await k.type('1810');
+  await k.press('Tab');
+  await k.type('Mar. 3, 1850');
+  await k.press('Control+.');
+  await k.press('Tab');
+  await k.type('40 yrs');
+  await k.press('Tab');
+  await k.type('wife of John');
+  await k.press('Control+Enter'); // save, and a second person
+  const p2 = form.getByRole('group', { name: 'Person 2' });
+  await expect(p2.getByLabel('Name, as carved')).toBeFocused();
+  await k.type('John Brown');
+  await k.press('Enter'); // save & next
+  await expect(form.getByRole('heading', { level: 2 })).toHaveText('Row 1, stone 2');
+
+  await form.getByRole('button', { name: 'Previous' }).click();
+  await expect(box).toHaveValue('IN MEMORY OF\nMARY [illegible] BROWN');
+  const p1 = form.getByRole('group', { name: 'Person 1' });
+  await expect(p1.getByLabel('Name, as carved')).toHaveValue('Mary Brown[?]');
+  await expect(p1.getByLabel('Died')).toHaveValue('Mar. 3, 1850?');
+  await expect(p1.getByLabel('Age')).toHaveValue('40 yrs');
+  await expect(p1.getByLabel('Relationship')).toHaveValue('wife of John');
+  await expect(p2.getByLabel('Name, as carved')).toHaveValue('John Brown');
+  await expect(form.getByRole('group', { name: 'Person 3' })).toHaveCount(0);
+});
