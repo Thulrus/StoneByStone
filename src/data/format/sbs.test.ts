@@ -124,6 +124,10 @@ describe('.sbs', () => {
     expect(names.filter((n) => n.startsWith('overlays/'))).toHaveLength(1);
     expect(names.filter((n) => n.startsWith('data/'))).toHaveLength(10);
     expect(names).toContain('schema/monument.json');
+    // The README says which transcription convention the inscriptions use.
+    expect(new TextDecoder().decode(files['README.txt'])).toMatch(
+      /Transcription convention: as-carved \(\[illegible\] illegible/,
+    );
     const manifest = JSON.parse(new TextDecoder().decode(files['manifest.json']));
     expect(manifest).toMatchObject({
       format: 'stonebystone',

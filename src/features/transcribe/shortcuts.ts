@@ -12,11 +12,15 @@ export interface Edit {
 export const ILLEGIBLE = '[illegible]';
 export const UNCERTAIN = '[?]';
 
-/** Ctrl+I: `[illegible]` in place of the selection. */
-export const illegible = (start: number, end: number): Edit => ({ start, end, text: ILLEGIBLE });
+/** Ctrl+I: `[illegible]` (or the convention's mark) in place of the selection. */
+export const illegible = (start: number, end: number, mark = ILLEGIBLE): Edit => ({
+  start,
+  end,
+  text: mark,
+});
 
 /**
- * Ctrl+.: in text, `[?]` after the word at (or just before) the caret, or after the
+ * Ctrl+.: in text, `[?]` (or the convention's mark) after the word at (or just before) the caret, or after the
  * selection; in a date or age, a trailing `?` (which the date parser reads as "about").
  */
 export function uncertain(
@@ -24,6 +28,7 @@ export function uncertain(
   start: number,
   end: number,
   kind: 'text' | 'date',
+  mark = UNCERTAIN,
 ): Edit | undefined {
   if (kind === 'date') {
     const trimmed = value.replace(/\s+$/u, '');
@@ -32,9 +37,9 @@ export function uncertain(
   }
   let at = Math.max(start, end);
   if (start === end) while (at < value.length && !/\s/u.test(value[at] ?? '')) at++;
-  const marked = (from: number) => value.slice(from, from + UNCERTAIN.length) === UNCERTAIN;
-  if (marked(at) || marked(at - UNCERTAIN.length)) return undefined;
-  return { start: at, end: at, text: UNCERTAIN };
+  const marked = (from: number) => value.slice(from, from + mark.length) === mark;
+  if (marked(at) || marked(at - mark.length)) return undefined;
+  return { start: at, end: at, text: mark };
 }
 
 /** Apply an edit to an input or textarea as typing would (undoable, fires `input`). */

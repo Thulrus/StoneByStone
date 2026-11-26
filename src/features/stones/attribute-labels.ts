@@ -6,6 +6,7 @@ import type {
   MapFeatureKind,
   MATERIALS,
   MONUMENT_KINDS,
+  SYMBOLS,
 } from '../../domain';
 
 export const KIND_LABEL: Record<(typeof MONUMENT_KINDS)[number], MessageDescriptor> = {
@@ -75,4 +76,28 @@ export const FEATURE_LABEL: Record<MapFeatureKind, MessageDescriptor> = {
   'large-monument': msg`Large monument`,
   bench: msg`Bench`,
   other: msg`Landmark`,
+};
+
+export const SYMBOL_LABEL: Record<(typeof SYMBOLS)[number], MessageDescriptor> = {
+  'willow-urn': msg`Willow and urn`,
+  urn: msg`Urn`,
+  'draped-urn': msg`Draped urn`,
+  willow: msg`Willow`,
+  'deaths-head': msg`Death's head`,
+  'soul-effigy': msg`Winged soul effigy`,
+  cherub: msg`Cherub`,
+  lamb: msg`Lamb`,
+  dove: msg`Dove`,
+  'clasped-hands': msg`Clasped hands`,
+  'hand-up': msg`Hand pointing up`,
+  'hand-down': msg`Hand pointing down`,
+  'broken-column': msg`Broken column`,
+  rose: msg`Rose / rosebud`,
+  ihs: msg`IHS`,
+  cross: msg`Cross`,
+  'star-of-david': msg`Star of David`,
+  masonic: msg`Masonic square and compass`,
+  'odd-fellows': msg`Odd Fellows three links`,
+  woodmen: msg`Woodmen of the World (tree stump)`,
+  gar: msg`GAR star`,
 };

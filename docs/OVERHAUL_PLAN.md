@@ -554,6 +554,18 @@ Documented in-app and stored per cemetery: `[illegible]`, `[?]` after an uncerta
 character/word, `[broken]`, `/` or real line breaks, `[on back]`. Users can choose a
 convention preset; the export notes which convention was used.
 
+Implementation notes (M4, `domain/conventions.ts`, `features/transcribe/`): three presets,
+`as-carved` (default: `[illegible]`, `[?]`, `[broken]`, `[on back]`, real line breaks),
+`slash-lines` (the same marks, `/` between lines) and `dashes` (`---` and `(?)`). Desk
+mode's "Conventions" button shows what each mark means and sets the cemetery's preset;
+Ctrl+I and Ctrl+. type that preset's marks. A saved inscription records the convention it was
+typed in (`Inscription.convention`): a changed text takes the cemetery's current one, so
+changing the preset never relabels text already typed. The `.sbs` README states the
+cemetery's convention with its marks. The desk form also has the §10.4 fields: symbol chips
+(`SYMBOLS`) plus free-text symbols, carver, inscription language (BCP 47) and script
+(ISO 15924, Fraktur = `Latf`), and per person a "Military service" section (conflict, rank,
+unit, `marker` for the government-issue or society marker).
+
 ---
 
 ## 11. Building the corpus

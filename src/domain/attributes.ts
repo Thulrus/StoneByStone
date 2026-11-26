@@ -49,6 +49,65 @@ export const CONDITIONS = [
   'missing',
 ] as const;
 
+/** Carved symbols (plan §10.4). Anything else is stored as the text typed. */
+export const SYMBOLS = [
+  'willow-urn',
+  'urn',
+  'draped-urn',
+  'willow',
+  'deaths-head',
+  'soul-effigy',
+  'cherub',
+  'lamb',
+  'dove',
+  'clasped-hands',
+  'hand-up',
+  'hand-down',
+  'broken-column',
+  'rose',
+  'ihs',
+  'cross',
+  'star-of-david',
+  'masonic',
+  'odd-fellows',
+  'woodmen',
+  'gar',
+] as const;
+
+/** Inscription languages offered first (BCP 47); any other tag can be stored. */
+export const INSCRIPTION_LANGUAGES = [
+  'en',
+  'de',
+  'nl',
+  'fr',
+  'es',
+  'it',
+  'sv',
+  'nb',
+  'da',
+  'fi',
+  'pl',
+  'cs',
+  'cy',
+  'gd',
+  'ga',
+  'la',
+  'he',
+  'yi',
+] as const;
+
+/** Scripts offered (ISO 15924). Fraktur (`Latf`) is common on German stones. */
+export const INSCRIPTION_SCRIPTS = [
+  'Latn',
+  'Latf',
+  'Hebr',
+  'Cyrl',
+  'Grek',
+  'Arab',
+  'Hani',
+] as const;
+export const FRAKTUR = 'Latf';
+
 /** Flags offered in the field. Others (`illegible`, `relocated`) may be set at the desk. */
 export const CAPTURE_FLAGS = ['needs-revisit', 'uncertain-position', 'veteran-marker'] as const;
 

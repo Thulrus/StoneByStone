@@ -76,6 +76,9 @@
             "unit": {
               "type": "string"
             },
+            "marker": {
+              "type": "string"
+            },
             "notes": {
               "type": "string"
             }

@@ -11,6 +11,8 @@ import {
 } from './transcribe';
 import { captureStone } from './walk';
 
+const STONE = { symbols: [], carver: '', language: '', script: '' };
+
 async function setup() {
   const { store } = await freshStore();
   const c = await store.cemeteries.create({
@@ -20,7 +22,7 @@ async function setup() {
   });
   const row = await store.rows.create({ cemeteryId: c.id, label: '1' });
   const m = await captureStone(store, { rowId: row.id });
-  return { store, m };
+  return { store, m, c };
 }
 
 test('the inscription is kept as carved, one undo step, and sets the status', async () => {
@@ -42,7 +44,12 @@ test('the inscription is kept as carved, one undo step, and sets the status', as
 test('people are parsed, re-saved without duplicates, and removed when emptied', async () => {
   const { store, m } = await setup();
   const p = { ...emptyPerson(store.newId()), name: 'Mary A. Brown', died: 'Mar. 3, 1850?' };
-  const draft: TranscriptionDraft = { inscription: 'MARY', epitaph: 'At rest', people: [p] };
+  const draft: TranscriptionDraft = {
+    ...STONE,
+    inscription: 'MARY',
+    epitaph: 'At rest',
+    people: [p],
+  };
   await saveTranscription(store, m.id, draft);
   await saveTranscription(store, m.id, {
     ...draft,
@@ -76,7 +83,7 @@ test('people are parsed, re-saved without duplicates, and removed when emptied',
 test('a blank Born is calculated from Died and Age, and follows them', async () => {
   const { store, m } = await setup();
   const p = { ...emptyPerson(store.newId()), name: 'Eli Hart', died: '1887', age: 'Æ 72' };
-  const draft: TranscriptionDraft = { inscription: '', epitaph: '', people: [p] };
+  const draft: TranscriptionDraft = { ...STONE, inscription: '', epitaph: '', people: [p] };
   await saveTranscription(store, m.id, draft);
   const [saved] = await store.persons.byMonument(m.id);
   expect(saved?.birth).toMatchObject({ y: 1815, qualifier: 'calculated' });
@@ -86,4 +93,72 @@ test('a blank Born is calculated from Died and Age, and follows them', async () 
   expect((await store.persons.get(p.id))?.birth).toMatchObject({ y: 1817 });
   await saveTranscription(store, m.id, { ...draft, people: [{ ...p, age: '70', born: '1816' }] });
   expect((await store.persons.get(p.id))?.birth).toEqual({ original: '1816', y: 1816 });
+});
+
+test('symbols, carver, language and script, with the convention the text was typed in', async () => {
+  const { store, m, c } = await setup();
+  const draft: TranscriptionDraft = {
+    ...STONE,
+    inscription: 'Hier ruhet\nJOHANN [?]',
+    epitaph: '',
+    people: [],
+    symbols: ['willow-urn', 'anchor'],
+    carver: ' J. Stevens, Newport ',
+    language: 'de',
+    script: 'Latf',
+  };
+  await saveTranscription(store, m.id, draft);
+  expect(await store.monuments.get(m.id)).toMatchObject({
+    symbols: ['willow-urn', 'anchor'],
+    carver: 'J. Stevens, Newport',
+    inscription: {
+      text: 'Hier ruhet\nJOHANN [?]',
+      language: 'de',
+      script: 'Latf',
+      convention: 'as-carved',
+    },
+  });
+
+  // A new convention applies to text typed from now on, not to what's already there.
+  await store.cemeteries.update(c.id, {
+    settings: { ...c.settings, transcriptionConvention: 'dashes' },
+  });
+  await saveTranscription(store, m.id, { ...draft, script: '' });
+  const kept = (await store.monuments.get(m.id))?.inscription;
+  expect(kept).toEqual({ text: 'Hier ruhet\nJOHANN [?]', language: 'de', convention: 'as-carved' });
+  await saveTranscription(store, m.id, { ...draft, inscription: 'Hier ruhet\nJOHANN (?)' });
+  expect((await store.monuments.get(m.id))?.inscription?.convention).toBe('dashes');
+
+  await saveTranscription(store, m.id, { ...STONE, inscription: '', epitaph: '', people: [] });
+  const cleared = await store.monuments.get(m.id);
+  expect([cleared?.symbols, cleared?.carver, cleared?.inscription]).toEqual([
+    undefined,
+    undefined,
+    undefined,
+  ]);
+});
+
+test('military service is saved per person and cleared when emptied', async () => {
+  const { store, m } = await setup();
+  const p = {
+    ...emptyPerson(store.newId()),
+    name: 'Asa Hart',
+    conflict: 'Civil War (Union)',
+    rank: 'Corp.',
+    unit: 'Co. B, 12th Vt. Inf.',
+    marker: 'GAR star',
+  };
+  const draft: TranscriptionDraft = { ...STONE, inscription: '', epitaph: '', people: [p] };
+  await saveTranscription(store, m.id, draft);
+  expect((await store.persons.get(p.id))?.military).toEqual({
+    conflict: 'Civil War (Union)',
+    rank: 'Corp.',
+    unit: 'Co. B, 12th Vt. Inf.',
+    marker: 'GAR star',
+  });
+  await saveTranscription(store, m.id, {
+    ...draft,
+    people: [{ ...p, conflict: '', rank: '', unit: '', marker: '' }],
+  });
+  expect((await store.persons.get(p.id))?.military).toBeUndefined();
 });

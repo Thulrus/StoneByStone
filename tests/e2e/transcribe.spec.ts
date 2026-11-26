@@ -204,3 +204,45 @@ test("a couple's stone and their son's stone, linked both ways", async ({ page }
   await expect(links(1)).toHaveCount(0);
   await expect(links(2)).toHaveCount(0);
 });
+
+test('conventions, symbols and military service', async ({ page }, testInfo) => {
+  const file = testInfo.outputPath('conv.sbs.json');
+  await writeFile(file, JSON.stringify(makeStonesDocument({ rows: 1, perRow: 2 })));
+  await stubTiles(page);
+  await page.goto('./');
+  await skipWelcome(page);
+  await importFile(page, file);
+  await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
+  await page.getByRole('link', { name: 'Transcribe' }).click();
+  await page.getByLabel('Show').selectOption({ label: 'No photo yet' });
+  const form = page.getByRole('form', { name: 'Transcription' });
+
+  // The in-app reference, and a different preset: Ctrl+I then types its mark.
+  await page.getByRole('button', { name: 'Conventions' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Transcription conventions' });
+  await expect(dialog.getByRole('cell', { name: '[illegible]' })).toBeVisible();
+  await dialog.getByLabel('Dashes for lost text, (?) for doubt').check();
+  await expect(dialog.getByRole('cell', { name: '---' })).toBeVisible();
+  await page.keyboard.press('Escape');
+  const box = form.getByLabel('Inscription, as carved');
+  await box.click();
+  await page.keyboard.type('JOHN ');
+  await page.keyboard.press('Control+i');
+  await expect(box).toHaveValue('JOHN ---');
+  await expect(form).toContainText('Ctrl+I: insert ---.');
+
+  await form.getByRole('button', { name: 'Lamb' }).click();
+  await form.getByLabel("Carver's signature").fill('J. Stevens');
+  await form.getByLabel('Language').selectOption('de');
+  const p1 = form.getByRole('group', { name: 'Person 1' });
+  await p1.getByLabel('Name, as carved').fill('Asa Hart');
+  await p1.getByText('Military service').click();
+  await p1.getByLabel('Unit, as carved').fill('Co. B, 12th Vt. Inf.');
+  await form.getByRole('button', { name: 'Save & next' }).click();
+  await expect(form.getByRole('heading', { level: 2 })).toHaveText('Row 1, stone 2');
+  await form.getByRole('button', { name: 'Previous' }).click();
+  await expect(form.getByRole('button', { name: 'Lamb' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(form.getByLabel("Carver's signature")).toHaveValue('J. Stevens');
+  await expect(form.getByLabel('Language')).toHaveValue('de');
+  await expect(p1.getByLabel('Unit, as carved')).toHaveValue('Co. B, 12th Vt. Inf.');
+});

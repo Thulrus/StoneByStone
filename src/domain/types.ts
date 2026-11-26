@@ -122,8 +122,11 @@ export type MonumentStatus = 'located' | 'photographed' | 'transcribed' | 'verif
 
 export interface Inscription {
   text: string;
+  /** BCP 47 language tag. */
   language?: string;
+  /** ISO 15924 script code (Latn, Hebr, Latf, ...). */
   script?: string;
+  /** Transcription convention id used for `text` (plan §10.5). */
   convention?: string;
 }
 
@@ -221,6 +224,8 @@ export interface Military {
   conflict?: string;
   rank?: string;
   unit?: string;
+  /** Government-issue or society marker: "GAR star", "VA upright marble", ... */
+  marker?: string;
   notes?: string;
 }
 

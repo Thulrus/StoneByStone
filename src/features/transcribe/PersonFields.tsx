@@ -6,6 +6,7 @@ import { Button } from '../../ui/Button';
 import { RelationsList } from '../people/RelationsList';
 import { readPerson } from './date-preview';
 import { Input } from './Input';
+import { MilitaryFields } from './MilitaryFields';
 import { NameInput } from './NameInput';
 
 export interface PersonFieldsProps {
@@ -49,6 +50,7 @@ export function PersonFields(props: PersonFieldsProps) {
         <Input label={t`Age`} kind="date" reading={read.age} {...field('age')} />
         <Input label={t`Relationship`} placeholder={t`wife of John`} {...field('relationship')} />
       </div>
+      <MilitaryFields value={person} onChange={(patch) => onChange({ ...person, ...patch })} />
       <RelationsList personId={person.id} whereOf={whereOf} />
       <div className="flex flex-wrap gap-2">
         <Button variant="secondary" onClick={onLink}>

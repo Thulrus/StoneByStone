@@ -4,12 +4,13 @@ import { Link, useSearchParams } from 'react-router';
 import { cemeteryPath } from '../../app/paths';
 import { useStore } from '../../app/store-context';
 import { saveTranscription, type TranscriptionDraft } from '../../data/transcribe';
-import type { Cemetery, ID, Monument, Row } from '../../domain';
+import { conventionOf, type Cemetery, type ID, type Monument, type Row } from '../../domain';
 import { Button } from '../../ui/Button';
 import { toast } from '../../ui/toast-store';
 import { StatusIcon } from '../stones/StatusIcon';
 import { useStoneLabel } from '../stones/useStoneLabel';
 import { STATUS_LABEL } from '../stones/labels';
+import { ConventionsButton } from './ConventionsDialog';
 import { FilterSelect } from './FilterSelect';
 import { NeighbourStrip } from './NeighbourStrip';
 import { PhotoPane } from './PhotoPane';
@@ -103,7 +104,10 @@ export function TranscribeView({
             <Trans>Transcribe</Trans>
           </h1>
         </div>
-        <FilterSelect value={filter} onChange={setFilter} />
+        <div className="flex flex-wrap items-end gap-2">
+          <ConventionsButton cemetery={cemetery} />
+          <FilterSelect value={filter} onChange={setFilter} />
+        </div>
       </div>
       {total === 0 ? (
         <p>
@@ -129,6 +133,7 @@ export function TranscribeView({
             stone={current}
             canPrevious={pos > 0}
             dateLocale={cemetery.settings.dateLocale}
+            convention={conventionOf(cemetery.settings.transcriptionConvention)}
             suggestNames={suggestNames}
             onDraft={(d) => (draft.current = d)}
             whereOf={(id) => stoneLabel(id ? byId.get(id) : undefined)}

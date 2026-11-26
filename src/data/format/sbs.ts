@@ -53,7 +53,15 @@ export async function writeSbs(archive: Archive, binaries: Binaries): Promise<Bl
   for (const [id, b] of binaries.thumbs) await binary(`thumbs/${id}.jpg`, b);
   for (const [id, b] of binaries.overlays) await binary(`overlays/${id}.jpg`, b);
   for (const [name, s] of Object.entries(SCHEMAS)) text(`schema/${name}`, prettyJson(s));
-  text('README.txt', readmeText(archive.manifest, archive.cemetery.name, archive.cemetery.license));
+  text(
+    'README.txt',
+    readmeText(
+      archive.manifest,
+      archive.cemetery.name,
+      archive.cemetery.license,
+      archive.cemetery.settings.transcriptionConvention,
+    ),
+  );
   writer.end();
   if (failed) throw failed;
   return done;

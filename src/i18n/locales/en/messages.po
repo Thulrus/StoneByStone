@@ -86,6 +86,11 @@ msgstr "{0, plural, one {# year} other {# years}}"
 msgid "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
 msgstr "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
 
+#. placeholder {0}: c.id
+#: src/features/transcribe/ConventionsDialog.tsx:98
+msgid "{0}"
+msgstr "{0}"
+
 #. placeholder {0}: Math.round(c.distanceM)
 #: src/features/cemeteries/create/PlaceFinder.tsx:108
 msgid "{0} m away"
@@ -158,7 +163,7 @@ msgstr "{name}: about {count} tiles, roughly {size}."
 msgid "{pct} transcribed"
 msgstr "{pct} transcribed"
 
-#: src/features/transcribe/TranscribeView.tsx:149
+#: src/features/transcribe/TranscribeView.tsx:154
 msgid "{position} of {total}"
 msgstr "{position} of {total}"
 
@@ -200,6 +205,10 @@ msgstr "1600 px (recommended)"
 msgid "a nearby stone or landmark"
 msgstr "a nearby stone or landmark"
 
+#: src/features/transcribe/ConventionsDialog.tsx:40
+msgid "A new carved line"
+msgstr "A new carved line"
+
 #: src/app/UpdatePrompt.tsx:45
 msgid "A new version of StoneByStone is available."
 msgstr "A new version of StoneByStone is available."
@@ -207,6 +216,10 @@ msgstr "A new version of StoneByStone is available."
 #: src/features/stones/detail/labels.ts:11
 msgid "a plat or drone image"
 msgstr "a plat or drone image"
+
+#: src/features/transcribe/ConventionsDialog.tsx:34
+msgid "a real line break (Enter)"
+msgstr "a real line break (Enter)"
 
 #: src/features/transcribe/date-preview.ts:52
 msgid "about {start}"
@@ -229,7 +242,7 @@ msgstr "Add a custom source"
 msgid "Add a plat map or drone image"
 msgstr "Add a plat map or drone image"
 
-#: src/features/transcribe/TranscribeForm.tsx:240
+#: src/features/transcribe/TranscribeForm.tsx:245
 msgid "Add another person"
 msgstr "Add another person"
 
@@ -283,12 +296,16 @@ msgstr "Adjust pins for {name}"
 msgid "after {start}"
 msgstr "after {start}"
 
+#: src/features/transcribe/ConventionsDialog.tsx:37
+msgid "After a letter or word you're unsure of (Ctrl+.)"
+msgstr "After a letter or word you're unsure of (Ctrl+.)"
+
 #. placeholder {0}: numberOf(m)
 #: src/features/capture/walk/RowOrderDialogs.tsx:59
 msgid "After stone {0}"
 msgstr "After stone {0}"
 
-#: src/features/transcribe/PersonFields.tsx:49
+#: src/features/transcribe/PersonFields.tsx:50
 msgid "Age"
 msgstr "Age"
 
@@ -324,6 +341,14 @@ msgstr "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
 msgid "Apply"
 msgstr "Apply"
 
+#: src/features/transcribe/ConventionsDialog.tsx:12
+msgid "As carved (brackets, real line breaks)"
+msgstr "As carved (brackets, real line breaks)"
+
+#: src/features/transcribe/StoneFields.tsx:83
+msgid "as carved, often at the base"
+msgstr "as carved, often at the base"
+
 #: src/features/map/CustomSourceForm.tsx:84
 msgid "Attribution"
 msgstr "Attribution"
@@ -346,7 +371,7 @@ msgstr "Back along the row"
 
 #. placeholder {0}: cemetery.name
 #: src/features/stones/detail/StoneDetail.tsx:54
-#: src/features/transcribe/TranscribeView.tsx:100
+#: src/features/transcribe/TranscribeView.tsx:101
 msgid "Back to {0}"
 msgstr "Back to {0}"
 
@@ -361,7 +386,7 @@ msgstr "Back to cemeteries"
 msgid "Back to its row position"
 msgstr "Back to its row position"
 
-#: src/features/transcribe/TranscribeView.tsx:118
+#: src/features/transcribe/TranscribeView.tsx:122
 msgid "Back to the first stone"
 msgstr "Back to the first stone"
 
@@ -414,7 +439,7 @@ msgstr "Before stone 1"
 msgid "Before you go out"
 msgstr "Before you go out"
 
-#: src/features/stones/attribute-labels.ts:76
+#: src/features/stones/attribute-labels.ts:77
 msgid "Bench"
 msgstr "Bench"
 
@@ -426,7 +451,7 @@ msgstr "between {start} and {end}"
 msgid "Black point"
 msgstr "Black point"
 
-#: src/features/transcribe/PersonFields.tsx:47
+#: src/features/transcribe/PersonFields.tsx:48
 msgid "Born"
 msgstr "Born"
 
@@ -438,7 +463,7 @@ msgstr "boundary available"
 msgid "Boundary from OpenStreetMap. Tap the map to move the pin."
 msgstr "Boundary from OpenStreetMap. Tap the map to move the pin."
 
-#: src/features/stones/attribute-labels.ts:18
+#: src/features/stones/attribute-labels.ts:19
 msgid "Box tomb"
 msgstr "Box tomb"
 
@@ -446,11 +471,19 @@ msgstr "Box tomb"
 msgid "Brightness"
 msgstr "Brightness"
 
-#: src/features/stones/attribute-labels.ts:49
+#: src/features/stones/attribute-labels.ts:50
 msgid "Broken"
 msgstr "Broken"
 
-#: src/features/stones/attribute-labels.ts:34
+#: src/features/stones/attribute-labels.ts:94
+msgid "Broken column"
+msgstr "Broken column"
+
+#: src/features/transcribe/MilitaryFields.tsx:71
+msgid "Bronze plaque"
+msgstr "Bronze plaque"
+
+#: src/features/stones/attribute-labels.ts:35
 msgid "Brownstone"
 msgstr "Brownstone"
 
@@ -458,7 +491,7 @@ msgstr "Brownstone"
 msgid "Build"
 msgstr "Build"
 
-#: src/features/stones/attribute-labels.ts:67
+#: src/features/stones/attribute-labels.ts:68
 msgid "Building"
 msgstr "Building"
 
@@ -496,7 +529,11 @@ msgstr "Can't check:"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/features/stones/attribute-labels.ts:37
+#: src/features/transcribe/StoneFields.tsx:82
+msgid "Carver's signature"
+msgstr "Carver's signature"
+
+#: src/features/stones/attribute-labels.ts:38
 msgid "Cast iron"
 msgstr "Cast iron"
 
@@ -542,9 +579,25 @@ msgstr "Check for updates"
 msgid "Checking…"
 msgstr "Checking…"
 
+#: src/features/stones/attribute-labels.ts:88
+msgid "Cherub"
+msgstr "Cherub"
+
 #: src/features/people/relation-labels.ts:9
 msgid "Child"
 msgstr "Child"
+
+#: src/features/transcribe/MilitaryFields.tsx:59
+msgid "Civil War (Confederate)"
+msgstr "Civil War (Confederate)"
+
+#: src/features/transcribe/MilitaryFields.tsx:58
+msgid "Civil War (Union)"
+msgstr "Civil War (Union)"
+
+#: src/features/stones/attribute-labels.ts:91
+msgid "Clasped hands"
+msgstr "Clasped hands"
 
 #: src/ui/Dialog.tsx:59
 msgid "Close"
@@ -554,7 +607,11 @@ msgstr "Close"
 msgid "Close camera"
 msgstr "Close camera"
 
-#: src/features/stones/attribute-labels.ts:39
+#: src/features/transcribe/MilitaryFields.tsx:43
+msgid "Co. B, 12th Vt. Inf."
+msgstr "Co. B, 12th Vt. Inf."
+
+#: src/features/stones/attribute-labels.ts:40
 msgid "Concrete"
 msgstr "Concrete"
 
@@ -562,6 +619,10 @@ msgstr "Concrete"
 #: src/features/stones/detail/AttributesSection.tsx:24
 msgid "Condition"
 msgstr "Condition"
+
+#: src/features/transcribe/MilitaryFields.tsx:30
+msgid "Conflict"
+msgstr "Conflict"
 
 #: src/features/settings/ContributorForm.tsx:44
 msgid "Contact (optional)"
@@ -574,6 +635,10 @@ msgstr "Context"
 #: src/features/transcribe/viewer/FilterControls.tsx:101
 msgid "Contrast"
 msgstr "Contrast"
+
+#: src/features/transcribe/ConventionsDialog.tsx:82
+msgid "Conventions"
+msgstr "Conventions"
 
 #. placeholder {0}: file.name
 #: src/features/cemeteries/ImportButton.tsx:36
@@ -614,11 +679,11 @@ msgid "Couldn't save that photo"
 msgstr "Couldn't save that photo"
 
 #: src/features/capture/walk/useWalkCapture.ts:159
-#: src/features/transcribe/TranscribeView.tsx:67
+#: src/features/transcribe/TranscribeView.tsx:68
 msgid "Couldn't save that stone"
 msgstr "Couldn't save that stone"
 
-#: src/features/stones/attribute-labels.ts:48
+#: src/features/stones/attribute-labels.ts:49
 msgid "Cracked"
 msgstr "Cracked"
 
@@ -630,13 +695,18 @@ msgstr "Create"
 msgid "Created"
 msgstr "Created"
 
-#: src/features/stones/attribute-labels.ts:19
+#: src/features/stones/attribute-labels.ts:20
+#: src/features/stones/attribute-labels.ts:97
 msgid "Cross"
 msgstr "Cross"
 
 #: src/app/pages/SettingsPage.tsx:17
 msgid "Dark"
 msgstr "Dark"
+
+#: src/features/transcribe/ConventionsDialog.tsx:14
+msgid "Dashes for lost text, (?) for doubt"
+msgstr "Dashes for lost text, (?) for doubt"
 
 #: src/features/settings/StoragePanel.tsx:93
 msgid "Data"
@@ -653,6 +723,10 @@ msgstr "dataset alignment"
 #: src/features/transcribe/date-preview.ts:90
 msgid "Day and month could be the other way round ({other}). Read using this cemetery's date order."
 msgstr "Day and month could be the other way round ({other}). Read using this cemetery's date order."
+
+#: src/features/stones/attribute-labels.ts:86
+msgid "Death's head"
+msgstr "Death's head"
 
 #: src/features/cemeteries/CemeteryList.tsx:91
 #: src/features/cemeteries/setup/SectionBlock.tsx:69
@@ -723,7 +797,7 @@ msgstr "Details"
 msgid "Diagram"
 msgstr "Diagram"
 
-#: src/features/transcribe/PersonFields.tsx:48
+#: src/features/transcribe/PersonFields.tsx:49
 msgid "Died"
 msgstr "Died"
 
@@ -738,6 +812,10 @@ msgstr "Done"
 #: src/features/overlays/OverlayLayers.tsx:83
 msgid "Done placing"
 msgstr "Done placing"
+
+#: src/features/stones/attribute-labels.ts:90
+msgid "Dove"
+msgstr "Dove"
 
 #: src/features/map/OfflinePanel.tsx:138
 msgid "Download again"
@@ -754,6 +832,10 @@ msgstr "Download for offline"
 #: src/features/map/OfflinePanel.tsx:103
 msgid "Downloading {done} of {total} tiles…"
 msgstr "Downloading {done} of {total} tiles…"
+
+#: src/features/stones/attribute-labels.ts:84
+msgid "Draped urn"
+msgstr "Draped urn"
 
 #: src/features/map/MapToolbar.tsx:33
 msgid "Draw a row line first"
@@ -795,7 +877,7 @@ msgstr "Edit line"
 msgid "Email or phone, included when you share a file."
 msgstr "Email or phone, included when you share a file."
 
-#: src/features/stones/attribute-labels.ts:72
+#: src/features/stones/attribute-labels.ts:73
 msgid "Enclosure"
 msgstr "Enclosure"
 
@@ -820,15 +902,15 @@ msgstr "Enter a name."
 msgid "Enter a valid web address."
 msgstr "Enter a valid web address."
 
-#: src/features/transcribe/TranscribeForm.tsx:244
-msgid "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain [?]. Ctrl+I: insert [illegible]."
-msgstr "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain [?]. Ctrl+I: insert [illegible]."
+#: src/features/transcribe/ConventionsDialog.tsx:23
+msgid "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain {uncertain}. Ctrl+I: insert {illegible}."
+msgstr "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain {uncertain}. Ctrl+I: insert {illegible}."
 
 #: src/features/map/CustomSourceForm.tsx:27
 msgid "Enter the WMS layer name."
 msgstr "Enter the WMS layer name."
 
-#: src/features/transcribe/TranscribeForm.tsx:214
+#: src/features/transcribe/TranscribeForm.tsx:216
 msgid "Epitaph"
 msgstr "Epitaph"
 
@@ -848,15 +930,19 @@ msgstr "estimated {start}"
 msgid "Every grid stone is already in a row"
 msgstr "Every grid stone is already in a row"
 
+#: src/features/transcribe/ConventionsDialog.tsx:103
+msgid "Exports say which convention was used. Changing it doesn't rewrite inscriptions already typed."
+msgstr "Exports say which convention was used. Changing it doesn't rewrite inscriptions already typed."
+
 #: src/features/transcribe/viewer/FilterControls.tsx:86
 msgid "Faint lettering"
 msgstr "Faint lettering"
 
-#: src/features/stones/attribute-labels.ts:50
+#: src/features/stones/attribute-labels.ts:51
 msgid "Fallen"
 msgstr "Fallen"
 
-#: src/features/stones/attribute-labels.ts:73
+#: src/features/stones/attribute-labels.ts:74
 msgid "Family plot"
 msgstr "Family plot"
 
@@ -864,7 +950,7 @@ msgstr "Family plot"
 msgid "Feet and inches"
 msgstr "Feet and inches"
 
-#: src/features/stones/attribute-labels.ts:70
+#: src/features/stones/attribute-labels.ts:71
 msgid "Fence"
 msgstr "Fence"
 
@@ -872,8 +958,8 @@ msgstr "Fence"
 msgid "Field checklist"
 msgstr "Field checklist"
 
-#: src/features/stones/attribute-labels.ts:22
-#: src/features/stones/attribute-labels.ts:40
+#: src/features/stones/attribute-labels.ts:23
+#: src/features/stones/attribute-labels.ts:41
 msgid "Fieldstone"
 msgstr "Fieldstone"
 
@@ -889,26 +975,38 @@ msgstr "First row"
 msgid "Fit"
 msgstr "Fit"
 
+#: src/features/transcribe/MilitaryFields.tsx:70
+msgid "Flag holder"
+msgstr "Flag holder"
+
 #: src/features/capture/walk/QuickTray.tsx:32
 #: src/features/stones/detail/AttributesSection.tsx:25
 msgid "Flags"
 msgstr "Flags"
 
-#: src/features/stones/attribute-labels.ts:20
+#: src/features/stones/attribute-labels.ts:21
 msgid "Flat marker"
 msgstr "Flat marker"
 
-#: src/features/stones/attribute-labels.ts:13
+#: src/features/stones/attribute-labels.ts:14
 msgid "Footstone"
 msgstr "Footstone"
+
+#: src/features/transcribe/ConventionsDialog.tsx:50
+msgid "For"
+msgstr "For"
 
 #: src/features/map/CustomSourceForm.tsx:69
 msgid "For example https://example.org/tiles/{z}/{x}/{y}.png"
 msgstr "For example https://example.org/tiles/{z}/{x}/{y}.png"
 
-#: src/features/stones/attribute-labels.ts:25
+#: src/features/stones/attribute-labels.ts:26
 msgid "Fragment"
 msgstr "Fragment"
+
+#: src/features/transcribe/StoneFields.tsx:121
+msgid "Fraktur (blackletter)"
+msgstr "Fraktur (blackletter)"
 
 #: src/features/cemeteries/FieldChecklist.tsx:120
 msgid "Free space: this browser can't tell."
@@ -952,7 +1050,12 @@ msgstr "Gamma"
 msgid "Gap"
 msgstr "Gap"
 
-#: src/features/stones/attribute-labels.ts:69
+#: src/features/stones/attribute-labels.ts:102
+#: src/features/transcribe/MilitaryFields.tsx:69
+msgid "GAR star"
+msgstr "GAR star"
+
+#: src/features/stones/attribute-labels.ts:70
 msgid "Gate"
 msgstr "Gate"
 
@@ -964,13 +1067,21 @@ msgstr "Getting your location…"
 msgid "Go to {label}"
 msgstr "Go to {label}"
 
-#: src/features/stones/attribute-labels.ts:45
+#: src/features/stones/attribute-labels.ts:46
 msgid "Good"
 msgstr "Good"
 
-#: src/features/stones/attribute-labels.ts:23
+#: src/features/stones/attribute-labels.ts:24
 msgid "Government / military"
 msgstr "Government / military"
+
+#: src/features/transcribe/MilitaryFields.tsx:68
+msgid "Government-issue flat marker"
+msgstr "Government-issue flat marker"
+
+#: src/features/transcribe/MilitaryFields.tsx:67
+msgid "Government-issue headstone"
+msgstr "Government-issue headstone"
 
 #: src/features/stones/detail/labels.ts:6
 msgid "GPS"
@@ -980,7 +1091,7 @@ msgstr "GPS"
 msgid "GPS \"Hold still\" time"
 msgstr "GPS \"Hold still\" time"
 
-#: src/features/stones/attribute-labels.ts:31
+#: src/features/stones/attribute-labels.ts:32
 msgid "Granite"
 msgstr "Granite"
 
@@ -1002,7 +1113,15 @@ msgstr "Grid row {0}, column {1}"
 msgid "Grid row {row}, column {col}"
 msgstr "Grid row {row}, column {col}"
 
-#: src/features/stones/attribute-labels.ts:12
+#: src/features/stones/attribute-labels.ts:93
+msgid "Hand pointing down"
+msgstr "Hand pointing down"
+
+#: src/features/stones/attribute-labels.ts:92
+msgid "Hand pointing up"
+msgstr "Hand pointing up"
+
+#: src/features/stones/attribute-labels.ts:13
 msgid "Headstone"
 msgstr "Headstone"
 
@@ -1043,7 +1162,11 @@ msgstr "I'm standing at the row start (GPS)"
 msgid "If this device is lost or the browser clears its data, they are gone."
 msgstr "If this device is lost or the browser clears its data, they are gone."
 
-#: src/features/stones/attribute-labels.ts:53
+#: src/features/stones/attribute-labels.ts:96
+msgid "IHS"
+msgstr "IHS"
+
+#: src/features/stones/attribute-labels.ts:54
 msgid "Illegible"
 msgstr "Illegible"
 
@@ -1077,7 +1200,7 @@ msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your sur
 msgid "In-app camera"
 msgstr "In-app camera"
 
-#: src/features/transcribe/TranscribeForm.tsx:182
+#: src/features/transcribe/TranscribeForm.tsx:184
 msgid "Inscription, as carved"
 msgstr "Inscription, as carved"
 
@@ -1129,15 +1252,24 @@ msgstr "Keep my data"
 msgid "Kept as typed."
 msgstr "Kept as typed."
 
-#: src/features/stones/attribute-labels.ts:77
+#: src/features/transcribe/MilitaryFields.tsx:63
+msgid "Korean War"
+msgstr "Korean War"
+
+#: src/features/stones/attribute-labels.ts:89
+msgid "Lamb"
+msgstr "Lamb"
+
+#: src/features/stones/attribute-labels.ts:78
 msgid "Landmark"
 msgstr "Landmark"
 
 #: src/app/pages/SettingsPage.tsx:40
+#: src/features/transcribe/StoneFields.tsx:90
 msgid "Language"
 msgstr "Language"
 
-#: src/features/stones/attribute-labels.ts:75
+#: src/features/stones/attribute-labels.ts:76
 msgid "Large monument"
 msgstr "Large monument"
 
@@ -1154,7 +1286,7 @@ msgstr "Later"
 msgid "Layer"
 msgstr "Layer"
 
-#: src/features/stones/attribute-labels.ts:16
+#: src/features/stones/attribute-labels.ts:17
 msgid "Ledger"
 msgstr "Ledger"
 
@@ -1170,7 +1302,11 @@ msgstr "Left/right height"
 msgid "Less"
 msgstr "Less"
 
-#: src/features/stones/attribute-labels.ts:47
+#: src/features/transcribe/ConventionsDialog.tsx:36
+msgid "Letters or words that can't be read (Ctrl+I)"
+msgstr "Letters or words that can't be read (Ctrl+I)"
+
+#: src/features/stones/attribute-labels.ts:48
 msgid "Lichen / growth"
 msgstr "Lichen / growth"
 
@@ -1182,7 +1318,7 @@ msgstr "Light"
 msgid "Light from (degrees)"
 msgstr "Light from (degrees)"
 
-#: src/features/stones/attribute-labels.ts:35
+#: src/features/stones/attribute-labels.ts:36
 msgid "Limestone"
 msgstr "Limestone"
 
@@ -1190,7 +1326,7 @@ msgstr "Limestone"
 msgid "Link {who} to…"
 msgstr "Link {who} to…"
 
-#: src/features/transcribe/PersonFields.tsx:55
+#: src/features/transcribe/PersonFields.tsx:57
 msgid "Link to a person…"
 msgstr "Link to a person…"
 
@@ -1256,9 +1392,21 @@ msgstr "Map saved for offline use"
 msgid "Map: tap to place the cemetery"
 msgstr "Map: tap to place the cemetery"
 
-#: src/features/stones/attribute-labels.ts:30
+#: src/features/stones/attribute-labels.ts:31
 msgid "Marble"
 msgstr "Marble"
+
+#: src/features/transcribe/MilitaryFields.tsx:48
+msgid "Marker"
+msgstr "Marker"
+
+#: src/features/transcribe/ConventionsDialog.tsx:93
+msgid "Marks used in this cemetery"
+msgstr "Marks used in this cemetery"
+
+#: src/features/stones/attribute-labels.ts:99
+msgid "Masonic square and compass"
+msgstr "Masonic square and compass"
 
 #: src/app/pages/SettingsPage.tsx:15
 #: src/app/pages/SettingsPage.tsx:22
@@ -1278,7 +1426,15 @@ msgstr "Merged"
 msgid "Metres"
 msgstr "Metres"
 
-#: src/features/stones/attribute-labels.ts:55
+#: src/features/transcribe/MilitaryFields.tsx:57
+msgid "Mexican–American War"
+msgstr "Mexican–American War"
+
+#: src/features/transcribe/MilitaryFields.tsx:26
+msgid "Military service"
+msgstr "Military service"
+
+#: src/features/stones/attribute-labels.ts:56
 msgid "Missing"
 msgstr "Missing"
 
@@ -1340,7 +1496,7 @@ msgstr "Name"
 msgid "Name as carved"
 msgstr "Name as carved"
 
-#: src/features/transcribe/PersonFields.tsx:41
+#: src/features/transcribe/PersonFields.tsx:42
 msgid "Name, as carved"
 msgstr "Name, as carved"
 
@@ -1356,7 +1512,7 @@ msgstr "needs an API key"
 msgid "Needs attention:"
 msgstr "Needs attention:"
 
-#: src/features/stones/attribute-labels.ts:59
+#: src/features/stones/attribute-labels.ts:60
 msgid "Needs revisit"
 msgstr "Needs revisit"
 
@@ -1422,7 +1578,7 @@ msgstr "No rows planned. Add them above, or start a new row when you walk."
 msgid "No section"
 msgstr "No section"
 
-#: src/features/transcribe/TranscribeView.tsx:110
+#: src/features/transcribe/TranscribeView.tsx:114
 msgid "No stones in this list. Choose another list above."
 msgstr "No stones in this list. Choose another list above."
 
@@ -1455,6 +1611,11 @@ msgstr "Not read as a date. It will be kept as typed."
 #: src/features/transcribe/date-preview.ts:134
 msgid "Not read as an age. It will be kept as typed."
 msgstr "Not read as an age. It will be kept as typed."
+
+#: src/features/transcribe/StoneFields.tsx:98
+#: src/features/transcribe/StoneFields.tsx:118
+msgid "Not set"
+msgstr "Not set"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:111
 msgid "not tagged as a cemetery"
@@ -1489,9 +1650,13 @@ msgstr "Now tap where the row ends."
 msgid "NW"
 msgstr "NW"
 
-#: src/features/stones/attribute-labels.ts:15
+#: src/features/stones/attribute-labels.ts:16
 msgid "Obelisk"
 msgstr "Obelisk"
+
+#: src/features/stones/attribute-labels.ts:100
+msgid "Odd Fellows three links"
+msgstr "Odd Fellows three links"
 
 #: src/features/map/OfflinePanel.tsx:153
 msgid "Offline map"
@@ -1513,6 +1678,10 @@ msgstr "on map"
 #: src/features/overlays/OverlaysPanel.tsx:66
 msgid "On the map, average error {0} m"
 msgstr "On the map, average error {0} m"
+
+#: src/features/transcribe/ConventionsDialog.tsx:13
+msgid "One line, \" / \" between carved lines"
+msgstr "One line, \" / \" between carved lines"
 
 #: src/features/map/ImageryPicker.tsx:42
 msgid "online only"
@@ -1539,14 +1708,18 @@ msgid "Original size (largest files)"
 msgstr "Original size (largest files)"
 
 #: src/features/capture/labels.ts:13
-#: src/features/stones/attribute-labels.ts:26
-#: src/features/stones/attribute-labels.ts:41
+#: src/features/stones/attribute-labels.ts:27
+#: src/features/stones/attribute-labels.ts:42
 msgid "Other"
 msgstr "Other"
 
 #: src/features/people/relation-labels.ts:11
 msgid "Other relation"
 msgstr "Other relation"
+
+#: src/features/transcribe/StoneFields.tsx:73
+msgid "Other symbols, separated by commas"
+msgstr "Other symbols, separated by commas"
 
 #: src/features/overlays/ImagePicker.tsx:25
 msgid "Overlay image: tap a point you can also find on the map"
@@ -1560,11 +1733,11 @@ msgstr "Page not found"
 msgid "Parent"
 msgstr "Parent"
 
-#: src/features/stones/attribute-labels.ts:65
+#: src/features/stones/attribute-labels.ts:66
 msgid "Path"
 msgstr "Path"
 
-#: src/features/stones/attribute-labels.ts:21
+#: src/features/stones/attribute-labels.ts:22
 msgid "Pedestal / die-on-base"
 msgstr "Pedestal / die-on-base"
 
@@ -1578,11 +1751,11 @@ msgid "person"
 msgstr "person"
 
 #: src/features/stones/detail/PeopleSection.tsx:26
-#: src/features/transcribe/PersonFields.tsx:38
+#: src/features/transcribe/PersonFields.tsx:39
 msgid "Person {n}"
 msgstr "Person {n}"
 
-#: src/features/transcribe/TranscribeForm.tsx:134
+#: src/features/transcribe/TranscribeForm.tsx:132
 msgid "Person removed"
 msgstr "Person removed"
 
@@ -1713,7 +1886,7 @@ msgstr "Preparing…"
 msgid "Presets"
 msgstr "Presets"
 
-#: src/features/transcribe/TranscribeForm.tsx:237
+#: src/features/transcribe/TranscribeForm.tsx:242
 msgid "Previous"
 msgstr "Previous"
 
@@ -1721,10 +1894,18 @@ msgstr "Previous"
 msgid "Protect data"
 msgstr "Protect data"
 
+#: src/features/transcribe/MilitaryFields.tsx:37
+msgid "Pvt., Capt."
+msgstr "Pvt., Capt."
+
 #: src/features/transcribe/viewer/FilterControls.tsx:89
 #: src/features/transcribe/viewer/FilterControls.tsx:124
 msgid "Raking light"
 msgstr "Raking light"
+
+#: src/features/transcribe/MilitaryFields.tsx:36
+msgid "Rank"
+msgstr "Rank"
 
 #: src/app/UpdatePrompt.tsx:33
 msgid "Ready to work offline"
@@ -1738,7 +1919,7 @@ msgstr "Ready:"
 msgid "Recorded on every stone and photo you add, so merged datasets show who did what."
 msgstr "Recorded on every stone and photo you add, so merged datasets show who did what."
 
-#: src/features/transcribe/PersonFields.tsx:50
+#: src/features/transcribe/PersonFields.tsx:51
 msgid "Relationship"
 msgstr "Relationship"
 
@@ -1760,7 +1941,7 @@ msgid "Remove line"
 msgstr "Remove line"
 
 #: src/features/stones/detail/PeopleSection.tsx:41
-#: src/features/transcribe/PersonFields.tsx:58
+#: src/features/transcribe/PersonFields.tsx:60
 msgid "Remove person {n}"
 msgstr "Remove person {n}"
 
@@ -1793,7 +1974,7 @@ msgstr "Reorder stones"
 msgid "Reorder…"
 msgstr "Reorder…"
 
-#: src/features/stones/attribute-labels.ts:54
+#: src/features/stones/attribute-labels.ts:55
 msgid "Repaired"
 msgstr "Repaired"
 
@@ -1805,13 +1986,21 @@ msgstr "Reset"
 msgid "Reverse direction"
 msgstr "Reverse direction"
 
+#: src/features/transcribe/MilitaryFields.tsx:55
+msgid "Revolutionary War"
+msgstr "Revolutionary War"
+
 #: src/features/stones/RelativePlacer.tsx:174
 msgid "Right of the row"
 msgstr "Right of the row"
 
-#: src/features/stones/attribute-labels.ts:66
+#: src/features/stones/attribute-labels.ts:67
 msgid "Road"
 msgstr "Road"
+
+#: src/features/stones/attribute-labels.ts:95
+msgid "Rose / rosebud"
+msgstr "Rose / rosebud"
 
 #: src/features/capture/walk/WalkStart.tsx:86
 #: src/features/stones/detail/AttributesSection.tsx:48
@@ -1923,7 +2112,7 @@ msgstr "S"
 msgid "Same surname: {lastSurname}"
 msgstr "Same surname: {lastSurname}"
 
-#: src/features/stones/attribute-labels.ts:33
+#: src/features/stones/attribute-labels.ts:34
 msgid "Sandstone"
 msgstr "Sandstone"
 
@@ -1932,7 +2121,7 @@ msgstr "Sandstone"
 msgid "Save"
 msgstr "Save"
 
-#: src/features/transcribe/TranscribeForm.tsx:228
+#: src/features/transcribe/TranscribeForm.tsx:233
 msgid "Save & next"
 msgstr "Save & next"
 
@@ -1978,6 +2167,10 @@ msgstr "Saved with every stone you record, so others can see who did the work wh
 #: src/features/capture/walk/WalkCamera.tsx:62
 msgid "Saving…"
 msgstr "Saving…"
+
+#: src/features/transcribe/StoneFields.tsx:110
+msgid "Script"
+msgstr "Script"
 
 #: src/features/stones/RelativePlacer.tsx:178
 msgid "SE"
@@ -2041,13 +2234,17 @@ msgstr "Skip"
 msgid "Skip to content"
 msgstr "Skip to content"
 
-#: src/features/stones/attribute-labels.ts:32
+#: src/features/stones/attribute-labels.ts:33
 msgid "Slate"
 msgstr "Slate"
 
 #: src/features/capture/HoldStill.tsx:124
 msgid "Snapped onto the row line."
 msgstr "Snapped onto the row line."
+
+#: src/features/transcribe/MilitaryFields.tsx:60
+msgid "Spanish–American War"
+msgstr "Spanish–American War"
 
 #: src/features/people/relation-labels.ts:7
 msgid "Spouse"
@@ -2056,6 +2253,10 @@ msgstr "Spouse"
 #: src/features/capture/HoldStill.tsx:77
 msgid "Stand at the stone and keep the phone still… {left} s"
 msgstr "Stand at the stone and keep the phone still… {left} s"
+
+#: src/features/stones/attribute-labels.ts:98
+msgid "Star of David"
+msgstr "Star of David"
 
 #: src/features/capture/walk/WalkStart.tsx:80
 msgid "Start"
@@ -2175,7 +2376,7 @@ msgstr "Straighten and perspective"
 msgid "street map, online only"
 msgstr "street map, online only"
 
-#: src/features/stones/attribute-labels.ts:51
+#: src/features/stones/attribute-labels.ts:52
 msgid "Sunken"
 msgstr "Sunken"
 
@@ -2187,11 +2388,16 @@ msgstr "Sunlight (high contrast)"
 msgid "SW"
 msgstr "SW"
 
-#: src/features/stones/attribute-labels.ts:17
+#: src/features/transcribe/StoneFields.tsx:54
+#: src/features/transcribe/StoneFields.tsx:56
+msgid "Symbols"
+msgstr "Symbols"
+
+#: src/features/stones/attribute-labels.ts:18
 msgid "Table / altar"
 msgstr "Table / altar"
 
-#: src/features/stones/attribute-labels.ts:14
+#: src/features/stones/attribute-labels.ts:15
 msgid "Tablet"
 msgstr "Tablet"
 
@@ -2211,11 +2417,11 @@ msgstr "Tap the map where the cemetery is."
 msgid "Tap where the row starts."
 msgstr "Tap where the row starts."
 
-#: src/features/stones/attribute-labels.ts:24
+#: src/features/stones/attribute-labels.ts:25
 msgid "Temporary marker"
 msgstr "Temporary marker"
 
-#: src/features/transcribe/TranscribeView.tsx:115
+#: src/features/transcribe/TranscribeView.tsx:119
 msgid "That's the end of the list."
 msgstr "That's the end of the list."
 
@@ -2261,6 +2467,14 @@ msgstr "The provider's terms allow saving tiles for offline use"
 msgid "the stone"
 msgstr "the stone"
 
+#: src/features/transcribe/StoneFields.tsx:52
+msgid "The stone"
+msgstr "The stone"
+
+#: src/features/transcribe/ConventionsDialog.tsx:39
+msgid "The text goes on around the back"
+msgstr "The text goes on around the back"
+
 #: src/features/stones/detail/labels.ts:12
 msgid "the v1 grid"
 msgstr "the v1 grid"
@@ -2305,7 +2519,7 @@ msgstr "This walk"
 msgid "Tiles (XYZ)"
 msgstr "Tiles (XYZ)"
 
-#: src/features/stones/attribute-labels.ts:52
+#: src/features/stones/attribute-labels.ts:53
 msgid "Tilted"
 msgstr "Tilted"
 
@@ -2323,7 +2537,7 @@ msgstr "Top/bottom width"
 
 #: src/features/cemeteries/CemeteryTabs.tsx:117
 #: src/features/stones/StoneSheet.tsx:130
-#: src/features/transcribe/TranscribeView.tsx:103
+#: src/features/transcribe/TranscribeView.tsx:104
 msgid "Transcribe"
 msgstr "Transcribe"
 
@@ -2335,15 +2549,19 @@ msgstr "Transcribed"
 msgid "Transcribed, not verified"
 msgstr "Transcribed, not verified"
 
-#: src/features/transcribe/TranscribeForm.tsx:171
+#: src/features/transcribe/TranscribeForm.tsx:173
 msgid "Transcription"
 msgstr "Transcription"
+
+#: src/features/transcribe/ConventionsDialog.tsx:87
+msgid "Transcription conventions"
+msgstr "Transcription conventions"
 
 #: src/features/overlays/GridActions.tsx:26
 msgid "Treat grid rows as cemetery rows"
 msgstr "Treat grid rows as cemetery rows"
 
-#: src/features/stones/attribute-labels.ts:68
+#: src/features/stones/attribute-labels.ts:69
 msgid "Tree"
 msgstr "Tree"
 
@@ -2366,11 +2584,15 @@ msgstr "Turn right"
 msgid "Type"
 msgstr "Type"
 
-#: src/features/transcribe/TranscribeForm.tsx:124
+#: src/features/transcribe/TranscribeForm.tsx:122
 msgid "Type a name first"
 msgstr "Type a name first"
 
-#: src/features/stones/attribute-labels.ts:60
+#: src/features/transcribe/ConventionsDialog.tsx:88
+msgid "Type the inscription exactly as carved: spelling, capitals, abbreviations and line breaks. Use these marks for what the stone doesn't show plainly."
+msgstr "Type the inscription exactly as carved: spelling, capitals, abbreviations and line breaks. Use these marks for what the stone doesn't show plainly."
+
+#: src/features/stones/attribute-labels.ts:61
 msgid "Uncertain position"
 msgstr "Uncertain position"
 
@@ -2394,13 +2616,17 @@ msgstr "Uncertain position"
 #: src/features/stones/PlaceOnMap.tsx:20
 #: src/features/stones/RelativePlacer.tsx:75
 #: src/features/stones/StoneSheet.tsx:159
-#: src/features/transcribe/TranscribeForm.tsx:136
+#: src/features/transcribe/TranscribeForm.tsx:134
 msgid "Undo"
 msgstr "Undo"
 
 #: src/features/map/RowDrawer.tsx:68
 msgid "Undo point"
 msgstr "Undo point"
+
+#: src/features/transcribe/MilitaryFields.tsx:42
+msgid "Unit, as carved"
+msgstr "Unit, as carved"
 
 #: src/features/settings/CemeteryDefaultsForm.tsx:25
 msgid "Units"
@@ -2429,6 +2655,10 @@ msgstr "Unnamed person"
 #: src/features/settings/AboutPanel.tsx:22
 msgid "Updates aren't available in this browser tab"
 msgstr "Updates aren't available in this browser tab"
+
+#: src/features/stones/attribute-labels.ts:83
+msgid "Urn"
+msgstr "Urn"
 
 #: src/features/capture/HoldStill.tsx:129
 msgid "Use this position"
@@ -2466,9 +2696,13 @@ msgstr "Verified"
 msgid "Version"
 msgstr "Version"
 
-#: src/features/stones/attribute-labels.ts:61
+#: src/features/stones/attribute-labels.ts:62
 msgid "Veteran marker / flag holder"
 msgstr "Veteran marker / flag holder"
+
+#: src/features/transcribe/MilitaryFields.tsx:64
+msgid "Vietnam War"
+msgstr "Vietnam War"
 
 #: src/features/cemeteries/CemeteryTabs.tsx:102
 msgid "View"
@@ -2488,19 +2722,23 @@ msgstr "Waiting for GPS…"
 msgid "Walk a row"
 msgstr "Walk a row"
 
-#: src/features/stones/attribute-labels.ts:71
+#: src/features/stones/attribute-labels.ts:72
 msgid "Wall"
 msgstr "Wall"
+
+#: src/features/transcribe/MilitaryFields.tsx:56
+msgid "War of 1812"
+msgstr "War of 1812"
 
 #: src/features/cemeteries/ImportButton.tsx:32
 msgid "Warning"
 msgstr "Warning"
 
-#: src/features/stones/attribute-labels.ts:74
+#: src/features/stones/attribute-labels.ts:75
 msgid "Water"
 msgstr "Water"
 
-#: src/features/stones/attribute-labels.ts:46
+#: src/features/stones/attribute-labels.ts:47
 msgid "Weathered"
 msgstr "Weathered"
 
@@ -2520,6 +2758,10 @@ msgstr "Where is it? (optional)"
 msgid "Where is the row?"
 msgstr "Where is the row?"
 
+#: src/features/transcribe/ConventionsDialog.tsx:38
+msgid "Where the stone is broken off"
+msgstr "Where the stone is broken off"
+
 #: src/features/stones/RelativePlacer.tsx:167
 msgid "Which way"
 msgstr "Which way"
@@ -2528,17 +2770,45 @@ msgstr "Which way"
 msgid "White point"
 msgstr "White point"
 
-#: src/features/transcribe/PersonFields.tsx:50
+#: src/features/transcribe/PersonFields.tsx:51
 msgid "wife of John"
 msgstr "wife of John"
+
+#: src/features/stones/attribute-labels.ts:85
+msgid "Willow"
+msgstr "Willow"
+
+#: src/features/stones/attribute-labels.ts:82
+msgid "Willow and urn"
+msgstr "Willow and urn"
+
+#: src/features/stones/attribute-labels.ts:87
+msgid "Winged soul effigy"
+msgstr "Winged soul effigy"
 
 #: src/features/map/CustomSourceForm.tsx:61
 msgid "WMS"
 msgstr "WMS"
 
-#: src/features/stones/attribute-labels.ts:38
+#: src/features/stones/attribute-labels.ts:39
 msgid "Wood"
 msgstr "Wood"
+
+#: src/features/stones/attribute-labels.ts:101
+msgid "Woodmen of the World (tree stump)"
+msgstr "Woodmen of the World (tree stump)"
+
+#: src/features/transcribe/MilitaryFields.tsx:61
+msgid "World War I"
+msgstr "World War I"
+
+#: src/features/transcribe/MilitaryFields.tsx:62
+msgid "World War II"
+msgstr "World War II"
+
+#: src/features/transcribe/ConventionsDialog.tsx:47
+msgid "Write"
+msgstr "Write"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:107
 msgid "You are here"
@@ -2560,7 +2830,7 @@ msgstr "Your data could not be opened"
 msgid "Your name"
 msgstr "Your name"
 
-#: src/features/stones/attribute-labels.ts:36
+#: src/features/stones/attribute-labels.ts:37
 msgid "Zinc (white bronze)"
 msgstr "Zinc (white bronze)"
 

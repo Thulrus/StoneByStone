@@ -123,6 +123,27 @@ The deletion stamp is the greater of the two.
 `Monument.status` is one of `located`, `photographed`, `transcribed`, `verified`. It is
 derived from the data (has a photo; has a person or an inscription) and stored for
 convenience; readers may recompute it. `verified` holds the stamp of an explicit check.
+It is cleared automatically when any transcription field (inscription, epitaph, carver,
+symbols, or a person on the stone) changes afterwards.
+
+### Inscriptions and conventions
+
+`Monument.inscription.text` is the inscription as carved. `language` is a BCP 47 tag and
+`script` an ISO 15924 code (`Latn`, `Hebr`, `Latf` for Fraktur). `convention` names the
+transcription convention the text was written in; the cemetery's current one is
+`cemetery.settings.transcriptionConvention`, and the archive README states it.
+
+| Convention    | Illegible     | Uncertain   | Broken off | On the back | Line breaks   |
+| ------------- | ------------- | ----------- | ---------- | ----------- | ------------- |
+| `as-carved`   | `[illegible]` | `[?]` after | `[broken]` | `[on back]` | real newlines |
+| `slash-lines` | `[illegible]` | `[?]` after | `[broken]` | `[on back]` | `/`           |
+| `dashes`      | `---`         | `(?)` after | `[broken]` | `[on back]` | real newlines |
+
+`Monument.symbols` lists carved symbols: ids such as `willow-urn`, `lamb`, `clasped-hands`,
+`masonic`, `odd-fellows`, `woodmen`, `gar` (see `SYMBOLS` in the source), or free text for
+anything else. `Monument.carver` is a carver's signature as carved. `Person.military` holds
+`conflict`, `rank`, `unit` (as carved, e.g. `Co. B, 12th Vt. Inf.`), `marker` (the
+government-issue or society marker) and `notes`.
 
 ### Dates
 

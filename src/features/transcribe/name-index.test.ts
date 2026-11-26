@@ -43,11 +43,18 @@ test('a lookup over 20 000 names takes under 50 ms', () => {
     (_, i) => `${given[i % 10]} ${String.fromCharCode(65 + (i % 26))}surname${i % 3000}`,
   );
   const index = buildNameIndex(people(...names));
-  const times: number[] = [];
-  for (const q of ['m', 'mary b', 'wil', 'zz', 'eli k', 'thomas', 'jo', 'h']) {
-    const t0 = performance.now();
-    suggestNames(index, q);
-    times.push(performance.now() - t0);
-  }
+  // Median of several runs per query, after a warm-up, so a GC pause under a loaded test
+  // run doesn't count as the lookup's cost.
+  const median = (q: string) => {
+    const runs = Array.from({ length: 7 }, () => {
+      const t0 = performance.now();
+      suggestNames(index, q);
+      return performance.now() - t0;
+    }).sort((a, b) => a - b);
+    return runs[3] ?? 0;
+  };
+  const queries = ['m', 'mary b', 'wil', 'zz', 'eli k', 'thomas', 'jo', 'h'];
+  queries.forEach((q) => suggestNames(index, q));
+  const times = queries.map(median);
   expect(Math.max(...times)).toBeLessThan(50);
 });

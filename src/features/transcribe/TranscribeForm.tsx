@@ -6,16 +6,18 @@ import { removePerson } from '../../data/people';
 import {
   emptyPerson,
   isBlank,
-  personDraft,
+  transcriptionDraft,
   type PersonDraft,
   type TranscriptionDraft,
 } from '../../data/transcribe';
-import type { ID, Monument, Person } from '../../domain';
+import type { Convention, ID, Monument, Person } from '../../domain';
 import { Button } from '../../ui/Button';
 import { cn } from '../../ui/cn';
 import { toast } from '../../ui/toast-store';
 import { LinkPersonDialog } from '../people/LinkPersonDialog';
+import { ShortcutHelp } from './ConventionsDialog';
 import { PersonFields } from './PersonFields';
+import { StoneFields } from './StoneFields';
 import { applyEdit, illegible, uncertain } from './shortcuts';
 
 export interface TranscribeFormProps {
@@ -29,6 +31,8 @@ export interface TranscribeFormProps {
   onPrevious: () => void;
   /** Cemetery setting that orders numeric dates. */
   dateLocale: string;
+  /** The cemetery's transcription marks (plan §10.5). */
+  convention: Convention;
   /** Name autocomplete. */
   suggestNames?: (typed: string) => string[];
   /** "Row 1, stone 3" for a person's stone. */
@@ -46,14 +50,7 @@ export function TranscribeForm(props: TranscribeFormProps) {
   );
   const [initial, setInitial] = useState<TranscriptionDraft>();
   // Taken once: later live updates are this form's own saves.
-  if (people && !initial) {
-    const drafts = people.map(personDraft);
-    setInitial({
-      inscription: props.stone.inscription?.text ?? '',
-      epitaph: props.stone.epitaph ?? '',
-      people: drafts.length ? drafts : [emptyPerson(store.newId())],
-    });
-  }
+  if (people && !initial) setInitial(transcriptionDraft(props.stone, people, () => store.newId()));
   return initial ? <Body {...props} initial={initial} /> : <Body {...props} />;
 }
 
@@ -66,6 +63,7 @@ function Body({
   onSaveNow,
   whereOf,
   dateLocale,
+  convention,
   suggestNames,
   initial,
 }: TranscribeFormProps & { initial?: TranscriptionDraft }) {
@@ -157,11 +155,15 @@ function Body({
     } else if (e.key === '.' && text) {
       e.preventDefault();
       const kind = text.dataset.kind === 'date' ? 'date' : 'text';
-      const edit = uncertain(text.value, text.selectionStart ?? 0, text.selectionEnd ?? 0, kind);
+      const [from, to] = [text.selectionStart ?? 0, text.selectionEnd ?? 0];
+      const edit = uncertain(text.value, from, to, kind, convention.uncertain);
       if (edit) applyEdit(text, edit);
     } else if (e.key.toLowerCase() === 'i' && text) {
       e.preventDefault();
-      applyEdit(text, illegible(text.selectionStart ?? 0, text.selectionEnd ?? 0));
+      applyEdit(
+        text,
+        illegible(text.selectionStart ?? 0, text.selectionEnd ?? 0, convention.illegible),
+      );
     }
   };
 
@@ -223,6 +225,9 @@ function Body({
           className={box}
         />
       </div>
+      {draft ? (
+        <StoneFields value={draft} onChange={(patch) => setDraft({ ...draft, ...patch })} />
+      ) : null}
       <div className="flex flex-wrap gap-2">
         <Button type="submit" size="lg">
           <Trans>Save & next</Trans>
@@ -240,12 +245,7 @@ function Body({
           <Trans>Add another person</Trans>
         </Button>
       </div>
-      <p className="text-sm text-fg-muted">
-        <Trans>
-          Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark
-          uncertain [?]. Ctrl+I: insert [illegible].
-        </Trans>
-      </p>
+      <ShortcutHelp convention={convention} />
       {linking ? (
         <LinkPersonDialog
           key={linking.id}

@@ -16,3 +16,4 @@ export * from './photo/exif';
 export * from './photo/phash';
 export * from './attributes';
 export * from './relations';
+export * from './conventions';

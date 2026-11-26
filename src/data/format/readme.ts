@@ -1,7 +1,20 @@
+import { conventionOf } from '../../domain';
 import { APP_VERSION, type Manifest } from './archive';
 
+/** `as-carved ([illegible], [?] after an uncertain word, ...)`. */
+function conventionLine(id: string | undefined): string {
+  const c = conventionOf(id);
+  const lines = c.lineBreak === 'slash' ? '" / " between lines' : 'line breaks as carved';
+  return `${id ?? c.id} (${c.illegible} illegible, ${c.uncertain} after an uncertain word, ${c.broken}, ${c.onBack}, ${lines})`;
+}
+
 /** README.txt placed in every `.sbs` archive. */
-export function readmeText(m: Manifest, cemeteryName: string, license?: string): string {
+export function readmeText(
+  m: Manifest,
+  cemeteryName: string,
+  license?: string,
+  convention?: string,
+): string {
   return `StoneByStone archive
 ====================
 
@@ -10,6 +23,7 @@ Kind:      ${m.kind}
 Created:   ${m.createdAt} by ${m.createdBy.displayName || 'an unnamed contributor'}
 App:       StoneByStone ${APP_VERSION}, format version ${m.formatVersion}
 License:   ${license ?? 'not stated'}
+Transcription convention: ${conventionLine(convention)}
 
 This is an ordinary zip file. Everything in it is open and documented, so the data stays
 usable without the app.
