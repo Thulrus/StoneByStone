@@ -39,7 +39,8 @@ export const personDraft = (p: Person): PersonDraft => ({
   relationship: p.relationshipText ?? '',
 });
 
-const blank = (d: PersonDraft) => !(d.name + d.born + d.died + d.age + d.relationship).trim();
+export const isBlank = (d: PersonDraft): boolean =>
+  !(d.name + d.born + d.died + d.age + d.relationship).trim();
 
 /** Only the fields whose typed text changed, parsed (names, fuzzy dates, ages). */
 function personPatch(d: PersonDraft, was: PersonDraft | undefined, dateLocale: string) {
@@ -88,12 +89,12 @@ export async function saveTranscription(
     for (const d of draft.people) {
       const existing = await store.persons.get(d.id, { includeDeleted: true });
       if (existing && !existing.deleted && existing.monumentId === monumentId) {
-        if (blank(d)) await store.persons.delete(d.id);
+        if (isBlank(d)) await store.persons.delete(d.id);
         else {
           const p = personPatch(d, personDraft(existing), dateLocale);
           if (Object.keys(p).length) await store.persons.update(d.id, p);
         }
-      } else if ((!existing || existing.deleted) && !blank(d)) {
+      } else if ((!existing || existing.deleted) && !isBlank(d)) {
         const id = existing ? store.newId() : d.id;
         if (id !== d.id) renamed[d.id] = id;
         await store.persons.create({

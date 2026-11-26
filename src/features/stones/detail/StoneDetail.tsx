@@ -6,6 +6,7 @@ import { useStore } from '../../../app/store-context';
 import type { Cemetery, MapFeature, Monument, Row } from '../../../domain';
 import { STATUS_LABEL } from '../labels';
 import { StatusIcon } from '../StatusIcon';
+import { useStoneLabel } from '../useStoneLabel';
 import { AttributesSection } from './AttributesSection';
 import { HistorySection } from './HistorySection';
 import { PeopleSection } from './PeopleSection';
@@ -32,6 +33,7 @@ export function StoneDetail({
 }: StoneDetailProps) {
   const { t } = useLingui();
   const store = useStore();
+  const stoneLabel = useStoneLabel(rows, labelOf);
   const first = useLiveQuery(
     async () => (await store.persons.byMonument(stone.id))[0]?.name.asCarved,
     [store, stone.id],
@@ -59,7 +61,7 @@ export function StoneDetail({
         </p>
       </div>
       <PhotosSection monumentId={stone.id} title={where} />
-      <PeopleSection stone={stone} />
+      <PeopleSection stone={stone} whereOf={(id) => stoneLabel(stones.find((m) => m.id === id))} />
       <AttributesSection stone={stone} rows={rows} labelOf={labelOf} />
       <PositionSection
         stone={stone}

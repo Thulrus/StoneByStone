@@ -19,6 +19,10 @@ msgstr "(deleted)"
 msgid "(new stones go before stone 1)"
 msgstr "(new stones go before stone 1)"
 
+#: src/features/people/LinkPersonDialog.tsx:79
+msgid "(no name yet)"
+msgstr "(no name yet)"
+
 #: src/features/capture/walk/RowOrderDialogs.tsx:106
 msgid "(skipped)"
 msgstr "(skipped)"
@@ -135,7 +139,7 @@ msgstr "{name}: about {count} tiles, roughly {size}."
 msgid "{pct} transcribed"
 msgstr "{pct} transcribed"
 
-#: src/features/transcribe/TranscribeView.tsx:150
+#: src/features/transcribe/TranscribeView.tsx:145
 msgid "{position} of {total}"
 msgstr "{position} of {total}"
 
@@ -198,11 +202,11 @@ msgstr "Add a custom source"
 msgid "Add a plat map or drone image"
 msgstr "Add a plat map or drone image"
 
-#: src/features/transcribe/TranscribeForm.tsx:184
+#: src/features/transcribe/TranscribeForm.tsx:232
 msgid "Add another person"
 msgstr "Add another person"
 
-#: src/features/stones/detail/PeopleSection.tsx:70
+#: src/features/stones/detail/PeopleSection.tsx:78
 msgid "Add person"
 msgstr "Add person"
 
@@ -253,7 +257,7 @@ msgstr "Adjust pins for {name}"
 msgid "After stone {0}"
 msgstr "After stone {0}"
 
-#: src/features/transcribe/PersonFields.tsx:52
+#: src/features/transcribe/PersonFields.tsx:59
 msgid "Age"
 msgstr "Age"
 
@@ -302,8 +306,8 @@ msgid "Back along the row"
 msgstr "Back along the row"
 
 #. placeholder {0}: cemetery.name
-#: src/features/stones/detail/StoneDetail.tsx:52
-#: src/features/transcribe/TranscribeView.tsx:104
+#: src/features/stones/detail/StoneDetail.tsx:54
+#: src/features/transcribe/TranscribeView.tsx:98
 msgid "Back to {0}"
 msgstr "Back to {0}"
 
@@ -318,7 +322,7 @@ msgstr "Back to cemeteries"
 msgid "Back to its row position"
 msgstr "Back to its row position"
 
-#: src/features/transcribe/TranscribeView.tsx:122
+#: src/features/transcribe/TranscribeView.tsx:116
 msgid "Back to the first stone"
 msgstr "Back to the first stone"
 
@@ -371,7 +375,7 @@ msgstr "Bench"
 msgid "Black point"
 msgstr "Black point"
 
-#: src/features/transcribe/PersonFields.tsx:50
+#: src/features/transcribe/PersonFields.tsx:57
 msgid "Born"
 msgstr "Born"
 
@@ -483,6 +487,10 @@ msgstr "Check for updates"
 msgid "Checking…"
 msgstr "Checking…"
 
+#: src/features/people/relation-labels.ts:9
+msgid "Child"
+msgstr "Child"
+
 #: src/ui/Dialog.tsx:59
 msgid "Close"
 msgstr "Close"
@@ -551,7 +559,7 @@ msgid "Couldn't save that photo"
 msgstr "Couldn't save that photo"
 
 #: src/features/capture/walk/useWalkCapture.ts:159
-#: src/features/transcribe/TranscribeView.tsx:63
+#: src/features/transcribe/TranscribeView.tsx:65
 msgid "Couldn't save that stone"
 msgstr "Couldn't save that stone"
 
@@ -656,7 +664,7 @@ msgstr "Details"
 msgid "Diagram"
 msgstr "Diagram"
 
-#: src/features/transcribe/PersonFields.tsx:51
+#: src/features/transcribe/PersonFields.tsx:58
 msgid "Died"
 msgstr "Died"
 
@@ -749,7 +757,7 @@ msgstr "Enter a name."
 msgid "Enter a valid web address."
 msgstr "Enter a valid web address."
 
-#: src/features/transcribe/TranscribeForm.tsx:188
+#: src/features/transcribe/TranscribeForm.tsx:236
 msgid "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain [?]. Ctrl+I: insert [illegible]."
 msgstr "Enter in a one-line field: save & next. Ctrl+Enter: add another person. Ctrl+.: mark uncertain [?]. Ctrl+I: insert [illegible]."
 
@@ -757,7 +765,7 @@ msgstr "Enter in a one-line field: save & next. Ctrl+Enter: add another person. 
 msgid "Enter the WMS layer name."
 msgstr "Enter the WMS layer name."
 
-#: src/features/transcribe/TranscribeForm.tsx:158
+#: src/features/transcribe/TranscribeForm.tsx:206
 msgid "Epitaph"
 msgstr "Epitaph"
 
@@ -801,6 +809,10 @@ msgstr "Field checklist"
 #: src/features/stones/attribute-labels.ts:40
 msgid "Fieldstone"
 msgstr "Fieldstone"
+
+#: src/features/people/LinkPersonDialog.tsx:62
+msgid "Find by name"
+msgstr "Find by name"
 
 #: src/features/cemeteries/setup/AddRowsForm.tsx:40
 msgid "First row"
@@ -994,7 +1006,7 @@ msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your sur
 msgid "In-app camera"
 msgstr "In-app camera"
 
-#: src/features/transcribe/TranscribeForm.tsx:131
+#: src/features/transcribe/TranscribeForm.tsx:176
 msgid "Inscription, as carved"
 msgstr "Inscription, as carved"
 
@@ -1094,6 +1106,22 @@ msgstr "Light from (degrees)"
 #: src/features/stones/attribute-labels.ts:35
 msgid "Limestone"
 msgstr "Limestone"
+
+#: src/features/people/LinkPersonDialog.tsx:52
+msgid "Link {who} to…"
+msgstr "Link {who} to…"
+
+#: src/features/transcribe/PersonFields.tsx:65
+msgid "Link to a person…"
+msgstr "Link to a person…"
+
+#: src/features/people/RelationsList.tsx:31
+msgid "Linked people"
+msgstr "Linked people"
+
+#: src/features/people/LinkPersonDialog.tsx:45
+msgid "Linked: {rel} {name}"
+msgstr "Linked: {rel} {name}"
 
 #: src/features/map/LazyMap.tsx:23
 msgid "Loading map…"
@@ -1229,11 +1257,11 @@ msgstr "N"
 msgid "Name"
 msgstr "Name"
 
-#: src/features/stones/detail/PeopleSection.tsx:26
+#: src/features/stones/detail/PeopleSection.tsx:31
 msgid "Name as carved"
 msgstr "Name as carved"
 
-#: src/features/transcribe/PersonFields.tsx:48
+#: src/features/transcribe/PersonFields.tsx:55
 msgid "Name, as carved"
 msgstr "Name, as carved"
 
@@ -1287,6 +1315,10 @@ msgstr "No GPS fixes came in. Check that location is on, then try again."
 msgid "no line"
 msgstr "no line"
 
+#: src/features/people/LinkPersonDialog.tsx:68
+msgid "No one else to link to yet."
+msgstr "No one else to link to yet."
+
 #: src/features/transcribe/PhotoPane.tsx:43
 msgid "No photo of this stone yet."
 msgstr "No photo of this stone yet."
@@ -1311,7 +1343,7 @@ msgstr "No rows planned. Add them above, or start a new row when you walk."
 msgid "No section"
 msgstr "No section"
 
-#: src/features/transcribe/TranscribeView.tsx:114
+#: src/features/transcribe/TranscribeView.tsx:108
 msgid "No stones in this list. Choose another list above."
 msgstr "No stones in this list. Choose another list above."
 
@@ -1425,6 +1457,10 @@ msgstr "Original size (largest files)"
 msgid "Other"
 msgstr "Other"
 
+#: src/features/people/relation-labels.ts:11
+msgid "Other relation"
+msgstr "Other relation"
+
 #: src/features/overlays/ImagePicker.tsx:25
 msgid "Overlay image: tap a point you can also find on the map"
 msgstr "Overlay image: tap a point you can also find on the map"
@@ -1432,6 +1468,10 @@ msgstr "Overlay image: tap a point you can also find on the map"
 #: src/app/pages/NotFoundPage.tsx:8
 msgid "Page not found"
 msgstr "Page not found"
+
+#: src/features/people/relation-labels.ts:8
+msgid "Parent"
+msgstr "Parent"
 
 #: src/features/stones/attribute-labels.ts:65
 msgid "Path"
@@ -1441,7 +1481,8 @@ msgstr "Path"
 msgid "Pedestal / die-on-base"
 msgstr "Pedestal / die-on-base"
 
-#: src/features/stones/detail/PeopleSection.tsx:52
+#: src/features/people/LinkPersonDialog.tsx:71
+#: src/features/stones/detail/PeopleSection.tsx:60
 msgid "People"
 msgstr "People"
 
@@ -1449,10 +1490,14 @@ msgstr "People"
 msgid "person"
 msgstr "person"
 
-#: src/features/stones/detail/PeopleSection.tsx:21
-#: src/features/transcribe/PersonFields.tsx:47
+#: src/features/stones/detail/PeopleSection.tsx:26
+#: src/features/transcribe/PersonFields.tsx:54
 msgid "Person {n}"
 msgstr "Person {n}"
+
+#: src/features/transcribe/TranscribeForm.tsx:128
+msgid "Person removed"
+msgstr "Person removed"
 
 #: src/features/capture/Camera.tsx:109
 msgid "Phone camera"
@@ -1581,7 +1626,7 @@ msgstr "Preparing…"
 msgid "Presets"
 msgstr "Presets"
 
-#: src/features/transcribe/TranscribeForm.tsx:181
+#: src/features/transcribe/TranscribeForm.tsx:229
 msgid "Previous"
 msgstr "Previous"
 
@@ -1606,7 +1651,7 @@ msgstr "Ready:"
 msgid "Recorded on every stone and photo you add, so merged datasets show who did what."
 msgstr "Recorded on every stone and photo you add, so merged datasets show who did what."
 
-#: src/features/transcribe/PersonFields.tsx:53
+#: src/features/transcribe/PersonFields.tsx:60
 msgid "Relationship"
 msgstr "Relationship"
 
@@ -1615,7 +1660,7 @@ msgid "Reload"
 msgstr "Reload"
 
 #: src/features/map/ImageryPicker.tsx:89
-#: src/features/stones/detail/PeopleSection.tsx:39
+#: src/features/stones/detail/PeopleSection.tsx:44
 msgid "Remove"
 msgstr "Remove"
 
@@ -1627,7 +1672,8 @@ msgstr "Remove gap"
 msgid "Remove line"
 msgstr "Remove line"
 
-#: src/features/stones/detail/PeopleSection.tsx:36
+#: src/features/stones/detail/PeopleSection.tsx:41
+#: src/features/transcribe/PersonFields.tsx:68
 msgid "Remove person {n}"
 msgstr "Remove person {n}"
 
@@ -1704,9 +1750,9 @@ msgstr "Row {name} ({n} stones)"
 msgid "Row {name}, stone {n}"
 msgstr "Row {name}, stone {n}"
 
-#: src/features/stones/detail/StoneDetail.tsx:45
+#: src/features/stones/detail/StoneDetail.tsx:47
 #: src/features/stones/StoneSheet.tsx:64
-#: src/features/transcribe/TranscribeView.tsx:93
+#: src/features/stones/useStoneLabel.ts:14
 msgid "Row {rowName}"
 msgstr "Row {rowName}"
 
@@ -1727,9 +1773,9 @@ msgstr "Row {rowName} done"
 msgid "Row {rowName}, stone {0}"
 msgstr "Row {rowName}, stone {0}"
 
-#: src/features/stones/detail/StoneDetail.tsx:46
+#: src/features/stones/detail/StoneDetail.tsx:48
 #: src/features/stones/RelativePlacer.tsx:54
-#: src/features/transcribe/TranscribeView.tsx:94
+#: src/features/stones/useStoneLabel.ts:16
 msgid "Row {rowName}, stone {n}"
 msgstr "Row {rowName}, stone {n}"
 
@@ -1799,7 +1845,7 @@ msgstr "Sandstone"
 msgid "Save"
 msgstr "Save"
 
-#: src/features/transcribe/TranscribeForm.tsx:172
+#: src/features/transcribe/TranscribeForm.tsx:220
 msgid "Save & next"
 msgstr "Save & next"
 
@@ -1895,6 +1941,10 @@ msgstr "Show"
 msgid "Shown on the map. Check the provider's terms."
 msgstr "Shown on the map. Check the provider's terms."
 
+#: src/features/people/relation-labels.ts:10
+msgid "Sibling"
+msgstr "Sibling"
+
 #: src/features/capture/walk/WalkCamera.tsx:133
 #: src/features/capture/walk/WalkPanel.tsx:136
 msgid "Skip"
@@ -1911,6 +1961,10 @@ msgstr "Slate"
 #: src/features/capture/HoldStill.tsx:124
 msgid "Snapped onto the row line."
 msgstr "Snapped onto the row line."
+
+#: src/features/people/relation-labels.ts:7
+msgid "Spouse"
+msgstr "Spouse"
 
 #: src/features/capture/HoldStill.tsx:77
 msgid "Stand at the stone and keep the phone still… {left} s"
@@ -1932,11 +1986,11 @@ msgstr "Status key"
 msgid "stone"
 msgstr "stone"
 
-#: src/features/stones/detail/StoneDetail.tsx:47
+#: src/features/stones/detail/StoneDetail.tsx:49
 #: src/features/stones/RelativePlacer.tsx:56
 #: src/features/stones/StoneSheet.tsx:79
 #: src/features/stones/StoneSheet.tsx:169
-#: src/features/transcribe/TranscribeView.tsx:95
+#: src/features/stones/useStoneLabel.ts:11
 msgid "Stone"
 msgstr "Stone"
 
@@ -2074,7 +2128,7 @@ msgstr "Tap where the row starts."
 msgid "Temporary marker"
 msgstr "Temporary marker"
 
-#: src/features/transcribe/TranscribeView.tsx:119
+#: src/features/transcribe/TranscribeView.tsx:113
 msgid "That's the end of the list."
 msgstr "That's the end of the list."
 
@@ -2107,6 +2161,10 @@ msgstr "The data on this device was saved by a newer version of StoneByStone (da
 #: src/features/capture/Camera.tsx:81
 msgid "The in-app camera isn't available here. Use your phone's camera app."
 msgstr "The in-app camera isn't available here. Use your phone's camera app."
+
+#: src/features/people/LinkPersonDialog.tsx:55
+msgid "The other person is their"
+msgstr "The other person is their"
 
 #: src/features/map/CustomSourceForm.tsx:102
 msgid "The provider's terms allow saving tiles for offline use"
@@ -2148,6 +2206,10 @@ msgstr "This device can't show the map. Sections and rows still work without it.
 msgid "This imagery can't be saved for offline use. The diagram works offline."
 msgstr "This imagery can't be saved for offline use. The diagram works offline."
 
+#: src/features/people/LinkPersonDialog.tsx:50
+msgid "this person"
+msgstr "this person"
+
 #: src/features/capture/walk/WalkSummary.tsx:47
 msgid "This walk"
 msgstr "This walk"
@@ -2174,7 +2236,7 @@ msgstr "Top/bottom width"
 
 #: src/features/cemeteries/CemeteryTabs.tsx:117
 #: src/features/stones/StoneSheet.tsx:130
-#: src/features/transcribe/TranscribeView.tsx:107
+#: src/features/transcribe/TranscribeView.tsx:101
 msgid "Transcribe"
 msgstr "Transcribe"
 
@@ -2186,7 +2248,7 @@ msgstr "Transcribed"
 msgid "Transcribed, not verified"
 msgstr "Transcribed, not verified"
 
-#: src/features/transcribe/TranscribeForm.tsx:120
+#: src/features/transcribe/TranscribeForm.tsx:165
 msgid "Transcription"
 msgstr "Transcription"
 
@@ -2217,6 +2279,10 @@ msgstr "Turn right"
 msgid "Type"
 msgstr "Type"
 
+#: src/features/transcribe/TranscribeForm.tsx:118
+msgid "Type a name first"
+msgstr "Type a name first"
+
 #: src/features/stones/attribute-labels.ts:60
 msgid "Uncertain position"
 msgstr "Uncertain position"
@@ -2236,10 +2302,12 @@ msgstr "Uncertain position"
 #: src/features/overlays/ImagePinWorkspace.tsx:36
 #: src/features/overlays/OverlayLayers.tsx:66
 #: src/features/overlays/OverlaysPanel.tsx:44
+#: src/features/people/LinkPersonDialog.tsx:46
 #: src/features/stones/detail/PhotosSection.tsx:52
 #: src/features/stones/PlaceOnMap.tsx:20
 #: src/features/stones/RelativePlacer.tsx:75
 #: src/features/stones/StoneSheet.tsx:159
+#: src/features/transcribe/TranscribeForm.tsx:130
 msgid "Undo"
 msgstr "Undo"
 
@@ -2254,6 +2322,14 @@ msgstr "Units"
 #: src/features/settings/CemeteryDefaultsForm.tsx:42
 msgid "Units and photo quality apply to cemeteries you create from now on."
 msgstr "Units and photo quality apply to cemeteries you create from now on."
+
+#: src/features/people/RelationsList.tsx:46
+msgid "Unlink"
+msgstr "Unlink"
+
+#: src/features/people/RelationsList.tsx:43
+msgid "Unlink {name}"
+msgstr "Unlink {name}"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:102
 msgid "Unnamed cemetery"
@@ -2365,7 +2441,7 @@ msgstr "Which way"
 msgid "White point"
 msgstr "White point"
 
-#: src/features/transcribe/PersonFields.tsx:53
+#: src/features/transcribe/PersonFields.tsx:60
 msgid "wife of John"
 msgstr "wife of John"
 

@@ -2,15 +2,19 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { useStore } from '../../app/store-context';
+import { removePerson } from '../../data/people';
 import {
   emptyPerson,
+  isBlank,
   personDraft,
   type PersonDraft,
   type TranscriptionDraft,
 } from '../../data/transcribe';
-import type { ID, Monument } from '../../domain';
+import type { ID, Monument, Person } from '../../domain';
 import { Button } from '../../ui/Button';
 import { cn } from '../../ui/cn';
+import { toast } from '../../ui/toast-store';
+import { LinkPersonDialog } from '../people/LinkPersonDialog';
 import { PersonFields } from './PersonFields';
 import { applyEdit, illegible, uncertain } from './shortcuts';
 
@@ -23,6 +27,8 @@ export interface TranscribeFormProps {
   onDraft: (d: TranscriptionDraft) => void;
   onNext: () => void;
   onPrevious: () => void;
+  /** "Row 1, stone 3" for a person's stone. */
+  whereOf: (monumentId: ID | undefined) => string;
   /** Save without moving; resolves to replaced person ids. */
   onSaveNow: (d: TranscriptionDraft) => Promise<Record<ID, ID>>;
 }
@@ -54,6 +60,7 @@ function Body({
   onNext,
   onPrevious,
   onSaveNow,
+  whereOf,
   initial,
 }: TranscribeFormProps & { initial?: TranscriptionDraft }) {
   const { t } = useLingui();
@@ -83,15 +90,53 @@ function Body({
   const setPerson = (p: PersonDraft) =>
     draft && setDraft({ ...draft, people: draft.people.map((x) => (x.id === p.id ? p : x)) });
 
+  const [linking, setLinking] = useState<Person>();
+
+  /** Save now; the draft with any replaced person ids swapped in. */
+  const saveNow = async (d: TranscriptionDraft) => {
+    const renamed = await onSaveNow(d);
+    return { ...d, people: d.people.map((p) => ({ ...p, id: renamed[p.id] ?? p.id })) };
+  };
+
   /** Ctrl+Enter: save, and a new person on this stone. */
   const addPerson = async () => {
     if (!draft) return;
-    const renamed = await onSaveNow(draft);
+    const saved = await saveNow(draft);
     const fresh = emptyPerson(store.newId());
     focusPerson.current = fresh.id;
-    setDraft({
-      ...draft,
-      people: [...draft.people.map((p) => ({ ...p, id: renamed[p.id] ?? p.id })), fresh],
+    setDraft({ ...saved, people: [...saved.people, fresh] });
+  };
+
+  /** Links need a saved person, so save first. */
+  const openLink = async (p: PersonDraft) => {
+    if (!draft) return;
+    const at = draft.people.indexOf(p);
+    const saved = await saveNow(draft);
+    setDraft(saved);
+    const person = await store.persons.get(saved.people[at]?.id ?? p.id);
+    if (person) setLinking(person);
+    else toast({ title: t`Type a name first`, tone: 'error' });
+  };
+
+  const remove = async (p: PersonDraft) => {
+    if (!draft) return;
+    const rest = draft.people.filter((x) => x.id !== p.id);
+    setDraft({ ...draft, people: rest.length ? rest : [emptyPerson(store.newId())] });
+    if (!(await store.persons.get(p.id))) return;
+    await removePerson(store, p.id);
+    toast({
+      title: t`Person removed`,
+      action: {
+        label: t`Undo`,
+        onAction: () =>
+          void store
+            .undo()
+            .then(() =>
+              setDraftState(
+                (d) => d && { ...d, people: [...d.people.filter((x) => !isBlank(x)), p] },
+              ),
+            ),
+      },
     });
   };
 
@@ -147,6 +192,9 @@ function Body({
           person={p}
           n={i + 1}
           onChange={setPerson}
+          onRemove={() => void remove(p)}
+          onLink={() => void openLink(p)}
+          whereOf={whereOf}
           nameRef={(el) => {
             if (el) nameInputs.current.set(p.id, el);
             else nameInputs.current.delete(p.id);
@@ -190,6 +238,17 @@ function Body({
           uncertain [?]. Ctrl+I: insert [illegible].
         </Trans>
       </p>
+      {linking ? (
+        <LinkPersonDialog
+          key={linking.id}
+          person={linking}
+          whereOf={whereOf}
+          open
+          onOpenChange={(o) => {
+            if (!o) setLinking(undefined);
+          }}
+        />
+      ) : null}
     </form>
   );
 }

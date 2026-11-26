@@ -1,6 +1,9 @@
 import { useLingui } from '@lingui/react/macro';
 import { useId, type InputHTMLAttributes, type Ref } from 'react';
 import type { PersonDraft } from '../../data/transcribe';
+import type { ID } from '../../domain';
+import { Button } from '../../ui/Button';
+import { RelationsList } from '../people/RelationsList';
 
 function Input({
   label,
@@ -31,11 +34,15 @@ export interface PersonFieldsProps {
   person: PersonDraft;
   n: number;
   onChange: (p: PersonDraft) => void;
+  onRemove: () => void;
+  onLink: () => void;
+  whereOf: (monumentId: ID | undefined) => string;
   nameRef?: Ref<HTMLInputElement>;
 }
 
 /** One person on the stone, as carved (plan §9). Enter in any field is Save & next. */
-export function PersonFields({ person, n, onChange, nameRef }: PersonFieldsProps) {
+export function PersonFields(props: PersonFieldsProps) {
+  const { person, n, onChange, onRemove, onLink, whereOf, nameRef } = props;
   const { t } = useLingui();
   const field = (k: keyof Omit<PersonDraft, 'id'>) => ({
     value: person[k],
@@ -51,6 +58,15 @@ export function PersonFields({ person, n, onChange, nameRef }: PersonFieldsProps
         <Input label={t`Died`} kind="date" {...field('died')} />
         <Input label={t`Age`} kind="date" {...field('age')} />
         <Input label={t`Relationship`} placeholder={t`wife of John`} {...field('relationship')} />
+      </div>
+      <RelationsList personId={person.id} whereOf={whereOf} />
+      <div className="flex flex-wrap gap-2">
+        <Button variant="secondary" onClick={onLink}>
+          {t`Link to a person…`}
+        </Button>
+        <Button variant="ghost" onClick={onRemove}>
+          {t`Remove person ${n}`}
+        </Button>
       </div>
     </fieldset>
   );

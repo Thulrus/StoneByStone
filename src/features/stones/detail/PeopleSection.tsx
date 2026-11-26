@@ -2,10 +2,14 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { useStore } from '../../../app/store-context';
-import { parseName, type Monument, type Person } from '../../../domain';
+import { removePerson } from '../../../data/people';
+import { parseName, type ID, type Monument, type Person } from '../../../domain';
 import { Button } from '../../../ui/Button';
+import { RelationsList } from '../../people/RelationsList';
 
-function PersonRow({ person, n }: { person: Person; n: number }) {
+type WhereOf = (monumentId: ID | undefined) => string;
+
+function PersonRow({ person, n, whereOf }: { person: Person; n: number; whereOf: WhereOf }) {
   const { t } = useLingui();
   const store = useStore();
   const saved = person.name.asCarved ?? '';
@@ -15,35 +19,39 @@ function PersonRow({ person, n }: { person: Person; n: number }) {
     if (text.trim() !== saved) void store.persons.update(person.id, { name: parseName(text) });
   };
   return (
-    <li className="flex items-end gap-2">
-      <label className="flex flex-1 flex-col gap-1">
-        <span className="font-medium">
-          <Trans>Person {n}</Trans>
-        </span>
-        <input
-          className="min-h-12 rounded-lg bg-surface-2 px-3 text-lg"
-          value={draft ?? saved}
-          placeholder={t`Name as carved`}
-          onChange={(e) => setDraft(e.currentTarget.value)}
-          onBlur={(e) => save(e.currentTarget.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') e.currentTarget.blur();
-          }}
-        />
-      </label>
-      <Button
-        variant="ghost"
-        aria-label={t`Remove person ${n}`}
-        onClick={() => void store.persons.delete(person.id)}
-      >
-        <Trans>Remove</Trans>
-      </Button>
+    <li className="flex flex-col gap-1">
+      <div className="flex items-end gap-2">
+        <label className="flex flex-1 flex-col gap-1">
+          <span className="font-medium">
+            <Trans>Person {n}</Trans>
+          </span>
+          <input
+            className="min-h-12 rounded-lg bg-surface-2 px-3 text-lg"
+            value={draft ?? saved}
+            placeholder={t`Name as carved`}
+            onChange={(e) => setDraft(e.currentTarget.value)}
+            onBlur={(e) => save(e.currentTarget.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') e.currentTarget.blur();
+            }}
+          />
+        </label>
+        <Button
+          variant="ghost"
+          aria-label={t`Remove person ${n}`}
+          onClick={() => void removePerson(store, person.id)}
+        >
+          <Trans>Remove</Trans>
+        </Button>
+      </div>
+      {person.relationshipText ? <p className="text-fg-muted">{person.relationshipText}</p> : null}
+      <RelationsList personId={person.id} whereOf={whereOf} />
     </li>
   );
 }
 
-/** Names on the stone. Dates, relationships and the rest come with the M4 transcription form. */
-export function PeopleSection({ stone }: { stone: Monument }) {
+/** Names on the stone and their links; dates and the rest are edited in desk mode. */
+export function PeopleSection({ stone, whereOf }: { stone: Monument; whereOf: WhereOf }) {
   const store = useStore();
   const people = useLiveQuery(() => store.persons.byMonument(stone.id), [store, stone.id]);
   return (
@@ -53,7 +61,7 @@ export function PeopleSection({ stone }: { stone: Monument }) {
       </h2>
       <ul className="flex flex-col gap-3">
         {(people ?? []).map((p, i) => (
-          <PersonRow key={p.id} person={p} n={i + 1} />
+          <PersonRow key={p.id} person={p} n={i + 1} whereOf={whereOf} />
         ))}
       </ul>
       <Button

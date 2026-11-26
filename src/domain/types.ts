@@ -235,6 +235,7 @@ export interface Person extends Stamped {
   age?: Age;
   /** "wife of John", "relict of", "son of J & M" */
   relationshipText?: string;
+  /** "personId is my <type>"; stored on both people (plan §10.3, `inverseRelation`). */
   relations?: { type: PersonRelationType; personId: ID }[];
   military?: Military;
   possiblyLiving?: boolean;

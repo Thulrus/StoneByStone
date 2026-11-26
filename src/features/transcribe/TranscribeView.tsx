@@ -8,6 +8,7 @@ import type { Cemetery, ID, Monument, Row } from '../../domain';
 import { Button } from '../../ui/Button';
 import { toast } from '../../ui/toast-store';
 import { StatusIcon } from '../stones/StatusIcon';
+import { useStoneLabel } from '../stones/useStoneLabel';
 import { STATUS_LABEL } from '../stones/labels';
 import { FilterSelect } from './FilterSelect';
 import { NeighbourStrip } from './NeighbourStrip';
@@ -38,6 +39,7 @@ export function TranscribeView({
   const store = useStore();
   const [, setParams] = useSearchParams();
   const byId = useMemo(() => new Map(stones.map((m) => [m.id, m])), [stones]);
+  const stoneLabel = useStoneLabel(rows, labelOf);
   const [filter, setFilterState] = useState<QueueFilter>(() =>
     initialStoneId && byId.get(initialStoneId)?.status !== DEFAULT_FILTER ? 'all' : DEFAULT_FILTER,
   );
@@ -84,15 +86,7 @@ export function TranscribeView({
     setCurrentId(keep);
   };
 
-  const row = rows.find((r) => r.id === current?.address?.rowId);
-  const rowName = row ? labelOf(row) : '';
-  const index = current?.address?.rowIndex;
-  const n = (index ?? 0) + 1;
-  const where = row
-    ? index === undefined
-      ? t`Row ${rowName}`
-      : t`Row ${rowName}, stone ${n}`
-    : t`Stone`;
+  const where = stoneLabel(current);
   const position = pos + 1;
   const total = ids.length;
 
@@ -133,6 +127,7 @@ export function TranscribeView({
             stone={current}
             canPrevious={pos > 0}
             onDraft={(d) => (draft.current = d)}
+            whereOf={(id) => stoneLabel(id ? byId.get(id) : undefined)}
             onNext={() => goTo(ids[pos + 1])}
             onPrevious={() => goTo(ids[pos - 1])}
             onSaveNow={(d) => {

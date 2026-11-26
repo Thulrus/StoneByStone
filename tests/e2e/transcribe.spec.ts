@@ -132,3 +132,61 @@ test('a whole stone transcribed without the mouse', async ({ page }, testInfo) =
   await expect(p2.getByLabel('Name, as carved')).toHaveValue('John Brown');
   await expect(form.getByRole('group', { name: 'Person 3' })).toHaveCount(0);
 });
+
+test("a couple's stone and their son's stone, linked both ways", async ({ page }, testInfo) => {
+  test.setTimeout(60_000);
+  const file = testInfo.outputPath('family.sbs.json');
+  await writeFile(file, JSON.stringify(makeStonesDocument({ rows: 1, perRow: 2 })));
+  await stubTiles(page);
+  await page.goto('./');
+  await skipWelcome(page);
+  await importFile(page, file);
+  await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
+  await page.getByRole('link', { name: 'Transcribe' }).click();
+  await page.getByLabel('Show').selectOption({ label: 'No photo yet' });
+  const form = page.getByRole('form', { name: 'Transcription' });
+  const person = (n: number) => form.getByRole('group', { name: `Person ${n}` });
+  const links = (n: number) => person(n).getByRole('list', { name: 'Linked people' });
+  const linkTo = async (n: number, type: string, who: RegExp) => {
+    await person(n).getByRole('button', { name: 'Link to a person…' }).click();
+    const dialog = page.getByRole('dialog', { name: /^Link .* to…$/ });
+    await expect(dialog.getByRole('radio', { name: type })).toBeChecked(); // from the carving
+    await dialog.getByRole('list', { name: 'People' }).getByRole('button').first().click();
+    await expect(dialog).toBeHidden();
+    await expect(links(n)).toContainText(who);
+  };
+
+  // Stone 1: a couple.
+  await person(1).getByLabel('Name, as carved').fill('John Brown');
+  await form.getByRole('button', { name: 'Add another person' }).click();
+  await person(2).getByLabel('Name, as carved').fill('Mary Brown');
+  await person(2).getByLabel('Relationship').fill('wife of John Brown');
+  await linkTo(2, 'Spouse', /Spouse: John Brown/);
+  await expect(links(1)).toContainText('Spouse: Mary Brown');
+  await form.getByRole('button', { name: 'Save & next' }).click();
+
+  // Stone 2: their son. Suggestions follow the carved names.
+  await expect(form.getByRole('heading', { level: 2 })).toHaveText('Row 1, stone 2');
+  await person(1).getByLabel('Name, as carved').fill('Amos Brown');
+  await person(1).getByLabel('Relationship').fill('son of John & Mary');
+  await linkTo(1, 'Parent', /Parent: John Brown \(Row 1, stone 1\)/);
+  await person(1).getByRole('button', { name: 'Link to a person…' }).click();
+  const dialog = page.getByRole('dialog', { name: /^Link .* to…$/ });
+  await dialog.getByLabel('Find by name').fill('mary');
+  await dialog.getByRole('button', { name: /Mary Brown/ }).click();
+  await expect(links(1)).toContainText('Parent: Mary Brown');
+
+  // Back on stone 1, the parents see their child.
+  await form.getByRole('button', { name: 'Previous' }).click();
+  await expect(links(1)).toContainText('Child: Amos Brown');
+  await expect(links(2)).toContainText('Child: Amos Brown');
+
+  // Unlinking and removing keep both sides in step.
+  await links(1).getByRole('button', { name: 'Unlink Mary Brown' }).click();
+  await expect(links(2)).not.toContainText('Spouse');
+  await form.getByRole('button', { name: 'Save & next' }).click();
+  await person(1).getByRole('button', { name: 'Remove person 1' }).click();
+  await form.getByRole('button', { name: 'Previous' }).click();
+  await expect(links(1)).toHaveCount(0);
+  await expect(links(2)).toHaveCount(0);
+});

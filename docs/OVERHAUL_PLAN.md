@@ -508,6 +508,16 @@ Store the carved phrase verbatim (`wife of`, `consort of`, `relict of` (= widow)
 `son of John & Mary`, `dau. of`) **and** structured links between Person records on the
 same or different stones.
 
+Implementation notes (M4, `domain/relations.ts`, `data/people.ts`): `Person.relations`
+entries read "personId is my <type>" and are stored on both people with inverse types
+(parent ↔ child; spouse, sibling, other are symmetric), so linking, unlinking and removing a
+person are one undo step each and never leave one side dangling. "Link to a person…" (desk
+form, per person) preselects the type from the carved phrase and lists people on the same
+stone first, then those matching the names after "of" (given names expanded, surnames by
+Soundex; a shared surname carries to each name, else the person's own), then the rest by
+name. The stone detail screen shows the carved phrase and the links, and removes people
+with their links.
+
 ### 10.4 Stone types and features worth capturing
 
 - Headstone/footstone pairs (footstones often bear only initials) — linked monuments.
