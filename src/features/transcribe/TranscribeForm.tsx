@@ -149,7 +149,7 @@ function Body({
     if (!mod) return;
     const el = e.target;
     const text = el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement ? el : null;
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       void addPerson();
     } else if (e.key === '.' && text) {

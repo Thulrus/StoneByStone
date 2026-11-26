@@ -466,6 +466,13 @@ match both ways, `Wm` ↔ `William`; accents ignored), most used first; when non
 word is completed to a known surname (`Sarah Whit` → `Sarah Whitcomb`). Arrow keys pick one
 and Enter takes it; with nothing picked, Enter is still Save & next.
 
+Verify pass (M4, `data/transcribe.ts` `verifyStone`): on a transcribed or verified stone the
+desk header has **Verified & next** (Ctrl+Shift+Enter). It saves any edits and sets
+`verified` in one undo step, then moves on without waiting. A stone with nothing transcribed
+isn't verified (a toast says so). The "Transcribed, not verified" list is the verify queue.
+Any later change to a transcription field clears the mark (§2.2); saving unchanged text
+doesn't. "Unmark verified" takes it off by hand.
+
 ---
 
 ## 10. Historic cemetery specifics

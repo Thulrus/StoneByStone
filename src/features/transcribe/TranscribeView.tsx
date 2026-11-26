@@ -3,7 +3,12 @@ import { useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { cemeteryPath } from '../../app/paths';
 import { useStore } from '../../app/store-context';
-import { saveTranscription, type TranscriptionDraft } from '../../data/transcribe';
+import {
+  saveTranscription,
+  unverifyStone,
+  verifyStone,
+  type TranscriptionDraft,
+} from '../../data/transcribe';
 import { conventionOf, type Cemetery, type ID, type Monument, type Row } from '../../domain';
 import { Button } from '../../ui/Button';
 import { toast } from '../../ui/toast-store';
@@ -16,6 +21,7 @@ import { NeighbourStrip } from './NeighbourStrip';
 import { PhotoPane } from './PhotoPane';
 import { TranscribeForm } from './TranscribeForm';
 import { useNameSuggestions } from './useNameSuggestions';
+import { VerifyBar } from './VerifyBar';
 import { buildQueue, DEFAULT_FILTER, type QueueFilter } from './queue';
 
 export interface TranscribeViewProps {
@@ -71,12 +77,34 @@ export function TranscribeView({
     return saving.current;
   };
 
-  /** Save, then show `id` (or the end of the list). */
-  const goTo = (id: ID | undefined) => {
-    void save();
+  const show = (id: ID | undefined) => {
     draft.current = undefined;
     setCurrentId(id);
     setParams(id ? { stone: id } : {}, { replace: true });
+  };
+
+  /** Save, then show `id` (or the end of the list). */
+  const goTo = (id: ID | undefined) => {
+    void save();
+    show(id);
+  };
+
+  /** Verify pass: save any edits, mark verified, and move on without waiting (plan §9). */
+  const verifyAndNext = () => {
+    if (!current) return;
+    const id = current.id;
+    const d = draft.current;
+    saving.current = saving.current
+      .then(() => verifyStone(store, id, d))
+      .then((ok) => {
+        if (!ok) toast({ title: t`Nothing to verify on that stone yet`, tone: 'error' });
+        return {};
+      })
+      .catch(() => {
+        toast({ title: t`Couldn't save that stone`, tone: 'error' });
+        return {};
+      });
+    show(ids[pos + 1]);
   };
 
   const setFilter = (f: QueueFilter) => {
@@ -128,36 +156,51 @@ export function TranscribeView({
             <PhotoPane key={current.id} monumentId={current.id} />
             <NeighbourStrip stone={current} stones={stones} inQueue={queued} onPick={goTo} />
           </div>
-          <TranscribeForm
-            key={current.id}
-            stone={current}
-            canPrevious={pos > 0}
-            dateLocale={cemetery.settings.dateLocale}
-            convention={conventionOf(cemetery.settings.transcriptionConvention)}
-            suggestNames={suggestNames}
-            onDraft={(d) => (draft.current = d)}
-            whereOf={(id) => stoneLabel(id ? byId.get(id) : undefined)}
-            onNext={() => goTo(ids[pos + 1])}
-            onPrevious={() => goTo(ids[pos - 1])}
-            onSaveNow={(d) => {
-              draft.current = d;
-              const done = save();
-              draft.current = undefined;
-              return done;
+          <div
+            className="contents"
+            onKeyDown={(e) => {
+              if (e.key !== 'Enter' || !e.shiftKey || !(e.ctrlKey || e.metaKey)) return;
+              if (current.status !== 'transcribed' && current.status !== 'verified') return;
+              e.preventDefault();
+              verifyAndNext();
             }}
-            header={
-              <div className="flex flex-col gap-1">
-                <h2 className="text-xl font-semibold">{where}</h2>
-                <p className="flex items-center gap-2 text-fg-muted">
-                  <StatusIcon status={current.status} />
-                  {t(STATUS_LABEL[current.status])} ·{' '}
-                  <Trans>
-                    {position} of {total}
-                  </Trans>
-                </p>
-              </div>
-            }
-          />
+          >
+            <TranscribeForm
+              key={current.id}
+              stone={current}
+              canPrevious={pos > 0}
+              dateLocale={cemetery.settings.dateLocale}
+              convention={conventionOf(cemetery.settings.transcriptionConvention)}
+              suggestNames={suggestNames}
+              onDraft={(d) => (draft.current = d)}
+              whereOf={(id) => stoneLabel(id ? byId.get(id) : undefined)}
+              onNext={() => goTo(ids[pos + 1])}
+              onPrevious={() => goTo(ids[pos - 1])}
+              onSaveNow={(d) => {
+                draft.current = d;
+                const done = save();
+                draft.current = undefined;
+                return done;
+              }}
+              header={
+                <div className="flex flex-col gap-1">
+                  <h2 className="text-xl font-semibold">{where}</h2>
+                  <p className="flex items-center gap-2 text-fg-muted">
+                    <StatusIcon status={current.status} />
+                    {t(STATUS_LABEL[current.status])} ·{' '}
+                    <Trans>
+                      {position} of {total}
+                    </Trans>
+                  </p>
+                  <VerifyBar
+                    stone={current}
+                    onVerify={verifyAndNext}
+                    onUnverify={() => void save().then(() => unverifyStone(store, current.id))}
+                  />
+                </div>
+              }
+            />
+          </div>
         </div>
       )}
     </div>

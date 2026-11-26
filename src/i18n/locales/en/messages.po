@@ -87,7 +87,7 @@ msgid "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
 msgstr "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
 
 #. placeholder {0}: c.id
-#: src/features/transcribe/ConventionsDialog.tsx:98
+#: src/features/transcribe/ConventionsDialog.tsx:102
 msgid "{0}"
 msgstr "{0}"
 
@@ -163,7 +163,7 @@ msgstr "{name}: about {count} tiles, roughly {size}."
 msgid "{pct} transcribed"
 msgstr "{pct} transcribed"
 
-#: src/features/transcribe/TranscribeView.tsx:154
+#: src/features/transcribe/TranscribeView.tsx:191
 msgid "{position} of {total}"
 msgstr "{position} of {total}"
 
@@ -371,7 +371,7 @@ msgstr "Back along the row"
 
 #. placeholder {0}: cemetery.name
 #: src/features/stones/detail/StoneDetail.tsx:54
-#: src/features/transcribe/TranscribeView.tsx:101
+#: src/features/transcribe/TranscribeView.tsx:129
 msgid "Back to {0}"
 msgstr "Back to {0}"
 
@@ -386,7 +386,7 @@ msgstr "Back to cemeteries"
 msgid "Back to its row position"
 msgstr "Back to its row position"
 
-#: src/features/transcribe/TranscribeView.tsx:122
+#: src/features/transcribe/TranscribeView.tsx:150
 msgid "Back to the first stone"
 msgstr "Back to the first stone"
 
@@ -575,6 +575,10 @@ msgstr "Check again"
 msgid "Check for updates"
 msgstr "Check for updates"
 
+#: src/features/transcribe/VerifyBar.tsx:30
+msgid "Checked against the photo? Ctrl+Shift+Enter"
+msgstr "Checked against the photo? Ctrl+Shift+Enter"
+
 #: src/features/settings/AboutPanel.tsx:67
 msgid "Checking…"
 msgstr "Checking…"
@@ -636,7 +640,7 @@ msgstr "Context"
 msgid "Contrast"
 msgstr "Contrast"
 
-#: src/features/transcribe/ConventionsDialog.tsx:82
+#: src/features/transcribe/ConventionsDialog.tsx:86
 msgid "Conventions"
 msgstr "Conventions"
 
@@ -679,7 +683,8 @@ msgid "Couldn't save that photo"
 msgstr "Couldn't save that photo"
 
 #: src/features/capture/walk/useWalkCapture.ts:159
-#: src/features/transcribe/TranscribeView.tsx:68
+#: src/features/transcribe/TranscribeView.tsx:74
+#: src/features/transcribe/TranscribeView.tsx:104
 msgid "Couldn't save that stone"
 msgstr "Couldn't save that stone"
 
@@ -930,7 +935,7 @@ msgstr "estimated {start}"
 msgid "Every grid stone is already in a row"
 msgstr "Every grid stone is already in a row"
 
-#: src/features/transcribe/ConventionsDialog.tsx:103
+#: src/features/transcribe/ConventionsDialog.tsx:107
 msgid "Exports say which convention was used. Changing it doesn't rewrite inscriptions already typed."
 msgstr "Exports say which convention was used. Changing it doesn't rewrite inscriptions already typed."
 
@@ -1400,7 +1405,7 @@ msgstr "Marble"
 msgid "Marker"
 msgstr "Marker"
 
-#: src/features/transcribe/ConventionsDialog.tsx:93
+#: src/features/transcribe/ConventionsDialog.tsx:97
 msgid "Marks used in this cemetery"
 msgstr "Marks used in this cemetery"
 
@@ -1578,7 +1583,7 @@ msgstr "No rows planned. Add them above, or start a new row when you walk."
 msgid "No section"
 msgstr "No section"
 
-#: src/features/transcribe/TranscribeView.tsx:114
+#: src/features/transcribe/TranscribeView.tsx:142
 msgid "No stones in this list. Choose another list above."
 msgstr "No stones in this list. Choose another list above."
 
@@ -1633,6 +1638,10 @@ msgstr "Nothing has been changed. Details: {0}"
 #: src/features/stones/RelativePlacer.tsx:108
 msgid "Nothing nearby is placed yet. Place a stone or a landmark first."
 msgstr "Nothing nearby is placed yet. Place a stone or a landmark first."
+
+#: src/features/transcribe/TranscribeView.tsx:100
+msgid "Nothing to verify on that stone yet"
+msgstr "Nothing to verify on that stone yet"
 
 #: src/ui/Toaster.tsx:28
 msgid "Notifications"
@@ -2421,7 +2430,7 @@ msgstr "Tap where the row starts."
 msgid "Temporary marker"
 msgstr "Temporary marker"
 
-#: src/features/transcribe/TranscribeView.tsx:119
+#: src/features/transcribe/TranscribeView.tsx:147
 msgid "That's the end of the list."
 msgstr "That's the end of the list."
 
@@ -2537,7 +2546,7 @@ msgstr "Top/bottom width"
 
 #: src/features/cemeteries/CemeteryTabs.tsx:117
 #: src/features/stones/StoneSheet.tsx:130
-#: src/features/transcribe/TranscribeView.tsx:104
+#: src/features/transcribe/TranscribeView.tsx:132
 msgid "Transcribe"
 msgstr "Transcribe"
 
@@ -2553,7 +2562,7 @@ msgstr "Transcribed, not verified"
 msgid "Transcription"
 msgstr "Transcription"
 
-#: src/features/transcribe/ConventionsDialog.tsx:87
+#: src/features/transcribe/ConventionsDialog.tsx:91
 msgid "Transcription conventions"
 msgstr "Transcription conventions"
 
@@ -2588,7 +2597,7 @@ msgstr "Type"
 msgid "Type a name first"
 msgstr "Type a name first"
 
-#: src/features/transcribe/ConventionsDialog.tsx:88
+#: src/features/transcribe/ConventionsDialog.tsx:92
 msgid "Type the inscription exactly as carved: spelling, capitals, abbreviations and line breaks. Use these marks for what the stone doesn't show plainly."
 msgstr "Type the inscription exactly as carved: spelling, capitals, abbreviations and line breaks. Use these marks for what the stone doesn't show plainly."
 
@@ -2644,6 +2653,10 @@ msgstr "Unlink"
 msgid "Unlink {name}"
 msgstr "Unlink {name}"
 
+#: src/features/transcribe/VerifyBar.tsx:26
+msgid "Unmark verified"
+msgstr "Unmark verified"
+
 #: src/features/cemeteries/create/PlaceFinder.tsx:102
 msgid "Unnamed cemetery"
 msgstr "Unnamed cemetery"
@@ -2691,6 +2704,10 @@ msgstr "v1 grid, {rows} rows by {cols} columns"
 #: src/features/transcribe/FilterSelect.tsx:10
 msgid "Verified"
 msgstr "Verified"
+
+#: src/features/transcribe/VerifyBar.tsx:22
+msgid "Verified & next"
+msgstr "Verified & next"
 
 #: src/features/settings/AboutPanel.tsx:47
 msgid "Version"

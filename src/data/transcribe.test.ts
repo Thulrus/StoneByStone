@@ -7,6 +7,8 @@ import {
   emptyPerson,
   saveInscription,
   saveTranscription,
+  unverifyStone,
+  verifyStone,
   type TranscriptionDraft,
 } from './transcribe';
 import { captureStone } from './walk';
@@ -161,4 +163,49 @@ test('military service is saved per person and cleared when emptied', async () =
     people: [{ ...p, conflict: '', rank: '', unit: '', marker: '' }],
   });
   expect((await store.persons.get(p.id))?.military).toBeUndefined();
+});
+
+test('verify pass: transitions, and later edits clear it', async () => {
+  const { store, m } = await setup();
+  const status = async () => (await store.monuments.get(m.id))?.status;
+  expect(await status()).toBe('located');
+  // Nothing transcribed: can't be verified.
+  expect(await verifyStone(store, m.id)).toBe(false);
+  expect(await status()).toBe('located');
+
+  // Edits and the mark together, one undo step.
+  const p = { ...emptyPerson(store.newId()), name: 'Eli Hart', died: '1887' };
+  const draft: TranscriptionDraft = { ...STONE, inscription: 'ELI HART', epitaph: '', people: [p] };
+  const steps = store.undoStack.size;
+  expect(await verifyStone(store, m.id, draft)).toBe(true);
+  expect(store.undoStack.size).toBe(steps + 1);
+  expect(await status()).toBe('verified');
+  expect((await store.monuments.get(m.id))?.verified?.by).toBe(store.device.contributorId);
+  await store.undo();
+  expect(await status()).toBe('located');
+  // Undo tombstoned that person, so the next draft has a fresh one.
+  const q = { ...p, id: store.newId() };
+  expect(await verifyStone(store, m.id, { ...draft, people: [q] })).toBe(true);
+
+  // Saving the same text keeps it verified; a changed field clears it.
+  await saveTranscription(store, m.id, { ...draft, people: [q] });
+  expect(await status()).toBe('verified');
+  await saveTranscription(store, m.id, { ...draft, people: [{ ...q, died: '1888' }] });
+  expect(await status()).toBe('transcribed');
+  expect(await verifyStone(store, m.id)).toBe(true);
+  await saveTranscription(store, m.id, { ...draft, people: [{ ...q, died: '1888' }], carver: 'X' });
+  expect(await status()).toBe('transcribed');
+  expect(await verifyStone(store, m.id)).toBe(true);
+  await saveTranscription(store, m.id, {
+    ...draft,
+    people: [{ ...q, died: '1888' }],
+    carver: 'X',
+    inscription: 'ELI HAR[?]',
+  });
+  expect(await status()).toBe('transcribed');
+
+  // Unmarking keeps the transcription.
+  expect(await verifyStone(store, m.id)).toBe(true);
+  await unverifyStone(store, m.id);
+  expect(await status()).toBe('transcribed');
 });

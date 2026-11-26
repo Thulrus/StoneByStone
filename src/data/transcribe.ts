@@ -211,3 +211,29 @@ export async function saveInscription(store: Store, id: ID, text: string): Promi
     inscription: text,
   });
 }
+
+/**
+ * Verify pass (plan §9): save any edits, then mark the stone verified, as one undo step.
+ * A stone with nothing transcribed can't be verified; resolves to whether it was. Any later
+ * transcription edit clears the mark again (`MonumentRepo`, plan §2.2).
+ */
+export async function verifyStone(
+  store: Store,
+  monumentId: ID,
+  draft?: TranscriptionDraft,
+): Promise<boolean> {
+  return store.run('Verify', async () => {
+    if (draft) await saveTranscription(store, monumentId, draft);
+    const m = await store.monuments.get(monumentId);
+    if (!m) return false;
+    const status = await store.monuments.status({ ...m, verified: undefined });
+    if (status !== 'transcribed') return false;
+    await store.monuments.verify(monumentId);
+    return true;
+  });
+}
+
+/** Take the verified mark off (the transcription stays). */
+export async function unverifyStone(store: Store, monumentId: ID): Promise<void> {
+  await store.monuments.update(monumentId, { verified: undefined });
+}

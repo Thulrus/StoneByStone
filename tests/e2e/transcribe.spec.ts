@@ -246,3 +246,32 @@ test('conventions, symbols and military service', async ({ page }, testInfo) => 
   await expect(form.getByLabel('Language')).toHaveValue('de');
   await expect(p1.getByLabel('Unit, as carved')).toHaveValue('Co. B, 12th Vt. Inf.');
 });
+
+test('verify pass: confirm and move on; a later edit clears it', async ({ page }, testInfo) => {
+  const file = testInfo.outputPath('verify.sbs.json');
+  // Per row, stone 3 is transcribed and stone 4 verified.
+  await writeFile(file, JSON.stringify(makeStonesDocument({ rows: 2, perRow: 4 })));
+  await stubTiles(page);
+  await page.goto('./');
+  await skipWelcome(page);
+  await importFile(page, file);
+  await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
+  await page.getByRole('link', { name: 'Transcribe' }).click();
+  await page.getByLabel('Show').selectOption({ label: 'Transcribed, not verified' });
+  const form = page.getByRole('form', { name: 'Transcription' });
+  const heading = form.getByRole('heading', { level: 2 });
+  await expect(heading).toHaveText('Row 1, stone 3');
+  await page.keyboard.press('Control+Shift+Enter');
+  await expect(heading).toHaveText('Row 2, stone 3');
+  await page.getByRole('button', { name: 'Verified & next' }).click();
+  await expect(page.getByText("That's the end of the list.")).toBeVisible();
+
+  await page.getByRole('button', { name: 'Back to the first stone' }).click();
+  await expect(heading).toHaveText('Row 1, stone 3');
+  await expect(form).toContainText('Verified ·');
+  await form.getByLabel('Inscription, as carved').fill('Stone 3 [?]');
+  await form.getByRole('button', { name: 'Save & next' }).click();
+  await form.getByRole('button', { name: 'Previous' }).click();
+  await expect(form).toContainText('Transcribed ·');
+  await expect(form.getByRole('button', { name: 'Unmark verified' })).toHaveCount(0);
+});
