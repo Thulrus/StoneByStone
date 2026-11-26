@@ -5,8 +5,9 @@ Update this file at the end of every session.
 
 ## Next session starts here
 
-Start **WP2** (M1, issues #15–#19: Dexie + repositories, history/undo, schemas, `.sbs`, v1
-importer). It is a _deep_ package. WP1 (the pure domain core) is done.
+Start **WP3** (M1, issues #20–#22: contributor/settings, Home, data safety). It's a _fast_
+package and the last one in M1, so mark WP4 `blocked: check-in` when it's finished.
+WP2 (the data layer) is done.
 
 One M0 issue stays open for the owner. Don't work on it:
 
@@ -16,24 +17,28 @@ One M0 issue stays open for the owner. Don't work on it:
 iPhone testing is now an optional M8 nice-to-have (**#80**) because the owner has no iPhone.
 Don't block on it, and don't plan check-ins around it. CI's WebKit run stands in for iOS Safari.
 
-Notes from WP1 (`src/domain/`, re-exported from `src/domain/index.ts`):
+Notes from WP2 (`src/data/`):
 
-- `uuidv7()`, `generateNodeId()` (16 hex). `HybridClock` holds `{wall, counter}` state. The data
-  layer must persist the nodeId and the clock state (for example in the `settings` table) and
-  call `clock.receive(hlc)` for every stamp it imports.
-- `mergeRecords` / `mergeCollections` work on any `{ id, stamps, deleted?, aliases? }`.
-  Repositories must write `aliases`/`sources` through `normalizeRecord` (canonical sorted
-  order, plan §2.2). The merge doesn't recompute `Monument.status`, so the caller re-derives it.
-  `detectConflicts(local, remote, lastSeen)` needs per-contributor `lastSeen` (max HLC),
-  maintained with `updateLastSeen`, which belongs in storage too.
-- `parseDate(text, { dateLocale, context })` never throws. Unparsed input comes back as
-  `{ original }`. `formatDate` is canonical English, not for display. Use `parseAge` +
-  `calculateBirth` for v1 ages.
-- `parseName` keeps `asCarved`. `nameSearchKeys` gives the expanded given name plus
-  Soundex/D–M codes for the `[cemeteryId+name.surname]` and search indexes.
-- `canonicalJson` / `deepEqual` implement §2.2's "byte-for-byte equivalent" for the M1
-  round-trip tests.
-- Non-null assertions are lint errors outside tests, so use `?? fallback` or narrowing.
+- `useStore()` (`src/app/store-context.ts`) gives the `Store` below `<StoreGate>`, which wraps
+  the router in `App.tsx`. Features use `store.monuments`, `store.persons`, and the other repos
+  (`create` / `update(id, patch)` / `delete` / `get` / `resolve` / `listByCemetery`). In a
+  patch, a key set to `undefined` clears that field. Don't write to Dexie tables directly.
+- Use `useLiveQuery` with the repos' read methods for reactive UI.
+- `store.undo()` undoes the last operation. `store.undoStack.subscribe()` drives an Undo
+  button. `store.group(label, 'import' | 'merge', fn)` makes any multi-record change one undo
+  step.
+- First run creates a contributor with `displayName: ''` and saves its id in settings
+  (`contributorId`). WP3's contributor screen should rename it with `store.putContributor()`.
+- Settings keys: `nodeId`, `clock`, `contributorId`, `lastSeen`, `schemaVersion`. Put new
+  device-level settings in the same table.
+- Backups: `collectArchive(store, cemeteryId)` → `writeSbs(archive, binaries)` returns a
+  `Blob`. `importFile(store, blob)` handles `.sbs`, `.sbs.json`, and v1. Errors are
+  `FormatError` with readable `problems[]`.
+- Data tests need `// @vitest-environment node`, because fake-indexeddb can't clone jsdom
+  Blobs. The polyfill is loaded in `src/test/setup.ts`. `src/data/test/helpers.ts` has
+  `freshStore()` (with a controllable clock) and `dump()`.
+- Locally, Playwright's WebKit fails to launch (`browserType.launch`) on this machine. That's
+  an environment problem; Chromium passes, and CI runs WebKit.
 
 ## Work packages
 
@@ -73,3 +78,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-25 · WP0 check-in · Owner passed the Android device check (install, offline, relaunch) and unblocked M1. iOS check (#9) and update-banner check (#4) remain with the owner.
 - 2026-11-25 · WP1 · Domain types + UUIDv7 (#10), HLC (#11), FuzzyDate parser/formatter/age (#12, 230+ table cases), name parser + Soundex/D–M (#13), field-stamp merge with fast-check properties (#14). 531 tests green.
 - 2026-11-25 · housekeeping · Owner has no iPhone: closed #9 (Android passed), moved all iOS checks to optional #80 (M8), and left #4 open only for the update-banner check.
+- 2026-11-25 · WP2 · Dexie schema + stamped repositories + newer-schema refusal (#15), history coalescing + undo (#16), v2 JSON Schemas + Ajv + FORMAT.md (#17), `.sbs`/`.sbs.json` read/write with streamed fflate (#18), idempotent v1 importer (#19). 575 tests green.
