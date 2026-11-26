@@ -381,6 +381,17 @@ A `FuzzyDate` (§19) stores structured parts plus the original text. The parser 
 - Numeric ambiguity (`3/4/1890`) resolves by the cemetery's locale setting, with the
   ambiguity flagged.
 
+Implementation notes (M1, `src/domain/dates/`):
+
+- Birth from age uses the carver's arithmetic (the "8870 rule"): subtract y/m/d separately,
+  borrowing 30 days per month and 12 months per year, then clamp the day to the month's
+  length. Precision follows the inputs (age in years only gives a birth year only).
+- Quaker month numbers (`3rd mo.`) are read directly from 1752 on. Before 1752, month 1 is
+  March, the date is marked `julian`, and Jan–Mar are flagged `ambiguous` (old-style year).
+- `formatDate` writes a canonical, GEDCOM-like English form (`abt 10 Mar 1887`,
+  `bet 1880 and 1885`, `10 Feb 1709/10`, `1790 O.S.`) that `parseDate` reads back to the same
+  parts. Localized display is the UI's job.
+
 ### 10.2 Names
 
 Structured name parts **plus** an `asCarved` string: given, middle, surname, maiden/birth
