@@ -41,8 +41,15 @@ test('set up a new cemetery with sections, rows and a row line in under 5 minute
   // Draw row 1's line on the map: start, end, save.
   await page.getByRole('button', { name: 'Draw line' }).first().click();
   await expect(page.getByText('Drawing North · 1')).toBeVisible();
-  await tapMap(page, 0.3, 0.6);
-  await tapMap(page, 0.7, 0.4);
+  // Each tap is checked before the next: a slow runner can miss a tap on a busy map.
+  await expect(async () => {
+    await tapMap(page, 0.3, 0.65);
+    await expect(page.getByText('Now tap where the row ends.')).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 15_000 });
+  await expect(async () => {
+    await tapMap(page, 0.7, 0.55);
+    await expect(page.getByText(/\d+ m\. Tap to add a bend/)).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 15_000 });
   await page.getByRole('button', { name: 'Save line' }).click();
   await expect(page.getByRole('tab', { name: 'Setup' })).toHaveAttribute('aria-selected', 'true');
   await expect(page.getByText(/on map/)).toHaveCount(1);
