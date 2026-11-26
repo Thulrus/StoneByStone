@@ -107,8 +107,12 @@ export class Store {
     opts: {
       kind?: OpContext['kind'];
       op?: OpContext['op'];
-      /** `false`: no undo step. `'join'`: part of the latest undo step (or a new one). */
-      undoable?: boolean | 'join';
+      /**
+       * `false`: no undo step. `'join'`: part of the latest undo step (or a new one).
+       * `{ join: id }`: part of the latest step only if that step created monument `id`
+       * (else a new one), so a late write can't land in someone else's step.
+       */
+      undoable?: boolean | 'join' | { join: ID };
     } = {},
   ): Promise<R> {
     const current = Dexie.currentTransaction;
@@ -130,7 +134,14 @@ export class Store {
       return r;
     });
     const top = this.undoStack.peek();
-    if (opts.undoable === 'join' && top && top.kind === 'edit') {
+    const u = opts.undoable;
+    const joins =
+      u === 'join' ||
+      (typeof u === 'object' &&
+        !!top?.snapshots.some(
+          (x) => x.table === 'monuments' && x.id === u.join && x.before === undefined,
+        ));
+    if (joins && top && top.kind === 'edit') {
       const have = new Set(top.snapshots.map((x) => `${x.table}:${x.id}`));
       for (const [key, snap] of ctx.snapshots) if (!have.has(key)) top.snapshots.push(snap);
     } else if (opts.undoable !== false) {

@@ -2,8 +2,8 @@ import { useLingui } from '@lingui/react/macro';
 import { useCallback, useRef, useState } from 'react';
 import { useStore } from '../../../app/store-context';
 import { addPhoto, preparePhoto } from '../../../data/photos';
-import { captureStone } from '../../../data/walk';
-import type { ID, PhotoRole, Row } from '../../../domain';
+import { attachCapturePhoto, captureStone, discardCapture } from '../../../data/walk';
+import type { ID, Monument, PhotoRole, Row } from '../../../domain';
 import { toast } from '../../../ui/toast-store';
 import { quickFix } from '../gps';
 import { photoFields, processForCemetery } from '../useSavePhoto';
@@ -36,7 +36,8 @@ export interface WalkCapture {
 
 /**
  * The capture queue for one walk: shots are processed and saved strictly in order, so stone
- * order is the order of the shutter presses even when a phone is slow. The GPS fix is asked
+ * order is the order of the shutter presses even when a phone is slow. A new stone's record is
+ * made before its photo is processed, so its quick tray opens at once. The GPS fix is asked
  * for at the shutter press, while the photo is processed.
  */
 export function useWalkCapture(row: Row, useGps: boolean): WalkCapture {
@@ -96,22 +97,27 @@ export function useWalkCapture(row: Row, useGps: boolean): WalkCapture {
       const fix = useGps ? quickFix() : Promise.resolve(undefined);
       setPending((n) => n + 1);
       queue.current = queue.current.then(async () => {
+        let created: Monument | undefined;
         try {
+          if (isNew) {
+            // The stone first, so its quick tray opens at once (plan §7.2); the photo follows.
+            created = await captureStone(store, { rowId: row.id, ...where });
+            if (generation.current === gen) {
+              target.current = created.id;
+              setCurrent(created.id);
+            }
+          }
           const [processed, gps] = await Promise.all([
             processForCemetery(store, row.cemeteryId, raw),
             fix,
           ]);
           const fields = photoFields(processed, role);
           if (!fields.position && gps) fields.position = { ...gps, source: 'gps' };
-          if (isNew) {
+          if (created) {
             const photo = await preparePhoto(store, { monumentId: '', ...fields });
-            const m = await captureStone(store, { rowId: row.id, photo, ...where });
-            if (generation.current === gen) {
-              target.current = m.id;
-              setCurrent(m.id);
-            }
-            const n = (m.address?.rowIndex ?? 0) + 1;
-            lastStone.current = { id: m.id, n };
+            await attachCapturePhoto(store, created, photo);
+            const n = (created.address?.rowIndex ?? 0) + 1;
+            lastStone.current = { id: created.id, n };
             setLastSaved({ kind: 'stone', stoneNumber: n });
           } else {
             const monumentId = target.current;
@@ -122,7 +128,12 @@ export function useWalkCapture(row: Row, useGps: boolean): WalkCapture {
           }
           setLastThumb(processed.thumb);
         } catch {
-          if (isNew && generation.current === gen) target.current = undefined;
+          // Take back a stone whose photo failed, unless something else is on top by now.
+          if (created) await discardCapture(store, created.id);
+          if (isNew && generation.current === gen) {
+            target.current = undefined;
+            setCurrent(undefined);
+          }
           toast({ title: t`Couldn't save that photo`, tone: 'error' });
         } finally {
           setPending((n) => n - 1);

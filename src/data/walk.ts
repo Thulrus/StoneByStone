@@ -150,6 +150,35 @@ export async function captureStone(
   });
 }
 
+/**
+ * Attach a walk shot's photo to the stone it started, as part of that stone's undo step, and
+ * re-space the row (the photo's GPS fix may move it). The stone is created first, so the
+ * quick tray shows without waiting for photo processing or GPS. No-op if it's gone (undone).
+ */
+export async function attachCapturePhoto(store: Store, m: Monument, photo: PreparedPhoto) {
+  await store.run(
+    'Add stone',
+    async (ctx) => {
+      if (!(await store.monuments.get(m.id))) return;
+      await writePhoto(store, ctx, m.cemeteryId, {
+        ...photo,
+        record: { ...photo.record, monumentId: m.id },
+      });
+      if (m.address?.rowId) await relayoutRow(store, m.address.rowId);
+    },
+    { undoable: { join: m.id } },
+  );
+}
+
+/** Take back a just-captured stone whose photo failed, if its undo step is still the latest. */
+export async function discardCapture(store: Store, id: ID): Promise<void> {
+  const top = store.undoStack.peek();
+  const created = top?.snapshots.some(
+    (x) => x.table === 'monuments' && x.id === id && x.before === undefined,
+  );
+  if (created) await store.undo();
+}
+
 export async function setIndex(store: Store, m: Monument, rowIndex: number) {
   if (m.address?.rowIndex === rowIndex) return;
   await store.monuments.update(m.id, { address: { ...m.address, rowIndex } });

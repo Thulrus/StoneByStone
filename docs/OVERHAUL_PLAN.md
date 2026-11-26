@@ -291,7 +291,10 @@ that are absent or `row-interpolated` are rewritten. Stones placed some other wa
 act as strong anchors. The line is the drawn line, else "Row start here" → "Row end here",
 else start → the fix farthest from it. Until the row end, the start fix is a device setting
 (`walk:start:<rowId>`). "Row end here" then writes `Row.line`. Each capture (stone + photo +
-re-spacing) is one undo step. Inside the camera, feedback and Undo show in the camera itself,
+re-spacing) is one undo step. The stone's record is made at the shutter press, before its
+photo is processed and its fix arrives, so the quick tray opens at once (field trial #1); the
+photo then joins that stone's undo step (`attachCapturePhoto`, `undoable: { join: id }`, which
+only joins the latest step if it created that stone). Inside the camera, feedback and Undo show in the camera itself,
 because a toast would cover the shutter on a phone.
 
 Row controls (M3, `data/row-controls.ts` and `captureStone` options), each one undo step that

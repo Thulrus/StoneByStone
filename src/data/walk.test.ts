@@ -4,7 +4,15 @@ import { defaultCemeterySettings } from '../domain';
 import { distanceM, localProjection, projectOntoLine } from '../geo';
 import { preparePhoto } from './photos';
 import { freshStore } from './test/helpers';
-import { captureStone, endRowHere, relayoutRow, rowStones, setRowStart } from './walk';
+import {
+  attachCapturePhoto,
+  captureStone,
+  discardCapture,
+  endRowHere,
+  relayoutRow,
+  rowStones,
+  setRowStart,
+} from './walk';
 
 const proj = localProjection([-72.58, 44.26]);
 const east = (x: number, y = 0) => {
@@ -145,5 +153,46 @@ describe('walk-a-row', () => {
     expect(
       distanceM([s1!.position!.lng, s1!.position!.lat], [east(4).lng, east(4).lat]),
     ).toBeLessThan(0.01);
+  });
+});
+
+describe('stone first, photo after (the quick tray opens at once)', () => {
+  test("the photo joins the stone's own undo step", async () => {
+    const { store, row } = await setup();
+    const steps = store.undoStack.size;
+    const s1 = await captureStone(store, { rowId: row.id });
+    await attachCapturePhoto(store, s1, await photoAt(store, east(3)));
+    const s2 = await captureStone(store, { rowId: row.id });
+    await attachCapturePhoto(store, s2, await photoAt(store, east(6)));
+    expect(store.undoStack.size).toBe(steps + 2);
+    await store.undo();
+    expect(await store.monuments.get(s2.id)).toBeUndefined();
+    expect(await store.photos.byMonument(s2.id)).toHaveLength(0);
+    expect(await store.photos.byMonument(s1.id)).toHaveLength(1);
+  });
+
+  test("a late photo never lands in a later stone's step", async () => {
+    const { store, row } = await setup();
+    const s1 = await captureStone(store, { rowId: row.id });
+    const s2 = await captureStone(store, { rowId: row.id });
+    await attachCapturePhoto(store, s1, await photoAt(store));
+    await store.undo(); // the late photo, on its own
+    expect(await store.photos.byMonument(s1.id)).toHaveLength(0);
+    expect(await store.monuments.get(s2.id)).toBeDefined();
+  });
+
+  test('a photo for an undone stone is dropped; a failed capture is taken back', async () => {
+    const { store, row } = await setup();
+    const s1 = await captureStone(store, { rowId: row.id });
+    await store.undo();
+    await attachCapturePhoto(store, s1, await photoAt(store));
+    expect(await store.photos.byMonument(s1.id)).toHaveLength(0);
+    const s2 = await captureStone(store, { rowId: row.id });
+    await discardCapture(store, s2.id);
+    expect(await store.monuments.get(s2.id)).toBeUndefined();
+    const s3 = await captureStone(store, { rowId: row.id });
+    await captureStone(store, { rowId: row.id });
+    await discardCapture(store, s3.id); // not the latest step: left alone
+    expect(await store.monuments.get(s3.id)).toBeDefined();
   });
 });

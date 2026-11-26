@@ -506,11 +506,11 @@ msgstr "Couldn't read that image"
 msgid "Couldn't read that photo"
 msgstr "Couldn't read that photo"
 
-#: src/features/capture/walk/useWalkCapture.ts:126
+#: src/features/capture/walk/useWalkCapture.ts:137
 msgid "Couldn't save that photo"
 msgstr "Couldn't save that photo"
 
-#: src/features/capture/walk/useWalkCapture.ts:148
+#: src/features/capture/walk/useWalkCapture.ts:159
 msgid "Couldn't save that stone"
 msgstr "Couldn't save that stone"
 
