@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import { makeStonesDocument } from '../fixtures/stones';
-import { stubTiles, tapMap, skipWelcome } from './helpers';
+import { stubTiles, tapMap, skipWelcome, importFile } from './helpers';
 
 test('10,000 stones import, draw, and open in the sheet when tapped', async ({
   page,
@@ -13,7 +13,7 @@ test('10,000 stones import, draw, and open in the sheet when tapped', async ({
   await page.goto('./');
   await skipWelcome(page);
 
-  await page.getByTestId('import-input').setInputFiles(file);
+  await importFile(page, file, 60_000);
   const list = page.getByRole('list', { name: 'Cemeteries on this device' });
   await expect(list.getByRole('link')).toHaveCount(1, { timeout: 60_000 });
   await list.getByRole('link').click();

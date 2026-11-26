@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
-import { skipWelcome, stubTiles, tapMap } from './helpers';
+import { skipWelcome, stubTiles, tapMap, importFile } from './helpers';
 
 const fixture = fileURLToPath(
   new URL('../fixtures/v1/willow-creek-example.cem.json', import.meta.url),
@@ -10,7 +10,7 @@ test('pin the Willow Creek v1 grid onto imagery, then make its rows', async ({ p
   await stubTiles(page);
   await page.goto('./');
   await skipWelcome(page);
-  await page.getByTestId('import-input').setInputFiles(fixture);
+  await importFile(page, fixture);
   await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
 
   // No coordinates: the diagram shows the grid.

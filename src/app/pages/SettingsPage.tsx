@@ -1,4 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
+import { AboutPanel } from '../../features/settings/AboutPanel';
 import { CemeteryDefaultsForm } from '../../features/settings/CemeteryDefaultsForm';
 import { ContributorForm } from '../../features/settings/ContributorForm';
 import { StoragePanel } from '../../features/settings/StoragePanel';
@@ -44,6 +45,7 @@ export function SettingsPage() {
       />
       <CemeteryDefaultsForm />
       <StoragePanel />
+      <AboutPanel />
     </div>
   );
 }

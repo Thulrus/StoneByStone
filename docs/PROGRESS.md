@@ -43,6 +43,19 @@ Notes for WP6+:
 - **Offline tiles:** `features/map/offline.ts` + `data/tiles.ts` (`tileMeta` rows). Plan §24
   describes the `sbs-tile://` protocol. The §8 field checklist (#41) can read
   `getTileDownload` for "tiles cached".
+- **CI must be green to deploy.** It was red from WP4 until this fix (mobile WebKit only), so
+  the owner's phone stayed on the M1 build. After every push, run `gh run watch` and fix
+  failures before ending the session. Run WebKit locally in Docker (host lacks its deps):
+  `docker run --rm --ipc=host --user $(id -u):$(id -g) -e HOME=/tmp -e CI=1 -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v1.65.1-noble npx playwright test`
+  (match the image tag to the installed `@playwright/test`).
+- Settings → "About this app" shows the version, build commit and build time, and has a
+  "Check for updates" button (`__BUILD_SHA__` / `__BUILD_TIME__` come from `vite.config.ts`).
+- Playwright's WebKit is ephemeral (like private browsing) and refuses Blobs in IndexedDB, so
+  the overlay e2e skips WebKit. WP6 photos hit the same limit: consider storing bytes
+  (ArrayBuffer + type) instead of Blobs, which would also make private Safari tabs work.
+- Toasts: after a tap on a toast button, the Toaster drops focus so remaining toasts still time
+  out. In e2e, use `importFile` / `dismissToasts` from the helpers, because a hovering mouse
+  pauses toasts.
 - **Tests:** e2e helpers are in `tests/e2e/helpers.ts` (`stubTiles`, `tapMap`, `TILE`,
   `skipWelcome`). Always use `skipWelcome`: a bare "Not now" clashes with the install prompt
   on mobile. `tests/fixtures/stones.ts` makes schema-valid `.sbs.json` files of any size.
@@ -98,3 +111,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-25 · WP4 · Geo module (#23), lazy MapLibre wrapper with rotation (#24), imagery presets + custom XYZ/WMS with terms checked into §24 and the non-US default resolved (#25), create by search / near me with OSM boundary / pin (#26), sections and rows with drawn row lines (#27). 670 tests + Chromium e2e green; setup e2e runs in ~5 s.
 - 2026-11-25 · housekeeping · Owner saw the update banner in the installed Android app after a deploy; closed #4. M0 has no open owner items.
 - 2026-11-25 · WP5 · Stones layer with shape+colour status and a bottom sheet (#28), Diagram tab with v1 grid view (#29), offline tile download via cache-first `sbs-tile://` protocol (#30), v1 grid pinning + grid rows → rows (#31), plat/drone image overlays with residuals, opacity, place-stones (#32). 695 tests + 20 Chromium e2e green. M2 complete; WP6 blocked on check-in (device checks for #28 smoothness and #30 airplane mode).
+- 2026-11-25 · WP5 fix · Owner's phone was still on M1: CI (mobile WebKit) had failed since WP4, so nothing deployed. Fixed: map panel overlapped the phone bottom bar; toasts stayed paused after Dismiss; e2e toast handling; overlay e2e skipped on ephemeral WebKit. Added Settings → About (version, build, Check for updates). All 3 e2e projects green in the Playwright Docker image.

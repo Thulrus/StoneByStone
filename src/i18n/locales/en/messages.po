@@ -102,6 +102,10 @@ msgstr "1600 px (recommended)"
 msgid "A new version of StoneByStone is available."
 msgstr "A new version of StoneByStone is available."
 
+#: src/features/settings/AboutPanel.tsx:43
+msgid "About this app"
+msgstr "About this app"
+
 #: src/features/map/ImageryPicker.tsx:104
 msgid "Add a custom source"
 msgstr "Add a custom source"
@@ -146,6 +150,10 @@ msgstr "Adjust grid on map"
 #: src/features/overlays/OverlaysPanel.tsx:88
 msgid "Adjust pins for {name}"
 msgstr "Adjust pins for {name}"
+
+#: src/features/settings/AboutPanel.tsx:30
+msgid "An update was found. Tap Reload when the banner appears."
+msgstr "An update was found. Tap Reload when the banner appears."
 
 #: src/features/map/CustomSourceForm.tsx:26
 msgid "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
@@ -197,6 +205,14 @@ msgstr "boundary available"
 msgid "Boundary from OpenStreetMap. Tap the map to move the pin."
 msgstr "Boundary from OpenStreetMap. Tap the map to move the pin."
 
+#: src/features/settings/AboutPanel.tsx:51
+msgid "Build"
+msgstr "Build"
+
+#: src/features/settings/AboutPanel.tsx:57
+msgid "Built"
+msgstr "Built"
+
 #: src/features/map/ImageryPicker.tsx:42
 msgid "can be saved for offline use"
 msgstr "can be saved for offline use"
@@ -231,6 +247,14 @@ msgstr "Cemetery"
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
+#: src/features/settings/AboutPanel.tsx:67
+msgid "Check for updates"
+msgstr "Check for updates"
+
+#: src/features/settings/AboutPanel.tsx:67
+msgid "Checking…"
+msgstr "Checking…"
+
 #: src/ui/Dialog.tsx:58
 msgid "Close"
 msgstr "Close"
@@ -243,6 +267,10 @@ msgstr "Contact (optional)"
 #: src/features/cemeteries/ImportButton.tsx:36
 msgid "Could not import {0}"
 msgstr "Could not import {0}"
+
+#: src/features/settings/AboutPanel.tsx:34
+msgid "Couldn't check for updates. Are you online?"
+msgstr "Couldn't check for updates. Are you online?"
 
 #: src/features/map/LocateButton.tsx:19
 msgid "Couldn't get your location"
@@ -264,7 +292,7 @@ msgstr "Couldn't read that image"
 msgid "Create"
 msgstr "Create"
 
-#: src/app/pages/SettingsPage.tsx:16
+#: src/app/pages/SettingsPage.tsx:17
 msgid "Dark"
 msgstr "Dark"
 
@@ -314,7 +342,7 @@ msgstr "Deleted row {0}"
 msgid "Deleted section {0}. Its rows are now unsectioned."
 msgstr "Deleted section {0}. Its rows are now unsectioned."
 
-#: src/features/cemeteries/CemeteryTabs.tsx:61
+#: src/features/cemeteries/CemeteryTabs.tsx:66
 #: src/features/schematic/SchematicView.tsx:80
 msgid "Diagram"
 msgstr "Diagram"
@@ -484,7 +512,7 @@ msgstr "It disappears from this list. Its records stay on the device and in any 
 msgid "Keep my data"
 msgstr "Keep my data"
 
-#: src/app/pages/SettingsPage.tsx:39
+#: src/app/pages/SettingsPage.tsx:40
 msgid "Language"
 msgstr "Language"
 
@@ -496,7 +524,7 @@ msgstr "Later"
 msgid "Layer"
 msgstr "Layer"
 
-#: src/app/pages/SettingsPage.tsx:15
+#: src/app/pages/SettingsPage.tsx:16
 msgid "Light"
 msgstr "Light"
 
@@ -517,7 +545,7 @@ msgstr "Made {n} rows from the grid"
 msgid "Main"
 msgstr "Main"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:60
+#: src/features/cemeteries/CemeteryTabs.tsx:65
 msgid "Map"
 msgstr "Map"
 
@@ -538,8 +566,8 @@ msgstr "Map saved for offline use"
 msgid "Map: tap to place the cemetery"
 msgstr "Map: tap to place the cemetery"
 
-#: src/app/pages/SettingsPage.tsx:14
-#: src/app/pages/SettingsPage.tsx:21
+#: src/app/pages/SettingsPage.tsx:15
+#: src/app/pages/SettingsPage.tsx:22
 msgid "Match device"
 msgstr "Match device"
 
@@ -893,11 +921,11 @@ msgid "Set the cemetery's location or draw a row line first."
 msgstr "Set the cemetery's location or draw a row line first."
 
 #: src/app/Layout.tsx:48
-#: src/app/pages/SettingsPage.tsx:28
+#: src/app/pages/SettingsPage.tsx:29
 msgid "Settings"
 msgstr "Settings"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:62
+#: src/features/cemeteries/CemeteryTabs.tsx:67
 msgid "Setup"
 msgstr "Setup"
 
@@ -946,7 +974,7 @@ msgstr "Storage used"
 msgid "street map, online only"
 msgstr "street map, online only"
 
-#: src/app/pages/SettingsPage.tsx:17
+#: src/app/pages/SettingsPage.tsx:18
 msgid "Sunlight (high contrast)"
 msgstr "Sunlight (high contrast)"
 
@@ -988,7 +1016,7 @@ msgstr "The provider's terms allow saving tiles for offline use"
 msgid "The WMS service address, without GetMap parameters"
 msgstr "The WMS service address, without GetMap parameters"
 
-#: src/app/pages/SettingsPage.tsx:32
+#: src/app/pages/SettingsPage.tsx:33
 msgid "Theme"
 msgstr "Theme"
 
@@ -1060,6 +1088,10 @@ msgstr "Unnamed cemetery"
 msgid "Unnamed person"
 msgstr "Unnamed person"
 
+#: src/features/settings/AboutPanel.tsx:22
+msgid "Updates aren't available in this browser tab"
+msgstr "Updates aren't available in this browser tab"
+
 #. placeholder {0}: fmt(quota.usage)
 #. placeholder {1}: fmt(quota.quota)
 #: src/features/settings/StoragePanel.tsx:44
@@ -1083,7 +1115,11 @@ msgstr "v1 grid, {rows} rows by {cols} columns"
 msgid "Verified"
 msgstr "Verified"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:59
+#: src/features/settings/AboutPanel.tsx:47
+msgid "Version"
+msgstr "Version"
+
+#: src/features/cemeteries/CemeteryTabs.tsx:64
 msgid "View"
 msgstr "View"
 
@@ -1106,6 +1142,10 @@ msgstr "WMS"
 #: src/features/cemeteries/create/PlaceFinder.tsx:107
 msgid "You are here"
 msgstr "You are here"
+
+#: src/features/settings/AboutPanel.tsx:31
+msgid "You have the latest version"
+msgstr "You have the latest version"
 
 #: src/features/share/useBackup.ts:40
 msgid "Your backup is ready"

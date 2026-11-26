@@ -8,6 +8,14 @@ import { renderWithStore, testStore } from '../../test/render';
 import { formatBytes } from './storage';
 
 describe('Settings', () => {
+  it('shows the version and build this device runs', async () => {
+    await renderWithStore(<SettingsPage />);
+    const about = screen.getByRole('region', { name: 'About this app' });
+    expect(within(about).getByText(/^\d+\.\d+\.\d+/)).toBeInTheDocument();
+    expect(within(about).getByText(/^([0-9a-f]{7,}|unknown)$/)).toBeInTheDocument();
+    expect(within(about).getByRole('button', { name: 'Check for updates' })).toBeEnabled();
+  });
+
   it('renames the contributor', async () => {
     const { store } = await renderWithStore(<SettingsPage />);
     const name = await screen.findByRole('textbox', { name: 'Name' });

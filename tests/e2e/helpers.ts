@@ -29,3 +29,33 @@ export async function skipWelcome(page: Page) {
     .getByRole('button', { name: 'Not now' })
     .click();
 }
+
+/**
+ * Import a file from Home and close the "Imported …" toast. Radix pauses a toast while the
+ * pointer is over it, and on phones it sits over the cemetery list, so leaving it open can
+ * block the next tap.
+ */
+export async function importFile(page: Page, file: string, timeout = 5000) {
+  await page.getByTestId('import-input').setInputFiles(file);
+  const toast = page
+    .getByRole('region', { name: /Notifications/ })
+    .getByRole('listitem')
+    .filter({ hasText: 'Imported' });
+  await expect(toast).toBeVisible({ timeout });
+  await dismissToasts(page);
+  await expect(toast).toHaveCount(0);
+}
+
+/** Close every open toast and move the pointer off them (hovering pauses Radix toasts). */
+export async function dismissToasts(page: Page) {
+  const close = page.getByRole('region', { name: /Notifications/ }).getByRole('button', {
+    name: 'Dismiss',
+  });
+  // A toast can time out mid-loop; that's fine.
+  while ((await close.count()) > 0)
+    await close
+      .first()
+      .click({ timeout: 2000 })
+      .catch(() => {});
+  await page.mouse.move(0, 0);
+}

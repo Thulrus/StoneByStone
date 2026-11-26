@@ -2,19 +2,25 @@ import { expect, test } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { makeStonesDocument } from '../fixtures/stones';
-import { skipWelcome, stubTiles, tapMap } from './helpers';
+import { skipWelcome, stubTiles, tapMap, importFile } from './helpers';
 
 const image = fileURLToPath(new URL('../../public/icon-512.png', import.meta.url));
 
 test('pin a plat image with three points, fade it, and place a stone on it', async ({
   page,
 }, testInfo) => {
+  // Playwright's WebKit is an ephemeral session, like Safari private browsing, and those
+  // refuse Blobs in IndexedDB ("Error preparing Blob/File data"). Installed Safari stores them.
+  test.skip(
+    testInfo.project.name.includes('webkit'),
+    'WebKit ephemeral sessions cannot store Blobs',
+  );
   const file = testInfo.outputPath('small.sbs.json');
   await writeFile(file, JSON.stringify(makeStonesDocument({ rows: 2, perRow: 3 })));
   await stubTiles(page);
   await page.goto('./');
   await skipWelcome(page);
-  await page.getByTestId('import-input').setInputFiles(file);
+  await importFile(page, file);
   await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
   await page.getByRole('tab', { name: 'Setup' }).click();
   await page.getByTestId('overlay-input').setInputFiles(image);

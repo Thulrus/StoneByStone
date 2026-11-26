@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import { makeStonesDocument } from '../fixtures/stones';
-import { stubTiles, skipWelcome } from './helpers';
+import { stubTiles, skipWelcome, importFile } from './helpers';
 
 const cachedTiles = (page: Page) =>
   page.evaluate(async () => (await (await caches.open('sbs-tiles-usgs-imagery')).keys()).length);
@@ -16,7 +16,7 @@ test('download a US cemetery for offline use, then delete it', async ({ page }, 
   await stubTiles(page);
   await page.goto('./');
   await skipWelcome(page);
-  await page.getByTestId('import-input').setInputFiles(file);
+  await importFile(page, file);
   await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
   await page.getByRole('tab', { name: 'Setup' }).click();
 

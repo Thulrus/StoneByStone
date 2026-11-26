@@ -36,3 +36,6 @@ dev-dist
 playwright-report
 test-results
 blob-report
+
+# Synthetic test cemeteries made by scripts/make-stones.ts
+/stones-*.sbs.json

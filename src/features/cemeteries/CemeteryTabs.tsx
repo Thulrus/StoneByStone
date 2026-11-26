@@ -55,7 +55,12 @@ export function CemeteryTabs({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-3">
-        <h1 className="flex-1 text-2xl font-bold">{cemetery.name}</h1>
+        <h1
+          className="min-w-0 basis-full truncate text-2xl font-bold md:basis-0 md:flex-1"
+          title={cemetery.name}
+        >
+          {cemetery.name}
+        </h1>
         <div role="tablist" aria-label={t`View`} className="flex gap-2">
           {tabButton('map', t`Map`)}
           {tabButton('diagram', t`Diagram`)}
@@ -63,7 +68,11 @@ export function CemeteryTabs({
         </div>
       </div>
       {current === 'map' ? (
-        <div role="tabpanel" className="h-[calc(100dvh-13rem)] min-h-80 overflow-hidden rounded-xl">
+        <div
+          role="tabpanel"
+          // Fits between the tabs and the phone's bottom bar, so no map control sits under it.
+          className="h-[calc(100dvh-16rem-env(safe-area-inset-bottom))] min-h-80 overflow-hidden rounded-xl md:h-[calc(100dvh-10.5rem)]"
+        >
           <MapTab
             cemetery={cemetery}
             rows={layout.rows}
