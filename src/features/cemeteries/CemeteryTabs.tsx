@@ -1,7 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import { useRef, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
-import { stonePath } from '../../app/paths';
+import { Link, useNavigate, useSearchParams } from 'react-router';
+import { stonePath, transcribePath } from '../../app/paths';
 import type { Cemetery, ID, MapFeature, Monument, Overlay } from '../../domain';
 import { Button } from '../../ui/Button';
 import { cn } from '../../ui/cn';
@@ -108,6 +108,14 @@ export function CemeteryTabs({
           <Button size="lg" onClick={() => setWalkStart(true)}>
             {t`Walk a row`}
           </Button>
+        ) : null}
+        {stones.length > 0 && !walkRow ? (
+          <Link
+            to={transcribePath(cemetery.id)}
+            className="inline-flex min-h-12 items-center rounded-lg bg-surface-2 px-4 font-medium"
+          >
+            {t`Transcribe`}
+          </Link>
         ) : null}
       </div>
       {current === 'map' ? (

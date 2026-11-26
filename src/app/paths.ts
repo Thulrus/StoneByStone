@@ -8,3 +8,9 @@ export function cemeteryPath(id: string): string {
 export function stonePath(cemeteryId: string, stoneId: string): string {
   return `${cemeteryPath(cemeteryId)}/stone/${encodeURIComponent(stoneId)}`;
 }
+
+/** Link target for desk-mode transcription, optionally opening on one stone. */
+export function transcribePath(cemeteryId: string, stoneId?: string): string {
+  const base = `${cemeteryPath(cemeteryId)}/transcribe`;
+  return stoneId ? `${base}?stone=${encodeURIComponent(stoneId)}` : base;
+}

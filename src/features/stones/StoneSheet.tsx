@@ -2,7 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { stonePath } from '../../app/paths';
+import { stonePath, transcribePath } from '../../app/paths';
 import { useStore } from '../../app/store-context';
 import type { MapFeature, Monument, PhotoRole, Row } from '../../domain';
 import { Button } from '../../ui/Button';
@@ -122,6 +122,12 @@ export function StoneSheet({
                 className="inline-flex min-h-12 items-center rounded-lg px-4 font-semibold text-primary underline"
               >
                 <Trans>All details</Trans>
+              </Link>
+              <Link
+                to={transcribePath(stone.cemeteryId, stone.id)}
+                className="inline-flex min-h-12 items-center rounded-lg px-4 font-semibold text-primary underline"
+              >
+                <Trans>Transcribe</Trans>
               </Link>
             </div>
           </div>

@@ -135,12 +135,17 @@ msgstr "{name}: about {count} tiles, roughly {size}."
 msgid "{pct} transcribed"
 msgstr "{pct} transcribed"
 
+#: src/features/transcribe/TranscribeView.tsx:145
+msgid "{position} of {total}"
+msgstr "{position} of {total}"
+
 #: src/features/settings/CemeteryDefaultsForm.tsx:19
 msgid "{px} px"
 msgstr "{px} px"
 
 #: src/features/capture/PhotoStrip.tsx:34
 #: src/features/stones/detail/PhotosSection.tsx:23
+#: src/features/transcribe/PhotoPane.tsx:34
 msgid "{role} photo"
 msgstr "{role} photo"
 
@@ -248,6 +253,10 @@ msgstr "After stone {0}"
 msgid "All details"
 msgstr "All details"
 
+#: src/features/transcribe/FilterSelect.tsx:11
+msgid "All stones"
+msgstr "All stones"
+
 #: src/features/stones/detail/labels.ts:14
 msgid "an import"
 msgstr "an import"
@@ -286,18 +295,24 @@ msgstr "Back along the row"
 
 #. placeholder {0}: cemetery.name
 #: src/features/stones/detail/StoneDetail.tsx:52
+#: src/features/transcribe/TranscribeView.tsx:105
 msgid "Back to {0}"
 msgstr "Back to {0}"
 
 #: src/app/pages/CemeteryPage.tsx:28
 #: src/app/pages/NotFoundPage.tsx:11
 #: src/app/pages/StonePage.tsx:49
+#: src/app/pages/TranscribePage.tsx:25
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
 
 #: src/features/stones/detail/PositionSection.tsx:72
 msgid "Back to its row position"
 msgstr "Back to its row position"
+
+#: src/features/transcribe/TranscribeView.tsx:123
+msgid "Back to the first stone"
+msgstr "Back to the first stone"
 
 #: src/features/share/useBackupReminder.ts:27
 msgid "Back up"
@@ -424,6 +439,7 @@ msgid "Cemetery"
 msgstr "Cemetery"
 
 #: src/app/pages/CemeteryPage.tsx:25
+#: src/app/pages/TranscribePage.tsx:22
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
@@ -511,6 +527,7 @@ msgid "Couldn't save that photo"
 msgstr "Couldn't save that photo"
 
 #: src/features/capture/walk/useWalkCapture.ts:159
+#: src/features/transcribe/TranscribeView.tsx:66
 msgid "Couldn't save that stone"
 msgstr "Couldn't save that stone"
 
@@ -807,6 +824,10 @@ msgstr "Gate"
 msgid "Getting your location…"
 msgstr "Getting your location…"
 
+#: src/features/transcribe/NeighbourStrip.tsx:74
+msgid "Go to {label}"
+msgstr "Go to {label}"
+
 #: src/features/stones/attribute-labels.ts:45
 msgid "Good"
 msgstr "Good"
@@ -911,6 +932,10 @@ msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your sur
 #: src/features/capture/Camera.tsx:109
 msgid "In-app camera"
 msgstr "In-app camera"
+
+#: src/features/transcribe/TranscribeView.tsx:152
+msgid "Inscription, as carved"
+msgstr "Inscription, as carved"
 
 #: src/features/capture/walk/RowOrderDialogs.tsx:45
 msgid "Insert a stone"
@@ -1147,6 +1172,10 @@ msgstr "Needs attention:"
 msgid "Needs revisit"
 msgstr "Needs revisit"
 
+#: src/features/transcribe/NeighbourStrip.tsx:24
+msgid "Neighbours in the row"
+msgstr "Neighbours in the row"
+
 #: src/app/pages/HomePage.tsx:22
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:75
 msgid "New cemetery"
@@ -1177,6 +1206,14 @@ msgstr "No GPS fixes came in. Check that location is on, then try again."
 msgid "no line"
 msgstr "no line"
 
+#: src/features/transcribe/PhotoPane.tsx:39
+msgid "No photo of this stone yet."
+msgstr "No photo of this stone yet."
+
+#: src/features/transcribe/FilterSelect.tsx:8
+msgid "No photo yet"
+msgstr "No photo yet"
+
 #: src/features/stones/detail/AttributesSection.tsx:55
 msgid "No row"
 msgstr "No row"
@@ -1192,6 +1229,10 @@ msgstr "No rows planned. Add them above, or start a new row when you walk."
 #: src/features/cemeteries/setup/RowItem.tsx:102
 msgid "No section"
 msgstr "No section"
+
+#: src/features/transcribe/TranscribeView.tsx:115
+msgid "No stones in this list. Choose another list above."
+msgstr "No stones in this list. Choose another list above."
 
 #: src/features/schematic/SchematicView.tsx:45
 msgid "No stones yet"
@@ -1361,8 +1402,13 @@ msgstr "Photo type"
 msgid "Photographed"
 msgstr "Photographed"
 
+#: src/features/transcribe/FilterSelect.tsx:7
+msgid "Photographed, not transcribed"
+msgstr "Photographed, not transcribed"
+
 #: src/features/settings/StoragePanel.tsx:96
 #: src/features/stones/detail/PhotosSection.tsx:72
+#: src/features/transcribe/PhotoPane.tsx:44
 msgid "Photos"
 msgstr "Photos"
 
@@ -1448,6 +1494,10 @@ msgstr "Position within about ±{0} m"
 #: src/features/share/BackupBanner.tsx:26
 msgid "Preparing…"
 msgstr "Preparing…"
+
+#: src/features/transcribe/TranscribeView.tsx:174
+msgid "Previous"
+msgstr "Previous"
 
 #: src/features/cemeteries/FieldChecklist.tsx:153
 msgid "Protect data"
@@ -1557,6 +1607,7 @@ msgstr "Row {name}, stone {n}"
 
 #: src/features/stones/detail/StoneDetail.tsx:45
 #: src/features/stones/StoneSheet.tsx:64
+#: src/features/transcribe/TranscribeView.tsx:94
 msgid "Row {rowName}"
 msgstr "Row {rowName}"
 
@@ -1579,6 +1630,7 @@ msgstr "Row {rowName}, stone {0}"
 
 #: src/features/stones/detail/StoneDetail.tsx:46
 #: src/features/stones/RelativePlacer.tsx:54
+#: src/features/transcribe/TranscribeView.tsx:95
 msgid "Row {rowName}, stone {n}"
 msgstr "Row {rowName}, stone {n}"
 
@@ -1647,6 +1699,10 @@ msgstr "Sandstone"
 #: src/features/cemeteries/WelcomeCard.tsx:50
 msgid "Save"
 msgstr "Save"
+
+#: src/features/transcribe/TranscribeView.tsx:165
+msgid "Save & next"
+msgstr "Save & next"
 
 #: src/features/share/useBackup.ts:41
 msgid "Save it"
@@ -1728,6 +1784,10 @@ msgstr "Settings"
 msgid "Setup"
 msgstr "Setup"
 
+#: src/features/transcribe/FilterSelect.tsx:26
+msgid "Show"
+msgstr "Show"
+
 #: src/features/map/CustomSourceForm.tsx:85
 msgid "Shown on the map. Check the provider's terms."
 msgstr "Shown on the map. Check the provider's terms."
@@ -1772,7 +1832,8 @@ msgstr "stone"
 #: src/features/stones/detail/StoneDetail.tsx:47
 #: src/features/stones/RelativePlacer.tsx:56
 #: src/features/stones/StoneSheet.tsx:79
-#: src/features/stones/StoneSheet.tsx:163
+#: src/features/stones/StoneSheet.tsx:169
+#: src/features/transcribe/TranscribeView.tsx:96
 msgid "Stone"
 msgstr "Stone"
 
@@ -1792,6 +1853,7 @@ msgid "Stone {0} skipped"
 msgstr "Stone {0} skipped"
 
 #: src/features/capture/walk/RowOrderDialogs.tsx:103
+#: src/features/transcribe/NeighbourStrip.tsx:53
 msgid "Stone {n}"
 msgstr "Stone {n}"
 
@@ -1815,7 +1877,7 @@ msgstr "Stone details"
 msgid "Stone not found"
 msgstr "Stone not found"
 
-#: src/features/stones/StoneSheet.tsx:152
+#: src/features/stones/StoneSheet.tsx:158
 msgid "Stone placed by GPS"
 msgstr "Stone placed by GPS"
 
@@ -1900,6 +1962,10 @@ msgstr "Tap where the row starts."
 #: src/features/stones/attribute-labels.ts:24
 msgid "Temporary marker"
 msgstr "Temporary marker"
+
+#: src/features/transcribe/TranscribeView.tsx:120
+msgid "That's the end of the list."
+msgstr "That's the end of the list."
 
 #: src/features/map/CustomSourceForm.tsx:25
 msgid "The address must start with https://"
@@ -1987,9 +2053,23 @@ msgstr "Tilted"
 msgid "Time to back up"
 msgstr "Time to back up"
 
+#: src/features/cemeteries/CemeteryTabs.tsx:117
+#: src/features/stones/StoneSheet.tsx:130
+#: src/features/transcribe/TranscribeView.tsx:108
+msgid "Transcribe"
+msgstr "Transcribe"
+
 #: src/features/stones/labels.ts:8
 msgid "Transcribed"
 msgstr "Transcribed"
+
+#: src/features/transcribe/FilterSelect.tsx:9
+msgid "Transcribed, not verified"
+msgstr "Transcribed, not verified"
+
+#: src/features/transcribe/TranscribeView.tsx:133
+msgid "Transcription"
+msgstr "Transcription"
 
 #: src/features/overlays/GridActions.tsx:26
 msgid "Treat grid rows as cemetery rows"
@@ -2032,7 +2112,7 @@ msgstr "Uncertain position"
 #: src/features/stones/detail/PhotosSection.tsx:52
 #: src/features/stones/PlaceOnMap.tsx:20
 #: src/features/stones/RelativePlacer.tsx:75
-#: src/features/stones/StoneSheet.tsx:153
+#: src/features/stones/StoneSheet.tsx:159
 msgid "Undo"
 msgstr "Undo"
 
@@ -2088,6 +2168,7 @@ msgid "v1 grid, {rows} rows by {cols} columns"
 msgstr "v1 grid, {rows} rows by {cols} columns"
 
 #: src/features/stones/labels.ts:9
+#: src/features/transcribe/FilterSelect.tsx:10
 msgid "Verified"
 msgstr "Verified"
 

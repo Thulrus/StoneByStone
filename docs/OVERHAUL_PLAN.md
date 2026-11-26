@@ -431,6 +431,13 @@ used to compute a similarity transform and re-align the incoming dataset (§21.4
 - **Verify pass:** a second, faster pass (by the same or another person) that confirms each
   transcription against the photo; moves status to _verified_.
 
+Implementation notes (M4, `features/transcribe/`, route `cemetery/:id/transcribe?stone=`): the
+queue is a snapshot taken when the list is chosen, so a stone saved as transcribed keeps its
+place (Previous goes back to it). Stones outside any row follow the rows, by v1 grid cell,
+then plot label. Every move (Save & next, Previous, a neighbour, changing the list) saves what
+was typed, and the move doesn't wait for the write. Opening one stone that isn't in the
+default list (from the stone sheet's "Transcribe") widens the list to all stones.
+
 ---
 
 ## 10. Historic cemetery specifics
