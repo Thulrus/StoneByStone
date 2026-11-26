@@ -71,27 +71,27 @@ Notes for WP6+:
 
 Status values: `todo` · `in-progress` · `done` · `blocked: check-in`
 
-| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status            |
-| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ----------------- |
-| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done              |
-| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done              |
-| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done              |
-| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done              |
-| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | done              |
-| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | done              |
-| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | blocked: check-in |
-| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | todo              |
-| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | todo              |
-| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | todo              |
-| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | todo              |
-| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo              |
-| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | todo              |
-| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | todo              |
-| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | todo              |
-| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo              |
-| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo              |
-| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo              |
-| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo              |
+| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status      |
+| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ----------- |
+| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done        |
+| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done        |
+| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done        |
+| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done        |
+| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | done        |
+| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | done        |
+| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | in-progress |
+| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | todo        |
+| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | todo        |
+| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | todo        |
+| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | todo        |
+| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo        |
+| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | todo        |
+| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | todo        |
+| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | todo        |
+| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo        |
+| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo        |
+| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo        |
+| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo        |
 
 Packages that end a milestone (WP0, WP3, WP5, WP9, WP11, WP13, WP14) finish with a check-in
 before the next package starts.
@@ -113,3 +113,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-25 · WP5 · Stones layer with shape+colour status and a bottom sheet (#28), Diagram tab with v1 grid view (#29), offline tile download via cache-first `sbs-tile://` protocol (#30), v1 grid pinning + grid rows → rows (#31), plat/drone image overlays with residuals, opacity, place-stones (#32). 695 tests + 20 Chromium e2e green. M2 complete; WP6 blocked on check-in (device checks for #28 smoothness and #30 airplane mode).
 - 2026-11-25 · WP5 fix · Owner's phone was still on M1: CI (mobile WebKit) had failed since WP4, so nothing deployed. Fixed: map panel overlapped the phone bottom bar; toasts stayed paused after Dismiss; e2e toast handling; overlay e2e skipped on ephemeral WebKit. Added Settings → About (version, build, Check for updates). All 3 e2e projects green in the Playwright Docker image.
 - 2026-11-25 · M2 check-in (partial) · Owner on Android: 10k stones smooth (#28), offline map works in airplane mode (#30), Willow Creek grid pinned on a real map (#31). Plat overlay (#32) not tried (no image). Fixed two bugs the owner found: map controls drew over the stone sheet (dialogs now z-40), and the row ⋯ menu opened off screen on phones (now a bottom sheet). Owner to confirm unblocking WP6.
+- 2026-11-26 · M2 check-in · Owner unblocked WP6. Plat overlay (#32) device check deferred; still open with the owner.
