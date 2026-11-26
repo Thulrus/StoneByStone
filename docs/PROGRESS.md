@@ -5,16 +5,8 @@ Update this file at the end of every session.
 
 ## Next session starts here
 
-**M1 is done. WP4 is `blocked: check-in`.** Stop and tell the owner; they unblock M2.
-
-Check-in items for the owner (on Android, after the deploy):
-
-- Home: name prompt on first launch, create two cemeteries, switch between them, delete one
-  and undo.
-- Import a v1 `.cem.json`. The "N stones not backed up" banner and header pill appear. Tap
-  **Back up now**: on Android the share sheet should open. On desktop Chrome you pick a
-  folder once and later backups go straight there. Afterwards the indicator clears.
-- Settings: rename, units, photo quality, and the storage table with per-cemetery usage.
+**Start WP4** (M2, issues #23–#27: geo module, map, imagery, create cemetery, sections/rows).
+It's a _deep_ package. The owner passed the M1 check-in on 2026-11-25.
 
 One M0 issue stays open for the owner. Don't work on it:
 
@@ -49,27 +41,27 @@ Notes for WP4+ (data layer is in `src/data/`, see also WP2 notes in git history 
 
 Status values: `todo` · `in-progress` · `done` · `blocked: check-in`
 
-| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status            |
-| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ----------------- |
-| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done (owner: #4)  |
-| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done              |
-| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done              |
-| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done              |
-| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | blocked: check-in |
-| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | todo              |
-| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | todo              |
-| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | todo              |
-| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | todo              |
-| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | todo              |
-| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | todo              |
-| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo              |
-| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | todo              |
-| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | todo              |
-| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | todo              |
-| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo              |
-| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo              |
-| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo              |
-| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo              |
+| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status           |
+| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ---------------- |
+| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done (owner: #4) |
+| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done             |
+| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done             |
+| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done             |
+| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | todo             |
+| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | todo             |
+| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | todo             |
+| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | todo             |
+| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | todo             |
+| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | todo             |
+| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | todo             |
+| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo             |
+| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | todo             |
+| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | todo             |
+| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | todo             |
+| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo             |
+| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo             |
+| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo             |
+| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo             |
 
 Packages that end a milestone (WP0, WP3, WP5, WP9, WP11, WP13, WP14) finish with a check-in
 before the next package starts.
@@ -85,3 +77,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-25 · housekeeping · Owner has no iPhone: closed #9 (Android passed), moved all iOS checks to optional #80 (M8), and left #4 open only for the update-banner check.
 - 2026-11-25 · WP2 · Dexie schema + stamped repositories + newer-schema refusal (#15), history coalescing + undo (#16), v2 JSON Schemas + Ajv + FORMAT.md (#17), `.sbs`/`.sbs.json` read/write with streamed fflate (#18), idempotent v1 importer (#19). 575 tests green.
 - 2026-11-25 · WP3 · Contributor name prompt + Settings (#20), Home with progress rings, create/import/delete+undo (#21), backup indicator/reminder, one-tap backup, persist(), storage dashboard (#22). Import/export lazy-loaded. 595 tests + Chromium e2e green. M1 complete; WP4 blocked on check-in.
+- 2026-11-25 · WP3 check-in · Owner passed the M1 checks on Android (Home, import, backup, Settings) and unblocked M2.
