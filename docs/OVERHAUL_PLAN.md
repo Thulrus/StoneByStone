@@ -438,6 +438,17 @@ then plot label. Every move (Save & next, Previous, a neighbour, changing the li
 was typed, and the move doesn't wait for the write. Opening one stone that isn't in the
 default list (from the stone sheet's "Transcribe") widens the list to all stones.
 
+Photo viewer (M4, `features/transcribe/viewer/`): one WebGL2 fragment pass. Zoom, pan,
+straighten and perspective (two keystone amounts) are a single canvas-pixel → source-uv 3×3
+matrix, so the original photo is sampled once, sharply, at any zoom. Local contrast is
+contrast-limited detail around a local mean read from the mipmap chain (a wide blur at
+constant cost); raking light is a directional derivative with a choosable light direction.
+Presets: weathered marble, faint lettering, raking light. Tone settings carry across stones
+for the session (consecutive stones usually need the same treatment); geometry resets per
+photo. Nothing is saved to the photo. Canvas density is capped at 2×. Without WebGL2: a plain
+image with the CSS-filter subset (brightness, contrast, grey, invert, rotate). 60 fps is
+checked on a real GPU with `playwright.gpu.config.ts` (CI's software GL can't measure it).
+
 ---
 
 ## 10. Historic cemetery specifics

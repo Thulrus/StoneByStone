@@ -1,12 +1,16 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from '../../app/store-context';
 import type { ID } from '../../domain';
 import { cn } from '../../ui/cn';
 import { ROLE_LABEL } from '../capture/labels';
-import { BlobImage } from '../capture/PhotoStrip';
+import { Button } from '../../ui/Button';
 import { photoOrder } from './queue';
+import { resetGeometry, useEnhancement } from './viewer/enhancement-store';
+import { FilterControls } from './viewer/FilterControls';
+import { isUnchanged } from './viewer/filters';
+import { PhotoViewer } from './viewer/PhotoViewer';
 
 /** The current stone's photos, large, front first; a button per photo when there are more. */
 export function PhotoPane({ monumentId }: { monumentId: ID }) {
@@ -23,23 +27,24 @@ export function PhotoPane({ monumentId }: { monumentId: ID }) {
     [store, shown?.id],
   );
   const role = shown ? t(ROLE_LABEL[shown.role]) : '';
+  const enhancement = useEnhancement();
+  const [controls, setControls] = useState(false);
+  // Straighten and perspective belong to one photo; tone settings carry on to the next.
+  useEffect(() => resetGeometry(), [shown?.id]);
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex min-h-80 items-center justify-center overflow-hidden rounded-xl bg-surface-2">
-        {blob ? (
-          <BlobImage
-            key={shown?.id}
-            blob={blob}
-            alt={t`${role} photo`}
-            className="max-h-[70dvh] w-full object-contain"
-          />
-        ) : photos && photos.length === 0 ? (
-          <p className="p-6 text-fg-muted">
-            <Trans>No photo of this stone yet.</Trans>
-          </p>
-        ) : null}
-      </div>
+      {blob ? (
+        <PhotoViewer blob={blob} alt={t`${role} photo`} enhancement={enhancement} />
+      ) : (
+        <div className="flex min-h-80 items-center justify-center rounded-xl bg-surface-2">
+          {photos && photos.length === 0 ? (
+            <p className="p-6 text-fg-muted">
+              <Trans>No photo of this stone yet.</Trans>
+            </p>
+          ) : null}
+        </div>
+      )}
       {photos && photos.length > 1 ? (
         <div role="group" aria-label={t`Photos`} className="flex flex-wrap gap-2">
           {photos.map((p) => (
@@ -56,6 +61,19 @@ export function PhotoPane({ monumentId }: { monumentId: ID }) {
               {t(ROLE_LABEL[p.role])}
             </button>
           ))}
+        </div>
+      ) : null}
+      {blob ? (
+        <div className="flex flex-col gap-2">
+          <Button
+            variant="secondary"
+            aria-expanded={controls}
+            className="self-start"
+            onClick={() => setControls((c) => !c)}
+          >
+            {isUnchanged(enhancement) ? <Trans>Enhance</Trans> : <Trans>Enhance (on)</Trans>}
+          </Button>
+          {controls ? <FilterControls e={enhancement} /> : null}
         </div>
       ) : null}
     </div>

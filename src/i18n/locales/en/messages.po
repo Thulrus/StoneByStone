@@ -145,7 +145,7 @@ msgstr "{px} px"
 
 #: src/features/capture/PhotoStrip.tsx:34
 #: src/features/stones/detail/PhotosSection.tsx:23
-#: src/features/transcribe/PhotoPane.tsx:34
+#: src/features/transcribe/PhotoPane.tsx:38
 msgid "{role} photo"
 msgstr "{role} photo"
 
@@ -359,6 +359,10 @@ msgstr "Before you go out"
 msgid "Bench"
 msgstr "Bench"
 
+#: src/features/transcribe/viewer/FilterControls.tsx:102
+msgid "Black point"
+msgstr "Black point"
+
 #: src/features/cemeteries/create/PlaceFinder.tsx:110
 msgid "boundary available"
 msgstr "boundary available"
@@ -370,6 +374,10 @@ msgstr "Boundary from OpenStreetMap. Tap the map to move the pin."
 #: src/features/stones/attribute-labels.ts:18
 msgid "Box tomb"
 msgstr "Box tomb"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:100
+msgid "Brightness"
+msgstr "Brightness"
 
 #: src/features/stones/attribute-labels.ts:49
 msgid "Broken"
@@ -487,6 +495,10 @@ msgstr "Contact (optional)"
 #: src/features/capture/labels.ts:12
 msgid "Context"
 msgstr "Context"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:101
+msgid "Contrast"
+msgstr "Contrast"
 
 #. placeholder {0}: file.name
 #: src/features/cemeteries/ImportButton.tsx:36
@@ -615,6 +627,7 @@ msgid "Deleted section {0}. Its rows are now unsectioned."
 msgstr "Deleted section {0}. Its rows are now unsectioned."
 
 #: src/features/capture/labels.ts:11
+#: src/features/transcribe/viewer/FilterControls.tsx:120
 msgid "Detail"
 msgstr "Detail"
 
@@ -703,6 +716,14 @@ msgstr "Enclosure"
 msgid "End walk"
 msgstr "End walk"
 
+#: src/features/transcribe/PhotoPane.tsx:74
+msgid "Enhance"
+msgstr "Enhance"
+
+#: src/features/transcribe/PhotoPane.tsx:74
+msgid "Enhance (on)"
+msgstr "Enhance (on)"
+
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:63
 #: src/features/cemeteries/setup/TextPrompt.tsx:23
 msgid "Enter a name."
@@ -727,6 +748,10 @@ msgstr "Esri World Imagery needs your own ArcGIS key. It stays on this device."
 #: src/features/overlays/GridActions.tsx:16
 msgid "Every grid stone is already in a row"
 msgstr "Every grid stone is already in a row"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:86
+msgid "Faint lettering"
+msgstr "Faint lettering"
 
 #: src/features/stones/attribute-labels.ts:50
 msgid "Fallen"
@@ -756,6 +781,10 @@ msgstr "Fieldstone"
 #: src/features/cemeteries/setup/AddRowsForm.tsx:40
 msgid "First row"
 msgstr "First row"
+
+#: src/features/transcribe/viewer/PhotoViewer.tsx:132
+msgid "Fit"
+msgstr "Fit"
 
 #: src/features/capture/walk/QuickTray.tsx:32
 #: src/features/stones/detail/AttributesSection.tsx:25
@@ -810,6 +839,10 @@ msgstr "ft"
 msgid "Further along the row"
 msgstr "Further along the row"
 
+#: src/features/transcribe/viewer/FilterControls.tsx:104
+msgid "Gamma"
+msgstr "Gamma"
+
 #: src/features/capture/walk/WalkCamera.tsx:122
 #: src/features/capture/walk/WalkPanel.tsx:119
 #: src/features/schematic/StoneButton.tsx:42
@@ -847,6 +880,10 @@ msgstr "GPS \"Hold still\" time"
 #: src/features/stones/attribute-labels.ts:31
 msgid "Granite"
 msgstr "Granite"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:107
+msgid "Grey"
+msgstr "Grey"
 
 #: src/features/overlays/GridPinWorkspace.tsx:53
 msgid "grid cell"
@@ -957,6 +994,10 @@ msgstr "Install StoneByStone"
 msgid "Install the app so it opens offline and keeps your survey data safe."
 msgstr "Install the app so it opens offline and keeps your survey data safe."
 
+#: src/features/transcribe/viewer/FilterControls.tsx:112
+msgid "Invert"
+msgstr "Invert"
+
 #: src/features/cemeteries/CemeteryList.tsx:84
 msgid "It disappears from this list. Its records stay on the device and in any backups, and you can undo right away."
 msgstr "It disappears from this list. Its records stay on the device and in any backups, and you can undo right away."
@@ -1006,6 +1047,10 @@ msgstr "Ledger"
 msgid "Left of the row"
 msgstr "Left of the row"
 
+#: src/features/transcribe/viewer/FilterControls.tsx:152
+msgid "Left/right height"
+msgstr "Left/right height"
+
 #: src/features/stones/RelativePlacer.tsx:151
 msgid "Less"
 msgstr "Less"
@@ -1018,6 +1063,10 @@ msgstr "Lichen / growth"
 msgid "Light"
 msgstr "Light"
 
+#: src/features/transcribe/viewer/FilterControls.tsx:125
+msgid "Light from (degrees)"
+msgstr "Light from (degrees)"
+
 #: src/features/stones/attribute-labels.ts:35
 msgid "Limestone"
 msgstr "Limestone"
@@ -1025,6 +1074,10 @@ msgstr "Limestone"
 #: src/features/map/LazyMap.tsx:23
 msgid "Loading map…"
 msgstr "Loading map…"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:123
+msgid "Local contrast"
+msgstr "Local contrast"
 
 #: src/features/stones/labels.ts:6
 msgid "Located"
@@ -1206,7 +1259,7 @@ msgstr "No GPS fixes came in. Check that location is on, then try again."
 msgid "no line"
 msgstr "no line"
 
-#: src/features/transcribe/PhotoPane.tsx:39
+#: src/features/transcribe/PhotoPane.tsx:43
 msgid "No photo of this stone yet."
 msgstr "No photo of this stone yet."
 
@@ -1408,7 +1461,7 @@ msgstr "Photographed, not transcribed"
 
 #: src/features/settings/StoragePanel.tsx:96
 #: src/features/stones/detail/PhotosSection.tsx:72
-#: src/features/transcribe/PhotoPane.tsx:44
+#: src/features/transcribe/PhotoPane.tsx:49
 msgid "Photos"
 msgstr "Photos"
 
@@ -1495,6 +1548,10 @@ msgstr "Position within about ±{0} m"
 msgid "Preparing…"
 msgstr "Preparing…"
 
+#: src/features/transcribe/viewer/FilterControls.tsx:81
+msgid "Presets"
+msgstr "Presets"
+
 #: src/features/transcribe/TranscribeView.tsx:174
 msgid "Previous"
 msgstr "Previous"
@@ -1502,6 +1559,11 @@ msgstr "Previous"
 #: src/features/cemeteries/FieldChecklist.tsx:153
 msgid "Protect data"
 msgstr "Protect data"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:89
+#: src/features/transcribe/viewer/FilterControls.tsx:124
+msgid "Raking light"
+msgstr "Raking light"
 
 #: src/app/UpdatePrompt.tsx:33
 msgid "Ready to work offline"
@@ -1568,6 +1630,10 @@ msgstr "Reorder…"
 #: src/features/stones/attribute-labels.ts:54
 msgid "Repaired"
 msgstr "Repaired"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:92
+msgid "Reset"
+msgstr "Reset"
 
 #: src/features/capture/walk/WalkPanel.tsx:142
 msgid "Reverse direction"
@@ -1784,6 +1850,10 @@ msgstr "Settings"
 msgid "Setup"
 msgstr "Setup"
 
+#: src/features/transcribe/viewer/FilterControls.tsx:122
+msgid "Sharpen"
+msgstr "Sharpen"
+
 #: src/features/transcribe/FilterSelect.tsx:26
 msgid "Show"
 msgstr "Show"
@@ -1919,6 +1989,14 @@ msgstr "Storage used"
 msgid "Storage used on this device: {0}"
 msgstr "Storage used on this device: {0}"
 
+#: src/features/transcribe/viewer/FilterControls.tsx:131
+msgid "Straighten"
+msgstr "Straighten"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:129
+msgid "Straighten and perspective"
+msgstr "Straighten and perspective"
+
 #: src/features/map/ImageryPicker.tsx:41
 msgid "street map, online only"
 msgstr "street map, online only"
@@ -2053,6 +2131,14 @@ msgstr "Tilted"
 msgid "Time to back up"
 msgstr "Time to back up"
 
+#: src/features/transcribe/viewer/FilterControls.tsx:98
+msgid "Tone"
+msgstr "Tone"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:150
+msgid "Top/bottom width"
+msgstr "Top/bottom width"
+
 #: src/features/cemeteries/CemeteryTabs.tsx:117
 #: src/features/stones/StoneSheet.tsx:130
 #: src/features/transcribe/TranscribeView.tsx:108
@@ -2083,6 +2169,14 @@ msgstr "Tree"
 #: src/features/capture/HoldStill.tsx:132
 msgid "Try again"
 msgstr "Try again"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:139
+msgid "Turn left"
+msgstr "Turn left"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:147
+msgid "Turn right"
+msgstr "Turn right"
 
 #: src/features/capture/walk/QuickTray.tsx:29
 #: src/features/map/CustomSourceForm.tsx:55
@@ -2214,6 +2308,10 @@ msgstr "Water"
 msgid "Weathered"
 msgstr "Weathered"
 
+#: src/features/transcribe/viewer/FilterControls.tsx:83
+msgid "Weathered marble"
+msgstr "Weathered marble"
+
 #: src/features/cemeteries/WelcomeCard.tsx:38
 msgid "Welcome! What’s your name?"
 msgstr "Welcome! What’s your name?"
@@ -2229,6 +2327,10 @@ msgstr "Where is the row?"
 #: src/features/stones/RelativePlacer.tsx:167
 msgid "Which way"
 msgstr "Which way"
+
+#: src/features/transcribe/viewer/FilterControls.tsx:103
+msgid "White point"
+msgstr "White point"
 
 #: src/features/map/CustomSourceForm.tsx:61
 msgid "WMS"
@@ -2261,3 +2363,11 @@ msgstr "Your name"
 #: src/features/stones/attribute-labels.ts:36
 msgid "Zinc (white bronze)"
 msgstr "Zinc (white bronze)"
+
+#: src/features/transcribe/viewer/PhotoViewer.tsx:125
+msgid "Zoom in"
+msgstr "Zoom in"
+
+#: src/features/transcribe/viewer/PhotoViewer.tsx:128
+msgid "Zoom out"
+msgstr "Zoom out"
