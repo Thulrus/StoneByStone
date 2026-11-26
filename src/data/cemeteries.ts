@@ -9,10 +9,21 @@ import {
 import { getCemeteryDefaults } from './settings';
 import type { Store } from './store';
 
+/** What setup can prefill from a map search (plan §11). */
+export type CemeteryPlace = Partial<
+  Pick<Cemetery, 'location' | 'boundary' | 'country' | 'adminAreas' | 'externalIds'>
+>;
+
 /** A new, empty cemetery using this device's defaults, with this device's contributor. */
-export async function createCemetery(store: Store, name: string): Promise<Cemetery> {
+export async function createCemetery(
+  store: Store,
+  name: string,
+  place: CemeteryPlace = {},
+): Promise<Cemetery> {
   const defaults = await getCemeteryDefaults(store);
+  const extra = Object.fromEntries(Object.entries(place).filter(([, v]) => v !== undefined));
   return store.cemeteries.create({
+    ...extra,
     name: name.trim(),
     license: DEFAULT_LICENSE,
     contributors: [store.device.contributorId],

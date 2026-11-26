@@ -48,12 +48,10 @@ describe('first launch', () => {
 describe('Home', () => {
   it('creates cemeteries and switches between them', async () => {
     const { router } = await renderHome();
+    await userEvent.click(await screen.findByRole('button', { name: 'Not now' }));
     for (const name of ['Bethel', 'Arlington']) {
-      await userEvent.click(await screen.findByRole('button', { name: 'New cemetery' }));
-      await userEvent.type(
-        within(screen.getByRole('dialog')).getByRole('textbox', { name: 'Name' }),
-        name,
-      );
+      await userEvent.click(await screen.findByRole('link', { name: 'New cemetery' }));
+      await userEvent.type(await screen.findByRole('textbox', { name: 'Name' }), name);
       await userEvent.click(screen.getByRole('button', { name: 'Create' }));
       expect(await screen.findByRole('heading', { name })).toBeInTheDocument();
       await router.navigate('/');

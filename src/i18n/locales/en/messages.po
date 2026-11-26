@@ -16,6 +16,11 @@ msgstr "(deleted)"
 msgid "{0, plural, one {# not backed up} other {# not backed up}}"
 msgstr "{0, plural, one {# not backed up} other {# not backed up}}"
 
+#. placeholder {0}: status.results.length
+#: src/features/cemeteries/create/PlaceFinder.tsx:123
+msgid "{0, plural, one {# place} other {# places}}"
+msgstr "{0, plural, one {# place} other {# places}}"
+
 #. placeholder {0}: status.unbacked
 #: src/features/share/BackupBanner.tsx:17
 msgid "{0, plural, one {# stone is not backed up} other {# stones are not backed up}}"
@@ -25,6 +30,16 @@ msgstr "{0, plural, one {# stone is not backed up} other {# stones are not backe
 #: src/features/cemeteries/CemeteryList.tsx:32
 msgid "{0, plural, one {# stone} other {# stones}}"
 msgstr "{0, plural, one {# stone} other {# stones}}"
+
+#. placeholder {0}: Math.round(c.distanceM)
+#: src/features/cemeteries/create/PlaceFinder.tsx:108
+msgid "{0} m away"
+msgstr "{0} m away"
+
+#. placeholder {0}: Math.round(lengthM)
+#: src/features/map/RowDrawer.tsx:60
+msgid "{0} m. Tap to add a bend, or drag a point to adjust."
+msgstr "{0} m. Tap to add a bend, or drag a point to adjust."
 
 #. placeholder {0}: r.created
 #. placeholder {1}: r.updated
@@ -59,6 +74,10 @@ msgstr "{pct} transcribed"
 msgid "{px} px"
 msgstr "{px} px"
 
+#: src/features/cemeteries/setup/RowItem.tsx:52
+msgid "{stones, plural, one {# stone} other {# stones}}"
+msgstr "{stones, plural, one {# stone} other {# stones}}"
+
 #: src/features/settings/CemeteryDefaultsForm.tsx:17
 msgid "1200 px (smallest files)"
 msgstr "1200 px (smallest files)"
@@ -71,7 +90,44 @@ msgstr "1600 px (recommended)"
 msgid "A new version of StoneByStone is available."
 msgstr "A new version of StoneByStone is available."
 
-#: src/app/pages/CemeteryPage.tsx:23
+#: src/features/map/ImageryPicker.tsx:104
+msgid "Add a custom source"
+msgstr "Add a custom source"
+
+#: src/features/cemeteries/setup/AddRowsForm.tsx:57
+msgid "Add row"
+msgstr "Add row"
+
+#. placeholder {0}: series[0]
+#: src/features/cemeteries/setup/AddRowsForm.tsx:53
+msgid "Add rows {0}–{last}"
+msgstr "Add rows {0}–{last}"
+
+#: src/features/cemeteries/setup/LayoutEditor.tsx:70
+msgid "Add section"
+msgstr "Add section"
+
+#: src/features/map/CustomSourceForm.tsx:106
+msgid "Add source"
+msgstr "Add source"
+
+#: src/features/cemeteries/setup/LayoutEditor.tsx:55
+msgid "Add the rows you will walk. Sections are optional; use them if the cemetery has named or lettered areas. Draw each row's line on the map, or do it later."
+msgstr "Add the rows you will walk. Sections are optional; use them if the cemetery has named or lettered areas. Draw each row's line on the map, or do it later."
+
+#: src/features/map/CustomSourceForm.tsx:66
+msgid "Address"
+msgstr "Address"
+
+#: src/features/map/CustomSourceForm.tsx:26
+msgid "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
+msgstr "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
+
+#: src/features/map/CustomSourceForm.tsx:84
+msgid "Attribution"
+msgstr "Attribution"
+
+#: src/app/pages/CemeteryPage.tsx:30
 #: src/app/pages/NotFoundPage.tsx:11
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
@@ -97,8 +153,22 @@ msgstr "Backup failed"
 msgid "Backup saved"
 msgstr "Backup saved"
 
+#: src/features/cemeteries/create/PlaceFinder.tsx:110
+msgid "boundary available"
+msgstr "boundary available"
+
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:110
+msgid "Boundary from OpenStreetMap. Tap the map to move the pin."
+msgstr "Boundary from OpenStreetMap. Tap the map to move the pin."
+
+#: src/features/map/ImageryPicker.tsx:42
+msgid "can be saved for offline use"
+msgstr "can be saved for offline use"
+
 #: src/features/cemeteries/CemeteryList.tsx:88
-#: src/features/cemeteries/NewCemeteryDialog.tsx:53
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:127
+#: src/features/cemeteries/setup/TextPrompt.tsx:44
+#: src/features/map/RowDrawer.tsx:76
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -106,6 +176,10 @@ msgstr "Cancel"
 #: src/app/pages/HomePage.tsx:14
 msgid "Cemeteries"
 msgstr "Cemeteries"
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:78
+msgid "Cemeteries near me"
+msgstr "Cemeteries near me"
 
 #: src/features/cemeteries/CemeteryList.tsx:75
 msgid "Cemeteries on this device"
@@ -115,7 +189,7 @@ msgstr "Cemeteries on this device"
 msgid "Cemetery"
 msgstr "Cemetery"
 
-#: src/app/pages/CemeteryPage.tsx:20
+#: src/app/pages/CemeteryPage.tsx:27
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
@@ -132,7 +206,15 @@ msgstr "Contact (optional)"
 msgid "Could not import {0}"
 msgstr "Could not import {0}"
 
-#: src/features/cemeteries/NewCemeteryDialog.tsx:56
+#: src/features/cemeteries/create/PlaceFinder.tsx:48
+msgid "Couldn't get your location. Search or drop a pin instead."
+msgstr "Couldn't get your location. Search or drop a pin instead."
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:27
+msgid "Couldn't reach the map service. Check the connection, or drop a pin instead."
+msgstr "Couldn't reach the map service. Check the connection, or drop a pin instead."
+
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:130
 msgid "Create"
 msgstr "Create"
 
@@ -145,6 +227,7 @@ msgid "Data"
 msgstr "Data"
 
 #: src/features/cemeteries/CemeteryList.tsx:91
+#: src/features/cemeteries/setup/SectionBlock.tsx:69
 msgid "Delete"
 msgstr "Delete"
 
@@ -158,29 +241,109 @@ msgstr "Delete {0}"
 msgid "Delete {0}?"
 msgstr "Delete {0}?"
 
+#: src/features/cemeteries/setup/RowItem.tsx:103
+msgid "Delete row"
+msgstr "Delete row"
+
 #: src/features/cemeteries/CemeteryList.tsx:59
 msgid "Deleted {name}"
 msgstr "Deleted {name}"
+
+#. placeholder {0}: row.label
+#: src/features/cemeteries/setup/RowItem.tsx:31
+msgid "Deleted row {0}"
+msgstr "Deleted row {0}"
+
+#. placeholder {0}: section.name
+#: src/features/cemeteries/setup/SectionBlock.tsx:36
+msgid "Deleted section {0}. Its rows are now unsectioned."
+msgstr "Deleted section {0}. Its rows are now unsectioned."
 
 #: src/ui/Toaster.tsx:43
 msgid "Dismiss"
 msgstr "Dismiss"
 
+#: src/features/map/MapToolbar.tsx:33
+msgid "Draw a row line first"
+msgstr "Draw a row line first"
+
+#: src/features/cemeteries/setup/RowItem.tsx:72
+msgid "Draw line"
+msgstr "Draw line"
+
+#: src/features/map/RowDrawer.tsx:53
+msgid "Drawing {rowName}"
+msgstr "Drawing {rowName}"
+
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:118
+msgid "Drop a pin on the map"
+msgstr "Drop a pin on the map"
+
+#: src/features/cemeteries/setup/RowItem.tsx:72
+msgid "Edit line"
+msgstr "Edit line"
+
 #: src/features/settings/ContributorForm.tsx:45
 msgid "Email or phone, included when you share a file."
 msgstr "Email or phone, included when you share a file."
 
-#: src/features/cemeteries/NewCemeteryDialog.tsx:24
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:63
+#: src/features/cemeteries/setup/TextPrompt.tsx:23
 msgid "Enter a name."
 msgstr "Enter a name."
+
+#: src/features/map/CustomSourceForm.tsx:24
+msgid "Enter a valid web address."
+msgstr "Enter a valid web address."
+
+#: src/features/map/CustomSourceForm.tsx:27
+msgid "Enter the WMS layer name."
+msgstr "Enter the WMS layer name."
+
+#: src/features/map/ImageryPicker.tsx:73
+msgid "Esri API key"
+msgstr "Esri API key"
+
+#: src/features/map/ImageryPicker.tsx:74
+msgid "Esri World Imagery needs your own ArcGIS key. It stays on this device."
+msgstr "Esri World Imagery needs your own ArcGIS key. It stays on this device."
 
 #: src/features/settings/CemeteryDefaultsForm.tsx:29
 msgid "Feet and inches"
 msgstr "Feet and inches"
 
+#: src/features/cemeteries/setup/AddRowsForm.tsx:40
+msgid "First row"
+msgstr "First row"
+
+#: src/features/map/CustomSourceForm.tsx:69
+msgid "For example https://example.org/tiles/{z}/{x}/{y}.png"
+msgstr "For example https://example.org/tiles/{z}/{x}/{y}.png"
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:124
+msgid "from OpenStreetMap."
+msgstr "from OpenStreetMap."
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:84
+msgid "Getting your location…"
+msgstr "Getting your location…"
+
+#: src/features/map/CustomSourceForm.tsx:90
+msgid "Highest zoom level"
+msgstr "Highest zoom level"
+
+#: src/features/cemeteries/setup/AddRowsForm.tsx:46
+msgid "How many"
+msgstr "How many"
+
 #: src/features/share/BackupBanner.tsx:22
 msgid "If this device is lost or the browser clears its data, they are gone."
 msgstr "If this device is lost or the browser clears its data, they are gone."
+
+#: src/features/map/ImageryPicker.tsx:46
+#: src/features/map/MapToolbar.tsx:27
+msgid "Imagery"
+msgstr "Imagery"
 
 #: src/features/cemeteries/ImportButton.tsx:59
 msgid "Import"
@@ -227,14 +390,39 @@ msgstr "Language"
 msgid "Later"
 msgstr "Later"
 
+#: src/features/map/CustomSourceForm.tsx:81
+msgid "Layer"
+msgstr "Layer"
+
 #: src/app/pages/SettingsPage.tsx:15
 msgid "Light"
 msgstr "Light"
+
+#: src/features/map/LazyMap.tsx:23
+msgid "Loading map…"
+msgstr "Loading map…"
 
 #: src/app/Layout.tsx:68
 #: src/app/Layout.tsx:82
 msgid "Main"
 msgstr "Main"
+
+#: src/app/pages/CemeteryPage.tsx:85
+msgid "Map"
+msgstr "Map"
+
+#: src/features/map/ImageryPicker.tsx:49
+msgid "Map background for this cemetery"
+msgstr "Map background for this cemetery"
+
+#. placeholder {0}: cemetery.name
+#: src/features/map/CemeteryMap.tsx:51
+msgid "Map of {0}"
+msgstr "Map of {0}"
+
+#: src/features/cemeteries/create/PlaceMap.tsx:49
+msgid "Map: tap to place the cemetery"
+msgstr "Map: tap to place the cemetery"
 
 #: src/app/pages/SettingsPage.tsx:14
 #: src/app/pages/SettingsPage.tsx:21
@@ -245,25 +433,75 @@ msgstr "Match device"
 msgid "Metres"
 msgstr "Metres"
 
-#: src/features/cemeteries/NewCemeteryDialog.tsx:42
+#. placeholder {0}: row.label
+#: src/features/cemeteries/setup/RowItem.tsx:77
+msgid "More for row {0}"
+msgstr "More for row {0}"
+
+#. placeholder {0}: row.label
+#: src/features/cemeteries/setup/RowItem.tsx:65
+msgid "Move row {0} down"
+msgstr "Move row {0} down"
+
+#. placeholder {0}: row.label
+#: src/features/cemeteries/setup/RowItem.tsx:57
+msgid "Move row {0} up"
+msgstr "Move row {0} up"
+
+#. placeholder {0}: section.name
+#: src/features/cemeteries/setup/SectionBlock.tsx:59
+msgid "Move section {0} down"
+msgstr "Move section {0} down"
+
+#. placeholder {0}: section.name
+#: src/features/cemeteries/setup/SectionBlock.tsx:51
+msgid "Move section {0} up"
+msgstr "Move section {0} up"
+
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:80
 #: src/features/cemeteries/WelcomeCard.tsx:42
+#: src/features/map/CustomSourceForm.tsx:64
 #: src/features/settings/ContributorForm.tsx:37
 msgid "Name"
 msgstr "Name"
 
-#: src/features/cemeteries/NewCemeteryDialog.tsx:37
-#: src/features/cemeteries/NewCemeteryDialog.tsx:39
+#: src/features/map/ImageryPicker.tsx:40
+msgid "needs an API key"
+msgstr "needs an API key"
+
+#: src/app/pages/HomePage.tsx:22
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:75
 msgid "New cemetery"
 msgstr "New cemetery"
+
+#: src/features/cemeteries/setup/LayoutEditor.tsx:65
+msgid "New section"
+msgstr "New section"
 
 #: src/features/cemeteries/CemeteryList.tsx:68
 msgid "No cemeteries on this device yet. Create one, or import a file."
 msgstr "No cemeteries on this device yet. Create one, or import a file."
 
+#: src/features/cemeteries/setup/RowItem.tsx:51
+msgid "no line"
+msgstr "no line"
+
+#: src/features/cemeteries/setup/RowItem.tsx:93
+msgid "No section"
+msgstr "No section"
+
 #: src/app/InstallPrompt.tsx:51
 #: src/features/cemeteries/WelcomeCard.tsx:53
 msgid "Not now"
 msgstr "Not now"
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:111
+msgid "not tagged as a cemetery"
+msgstr "not tagged as a cemetery"
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:89
+msgid "Nothing found. Try another search, or drop a pin."
+msgstr "Nothing found. Try another search, or drop a pin."
 
 #. placeholder {0}: state.message
 #: src/app/StoreGate.tsx:65
@@ -273,6 +511,18 @@ msgstr "Nothing has been changed. Details: {0}"
 #: src/ui/Toaster.tsx:14
 msgid "Notifications"
 msgstr "Notifications"
+
+#: src/features/map/RowDrawer.tsx:59
+msgid "Now tap where the row ends."
+msgstr "Now tap where the row ends."
+
+#: src/features/cemeteries/setup/RowItem.tsx:51
+msgid "on map"
+msgstr "on map"
+
+#: src/features/map/ImageryPicker.tsx:42
+msgid "online only"
+msgstr "online only"
 
 #: src/app/InstallPrompt.tsx:37
 msgid "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
@@ -294,6 +544,14 @@ msgstr "Photo quality"
 msgid "Photos"
 msgstr "Photos"
 
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:112
+msgid "Pin placed. Tap the map to move it."
+msgstr "Pin placed. Tap the map to move it."
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:93
+msgid "Places found"
+msgstr "Places found"
+
 #: src/features/settings/StoragePanel.tsx:122
 #: src/features/share/BackupBanner.tsx:26
 msgid "Preparing…"
@@ -311,6 +569,40 @@ msgstr "Recorded on every stone and photo you add, so merged datasets show who d
 msgid "Reload"
 msgstr "Reload"
 
+#: src/features/map/ImageryPicker.tsx:89
+msgid "Remove"
+msgstr "Remove"
+
+#: src/features/map/RowDrawer.tsx:72
+msgid "Remove line"
+msgstr "Remove line"
+
+#: src/features/cemeteries/setup/RowItem.tsx:83
+#: src/features/cemeteries/setup/SectionBlock.tsx:66
+msgid "Rename"
+msgstr "Rename"
+
+#: src/features/cemeteries/setup/RowItem.tsx:109
+msgid "Rename row"
+msgstr "Rename row"
+
+#: src/features/cemeteries/setup/SectionBlock.tsx:98
+msgid "Rename section"
+msgstr "Rename section"
+
+#: src/features/cemeteries/setup/RowItem.tsx:110
+msgid "Row label"
+msgstr "Row label"
+
+#: src/features/map/MapToolbar.tsx:36
+msgid "Rows horizontal"
+msgstr "Rows horizontal"
+
+#: src/features/cemeteries/setup/SectionBlock.tsx:45
+msgid "Rows without a section"
+msgstr "Rows without a section"
+
+#: src/features/cemeteries/setup/TextPrompt.tsx:47
 #: src/features/cemeteries/WelcomeCard.tsx:50
 msgid "Save"
 msgstr "Save"
@@ -318,6 +610,14 @@ msgstr "Save"
 #: src/features/share/useBackup.ts:41
 msgid "Save it"
 msgstr "Save it"
+
+#: src/features/map/ImageryPicker.tsx:80
+msgid "Save key"
+msgstr "Save key"
+
+#: src/features/map/RowDrawer.tsx:79
+msgid "Save line"
+msgstr "Save line"
 
 #: src/features/settings/ContributorForm.tsx:52
 msgid "Save name"
@@ -331,10 +631,38 @@ msgstr "Saved"
 msgid "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
 msgstr "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
 
+#: src/features/cemeteries/create/PlaceFinder.tsx:75
+msgid "Search"
+msgstr "Search"
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:69
+msgid "Search by name or place"
+msgstr "Search by name or place"
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:85
+msgid "Searching OpenStreetMap…"
+msgstr "Searching OpenStreetMap…"
+
+#: src/features/cemeteries/setup/RowItem.tsx:87
+msgid "Section"
+msgstr "Section"
+
+#: src/features/cemeteries/setup/SectionBlock.tsx:99
+msgid "Section name"
+msgstr "Section name"
+
 #: src/app/Layout.tsx:48
 #: src/app/pages/SettingsPage.tsx:28
 msgid "Settings"
 msgstr "Settings"
+
+#: src/app/pages/CemeteryPage.tsx:86
+msgid "Setup"
+msgstr "Setup"
+
+#: src/features/map/CustomSourceForm.tsx:85
+msgid "Shown on the map. Check the provider's terms."
+msgstr "Shown on the map. Check the provider's terms."
 
 #: src/app/Layout.tsx:62
 msgid "Skip to content"
@@ -356,9 +684,25 @@ msgstr "Storage per cemetery"
 msgid "Storage used"
 msgstr "Storage used"
 
+#: src/features/map/ImageryPicker.tsx:41
+msgid "street map, online only"
+msgstr "street map, online only"
+
 #: src/app/pages/SettingsPage.tsx:17
 msgid "Sunlight (high contrast)"
 msgstr "Sunlight (high contrast)"
+
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:113
+msgid "Tap the map where the cemetery is."
+msgstr "Tap the map where the cemetery is."
+
+#: src/features/map/RowDrawer.tsx:57
+msgid "Tap where the row starts."
+msgstr "Tap where the row starts."
+
+#: src/features/map/CustomSourceForm.tsx:25
+msgid "The address must start with https://"
+msgstr "The address must start with https://"
 
 #: src/features/settings/StoragePanel.tsx:79
 msgid "The browser has agreed to keep this app’s data."
@@ -374,9 +718,13 @@ msgstr "The browser may clear this app’s data when space runs low. Installing 
 msgid "The data on this device was saved by a newer version of StoneByStone (data version {0}; this version reads up to {1}). Nothing has been changed. Reload the page to get the latest version."
 msgstr "The data on this device was saved by a newer version of StoneByStone (data version {0}; this version reads up to {1}). Nothing has been changed. Reload the page to get the latest version."
 
-#: src/app/pages/CemeteryPage.tsx:32
-msgid "The map for this cemetery arrives in a later update."
-msgstr "The map for this cemetery arrives in a later update."
+#: src/features/map/CustomSourceForm.tsx:102
+msgid "The provider's terms allow saving tiles for offline use"
+msgstr "The provider's terms allow saving tiles for offline use"
+
+#: src/features/map/CustomSourceForm.tsx:70
+msgid "The WMS service address, without GetMap parameters"
+msgstr "The WMS service address, without GetMap parameters"
 
 #: src/app/pages/SettingsPage.tsx:32
 msgid "Theme"
@@ -390,14 +738,32 @@ msgstr "There is nothing to back up yet."
 msgid "This app is out of date"
 msgstr "This app is out of date"
 
+#: src/features/map/LazyMap.tsx:14
+msgid "This device can't show the map. Sections and rows still work without it."
+msgstr "This device can't show the map. Sections and rows still work without it."
+
+#: src/features/map/CustomSourceForm.tsx:60
+msgid "Tiles (XYZ)"
+msgstr "Tiles (XYZ)"
+
 #: src/features/share/useBackupReminder.ts:25
 msgid "Time to back up"
 msgstr "Time to back up"
 
+#: src/features/map/CustomSourceForm.tsx:55
+msgid "Type"
+msgstr "Type"
+
 #: src/features/cemeteries/CemeteryList.tsx:60
 #: src/features/cemeteries/ImportButton.tsx:30
+#: src/features/cemeteries/setup/RowItem.tsx:32
+#: src/features/cemeteries/setup/SectionBlock.tsx:37
 msgid "Undo"
 msgstr "Undo"
+
+#: src/features/map/RowDrawer.tsx:68
+msgid "Undo point"
+msgstr "Undo point"
 
 #: src/features/settings/CemeteryDefaultsForm.tsx:25
 msgid "Units"
@@ -407,11 +773,19 @@ msgstr "Units"
 msgid "Units and photo quality apply to cemeteries you create from now on."
 msgstr "Units and photo quality apply to cemeteries you create from now on."
 
+#: src/features/cemeteries/create/PlaceFinder.tsx:102
+msgid "Unnamed cemetery"
+msgstr "Unnamed cemetery"
+
 #. placeholder {0}: fmt(quota.usage)
 #. placeholder {1}: fmt(quota.quota)
 #: src/features/settings/StoragePanel.tsx:44
 msgid "Using {0} of about {1} ({pct})."
 msgstr "Using {0} of about {1} ({pct})."
+
+#: src/app/pages/CemeteryPage.tsx:84
+msgid "View"
+msgstr "View"
 
 #: src/features/cemeteries/ImportButton.tsx:32
 msgid "Warning"
@@ -420,6 +794,18 @@ msgstr "Warning"
 #: src/features/cemeteries/WelcomeCard.tsx:38
 msgid "Welcome! What’s your name?"
 msgstr "Welcome! What’s your name?"
+
+#: src/features/cemeteries/create/NewCemeteryPage.tsx:93
+msgid "Where is it? (optional)"
+msgstr "Where is it? (optional)"
+
+#: src/features/map/CustomSourceForm.tsx:61
+msgid "WMS"
+msgstr "WMS"
+
+#: src/features/cemeteries/create/PlaceFinder.tsx:107
+msgid "You are here"
+msgstr "You are here"
 
 #: src/features/share/useBackup.ts:40
 msgid "Your backup is ready"

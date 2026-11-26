@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/react/macro';
+import { Link } from 'react-router';
 import { CemeteryList } from '../../features/cemeteries/CemeteryList';
 import { ImportButton } from '../../features/cemeteries/ImportButton';
-import { NewCemeteryButton } from '../../features/cemeteries/NewCemeteryDialog';
 import { WelcomeCard } from '../../features/cemeteries/WelcomeCard';
 import { BackupBanner } from '../../features/share/BackupBanner';
 import { InstallPrompt } from '../InstallPrompt';
@@ -15,7 +15,12 @@ export function HomePage() {
         </h1>
         <div className="flex gap-2">
           <ImportButton />
-          <NewCemeteryButton />
+          <Link
+            to="/new"
+            className="inline-flex min-h-12 items-center justify-center rounded-lg bg-primary px-4 font-medium text-primary-fg hover:opacity-90"
+          >
+            <Trans>New cemetery</Trans>
+          </Link>
         </div>
       </div>
       <WelcomeCard />
