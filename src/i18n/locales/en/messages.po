@@ -127,7 +127,7 @@ msgstr "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
 msgid "Attribution"
 msgstr "Attribution"
 
-#: src/app/pages/CemeteryPage.tsx:32
+#: src/app/pages/CemeteryPage.tsx:35
 #: src/app/pages/NotFoundPage.tsx:11
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
@@ -189,7 +189,7 @@ msgstr "Cemeteries on this device"
 msgid "Cemetery"
 msgstr "Cemetery"
 
-#: src/app/pages/CemeteryPage.tsx:29
+#: src/app/pages/CemeteryPage.tsx:32
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
@@ -259,6 +259,11 @@ msgstr "Deleted row {0}"
 msgid "Deleted section {0}. Its rows are now unsectioned."
 msgstr "Deleted section {0}. Its rows are now unsectioned."
 
+#: src/app/pages/CemeteryPage.tsx:111
+#: src/features/schematic/SchematicView.tsx:78
+msgid "Diagram"
+msgstr "Diagram"
+
 #: src/ui/Toaster.tsx:43
 msgid "Dismiss"
 msgstr "Dismiss"
@@ -324,9 +329,19 @@ msgstr "For example https://example.org/tiles/{z}/{x}/{y}.png"
 msgid "from OpenStreetMap."
 msgstr "from OpenStreetMap."
 
+#: src/features/schematic/StoneButton.tsx:42
+msgid "Gap"
+msgstr "Gap"
+
 #: src/features/cemeteries/create/PlaceFinder.tsx:84
 msgid "Getting your location…"
 msgstr "Getting your location…"
+
+#. placeholder {0}: r + 1
+#. placeholder {1}: c + 1
+#: src/features/schematic/LegacyGridView.tsx:71
+msgid "Grid row {0}, column {1}"
+msgstr "Grid row {0}, column {1}"
 
 #: src/features/map/CustomSourceForm.tsx:90
 msgid "Highest zoom level"
@@ -411,7 +426,7 @@ msgstr "Located"
 msgid "Main"
 msgstr "Main"
 
-#: src/app/pages/CemeteryPage.tsx:92
+#: src/app/pages/CemeteryPage.tsx:110
 msgid "Map"
 msgstr "Map"
 
@@ -490,9 +505,21 @@ msgstr "No cemeteries on this device yet. Create one, or import a file."
 msgid "no line"
 msgstr "no line"
 
+#: src/features/schematic/SchematicView.tsx:82
+msgid "No rows or stones yet. Add rows in Setup."
+msgstr "No rows or stones yet. Add rows in Setup."
+
 #: src/features/cemeteries/setup/RowItem.tsx:93
 msgid "No section"
 msgstr "No section"
+
+#: src/features/schematic/SchematicView.tsx:43
+msgid "No stones yet"
+msgstr "No stones yet"
+
+#: src/features/schematic/SchematicView.tsx:99
+msgid "Not in a row"
+msgstr "Not in a row"
 
 #: src/app/InstallPrompt.tsx:51
 #: src/features/cemeteries/WelcomeCard.tsx:53
@@ -607,6 +634,10 @@ msgstr "Rename row"
 msgid "Rename section"
 msgstr "Rename section"
 
+#: src/features/schematic/SchematicView.tsx:53
+msgid "Row {name}, stone {n}"
+msgstr "Row {name}, stone {n}"
+
 #: src/features/stones/StoneSheet.tsx:36
 msgid "Row {rowName}"
 msgstr "Row {rowName}"
@@ -682,7 +713,7 @@ msgstr "Section name"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/app/pages/CemeteryPage.tsx:93
+#: src/app/pages/CemeteryPage.tsx:112
 msgid "Setup"
 msgstr "Setup"
 
@@ -701,6 +732,11 @@ msgstr "Status key"
 #: src/features/stones/StoneSheet.tsx:50
 msgid "Stone"
 msgstr "Stone"
+
+#. placeholder {0}: i + 1
+#: src/features/schematic/SchematicView.tsx:106
+msgid "Stone {0} not in a row"
+msgstr "Stone {0} not in a row"
 
 #: src/features/settings/StoragePanel.tsx:38
 msgid "Storage"
@@ -768,6 +804,10 @@ msgstr "Theme"
 msgid "There is nothing to back up yet."
 msgstr "There is nothing to back up yet."
 
+#: src/features/schematic/LegacyGridView.tsx:87
+msgid "These stones came from a v1 grid and aren't on the map yet."
+msgstr "These stones came from a v1 grid and aren't on the map yet."
+
 #: src/app/StoreGate.tsx:50
 msgid "This app is out of date"
 msgstr "This app is out of date"
@@ -825,15 +865,23 @@ msgstr "Unnamed person"
 msgid "Using {0} of about {1} ({pct})."
 msgstr "Using {0} of about {1} ({pct})."
 
+#: src/features/schematic/LegacyGridView.tsx:83
+msgid "v1 grid"
+msgstr "v1 grid"
+
 #: src/features/stones/StoneSheet.tsx:40
 msgid "v1 grid row {r}, column {c}"
 msgstr "v1 grid row {r}, column {c}"
+
+#: src/features/schematic/LegacyGridView.tsx:95
+msgid "v1 grid, {rows} rows by {cols} columns"
+msgstr "v1 grid, {rows} rows by {cols} columns"
 
 #: src/features/stones/labels.ts:9
 msgid "Verified"
 msgstr "Verified"
 
-#: src/app/pages/CemeteryPage.tsx:91
+#: src/app/pages/CemeteryPage.tsx:109
 msgid "View"
 msgstr "View"
 
