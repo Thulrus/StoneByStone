@@ -459,6 +459,13 @@ and adds a person. People get their ids up front, so saving again never duplicat
 person emptied out is removed, and one typed again afterwards gets a new id (a tombstone
 always wins on merge, §21.2).
 
+Name autocomplete (M4, `features/transcribe/name-index.ts`): an in-memory index of the
+cemetery's people (imported index records are people too), rebuilt when they change. A
+suggestion is a whole name whose words start with every typed word (carved abbreviations
+match both ways, `Wm` ↔ `William`; accents ignored), most used first; when none fits, the last
+word is completed to a known surname (`Sarah Whit` → `Sarah Whitcomb`). Arrow keys pick one
+and Enter takes it; with nothing picked, Enter is still Save & next.
+
 ---
 
 ## 10. Historic cemetery specifics

@@ -14,6 +14,7 @@ import { FilterSelect } from './FilterSelect';
 import { NeighbourStrip } from './NeighbourStrip';
 import { PhotoPane } from './PhotoPane';
 import { TranscribeForm } from './TranscribeForm';
+import { useNameSuggestions } from './useNameSuggestions';
 import { buildQueue, DEFAULT_FILTER, type QueueFilter } from './queue';
 
 export interface TranscribeViewProps {
@@ -40,6 +41,7 @@ export function TranscribeView({
   const [, setParams] = useSearchParams();
   const byId = useMemo(() => new Map(stones.map((m) => [m.id, m])), [stones]);
   const stoneLabel = useStoneLabel(rows, labelOf);
+  const suggestNames = useNameSuggestions(cemetery.id);
   const [filter, setFilterState] = useState<QueueFilter>(() =>
     initialStoneId && byId.get(initialStoneId)?.status !== DEFAULT_FILTER ? 'all' : DEFAULT_FILTER,
   );
@@ -127,6 +129,7 @@ export function TranscribeView({
             stone={current}
             canPrevious={pos > 0}
             dateLocale={cemetery.settings.dateLocale}
+            suggestNames={suggestNames}
             onDraft={(d) => (draft.current = d)}
             whereOf={(id) => stoneLabel(id ? byId.get(id) : undefined)}
             onNext={() => goTo(ids[pos + 1])}

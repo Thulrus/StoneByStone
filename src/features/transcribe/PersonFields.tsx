@@ -1,49 +1,12 @@
 import { useLingui } from '@lingui/react/macro';
-import { useId, type InputHTMLAttributes, type Ref } from 'react';
+import type { Ref } from 'react';
 import type { PersonDraft } from '../../data/transcribe';
 import type { ID } from '../../domain';
 import { Button } from '../../ui/Button';
 import { RelationsList } from '../people/RelationsList';
-import { readPerson, type Reading } from './date-preview';
-
-export function Input({
-  label,
-  kind = 'text',
-  reading,
-  ...rest
-}: {
-  label: string;
-  kind?: 'text' | 'date';
-  reading?: Reading;
-} & InputHTMLAttributes<HTMLInputElement> & {
-    ref?: Ref<HTMLInputElement>;
-  }) {
-  const id = useId();
-  const hint = useId();
-  const hintId = reading ? hint : undefined;
-  return (
-    <div className="flex flex-col gap-1">
-      <label htmlFor={id} className="text-sm font-medium">
-        {label}
-      </label>
-      <input
-        id={id}
-        data-kind={kind}
-        autoComplete="off"
-        spellCheck={false}
-        aria-describedby={hintId}
-        className="min-h-12 rounded-lg bg-surface px-3 text-base text-fg sbs-border"
-        {...rest}
-      />
-      {reading ? (
-        <div id={hintId} className="text-sm" data-testid="date-reading">
-          <p className="text-fg-muted">{reading.text}</p>
-          {reading.warning ? <p className="font-medium text-danger">{reading.warning}</p> : null}
-        </div>
-      ) : null}
-    </div>
-  );
-}
+import { readPerson } from './date-preview';
+import { Input } from './Input';
+import { NameInput } from './NameInput';
 
 export interface PersonFieldsProps {
   person: PersonDraft;
@@ -52,6 +15,8 @@ export interface PersonFieldsProps {
   onRemove: () => void;
   onLink: () => void;
   whereOf: (monumentId: ID | undefined) => string;
+  /** Name autocomplete. */
+  suggestNames?: (typed: string) => string[];
   /** Cemetery setting that orders numeric dates. */
   dateLocale: string;
   nameRef?: Ref<HTMLInputElement>;
@@ -59,7 +24,8 @@ export interface PersonFieldsProps {
 
 /** One person on the stone, as carved (plan §9). Enter in any field is Save & next. */
 export function PersonFields(props: PersonFieldsProps) {
-  const { person, n, onChange, onRemove, onLink, whereOf, nameRef, dateLocale } = props;
+  const { person, n, onChange, onRemove, onLink, whereOf, nameRef, dateLocale, suggestNames } =
+    props;
   const { t, i18n } = useLingui();
   const read = readPerson(i18n, person, dateLocale);
   const field = (k: keyof Omit<PersonDraft, 'id'>) => ({
@@ -70,7 +36,13 @@ export function PersonFields(props: PersonFieldsProps) {
   return (
     <fieldset className="flex flex-col gap-3 rounded-lg p-3 sbs-border">
       <legend className="px-1 font-medium">{t`Person ${n}`}</legend>
-      <Input ref={nameRef} label={t`Name, as carved`} {...field('name')} />
+      <NameInput
+        inputRef={nameRef}
+        label={t`Name, as carved`}
+        value={person.name}
+        onChange={(name) => onChange({ ...person, name })}
+        suggest={suggestNames}
+      />
       <div className="grid grid-cols-2 gap-3">
         <Input label={t`Born`} kind="date" reading={read.born} {...field('born')} />
         <Input label={t`Died`} kind="date" reading={read.died} {...field('died')} />

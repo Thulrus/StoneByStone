@@ -29,6 +29,8 @@ export interface TranscribeFormProps {
   onPrevious: () => void;
   /** Cemetery setting that orders numeric dates. */
   dateLocale: string;
+  /** Name autocomplete. */
+  suggestNames?: (typed: string) => string[];
   /** "Row 1, stone 3" for a person's stone. */
   whereOf: (monumentId: ID | undefined) => string;
   /** Save without moving; resolves to replaced person ids. */
@@ -64,6 +66,7 @@ function Body({
   onSaveNow,
   whereOf,
   dateLocale,
+  suggestNames,
   initial,
 }: TranscribeFormProps & { initial?: TranscriptionDraft }) {
   const { t } = useLingui();
@@ -199,6 +202,7 @@ function Body({
           onLink={() => void openLink(p)}
           whereOf={whereOf}
           dateLocale={dateLocale}
+          suggestNames={suggestNames}
           nameRef={(el) => {
             if (el) nameInputs.current.set(p.id, el);
             else nameInputs.current.delete(p.id);

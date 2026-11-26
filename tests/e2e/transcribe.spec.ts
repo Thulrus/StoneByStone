@@ -132,6 +132,19 @@ test('a whole stone transcribed without the mouse', async ({ page }, testInfo) =
   await expect(p1.getByLabel('Relationship')).toHaveValue('wife of John');
   await expect(p2.getByLabel('Name, as carved')).toHaveValue('John Brown');
   await expect(form.getByRole('group', { name: 'Person 3' })).toHaveCount(0);
+
+  // Names already in the cemetery are offered; arrow + Enter takes one without moving on.
+  await form.getByRole('button', { name: 'Save & next' }).click();
+  await expect(form.getByRole('heading', { level: 2 })).toHaveText('Row 1, stone 2');
+  await form.getByRole('group', { name: 'Person 1' }).getByLabel('Name, as carved').click();
+  await k.type('jo b');
+  await expect(form.getByRole('option', { name: 'John Brown' })).toBeVisible();
+  await k.press('ArrowDown');
+  await k.press('Enter');
+  await expect(
+    form.getByRole('group', { name: 'Person 1' }).getByLabel('Name, as carved'),
+  ).toHaveValue('John Brown');
+  await expect(form.getByRole('heading', { level: 2 })).toHaveText('Row 1, stone 2');
 });
 
 test("a couple's stone and their son's stone, linked both ways", async ({ page }, testInfo) => {
