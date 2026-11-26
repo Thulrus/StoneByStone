@@ -5,24 +5,47 @@ Update this file at the end of every session.
 
 ## Next session starts here
 
-**Blocked: M2 check-in with the owner.** WP5 is done; WP6 (M3: photo pipeline, camera,
-walk-a-row) waits until the owner has checked M2 on Android:
+**WP7 (M3: row controls, GPS averaging, chips, relative placement, polish, checklist, stone
+detail) is `todo`.** Start with #36. WP6 is done; its device checks (below) can be tried any
+time before field trial #1 (#43).
 
-1. **10,000 stones stay smooth (#28).** Make the file with
-   `node scripts/make-stones.ts 100 100 stones-10k.sbs.json`, import it on the phone, then pan,
-   zoom and tap stones on the map. Also try the Diagram tab.
-2. **Airplane mode (#30).** Open a US cemetery (e.g. the 10k file, which sits in Vermont), go to
-   Setup → Offline map → Download, then turn on airplane mode, close and reopen the app, and
-   check that the imagery still shows.
-3. **v1 grid (#31).** Import `tests/fixtures/v1/willow-creek-example.cem.json`. It opens on the
-   Diagram. Tap "Place grid on map", pin 2–3 cells (use "My location" or pan to a real place),
-   then Apply, and check the stones on the map. Try "Treat grid rows as cemetery rows".
-4. **Plat overlay (#32).** Setup → "Add a plat map or drone image". Pin 3+ points, check the
-   residuals, change the opacity, and use "Place stones".
+Owner device checks still open (Android, installed app):
 
-When the owner passes it, set WP6 to `todo` and log the check-in.
+- **#33:** a photo is ready (stone appears, "Stone N saved") within about 1 s of the shutter.
+- **#34:** the in-app camera opens and shoots in the installed app; "Phone camera" switches to
+  the system camera app and back.
+- **#32 (from M2):** plat overlay on the phone (Setup → "Add a plat map or drone image").
 
-Notes for WP6+:
+Notes for WP7+:
+
+- **Walk-a-row:** `geo/row-layout.ts` (`layoutRow`, `isotonic`, `effectiveRowLine`) is pure.
+  `data/walk.ts` has `captureStone` (stone + photo + re-space, one undo step), `relayoutRow`
+  (joins the current operation), `endRowHere`, and `get/setRowStart` (device setting
+  `walk:start:<rowId>`). A stone's GPS fix is its first photo's `position`. Gaps are missing
+  `rowIndex` values. #36 can add Gap as "skip an index", and Insert/Reverse/Reorder as
+  `rowIndex` rewrites followed by `relayoutRow`, all in one `store.run`. Only `row-interpolated`
+  (or missing) positions are rewritten.
+- **Capture UI:** `features/capture/` has `Camera` (generic full-screen camera with roles,
+  `actions` slot, `lastPhoto`, phone-camera fallback via the `systemCamera` pref),
+  `walk/useWalkCapture` (a serial queue: shutter order = stone order; `generation` detaches a
+  pending stone on Next stone), `WalkCamera`, `WalkPanel` (under the map via the `tool` slot,
+  above the diagram), and `WalkStart`. `CemeteryTabs` holds the walk state. Toasts cover the
+  shutter on phones, so the camera shows its own "Stone N saved · Undo". Keep #40's capture
+  feedback in the camera too.
+- **Photos:** `features/capture/pipeline.ts` (runs in `photo.worker.ts` via `process.ts`),
+  `data/photos.ts` (`preparePhoto` outside a transaction, then `writePhoto` inside one, or
+  `addPhoto`). `useSavePhoto` adds a photo to an existing stone (StoneSheet → Add photo).
+  `PhotoStrip`/`BlobImage` show thumbnails.
+- **Binary rows store bytes** (`data/blobs.ts`: `toBlobRow`, `rowBlob`, `rowSize`), so
+  WebKit e2e can store photos. The overlay e2e is still skipped on WebKit, but now because a
+  tap in the pin workspace times out there (not investigated).
+- `quickFix()` (`features/capture/gps.ts`) is one fresh fix (`maximumAge: 0`). #37's
+  averaging should build on it. Never use `watchPosition`.
+- In e2e, the camera's fallback input is `getByTestId('camera-file')` after tapping
+  "Phone camera". Mocked GPS: `test.use({ geolocation, permissions: ['geolocation'] })` and
+  `context.setGeolocation` before each shot.
+
+Older notes (WP6 and earlier):
 
 - **Cemetery screen:** `app/pages/CemeteryPage.tsx` only loads data; the tabs live in
   `features/cemeteries/CemeteryTabs.tsx` (Map / Diagram / Setup + the shared `StoneSheet`), and
@@ -114,3 +137,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-25 · WP5 fix · Owner's phone was still on M1: CI (mobile WebKit) had failed since WP4, so nothing deployed. Fixed: map panel overlapped the phone bottom bar; toasts stayed paused after Dismiss; e2e toast handling; overlay e2e skipped on ephemeral WebKit. Added Settings → About (version, build, Check for updates). All 3 e2e projects green in the Playwright Docker image.
 - 2026-11-25 · M2 check-in (partial) · Owner on Android: 10k stones smooth (#28), offline map works in airplane mode (#30), Willow Creek grid pinned on a real map (#31). Plat overlay (#32) not tried (no image). Fixed two bugs the owner found: map controls drew over the stone sheet (dialogs now z-40), and the row ⋯ menu opened off screen on phones (now a bottom sheet). Owner to confirm unblocking WP6.
 - 2026-11-26 · M2 check-in · Owner unblocked WP6. Plat overlay (#32) device check deferred; still open with the owner.
+- 2026-11-26 · WP6 · Photo pipeline in a worker: resize, ≤20 KB thumbnail, sha256, pHash, EXIF time/GPS (#33). In-app camera with roles, haptics, phone-camera fallback, Add photo on the stone sheet (#34). Walk-a-row: start by GPS/draw/name, Next stone → photo → next rowIndex, isotonic GPS fit, Row end re-spacing, in-camera Undo (#35). Binary rows now store bytes, so WebKit can store photos. 725 unit + 33 e2e (all 3 projects) green. Owner device checks for #33/#34 open.
