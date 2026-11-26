@@ -1,6 +1,7 @@
 /** Image overlays: plat maps and drone orthophotos pinned onto the map (plan §7.4). */
 import type { ControlPoint, ID, Overlay } from '../domain';
 import { fitPins, type SourcePoint } from '../geo';
+import { rowBlob, toBlobRow } from './blobs';
 import type { Store } from './store';
 
 /** Store an image and create its (unpinned) overlay, as one undoable step. */
@@ -11,10 +12,11 @@ export async function addImageOverlay(
   name: string,
   kind: 'plat' | 'drone' = 'plat',
 ): Promise<Overlay> {
+  const imageId = store.newId();
+  const row = await toBlobRow(imageId, image);
   return store.run('Add overlay', async (ctx) => {
-    const imageId = store.newId();
     store.snapshot(ctx, 'overlayBlobs', imageId, undefined);
-    await store.db.overlayBlobs.put({ id: imageId, blob: image });
+    await store.db.overlayBlobs.put(row);
     return store.overlays.create({
       cemeteryId,
       kind,
@@ -27,7 +29,7 @@ export async function addImageOverlay(
 }
 
 export async function overlayImage(store: Store, imageId: ID): Promise<Blob | undefined> {
-  return (await store.db.overlayBlobs.get(imageId))?.blob;
+  return rowBlob(await store.db.overlayBlobs.get(imageId));
 }
 
 /** Save control points and the fitted transform (≥3 points: least-squares affine). */

@@ -1,8 +1,13 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { useState } from 'react';
 import { useStore } from '../../app/store-context';
-import type { Monument, Row } from '../../domain';
+import type { Monument, PhotoRole, Row } from '../../domain';
+import { Button } from '../../ui/Button';
 import { Sheet } from '../../ui/Sheet';
+import { Camera } from '../capture/Camera';
+import { PhotoStrip } from '../capture/PhotoStrip';
+import { useSavePhoto } from '../capture/useSavePhoto';
 import { STATUS_LABEL } from './labels';
 import { StatusIcon } from './StatusIcon';
 
@@ -21,6 +26,9 @@ export function StoneSheet({ stone, rows, labelOf, onClose }: StoneSheetProps) {
     async () => (stone ? store.persons.byMonument(stone.id) : []),
     [store, stone?.id],
   );
+  const [camera, setCamera] = useState(false);
+  const [role, setRole] = useState<PhotoRole>('front');
+  const savePhoto = useSavePhoto();
   const row = rows.find((r) => r.id === stone?.address?.rowId);
   const names = (people ?? []).map(
     (p) =>
@@ -41,39 +49,58 @@ export function StoneSheet({ stone, rows, labelOf, onClose }: StoneSheetProps) {
   }
 
   return (
-    <Sheet
-      open={stone !== undefined}
-      onOpenChange={(o) => {
-        if (!o) onClose();
-      }}
-      title={
-        names[0] ?? (stone?.address?.plotLabel ? t`Plot ${stone.address.plotLabel}` : t`Stone`)
-      }
-      description={where || undefined}
-    >
-      {stone ? (
-        <div className="flex flex-col gap-3">
-          <p className="flex items-center gap-2 font-medium">
-            <StatusIcon status={stone.status} />
-            {t(STATUS_LABEL[stone.status])}
-          </p>
-          {names.length > 1 ? (
-            <ul className="list-inside list-disc">
-              {names.map((n, i) => (
-                <li key={i}>{n}</li>
-              ))}
-            </ul>
-          ) : null}
-          {stone.inscription?.text ? (
-            <p className="whitespace-pre-line text-fg-muted">{stone.inscription.text}</p>
-          ) : null}
-          {stone.position ? null : (
-            <p className="text-fg-muted">
-              <Trans>Not placed on the map yet.</Trans>
+    <>
+      <Sheet
+        open={stone !== undefined}
+        onOpenChange={(o) => {
+          if (!o) onClose();
+        }}
+        title={
+          names[0] ?? (stone?.address?.plotLabel ? t`Plot ${stone.address.plotLabel}` : t`Stone`)
+        }
+        description={where || undefined}
+      >
+        {stone ? (
+          <div className="flex flex-col gap-3">
+            <p className="flex items-center gap-2 font-medium">
+              <StatusIcon status={stone.status} />
+              {t(STATUS_LABEL[stone.status])}
             </p>
-          )}
-        </div>
+            {names.length > 1 ? (
+              <ul className="list-inside list-disc">
+                {names.map((n, i) => (
+                  <li key={i}>{n}</li>
+                ))}
+              </ul>
+            ) : null}
+            <PhotoStrip monumentId={stone.id} />
+            {stone.inscription?.text ? (
+              <p className="whitespace-pre-line text-fg-muted">{stone.inscription.text}</p>
+            ) : null}
+            {stone.position ? null : (
+              <p className="text-fg-muted">
+                <Trans>Not placed on the map yet.</Trans>
+              </p>
+            )}
+            <Button variant="secondary" size="lg" onClick={() => setCamera(true)}>
+              <Trans>Add photo</Trans>
+            </Button>
+          </div>
+        ) : null}
+      </Sheet>
+      {stone ? (
+        <Camera
+          open={camera}
+          onClose={() => setCamera(false)}
+          title={where || t`Stone`}
+          role={role}
+          onRoleChange={setRole}
+          onCapture={(blob, r) => {
+            setCamera(false);
+            void savePhoto(stone.id, blob, r);
+          }}
+        />
       ) : null}
-    </Sheet>
+    </>
   );
 }

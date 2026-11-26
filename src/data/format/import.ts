@@ -3,6 +3,7 @@
  * one history group and one undo step. Cross-ID matching (M6) is not done here.
  */
 import type { ID, MergeableRecord } from '../../domain';
+import { toBlobRow } from '../blobs';
 import { sha256Hex } from '../hash';
 import { LAST_SEEN_KEY } from '../device';
 import type { Repo } from '../repository';
@@ -67,6 +68,14 @@ export async function importArchive(
     if (blob) verified.set(p.id, (await sha256Hex(blob)) === p.sha256);
   }
 
+  const rows = async (m: Map<ID, Blob>) =>
+    Promise.all([...m].map(([id, blob]) => toBlobRow(id, blob)));
+  const [photoRows, thumbRows, overlayRows] = await Promise.all([
+    rows(binaries.photos),
+    rows(binaries.thumbs),
+    rows(binaries.overlays),
+  ]);
+
   await store.group(label, 'import', async (ctx) => {
     const count = (r: 'created' | 'updated' | 'unchanged') => summary[r]++;
     for (const c of archive.data.contributors) {
@@ -83,17 +92,15 @@ export async function importArchive(
     }
     for (const h of archive.data.history) await putIfAbsent(store, ctx, 'history', h);
 
-    for (const [id, blob] of binaries.photos) {
-      if (verified.get(id) === false) {
-        summary.warnings.push(`photos/${id}.jpg does not match its checksum; skipped`);
+    for (const row of photoRows) {
+      if (verified.get(row.id) === false) {
+        summary.warnings.push(`photos/${row.id}.jpg does not match its checksum; skipped`);
         continue;
       }
-      if (await putIfAbsent(store, ctx, 'photoBlobs', { id, blob })) summary.photos++;
+      if (await putIfAbsent(store, ctx, 'photoBlobs', row)) summary.photos++;
     }
-    for (const [id, blob] of binaries.thumbs)
-      await putIfAbsent(store, ctx, 'photoThumbs', { id, blob });
-    for (const [id, blob] of binaries.overlays)
-      await putIfAbsent(store, ctx, 'overlayBlobs', { id, blob });
+    for (const row of thumbRows) await putIfAbsent(store, ctx, 'photoThumbs', row);
+    for (const row of overlayRows) await putIfAbsent(store, ctx, 'overlayBlobs', row);
 
     store.snapshot(ctx, 'settings', LAST_SEEN_KEY, await store.db.settings.get(LAST_SEEN_KEY));
     await store.noteSeen([

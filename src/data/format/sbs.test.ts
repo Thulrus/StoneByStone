@@ -3,6 +3,7 @@ import { unzipSync } from 'fflate';
 import { describe, expect, test } from 'vitest';
 import { canonicalJson, defaultCemeterySettings } from '../../domain';
 import { sha256Hex } from '../hash';
+import { rowBlob } from '../blobs';
 import { dump, ENTITY_TABLES, freshStore } from '../test/helpers';
 import { collectArchive } from './export';
 import { importArchive } from './import';
@@ -75,7 +76,7 @@ async function seeded() {
 async function blobsOf(db: Parameters<typeof dump>[0]) {
   const out: Record<string, string> = {};
   for (const t of ['photoBlobs', 'photoThumbs', 'overlayBlobs'] as const) {
-    for (const r of await db[t].toArray()) out[`${t}/${r.id}`] = await sha256Hex(r.blob);
+    for (const r of await db[t].toArray()) out[`${t}/${r.id}`] = await sha256Hex(rowBlob(r)!);
   }
   return out;
 }

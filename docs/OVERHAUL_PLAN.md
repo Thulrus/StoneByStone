@@ -896,6 +896,19 @@ new stamped writes; undo of a create is a tombstone; undo of a delete removes th
 tombstone; undo of an import/merge group restores snapshots exactly and drops the group's
 history entries.
 
+Implementation notes (M3): rows in `photoBlobs`, `photoThumbs` and `overlayBlobs` store
+`{ id, bytes: ArrayBuffer, type }`, not a `Blob`, because WebKit refuses Blobs in IndexedDB in
+private/ephemeral sessions (`data/blobs.ts`; rows stored as `{ id, blob }` by M2 builds are
+still read, so no migration is needed). Bytes are read before the transaction opens. The photo
+pipeline (`features/capture/pipeline.ts`) runs in a module worker when `OffscreenCanvas`
+exists, else inline: decode with EXIF orientation applied, scale to `photoMaxPx` at JPEG 0.85
+(an upright JPEG already within the limit is kept byte-for-byte), thumbnail ≤ 320 px and
+≤ 20 KB (quality, then size, steps down), `sha256` of the stored bytes, and a 64-bit DCT
+`phash` (16 hex chars) from a 32×32 luma image. EXIF `DateTimeOriginal` (+ `OffsetTimeOriginal`,
+else device zone) becomes `takenAt` (else capture time), and EXIF GPS becomes `Photo.position`
+with `source: 'gps'`. The "use the phone's camera app" choice is a device preference
+(`systemCamera`), not survey data.
+
 ---
 
 ## 20. File formats

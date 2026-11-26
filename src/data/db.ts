@@ -21,9 +21,12 @@ import { MIGRATIONS, SCHEMA_VERSION } from './migrations';
 /** All GitHub Pages projects share one origin, so the name must be specific (plan §14). */
 export const DB_NAME = 'stonebystone';
 
+/** See `blobs.ts`: new rows hold `bytes` + `type`; older rows hold `blob`. */
 export interface BlobRow {
   id: string;
-  blob: Blob;
+  bytes?: ArrayBuffer;
+  type?: string;
+  blob?: Blob;
 }
 
 export interface SettingRow {

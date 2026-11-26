@@ -1,6 +1,7 @@
 /** Storage used per cemetery (plan §14 storage dashboard). */
 import type { ID } from '../domain';
 import type { Store } from './store';
+import { rowSize } from './blobs';
 
 export interface CemeteryUsage {
   cemeteryId: ID;
@@ -45,11 +46,11 @@ export async function storageUsage(store: Store): Promise<CemeteryUsage[]> {
       let photoBytes = 0;
       const photos = await db.photos.where('cemeteryId').equals(c.id).primaryKeys();
       for (const table of [db.photoBlobs, db.photoThumbs]) {
-        for (const row of await table.bulkGet(photos)) photoBytes += row?.blob.size ?? 0;
+        for (const row of await table.bulkGet(photos)) photoBytes += rowSize(row);
       }
       const overlays = await db.overlays.where('cemeteryId').equals(c.id).toArray();
       const images = overlays.flatMap((o) => (o.imageId ? [o.imageId] : []));
-      for (const row of await db.overlayBlobs.bulkGet(images)) photoBytes += row?.blob.size ?? 0;
+      for (const row of await db.overlayBlobs.bulkGet(images)) photoBytes += rowSize(row);
       out.push({ cemeteryId: c.id, name: c.name, deleted: !!c.deleted, dataBytes, photoBytes });
     }
     return out.sort((a, b) => b.dataBytes + b.photoBytes - (a.dataBytes + a.photoBytes));

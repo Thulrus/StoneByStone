@@ -12,6 +12,8 @@ import {
   type Person,
   type Photo,
 } from '../domain';
+import { rowBlob, toBlobRow } from './blobs';
+import type { BlobRow } from './db';
 import { Repo } from './repository';
 import type { OpContext } from './store';
 
@@ -116,14 +118,27 @@ export class PhotoRepo extends LinkedRepo<Photo> {
 
   /** Store the full image and thumbnail for a photo record. */
   async putBlobs(photoId: ID, full: Blob, thumb?: Blob): Promise<void> {
-    await this.store.run('Add photo', async (ctx) => {
-      const db = this.store.db;
-      this.store.snapshot(ctx, 'photoBlobs', photoId, await db.photoBlobs.get(photoId));
-      await db.photoBlobs.put({ id: photoId, blob: full });
-      if (thumb) {
-        this.store.snapshot(ctx, 'photoThumbs', photoId, await db.photoThumbs.get(photoId));
-        await db.photoThumbs.put({ id: photoId, blob: thumb });
-      }
-    });
+    const fullRow = await toBlobRow(photoId, full);
+    const thumbRow = thumb ? await toBlobRow(photoId, thumb) : undefined;
+    await this.store.run('Add photo', (ctx) => this.writeBlobs(ctx, fullRow, thumbRow));
+  }
+
+  /** Inside an operation: store rows already read by `toBlobRow`. */
+  async writeBlobs(ctx: OpContext, full: BlobRow, thumb?: BlobRow): Promise<void> {
+    const db = this.store.db;
+    this.store.snapshot(ctx, 'photoBlobs', full.id, await db.photoBlobs.get(full.id));
+    await db.photoBlobs.put(full);
+    if (thumb) {
+      this.store.snapshot(ctx, 'photoThumbs', thumb.id, await db.photoThumbs.get(thumb.id));
+      await db.photoThumbs.put(thumb);
+    }
+  }
+
+  async blob(photoId: ID): Promise<Blob | undefined> {
+    return rowBlob(await this.store.db.photoBlobs.get(photoId));
+  }
+
+  async thumb(photoId: ID): Promise<Blob | undefined> {
+    return rowBlob(await this.store.db.photoThumbs.get(photoId));
   }
 }

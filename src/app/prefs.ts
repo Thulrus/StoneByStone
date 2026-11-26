@@ -8,6 +8,9 @@ interface PrefsState {
   theme: ThemePref;
   locale: LocalePref;
   installHintDismissed: boolean;
+  /** Take photos with the phone's own camera app (file input) instead of the in-app camera. */
+  systemCamera: boolean;
+  setSystemCamera: (on: boolean) => void;
   setTheme: (theme: ThemePref) => void;
   setLocale: (locale: LocalePref) => void;
   dismissInstallHint: () => void;
@@ -23,6 +26,8 @@ export const usePrefs = create<PrefsState>()(
       theme: 'system',
       locale: 'auto',
       installHintDismissed: false,
+      systemCamera: false,
+      setSystemCamera: (systemCamera) => set({ systemCamera }),
       setTheme: (theme) => set({ theme }),
       setLocale: (locale) => set({ locale }),
       dismissInstallHint: () => set({ installHintDismissed: true }),

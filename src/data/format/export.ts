@@ -1,6 +1,7 @@
 /** Collect a cemetery's records into an `Archive` (plan §20). */
 import { canonicalJson, type ID, type MergeableRecord } from '../../domain';
 import type { Store } from '../store';
+import { rowBlob } from '../blobs';
 import {
   APP_VERSION,
   COLLECTION_NAMES,
@@ -69,13 +70,16 @@ export async function collectArchive(
     for (const p of data.photos) {
       const full = photos ? await db.photoBlobs.get(p.id) : undefined;
       const thumb = await db.photoThumbs.get(p.id);
-      if (full) binaries.photos.set(p.id, full.blob);
-      if (thumb) binaries.thumbs.set(p.id, thumb.blob);
+      const fullBlob = rowBlob(full);
+      const thumbBlob = rowBlob(thumb);
+      if (fullBlob) binaries.photos.set(p.id, fullBlob);
+      if (thumbBlob) binaries.thumbs.set(p.id, thumbBlob);
     }
     for (const o of data.overlays) {
       if (!o.imageId) continue;
       const img = await db.overlayBlobs.get(o.imageId);
-      if (img) binaries.overlays.set(o.imageId, img.blob);
+      const imgBlob = rowBlob(img);
+      if (imgBlob) binaries.overlays.set(o.imageId, imgBlob);
     }
 
     const me = (await db.contributors.get(store.device.contributorId)) ?? {
