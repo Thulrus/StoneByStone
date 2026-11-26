@@ -1,6 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import { useMemo, useState, type ReactNode } from 'react';
-import type { Cemetery, ID, Monument, Row } from '../../domain';
+import type { Cemetery, ID, Monument, Overlay, Row } from '../../domain';
+import { OverlayImages, PlaceOnOverlay } from '../overlays/OverlayLayers';
 import { StatusLegend } from '../stones/StatusLegend';
 import { cameraFor } from './camera';
 import { resolveProvider } from './imagery';
@@ -24,6 +25,8 @@ export interface CemeteryMapProps {
   /** When set, the map is in draw mode for this row. */
   drawRowId?: ID;
   onDrawClose?: () => void;
+  /** Image overlays (plats, drone photos); pinned ones are drawn. */
+  overlays?: readonly Overlay[];
   /** A pinning session: layers for the map and a panel shown under it. */
   tool?: { map: ReactNode; panel: ReactNode };
 }
@@ -61,6 +64,7 @@ export function CemeteryMap(props: CemeteryMapProps) {
           units={cemetery.settings.units}
           label={t`Map of ${cemetery.name}`}
         >
+          <OverlayImages overlays={props.overlays ?? []} />
           {cemetery.boundary ? <BoundaryLayer boundary={cemetery.boundary} /> : null}
           <RowsLayer
             rows={drawRow ? rows.filter((r) => r.id !== drawRow.id) : rows}
@@ -82,10 +86,15 @@ export function CemeteryMap(props: CemeteryMapProps) {
               onClose={() => onDrawClose?.()}
             />
           ) : (
-            <MapToolbar
-              lines={focus.flatMap((r) => (r.line ? [r.line] : []))}
-              onImagery={() => setPicker(true)}
-            />
+            <>
+              {tool ? null : (
+                <PlaceOnOverlay cemeteryId={cemetery.id} overlays={props.overlays ?? []} />
+              )}
+              <MapToolbar
+                lines={focus.flatMap((r) => (r.line ? [r.line] : []))}
+                onImagery={() => setPicker(true)}
+              />
+            </>
           )}
         </LazyMap>
         {stones.length > 0 && !tool ? (

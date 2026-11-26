@@ -4,6 +4,7 @@ import type { Cemetery, ID, MapFeature, Monument, Overlay } from '../../domain';
 import { cn } from '../../ui/cn';
 import { OfflinePanel } from '../map/OfflinePanel';
 import { GridActions } from '../overlays/GridActions';
+import { OverlaysPanel } from '../overlays/OverlaysPanel';
 import { SchematicView } from '../schematic/SchematicView';
 import { StoneSheet } from '../stones/StoneSheet';
 import { MapTab } from './MapTab';
@@ -118,6 +119,14 @@ export function CemeteryTabs({
             onDrawRow={(id) => {
               setActiveRowId(id);
               setDrawRowId(id);
+              setTab('map');
+            }}
+          />
+          <OverlaysPanel
+            cemeteryId={cemetery.id}
+            overlays={overlays}
+            onPin={(id) => {
+              setPinId(id);
               setTab('map');
             }}
           />

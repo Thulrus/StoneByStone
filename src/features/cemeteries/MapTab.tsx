@@ -1,6 +1,7 @@
 import type { ID, Overlay } from '../../domain';
 import { CemeteryMap, type CemeteryMapProps } from '../map/CemeteryMap';
 import { GridPinWorkspace } from '../overlays/GridPinWorkspace';
+import { ImagePinWorkspace } from '../overlays/ImagePinWorkspace';
 
 export interface MapTabProps extends Omit<CemeteryMapProps, 'tool'> {
   overlays: readonly Overlay[];
@@ -15,5 +16,16 @@ export function MapTab({ overlays, pinId, onPinDone, ...map }: MapTabProps) {
   if (pinning?.kind === 'legacy-grid') {
     return <GridPinWorkspace key={pinning.id} grid={pinning} onDone={onPinDone} {...map} />;
   }
-  return <CemeteryMap {...map} />;
+  if (pinning) {
+    return (
+      <ImagePinWorkspace
+        key={pinning.id}
+        overlay={pinning}
+        onDone={onPinDone}
+        overlays={overlays}
+        {...map}
+      />
+    );
+  }
+  return <CemeteryMap {...map} overlays={overlays} />;
 }

@@ -69,6 +69,10 @@ msgstr "{n} stone(s) on this device are not in any backup."
 msgid "{name} can't be saved for offline use under its terms. Pick USGS imagery, or a custom source whose terms allow it, from the map's Imagery menu. The diagram works offline without any imagery."
 msgstr "{name} can't be saved for offline use under its terms. Pick USGS imagery, or a custom source whose terms allow it, from the map's Imagery menu. The diagram works offline without any imagery."
 
+#: src/features/overlays/ImagePinWorkspace.tsx:35
+msgid "{name} is on the map"
+msgstr "{name} is on the map"
+
 #: src/features/map/OfflinePanel.tsx:131
 msgid "{name}: about {count} tiles, roughly {size}."
 msgstr "{name}: about {count} tiles, roughly {size}."
@@ -102,6 +106,10 @@ msgstr "A new version of StoneByStone is available."
 msgid "Add a custom source"
 msgstr "Add a custom source"
 
+#: src/features/overlays/OverlaysPanel.tsx:99
+msgid "Add a plat map or drone image"
+msgstr "Add a plat map or drone image"
+
 #: src/features/cemeteries/setup/AddRowsForm.tsx:57
 msgid "Add row"
 msgstr "Add row"
@@ -123,6 +131,10 @@ msgstr "Add source"
 msgid "Add the rows you will walk. Sections are optional; use them if the cemetery has named or lettered areas. Draw each row's line on the map, or do it later."
 msgstr "Add the rows you will walk. Sections are optional; use them if the cemetery has named or lettered areas. Draw each row's line on the map, or do it later."
 
+#: src/features/overlays/OverlaysPanel.tsx:99
+msgid "Adding…"
+msgstr "Adding…"
+
 #: src/features/map/CustomSourceForm.tsx:66
 msgid "Address"
 msgstr "Address"
@@ -130,6 +142,10 @@ msgstr "Address"
 #: src/features/overlays/GridActions.tsx:23
 msgid "Adjust grid on map"
 msgstr "Adjust grid on map"
+
+#: src/features/overlays/OverlaysPanel.tsx:88
+msgid "Adjust pins for {name}"
+msgstr "Adjust pins for {name}"
 
 #: src/features/map/CustomSourceForm.tsx:26
 msgid "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
@@ -240,6 +256,10 @@ msgstr "Couldn't get your location. Search or drop a pin instead."
 msgid "Couldn't reach the map service. Check the connection, or drop a pin instead."
 msgstr "Couldn't reach the map service. Check the connection, or drop a pin instead."
 
+#: src/features/overlays/OverlaysPanel.tsx:33
+msgid "Couldn't read that image"
+msgstr "Couldn't read that image"
+
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:130
 msgid "Create"
 msgstr "Create"
@@ -267,6 +287,10 @@ msgstr "Delete {0}"
 msgid "Delete {0}?"
 msgstr "Delete {0}?"
 
+#: src/features/overlays/OverlaysPanel.tsx:91
+msgid "Delete {name}"
+msgstr "Delete {name}"
+
 #: src/features/map/OfflinePanel.tsx:142
 msgid "Delete offline map"
 msgstr "Delete offline map"
@@ -276,6 +300,7 @@ msgid "Delete row"
 msgstr "Delete row"
 
 #: src/features/cemeteries/CemeteryList.tsx:59
+#: src/features/overlays/OverlaysPanel.tsx:43
 msgid "Deleted {name}"
 msgstr "Deleted {name}"
 
@@ -289,7 +314,7 @@ msgstr "Deleted row {0}"
 msgid "Deleted section {0}. Its rows are now unsectioned."
 msgstr "Deleted section {0}. Its rows are now unsectioned."
 
-#: src/features/cemeteries/CemeteryTabs.tsx:60
+#: src/features/cemeteries/CemeteryTabs.tsx:61
 #: src/features/schematic/SchematicView.tsx:80
 msgid "Diagram"
 msgstr "Diagram"
@@ -297,6 +322,10 @@ msgstr "Diagram"
 #: src/ui/Toaster.tsx:43
 msgid "Dismiss"
 msgstr "Dismiss"
+
+#: src/features/overlays/OverlayLayers.tsx:83
+msgid "Done placing"
+msgstr "Done placing"
 
 #: src/features/map/OfflinePanel.tsx:138
 msgid "Download again"
@@ -488,7 +517,7 @@ msgstr "Made {n} rows from the grid"
 msgid "Main"
 msgstr "Main"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:59
+#: src/features/cemeteries/CemeteryTabs.tsx:60
 msgid "Map"
 msgstr "Map"
 
@@ -497,7 +526,7 @@ msgid "Map background for this cemetery"
 msgstr "Map background for this cemetery"
 
 #. placeholder {0}: cemetery.name
-#: src/features/map/CemeteryMap.tsx:62
+#: src/features/map/CemeteryMap.tsx:65
 msgid "Map of {0}"
 msgstr "Map of {0}"
 
@@ -596,6 +625,10 @@ msgstr "Not in a row"
 msgid "Not now"
 msgstr "Not now"
 
+#: src/features/overlays/OverlaysPanel.tsx:67
+msgid "Not on the map yet"
+msgstr "Not on the map yet"
+
 #: src/features/stones/StoneSheet.tsx:72
 msgid "Not placed on the map yet."
 msgstr "Not placed on the map yet."
@@ -637,9 +670,18 @@ msgstr "Offline map deleted"
 msgid "on map"
 msgstr "on map"
 
+#. placeholder {0}: fmt(err)
+#: src/features/overlays/OverlaysPanel.tsx:66
+msgid "On the map, average error {0} m"
+msgstr "On the map, average error {0} m"
+
 #: src/features/map/ImageryPicker.tsx:42
 msgid "online only"
 msgstr "online only"
+
+#: src/features/overlays/OverlaysPanel.tsx:71
+msgid "Opacity"
+msgstr "Opacity"
 
 #: src/app/InstallPrompt.tsx:37
 msgid "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
@@ -648,6 +690,10 @@ msgstr "Open your browser’s menu and choose “Install app” or “Add to Hom
 #: src/features/settings/CemeteryDefaultsForm.tsx:16
 msgid "Original size (largest files)"
 msgstr "Original size (largest files)"
+
+#: src/features/overlays/ImagePicker.tsx:25
+msgid "Overlay image: tap a point you can also find on the map"
+msgstr "Overlay image: tap a point you can also find on the map"
 
 #: src/app/pages/NotFoundPage.tsx:8
 msgid "Page not found"
@@ -669,6 +715,10 @@ msgstr "Photos"
 msgid "Pick a {sourceHint} for point {n}, then tap the same spot on the map."
 msgstr "Pick a {sourceHint} for point {n}, then tap the same spot on the map."
 
+#: src/features/overlays/OverlaysPanel.tsx:88
+msgid "Pin {name} to the map"
+msgstr "Pin {name} to the map"
+
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:112
 msgid "Pin placed. Tap the map to move it."
 msgstr "Pin placed. Tap the map to move it."
@@ -677,6 +727,10 @@ msgstr "Pin placed. Tap the map to move it."
 msgid "Place grid on map"
 msgstr "Place grid on map"
 
+#: src/features/overlays/OverlayLayers.tsx:83
+msgid "Place stones"
+msgstr "Place stones"
+
 #: src/features/overlays/GridPinWorkspace.tsx:32
 msgid "Placed {n} stones from the v1 grid"
 msgstr "Placed {n} stones from the v1 grid"
@@ -684,6 +738,10 @@ msgstr "Placed {n} stones from the v1 grid"
 #: src/features/cemeteries/create/PlaceFinder.tsx:93
 msgid "Places found"
 msgstr "Places found"
+
+#: src/features/overlays/OverlaysPanel.tsx:54
+msgid "Plat maps and drone images"
+msgstr "Plat maps and drone images"
 
 #. placeholder {0}: stone.address.plotLabel
 #: src/features/stones/StoneSheet.tsx:50
@@ -698,6 +756,10 @@ msgstr "Point {num}"
 #: src/features/overlays/PinPanel.tsx:48
 msgid "Point {num}: off by {0} m"
 msgstr "Point {num}: off by {0} m"
+
+#: src/features/overlays/ImagePinWorkspace.tsx:59
+msgid "point on the image"
+msgstr "point on the image"
 
 #: src/features/settings/StoragePanel.tsx:122
 #: src/features/share/BackupBanner.tsx:26
@@ -835,7 +897,7 @@ msgstr "Set the cemetery's location or draw a row line first."
 msgid "Settings"
 msgstr "Settings"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:61
+#: src/features/cemeteries/CemeteryTabs.tsx:62
 msgid "Setup"
 msgstr "Setup"
 
@@ -859,6 +921,10 @@ msgstr "Stone"
 #: src/features/schematic/SchematicView.tsx:109
 msgid "Stone {0} not in a row"
 msgstr "Stone {0} not in a row"
+
+#: src/features/overlays/OverlayLayers.tsx:65
+msgid "Stone added"
+msgstr "Stone added"
 
 #: src/features/settings/StoragePanel.tsx:38
 msgid "Storage"
@@ -968,6 +1034,9 @@ msgstr "Type"
 #: src/features/cemeteries/setup/SectionBlock.tsx:37
 #: src/features/overlays/GridActions.tsx:17
 #: src/features/overlays/GridPinWorkspace.tsx:33
+#: src/features/overlays/ImagePinWorkspace.tsx:36
+#: src/features/overlays/OverlayLayers.tsx:66
+#: src/features/overlays/OverlaysPanel.tsx:44
 msgid "Undo"
 msgstr "Undo"
 
@@ -1014,7 +1083,7 @@ msgstr "v1 grid, {rows} rows by {cols} columns"
 msgid "Verified"
 msgstr "Verified"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:58
+#: src/features/cemeteries/CemeteryTabs.tsx:59
 msgid "View"
 msgstr "View"
 
