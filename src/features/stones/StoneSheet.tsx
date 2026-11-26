@@ -5,7 +5,10 @@ import { useStore } from '../../app/store-context';
 import type { Monument, PhotoRole, Row } from '../../domain';
 import { Button } from '../../ui/Button';
 import { Sheet } from '../../ui/Sheet';
+import { placeStone } from '../../data/placement';
+import { toast } from '../../ui/toast-store';
 import { Camera } from '../capture/Camera';
+import { HoldStill } from '../capture/HoldStill';
 import { PhotoStrip } from '../capture/PhotoStrip';
 import { useSavePhoto } from '../capture/useSavePhoto';
 import { STATUS_LABEL } from './labels';
@@ -28,6 +31,7 @@ export function StoneSheet({ stone, rows, labelOf, onClose }: StoneSheetProps) {
   );
   const [camera, setCamera] = useState(false);
   const [role, setRole] = useState<PhotoRole>('front');
+  const [holding, setHolding] = useState(false);
   const savePhoto = useSavePhoto();
   const row = rows.find((r) => r.id === stone?.address?.rowId);
   const names = (people ?? []).map(
@@ -82,12 +86,38 @@ export function StoneSheet({ stone, rows, labelOf, onClose }: StoneSheetProps) {
                 <Trans>Not placed on the map yet.</Trans>
               </p>
             )}
-            <Button variant="secondary" size="lg" onClick={() => setCamera(true)}>
-              <Trans>Add photo</Trans>
-            </Button>
+            {stone.position?.accuracyM !== undefined ? (
+              <p className="text-fg-muted">
+                <Trans>Position within about ±{Math.round(stone.position.accuracyM)} m</Trans>
+              </p>
+            ) : null}
+            <div className="flex flex-wrap gap-2">
+              <Button variant="secondary" size="lg" onClick={() => setCamera(true)}>
+                <Trans>Add photo</Trans>
+              </Button>
+              <Button variant="secondary" size="lg" onClick={() => setHolding(true)}>
+                <Trans>Hold still here (GPS)</Trans>
+              </Button>
+            </div>
           </div>
         ) : null}
       </Sheet>
+      {stone ? (
+        <HoldStill
+          open={holding}
+          onOpenChange={setHolding}
+          line={row?.line?.coordinates as [number, number][] | undefined}
+          onUse={(position) => {
+            setHolding(false);
+            void placeStone(store, stone.id, position).then(() =>
+              toast({
+                title: t`Stone placed by GPS`,
+                action: { label: t`Undo`, onAction: () => void store.undo() },
+              }),
+            );
+          }}
+        />
+      ) : null}
       {stone ? (
         <Camera
           open={camera}

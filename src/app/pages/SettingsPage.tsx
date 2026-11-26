@@ -9,7 +9,7 @@ import { usePrefs, type ThemePref } from '../prefs';
 
 export function SettingsPage() {
   const { t } = useLingui();
-  const { theme, setTheme, locale, setLocale } = usePrefs();
+  const { theme, setTheme, locale, setLocale, holdStillSeconds, setHoldStillSeconds } = usePrefs();
 
   const themes: Array<{ value: ThemePref; label: string }> = [
     { value: 'system', label: t`Match device` },
@@ -42,6 +42,13 @@ export function SettingsPage() {
         value={locale}
         options={locales}
         onChange={setLocale}
+      />
+      <RadioGroup
+        legend={t`GPS "Hold still" time`}
+        name="hold-still"
+        value={String(holdStillSeconds)}
+        options={[5, 10, 20, 30].map((n) => ({ value: String(n), label: t`${n} seconds` }))}
+        onChange={(v) => setHoldStillSeconds(Number(v))}
       />
       <CemeteryDefaultsForm />
       <StoragePanel />

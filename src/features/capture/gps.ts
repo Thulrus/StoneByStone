@@ -17,3 +17,27 @@ export function quickFix(timeoutMs = 4000): Promise<RowFix | undefined> {
     );
   });
 }
+
+/**
+ * "Hold still" (plan §7.3): one fresh fix after another for `durationMs`, then stop. Each
+ * request is a one-off, so GPS runs only while the user is holding still.
+ */
+export async function holdStill(
+  durationMs: number,
+  { onFix, signal }: { onFix?: (fixes: readonly RowFix[]) => void; signal?: AbortSignal } = {},
+): Promise<RowFix[]> {
+  const fixes: RowFix[] = [];
+  const end = Date.now() + durationMs;
+  let misses = 0;
+  while (!signal?.aborted && Date.now() < end) {
+    const fix = await quickFix(Math.max(1000, end - Date.now()));
+    if (signal?.aborted) break;
+    if (fix) {
+      fixes.push(fix);
+      onFix?.(fixes);
+    } else if (++misses >= 3) break;
+    // Some browsers hand back the same fix at once; give the receiver a moment.
+    await new Promise((r) => setTimeout(r, 250));
+  }
+  return fixes;
+}

@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+#: src/features/capture/HoldStill.tsx:119
+msgid "({dropped} dropped as outliers)"
+msgstr "({dropped} dropped as outliers)"
+
 #: src/features/settings/StoragePanel.tsx:107
 msgid "(deleted)"
 msgstr "(deleted)"
@@ -78,6 +82,15 @@ msgstr "{n} file(s) shared."
 msgid "{n} file(s) written to the folder “{0}”."
 msgstr "{n} file(s) written to the folder “{0}”."
 
+#. placeholder {0}: live.accuracyM
+#: src/features/capture/HoldStill.tsx:81
+msgid "{n} fixes, about ±{0} m so far"
+msgstr "{n} fixes, about ±{0} m so far"
+
+#: src/app/pages/SettingsPage.tsx:50
+msgid "{n} seconds"
+msgstr "{n} seconds"
+
 #: src/features/share/useBackupReminder.ts:26
 msgid "{n} stone(s) on this device are not in any backup."
 msgstr "{n} stone(s) on this device are not in any backup."
@@ -127,6 +140,11 @@ msgstr "1600 px (recommended)"
 msgid "A new version of StoneByStone is available."
 msgstr "A new version of StoneByStone is available."
 
+#. placeholder {0}: result.accuracyM
+#: src/features/capture/HoldStill.tsx:115
+msgid "About ±{0} m from {n} fixes"
+msgstr "About ±{0} m from {n} fixes"
+
 #: src/features/settings/AboutPanel.tsx:43
 msgid "About this app"
 msgstr "About this app"
@@ -139,7 +157,7 @@ msgstr "Add a custom source"
 msgid "Add a plat map or drone image"
 msgstr "Add a plat map or drone image"
 
-#: src/features/stones/StoneSheet.tsx:86
+#: src/features/stones/StoneSheet.tsx:96
 msgid "Add photo"
 msgstr "Add photo"
 
@@ -537,6 +555,10 @@ msgstr "Gap"
 msgid "Getting your location…"
 msgstr "Getting your location…"
 
+#: src/app/pages/SettingsPage.tsx:47
+msgid "GPS \"Hold still\" time"
+msgstr "GPS \"Hold still\" time"
+
 #: src/features/overlays/GridPinWorkspace.tsx:53
 msgid "grid cell"
 msgstr "grid cell"
@@ -554,6 +576,14 @@ msgstr "Grid row {row}, column {col}"
 #: src/features/map/CustomSourceForm.tsx:90
 msgid "Highest zoom level"
 msgstr "Highest zoom level"
+
+#: src/features/capture/HoldStill.tsx:25
+msgid "Hold still"
+msgstr "Hold still"
+
+#: src/features/stones/StoneSheet.tsx:99
+msgid "Hold still here (GPS)"
+msgstr "Hold still here (GPS)"
 
 #: src/features/cemeteries/setup/AddRowsForm.tsx:46
 msgid "How many"
@@ -762,6 +792,10 @@ msgstr "Next stone"
 msgid "No cemeteries on this device yet. Create one, or import a file."
 msgstr "No cemeteries on this device yet. Create one, or import a file."
 
+#: src/features/capture/HoldStill.tsx:95
+msgid "No GPS fixes came in. Check that location is on, then try again."
+msgstr "No GPS fixes came in. Check that location is on, then try again."
+
 #: src/features/cemeteries/setup/RowItem.tsx:53
 msgid "no line"
 msgstr "no line"
@@ -791,7 +825,7 @@ msgstr "Not now"
 msgid "Not on the map yet"
 msgstr "Not on the map yet"
 
-#: src/features/stones/StoneSheet.tsx:82
+#: src/features/stones/StoneSheet.tsx:86
 msgid "Not placed on the map yet."
 msgstr "Not placed on the map yet."
 
@@ -923,7 +957,7 @@ msgid "Plat maps and drone images"
 msgstr "Plat maps and drone images"
 
 #. placeholder {0}: stone.address.plotLabel
-#: src/features/stones/StoneSheet.tsx:59
+#: src/features/stones/StoneSheet.tsx:63
 msgid "Plot {0}"
 msgstr "Plot {0}"
 
@@ -939,6 +973,11 @@ msgstr "Point {num}: off by {0} m"
 #: src/features/overlays/ImagePinWorkspace.tsx:59
 msgid "point on the image"
 msgstr "point on the image"
+
+#. placeholder {0}: Math.round(stone.position.accuracyM)
+#: src/features/stones/StoneSheet.tsx:91
+msgid "Position within about ±{0} m"
+msgstr "Position within about ±{0} m"
 
 #: src/features/settings/StoragePanel.tsx:122
 #: src/features/share/BackupBanner.tsx:26
@@ -1015,7 +1054,7 @@ msgstr "Row {name} ({n} stones)"
 msgid "Row {name}, stone {n}"
 msgstr "Row {name}, stone {n}"
 
-#: src/features/stones/StoneSheet.tsx:44
+#: src/features/stones/StoneSheet.tsx:48
 msgid "Row {rowName}"
 msgstr "Row {rowName}"
 
@@ -1028,7 +1067,7 @@ msgid "Row {rowName} · stone {nextNumber}"
 msgstr "Row {rowName} · stone {nextNumber}"
 
 #. placeholder {0}: index + 1
-#: src/features/stones/StoneSheet.tsx:44
+#: src/features/stones/StoneSheet.tsx:48
 msgid "Row {rowName}, stone {0}"
 msgstr "Row {rowName}, stone {0}"
 
@@ -1163,6 +1202,14 @@ msgstr "Skip"
 msgid "Skip to content"
 msgstr "Skip to content"
 
+#: src/features/capture/HoldStill.tsx:124
+msgid "Snapped onto the row line."
+msgstr "Snapped onto the row line."
+
+#: src/features/capture/HoldStill.tsx:77
+msgid "Stand at the stone and keep the phone still… {left} s"
+msgstr "Stand at the stone and keep the phone still… {left} s"
+
 #: src/features/capture/walk/WalkStart.tsx:80
 msgid "Start"
 msgstr "Start"
@@ -1175,8 +1222,8 @@ msgstr "Starting camera…"
 msgid "Status key"
 msgstr "Status key"
 
-#: src/features/stones/StoneSheet.tsx:59
-#: src/features/stones/StoneSheet.tsx:95
+#: src/features/stones/StoneSheet.tsx:63
+#: src/features/stones/StoneSheet.tsx:125
 msgid "Stone"
 msgstr "Stone"
 
@@ -1202,6 +1249,10 @@ msgstr "Stone {n}"
 #: src/features/overlays/OverlayLayers.tsx:65
 msgid "Stone added"
 msgstr "Stone added"
+
+#: src/features/stones/StoneSheet.tsx:114
+msgid "Stone placed by GPS"
+msgstr "Stone placed by GPS"
 
 #: src/features/capture/walk/RowOrderDialogs.tsx:95
 msgid "Stones in order"
@@ -1313,6 +1364,11 @@ msgstr "Transcribed"
 msgid "Treat grid rows as cemetery rows"
 msgstr "Treat grid rows as cemetery rows"
 
+#: src/features/capture/HoldStill.tsx:98
+#: src/features/capture/HoldStill.tsx:132
+msgid "Try again"
+msgstr "Try again"
+
 #: src/features/map/CustomSourceForm.tsx:55
 msgid "Type"
 msgstr "Type"
@@ -1331,6 +1387,7 @@ msgstr "Type"
 #: src/features/overlays/ImagePinWorkspace.tsx:36
 #: src/features/overlays/OverlayLayers.tsx:66
 #: src/features/overlays/OverlaysPanel.tsx:44
+#: src/features/stones/StoneSheet.tsx:115
 msgid "Undo"
 msgstr "Undo"
 
@@ -1350,13 +1407,17 @@ msgstr "Units and photo quality apply to cemeteries you create from now on."
 msgid "Unnamed cemetery"
 msgstr "Unnamed cemetery"
 
-#: src/features/stones/StoneSheet.tsx:37
+#: src/features/stones/StoneSheet.tsx:41
 msgid "Unnamed person"
 msgstr "Unnamed person"
 
 #: src/features/settings/AboutPanel.tsx:22
 msgid "Updates aren't available in this browser tab"
 msgstr "Updates aren't available in this browser tab"
+
+#: src/features/capture/HoldStill.tsx:129
+msgid "Use this position"
+msgstr "Use this position"
 
 #. placeholder {0}: fmt(quota.usage)
 #. placeholder {1}: fmt(quota.quota)
@@ -1373,7 +1434,7 @@ msgstr "Using your phone's camera app."
 msgid "v1 grid"
 msgstr "v1 grid"
 
-#: src/features/stones/StoneSheet.tsx:48
+#: src/features/stones/StoneSheet.tsx:52
 msgid "v1 grid row {r}, column {c}"
 msgstr "v1 grid row {r}, column {c}"
 
@@ -1392,6 +1453,10 @@ msgstr "Version"
 #: src/features/cemeteries/CemeteryTabs.tsx:87
 msgid "View"
 msgstr "View"
+
+#: src/features/capture/HoldStill.tsx:85
+msgid "Waiting for GPS…"
+msgstr "Waiting for GPS…"
 
 #: src/features/capture/walk/WalkPanel.tsx:83
 #: src/features/capture/walk/WalkStart.tsx:77

@@ -7,3 +7,4 @@ export * from './tiles';
 export * from './pin';
 export * from './cells';
 export * from './row-layout';
+export * from './average';

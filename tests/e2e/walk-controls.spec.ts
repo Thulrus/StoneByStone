@@ -56,6 +56,12 @@ async function rowOrder(page: Page): Promise<number[]> {
 
 test('row controls: gap, skip, insert, reverse, reorder', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
+  await page.addInitScript(() =>
+    localStorage.setItem(
+      'stonebystone:prefs',
+      JSON.stringify({ state: { holdStillSeconds: 5 }, version: 1 }),
+    ),
+  );
   const file = testInfo.outputPath('one.sbs.json');
   await writeFile(file, JSON.stringify(makeStonesDocument({ rows: 1, perRow: 1 })));
   await stubTiles(page);
@@ -134,4 +140,12 @@ test('row controls: gap, skip, insert, reverse, reorder', async ({ page }, testI
   await panel.getByRole('button', { name: 'End walk' }).click();
   await page.getByRole('tab', { name: 'Diagram' }).click();
   await expect(page.getByRole('button', { name: 'Row C, stone 5: Located' })).toBeVisible();
+
+  // Hold still (GPS averaging) places the skipped stone, with its accuracy shown.
+  await page.getByRole('button', { name: 'Row C, stone 5: Located' }).click();
+  const sheet = page.getByRole('dialog');
+  await sheet.getByRole('button', { name: 'Hold still here (GPS)' }).click();
+  const hold = page.getByRole('dialog', { name: 'Hold still' });
+  await hold.getByRole('button', { name: 'Use this position' }).click({ timeout: 20_000 });
+  await expect(sheet).toContainText('Position within about ±');
 });

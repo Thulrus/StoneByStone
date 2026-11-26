@@ -1,14 +1,24 @@
 import type { MapMouseEvent } from 'maplibre-gl';
 import { useEffect, useMemo, useRef } from 'react';
 import type { ID, Monument } from '../../domain';
+import { circleRing } from '../../geo';
 import { stonesGeoJson } from '../stones/stones-geojson';
 import { useMap } from './map-context';
-import { STONE_ICON_SIZE, STONE_SELECTED } from './map-style';
+import {
+  STONE_ACCURACY_FILL,
+  STONE_ACCURACY_LINE,
+  STONE_ICON_SIZE,
+  STONE_SELECTED,
+} from './map-style';
 import { addStoneIcons, ICON_PREFIX } from './stone-icons';
 
 const SRC = 'sbs-stones';
 const ICONS = 'sbs-stones-icons';
 const SELECTED = 'sbs-stones-selected';
+const ACC_SRC = 'sbs-stone-accuracy';
+const ACC_FILL = 'sbs-stone-accuracy-fill';
+const ACC_LINE = 'sbs-stone-accuracy-line';
+const EMPTY = { type: 'FeatureCollection' as const, features: [] };
 /** Half the tap box, px: glove-sized (plan §17). */
 const HIT = 18;
 
@@ -33,7 +43,10 @@ export function StonesLayer({ stones, selectedId, onSelect }: StonesLayerProps) 
 
   useEffect(() => {
     addStoneIcons(map);
-    map.addSource(SRC, { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    map.addSource(ACC_SRC, { type: 'geojson', data: EMPTY });
+    map.addLayer({ id: ACC_FILL, type: 'fill', source: ACC_SRC, paint: STONE_ACCURACY_FILL });
+    map.addLayer({ id: ACC_LINE, type: 'line', source: ACC_SRC, paint: STONE_ACCURACY_LINE });
+    map.addSource(SRC, { type: 'geojson', data: EMPTY });
     map.addLayer({
       id: SELECTED,
       type: 'circle',
@@ -77,8 +90,9 @@ export function StonesLayer({ stones, selectedId, onSelect }: StonesLayerProps) 
     return () => {
       map.off('click', click);
       if (!map.getStyle()) return;
-      for (const l of [ICONS, SELECTED]) if (map.getLayer(l)) map.removeLayer(l);
-      if (map.getSource(SRC)) map.removeSource(SRC);
+      for (const l of [ICONS, SELECTED, ACC_LINE, ACC_FILL])
+        if (map.getLayer(l)) map.removeLayer(l);
+      for (const src of [SRC, ACC_SRC]) if (map.getSource(src)) map.removeSource(src);
     };
   }, [map]);
 
@@ -90,6 +104,28 @@ export function StonesLayer({ stones, selectedId, onSelect }: StonesLayerProps) 
   useEffect(() => {
     if (map.getLayer(SELECTED)) map.setFilter(SELECTED, ['==', ['get', 'id'], selectedId ?? '']);
   }, [map, selectedId]);
+
+  // The selected stone's accuracy circle (plan §7.3).
+  const selected = stones.find((m) => m.id === selectedId)?.position;
+  const { lng, lat, accuracyM } = selected ?? {};
+  useEffect(() => {
+    const src = map.getSource(ACC_SRC);
+    if (!src || !('setData' in src)) return;
+    const circle =
+      lng !== undefined && lat !== undefined && accuracyM
+        ? {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                properties: {},
+                geometry: { type: 'Polygon', coordinates: [circleRing([lng, lat], accuracyM)] },
+              },
+            ],
+          }
+        : EMPTY;
+    (src as { setData(d: unknown): void }).setData(circle);
+  }, [map, lng, lat, accuracyM]);
 
   return null;
 }

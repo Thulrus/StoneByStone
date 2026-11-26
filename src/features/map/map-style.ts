@@ -40,3 +40,10 @@ export const STONE_SELECTED = {
 };
 export const GRID_PREVIEW_FILL = { 'fill-color': ACCENT, 'fill-opacity': 0.15 };
 export const GRID_PREVIEW_LINE = { 'line-color': ACCENT, 'line-width': 1, 'line-opacity': 0.8 };
+/** A stone's GPS accuracy circle (plan §7.3). */
+export const STONE_ACCURACY_FILL = { 'fill-color': ACCENT, 'fill-opacity': 0.12 };
+export const STONE_ACCURACY_LINE = {
+  'line-color': ACCENT,
+  'line-width': 2,
+  'line-dasharray': [2, 2],
+};

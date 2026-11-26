@@ -11,6 +11,9 @@ interface PrefsState {
   /** Take photos with the phone's own camera app (file input) instead of the in-app camera. */
   systemCamera: boolean;
   setSystemCamera: (on: boolean) => void;
+  /** How long "Hold still" collects GPS fixes, seconds (plan §7.3). */
+  holdStillSeconds: number;
+  setHoldStillSeconds: (s: number) => void;
   setTheme: (theme: ThemePref) => void;
   setLocale: (locale: LocalePref) => void;
   dismissInstallHint: () => void;
@@ -28,6 +31,8 @@ export const usePrefs = create<PrefsState>()(
       installHintDismissed: false,
       systemCamera: false,
       setSystemCamera: (systemCamera) => set({ systemCamera }),
+      holdStillSeconds: 10,
+      setHoldStillSeconds: (holdStillSeconds) => set({ holdStillSeconds }),
       setTheme: (theme) => set({ theme }),
       setLocale: (locale) => set({ locale }),
       dismissInstallHint: () => set({ installHintDismissed: true }),

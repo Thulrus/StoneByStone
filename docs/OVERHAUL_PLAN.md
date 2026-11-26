@@ -306,6 +306,16 @@ sliding into a gap). It uses buttons, not drag, so it works with gloves and a ke
 mean with an accuracy estimate. Shown as a circle. Used as a hint, snapped to the active row
 line where one exists. GPS is never run continuously (battery).
 
+Implementation (M3, `geo/average.ts`, `features/capture/gps.ts` `holdStill`, `HoldStill`): one
+fresh one-off fix after another (never `watchPosition`) for the Settings time (5/10/20/30 s,
+default 10). Fixes reporting over twice the median accuracy, or farther from the median point
+than max(3 × median distance, median accuracy), are dropped. The rest get a 1/accuracy²
+weighted mean. Fixes seconds apart have correlated errors, so the accuracy is the larger of
+the RMS scatter and the typical single-fix accuracy divided by at most 2. The result is snapped
+onto the stone's row line when within 25 m and stored as `gps-averaged`. That makes it an
+anchor when the row is re-spaced. The stone sheet has "Hold still here (GPS)", and the map
+draws the selected stone's accuracy circle.
+
 ### 7.4 Plat map / image overlays
 
 Many historic cemeteries have a hand-drawn plat map. The user photographs or uploads it,

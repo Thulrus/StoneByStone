@@ -112,3 +112,19 @@ describe('row controls', () => {
     expect(await order()).toEqual([b.id, a.id, null, c.id]);
   });
 });
+
+test('placing a stone by averaged GPS anchors its row', async () => {
+  const { placeStone } = await import('./placement');
+  const { store, add, xOf } = await setup();
+  const a = await add();
+  const b = await add();
+  const c = await add();
+  expect(await xOf(b.id)).toBe(10);
+  const [lng, lat] = east(14);
+  await placeStone(store, b.id, { lng, lat, accuracyM: 3, source: 'gps-averaged' });
+  expect(await xOf(b.id)).toBe(14);
+  expect(await xOf(a.id)).toBe(0);
+  expect(await xOf(c.id)).toBe(20);
+  await store.undo();
+  expect(await xOf(b.id)).toBe(10);
+});
