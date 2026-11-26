@@ -35,7 +35,7 @@ Status values: `todo` · `in-progress` · `done` · `blocked: check-in`
 | WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status                   |
 | ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ------------------------ |
 | WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done (owner: #9, #4 iOS) |
-| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | todo                     |
+| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | in-progress              |
 | WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | todo                     |
 | WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | todo                     |
 | WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | todo                     |
