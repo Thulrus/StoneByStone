@@ -5,28 +5,34 @@ Update this file at the end of every session.
 
 ## Next session starts here
 
-Start **WP1** (M1, issues #10–#14). It is a _deep_ package, so use the strongest model. M0 is
-finished and the owner has unblocked M1. Work goes in `src/domain/`, which is pure TS (ESLint
-enforces the import rule).
+Start **WP2** (M1, issues #15–#19: Dexie + repositories, history/undo, schemas, `.sbs`, v1
+importer). It is a _deep_ package. WP1 (the pure domain core) is done.
 
 Two M0 issues stay open for the owner. Don't work on them:
 
-- **#9** Device check: Android (Chrome) passed on 2026-11-25 (install, offline refresh,
-  relaunch). The iPhone (Safari) check is still to do.
+- **#9** Device check: Android (Chrome) passed on 2026-11-25. The iPhone (Safari) check is
+  still to do.
 - **#4** Still unverified: iOS Safari install, and the update banner appearing after a later
   deploy.
 
-Notes from WP0:
+Notes from WP1 (`src/domain/`, re-exported from `src/domain/index.ts`):
 
-- Tests: `npm test` (Vitest, dot reporter). Put `*.test.ts` next to the code. Test-only types
-  (node, vitest globals) live in `tsconfig.test.json`; `tsconfig.app.json` excludes tests.
-  `fast-check` (plan §25) is not installed yet, so add it when the merge property tests need it.
-- Local WebKit e2e needs `sudo npx playwright install-deps` (libmanette). CI runs it fine.
-- Lingui 6 uses the Vite plugin with `macroTransform: true` (no Babel, no compile step).
-  Run `npm run i18n:extract` after adding UI strings. The `lingui/no-unlocalized-strings`
-  lint rule covers `src/app` and `src/features`.
-- UI prefs (theme, locale) live in localStorage through Zustand (`src/app/prefs.ts`), not in
-  IndexedDB. Contributor settings in WP3 belong in Dexie.
+- `uuidv7()`, `generateNodeId()` (16 hex). `HybridClock` holds `{wall, counter}` state. The data
+  layer must persist the nodeId and the clock state (for example in the `settings` table) and
+  call `clock.receive(hlc)` for every stamp it imports.
+- `mergeRecords` / `mergeCollections` work on any `{ id, stamps, deleted?, aliases? }`.
+  Repositories must write `aliases`/`sources` through `normalizeRecord` (canonical sorted
+  order, plan §2.2). The merge doesn't recompute `Monument.status`, so the caller re-derives it.
+  `detectConflicts(local, remote, lastSeen)` needs per-contributor `lastSeen` (max HLC),
+  maintained with `updateLastSeen`, which belongs in storage too.
+- `parseDate(text, { dateLocale, context })` never throws. Unparsed input comes back as
+  `{ original }`. `formatDate` is canonical English, not for display. Use `parseAge` +
+  `calculateBirth` for v1 ages.
+- `parseName` keeps `asCarved`. `nameSearchKeys` gives the expanded given name plus
+  Soundex/D–M codes for the `[cemeteryId+name.surname]` and search indexes.
+- `canonicalJson` / `deepEqual` implement §2.2's "byte-for-byte equivalent" for the M1
+  round-trip tests.
+- Non-null assertions are lint errors outside tests, so use `?? fallback` or narrowing.
 
 ## Work packages
 
@@ -35,7 +41,7 @@ Status values: `todo` · `in-progress` · `done` · `blocked: check-in`
 | WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status                   |
 | ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ------------------------ |
 | WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done (owner: #9, #4 iOS) |
-| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | in-progress              |
+| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done                     |
 | WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | todo                     |
 | WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | todo                     |
 | WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | todo                     |
@@ -64,3 +70,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-25 · setup · Plan finalized, 79 issues and 9 milestones created, `v1-final` tagged, handoff protocol written.
 - 2026-11-25 · WP0 · Removed v1 (#1). Added the scaffold, shell, PWA, themes and primitives, Lingui, Vitest/Playwright, and CI with gated deploy (#2, #3, #5–#8). Live on Pages, CI green. Left for the owner: device check #9, then close #4.
 - 2026-11-25 · WP0 check-in · Owner passed the Android device check (install, offline, relaunch) and unblocked M1. iOS check (#9) and update-banner check (#4) remain with the owner.
+- 2026-11-25 · WP1 · Domain types + UUIDv7 (#10), HLC (#11), FuzzyDate parser/formatter/age (#12, 230+ table cases), name parser + Soundex/D–M (#13), field-stamp merge with fast-check properties (#14). 531 tests green.
