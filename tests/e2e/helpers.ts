@@ -21,3 +21,11 @@ export async function tapMap(page: Page, fx: number, fy: number) {
   if (!box) throw new Error('no map canvas');
   await page.mouse.click(box.x + box.width * fx, box.y + box.height * fy);
 }
+
+/** Dismiss the first-run name prompt (an install prompt may also offer "Not now"). */
+export async function skipWelcome(page: Page) {
+  await page
+    .getByRole('region', { name: /What’s your name/ })
+    .getByRole('button', { name: 'Not now' })
+    .click();
+}

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { skipWelcome } from './helpers';
 import { fileURLToPath } from 'node:url';
 
 const fixture = fileURLToPath(new URL('../fixtures/v1/example.cem.json', import.meta.url));
@@ -10,7 +11,7 @@ test('import, back up, and keep data across reloads', async ({ page }) => {
     Reflect.deleteProperty(Navigator.prototype, 'canShare');
   });
   await page.goto('./');
-  await page.getByRole('button', { name: 'Not now' }).click();
+  await skipWelcome(page);
 
   await page.getByTestId('import-input').setInputFiles(fixture);
   const list = page.getByRole('list', { name: 'Cemeteries on this device' });

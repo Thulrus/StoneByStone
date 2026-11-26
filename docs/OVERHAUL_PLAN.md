@@ -1156,6 +1156,14 @@ Offline download is limited to the cemetery bounding box + small buffer, zoom ~1
 with a size estimate before downloading and per-cemetery deletion. Tiles go in Cache
 Storage keyed per source. Attribution is always displayed.
 
+How it works (WP5, #30): offline-capable sources (`allowsOffline`) are given to MapLibre as
+`sbs-tile://<source>/{z}/{x}/{y}`, and an `addProtocol` loader reads the source's cache
+(`sbs-tiles-<source>`, keys `z/x/y`) before the network. Other sources load directly, so OSM
+and Esri tiles never touch a cache, and the service worker needs no tile route. Downloads
+cover zoom 15 up to the source's own max (USGS: 16; MapLibre over-zooms), at most 4,000
+tiles. The device-only `tileMeta` table records which tiles each cemetery downloaded, so
+deleting one cemetery's download keeps tiles another still uses.
+
 Geocoding uses Nominatim (1 request/second, only on explicit search, cached); cemetery
 discovery uses the Overpass API (on explicit request). Both are optional conveniences.
 

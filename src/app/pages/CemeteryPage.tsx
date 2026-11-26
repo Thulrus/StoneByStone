@@ -7,6 +7,7 @@ import { LayoutEditor } from '../../features/cemeteries/setup/LayoutEditor';
 import { useLayout, type Layout } from '../../features/cemeteries/useLayout';
 import { useFeatures, useOverlays } from '../../features/cemeteries/useRecords';
 import { CemeteryMap } from '../../features/map/CemeteryMap';
+import { OfflinePanel } from '../../features/map/OfflinePanel';
 import { hasCoordinates } from '../../features/schematic/schematic';
 import { SchematicView } from '../../features/schematic/SchematicView';
 import { StoneSheet } from '../../features/stones/StoneSheet';
@@ -144,7 +145,7 @@ function CemeteryTabs({
           />
         </div>
       ) : (
-        <div role="tabpanel">
+        <div role="tabpanel" className="flex flex-col gap-4">
           <LayoutEditor
             cemeteryId={cemetery.id}
             sections={layout.sections}
@@ -158,6 +159,7 @@ function CemeteryTabs({
               setTab('map');
             }}
           />
+          <OfflinePanel cemetery={cemetery} rows={layout.rows} stones={stones} />
         </div>
       )}
       <StoneSheet

@@ -15,6 +15,7 @@ import {
   type ImageryProvider,
 } from './imagery';
 import { MapContext, type MapCamera, type MapHandle } from './map-context';
+import { loadTile, OFFLINE_PROTOCOL, offlineTemplate, registerOfflineProvider } from './offline';
 
 export interface MapViewProps {
   provider: ImageryProvider;
@@ -28,15 +29,20 @@ export interface MapViewProps {
 }
 
 maplibre.setWorkerUrl(workerUrl);
+// Offline-capable imagery goes through this loader, which reads downloaded tiles first.
+maplibre.addProtocol(OFFLINE_PROTOCOL, async (params, ac) => ({
+  data: await loadTile(params.url, ac.signal),
+}));
 
 const IMAGERY = 'imagery';
 
 function setImagery(map: maplibre.Map, provider: ImageryProvider, keys: ImageryKeys) {
   if (map.getLayer(IMAGERY)) map.removeLayer(IMAGERY);
   if (map.getSource(IMAGERY)) map.removeSource(IMAGERY);
+  if (provider.allowsOffline) registerOfflineProvider(provider);
   map.addSource(IMAGERY, {
     type: 'raster',
-    tiles: tileUrls(provider, keys),
+    tiles: provider.allowsOffline ? [offlineTemplate(provider.id)] : tileUrls(provider, keys),
     tileSize: provider.tileSize,
     maxzoom: provider.maxzoom,
     attribution: provider.attribution,

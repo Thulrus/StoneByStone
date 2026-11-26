@@ -3,3 +3,4 @@ export * from './local';
 export * from './rotate';
 export * from './transform';
 export * from './bbox';
+export * from './tiles';

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { stubTiles, tapMap, TILE } from './helpers';
+import { stubTiles, tapMap, TILE, skipWelcome } from './helpers';
 
 test('set up a new cemetery with sections, rows and a row line in under 5 minutes', async ({
   page,
@@ -7,7 +7,7 @@ test('set up a new cemetery with sections, rows and a row line in under 5 minute
   const started = Date.now();
   await stubTiles(page);
   await page.goto('./');
-  await page.getByRole('button', { name: 'Not now' }).click();
+  await skipWelcome(page);
 
   // Create by dropping a pin. Nothing is fetched from OSM unless asked.
   const osm: string[] = [];
@@ -72,7 +72,7 @@ test('choose imagery and add a custom XYZ source', async ({ page }) => {
     route.fulfill({ status: 200, contentType: 'image/png', body: TILE }),
   );
   await page.goto('./');
-  await page.getByRole('button', { name: 'Not now' }).click();
+  await skipWelcome(page);
   await page.getByRole('link', { name: 'New cemetery' }).click();
   await page.getByRole('textbox', { name: 'Name' }).fill('Test');
   await page.getByRole('button', { name: 'Create' }).click();

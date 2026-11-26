@@ -65,6 +65,14 @@ msgstr "{n} file(s) written to the folder “{0}”."
 msgid "{n} stone(s) on this device are not in any backup."
 msgstr "{n} stone(s) on this device are not in any backup."
 
+#: src/features/map/OfflinePanel.tsx:85
+msgid "{name} can't be saved for offline use under its terms. Pick USGS imagery, or a custom source whose terms allow it, from the map's Imagery menu. The diagram works offline without any imagery."
+msgstr "{name} can't be saved for offline use under its terms. Pick USGS imagery, or a custom source whose terms allow it, from the map's Imagery menu. The diagram works offline without any imagery."
+
+#: src/features/map/OfflinePanel.tsx:131
+msgid "{name}: about {count} tiles, roughly {size}."
+msgstr "{name}: about {count} tiles, roughly {size}."
+
 #: src/features/cemeteries/CemeteryList.tsx:23
 #: src/features/cemeteries/CemeteryList.tsx:34
 msgid "{pct} transcribed"
@@ -127,7 +135,7 @@ msgstr "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
 msgid "Attribution"
 msgstr "Attribution"
 
-#: src/app/pages/CemeteryPage.tsx:35
+#: src/app/pages/CemeteryPage.tsx:36
 #: src/app/pages/NotFoundPage.tsx:11
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
@@ -168,6 +176,7 @@ msgstr "can be saved for offline use"
 #: src/features/cemeteries/CemeteryList.tsx:88
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:127
 #: src/features/cemeteries/setup/TextPrompt.tsx:44
+#: src/features/map/OfflinePanel.tsx:109
 #: src/features/map/RowDrawer.tsx:76
 msgid "Cancel"
 msgstr "Cancel"
@@ -189,7 +198,7 @@ msgstr "Cemeteries on this device"
 msgid "Cemetery"
 msgstr "Cemetery"
 
-#: src/app/pages/CemeteryPage.tsx:32
+#: src/app/pages/CemeteryPage.tsx:33
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
@@ -241,6 +250,10 @@ msgstr "Delete {0}"
 msgid "Delete {0}?"
 msgstr "Delete {0}?"
 
+#: src/features/map/OfflinePanel.tsx:142
+msgid "Delete offline map"
+msgstr "Delete offline map"
+
 #: src/features/cemeteries/setup/RowItem.tsx:103
 msgid "Delete row"
 msgstr "Delete row"
@@ -259,7 +272,7 @@ msgstr "Deleted row {0}"
 msgid "Deleted section {0}. Its rows are now unsectioned."
 msgstr "Deleted section {0}. Its rows are now unsectioned."
 
-#: src/app/pages/CemeteryPage.tsx:111
+#: src/app/pages/CemeteryPage.tsx:112
 #: src/features/schematic/SchematicView.tsx:78
 msgid "Diagram"
 msgstr "Diagram"
@@ -267,6 +280,22 @@ msgstr "Diagram"
 #: src/ui/Toaster.tsx:43
 msgid "Dismiss"
 msgstr "Dismiss"
+
+#: src/features/map/OfflinePanel.tsx:138
+msgid "Download again"
+msgstr "Download again"
+
+#: src/features/map/OfflinePanel.tsx:69
+msgid "Download failed"
+msgstr "Download failed"
+
+#: src/features/map/OfflinePanel.tsx:138
+msgid "Download for offline"
+msgstr "Download for offline"
+
+#: src/features/map/OfflinePanel.tsx:103
+msgid "Downloading {done} of {total} tiles…"
+msgstr "Downloading {done} of {total} tiles…"
 
 #: src/features/map/MapToolbar.tsx:33
 msgid "Draw a row line first"
@@ -426,7 +455,7 @@ msgstr "Located"
 msgid "Main"
 msgstr "Main"
 
-#: src/app/pages/CemeteryPage.tsx:110
+#: src/app/pages/CemeteryPage.tsx:111
 msgid "Map"
 msgstr "Map"
 
@@ -438,6 +467,10 @@ msgstr "Map background for this cemetery"
 #: src/features/map/CemeteryMap.tsx:57
 msgid "Map of {0}"
 msgstr "Map of {0}"
+
+#: src/features/map/OfflinePanel.tsx:65
+msgid "Map saved for offline use"
+msgstr "Map saved for offline use"
 
 #: src/features/cemeteries/create/PlaceMap.tsx:49
 msgid "Map: tap to place the cemetery"
@@ -550,6 +583,14 @@ msgstr "Notifications"
 #: src/features/map/RowDrawer.tsx:59
 msgid "Now tap where the row ends."
 msgstr "Now tap where the row ends."
+
+#: src/features/map/OfflinePanel.tsx:153
+msgid "Offline map"
+msgstr "Offline map"
+
+#: src/features/map/OfflinePanel.tsx:78
+msgid "Offline map deleted"
+msgstr "Offline map deleted"
 
 #: src/features/cemeteries/setup/RowItem.tsx:51
 msgid "on map"
@@ -684,6 +725,17 @@ msgstr "Save name"
 msgid "Saved"
 msgstr "Saved"
 
+#: src/features/map/OfflinePanel.tsx:64
+msgid "Saved for offline, but {failed} tiles failed"
+msgstr "Saved for offline, but {failed} tiles failed"
+
+#. placeholder {0}: saved.tiles.length
+#. placeholder {1}: fmt(saved.bytes)
+#. placeholder {2}: new Date(saved.downloadedAt).toLocaleDateString(i18n.locale)
+#: src/features/map/OfflinePanel.tsx:121
+msgid "Saved for offline: {0} tiles, {1}, on {2}."
+msgstr "Saved for offline: {0} tiles, {1}, on {2}."
+
 #: src/features/cemeteries/WelcomeCard.tsx:43
 msgid "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
 msgstr "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
@@ -708,12 +760,16 @@ msgstr "Section"
 msgid "Section name"
 msgstr "Section name"
 
+#: src/features/map/OfflinePanel.tsx:95
+msgid "Set the cemetery's location or draw a row line first."
+msgstr "Set the cemetery's location or draw a row line first."
+
 #: src/app/Layout.tsx:48
 #: src/app/pages/SettingsPage.tsx:28
 msgid "Settings"
 msgstr "Settings"
 
-#: src/app/pages/CemeteryPage.tsx:112
+#: src/app/pages/CemeteryPage.tsx:113
 msgid "Setup"
 msgstr "Setup"
 
@@ -773,6 +829,10 @@ msgstr "Tap where the row starts."
 #: src/features/map/CustomSourceForm.tsx:25
 msgid "The address must start with https://"
 msgstr "The address must start with https://"
+
+#: src/features/map/OfflinePanel.tsx:129
+msgid "The area is too large to download ({count} tiles)."
+msgstr "The area is too large to download ({count} tiles)."
 
 #: src/features/settings/StoragePanel.tsx:79
 msgid "The browser has agreed to keep this app’s data."
@@ -881,7 +941,7 @@ msgstr "v1 grid, {rows} rows by {cols} columns"
 msgid "Verified"
 msgstr "Verified"
 
-#: src/app/pages/CemeteryPage.tsx:109
+#: src/app/pages/CemeteryPage.tsx:110
 msgid "View"
 msgstr "View"
 

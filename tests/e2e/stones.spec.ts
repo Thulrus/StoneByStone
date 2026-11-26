@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import { makeStonesDocument } from '../fixtures/stones';
-import { stubTiles, tapMap } from './helpers';
+import { stubTiles, tapMap, skipWelcome } from './helpers';
 
 test('10,000 stones import, draw, and open in the sheet when tapped', async ({
   page,
@@ -11,7 +11,7 @@ test('10,000 stones import, draw, and open in the sheet when tapped', async ({
   await writeFile(file, JSON.stringify(makeStonesDocument()));
   await stubTiles(page);
   await page.goto('./');
-  await page.getByRole('button', { name: 'Not now' }).click();
+  await skipWelcome(page);
 
   await page.getByTestId('import-input').setInputFiles(file);
   const list = page.getByRole('list', { name: 'Cemeteries on this device' });
