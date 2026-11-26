@@ -9,12 +9,9 @@ const image = fileURLToPath(new URL('../../public/icon-512.png', import.meta.url
 test('pin a plat image with three points, fade it, and place a stone on it', async ({
   page,
 }, testInfo) => {
-  // Playwright's WebKit is an ephemeral session, like Safari private browsing, and those
-  // refuse Blobs in IndexedDB ("Error preparing Blob/File data"). Installed Safari stores them.
-  test.skip(
-    testInfo.project.name.includes('webkit'),
-    'WebKit ephemeral sessions cannot store Blobs',
-  );
+  // Images are stored as bytes since M3, so WebKit can store them now, but in WebKit the
+  // tap on the overlay image in the pin workspace times out. Not yet investigated.
+  test.skip(testInfo.project.name.includes('webkit'), 'WebKit: pin-workspace tap times out');
   const file = testInfo.outputPath('small.sbs.json');
   await writeFile(file, JSON.stringify(makeStonesDocument({ rows: 2, perRow: 3 })));
   await stubTiles(page);

@@ -1,7 +1,10 @@
 import { useLingui } from '@lingui/react/macro';
 import { useRef, useState } from 'react';
 import type { Cemetery, ID, MapFeature, Monument, Overlay } from '../../domain';
+import { Button } from '../../ui/Button';
 import { cn } from '../../ui/cn';
+import { WalkPanel } from '../capture/walk/WalkPanel';
+import { WalkStart } from '../capture/walk/WalkStart';
 import { OfflinePanel } from '../map/OfflinePanel';
 import { GridActions } from '../overlays/GridActions';
 import { OverlaysPanel } from '../overlays/OverlaysPanel';
@@ -36,6 +39,23 @@ export function CemeteryTabs({
   const [drawRowId, setDrawRowId] = useState<ID>();
   const [stoneId, setStoneId] = useState<ID>();
   const [pinId, setPinId] = useState<ID>();
+  const [walkStart, setWalkStart] = useState(false);
+  const [walkRowId, setWalkRowId] = useState<ID>();
+  const [pendingWalk, setPendingWalk] = useState<ID>();
+  const [walkStoneId, setWalkStoneId] = useState<ID>();
+  const walkRow = layout.rows.find((r) => r.id === walkRowId);
+  const walkPanel = walkRow ? (
+    <WalkPanel
+      row={walkRow}
+      rowName={layout.labelOf(walkRow)}
+      onCaptured={setWalkStoneId}
+      onEnd={() => {
+        setWalkRowId(undefined);
+        setWalkStoneId(undefined);
+      }}
+    />
+  ) : undefined;
+  const highlighted = walkRow ? walkStoneId : stoneId;
   const grid = overlays.find((o) => o.kind === 'legacy-grid');
   const mapPanel = useRef<HTMLDivElement>(null);
   useFillViewport(mapPanel, current === 'map');
@@ -69,6 +89,11 @@ export function CemeteryTabs({
           {tabButton('diagram', t`Diagram`)}
           {tabButton('setup', t`Setup`)}
         </div>
+        {current !== 'setup' && !walkRow && !drawRowId ? (
+          <Button size="lg" onClick={() => setWalkStart(true)}>
+            {t`Walk a row`}
+          </Button>
+        ) : null}
       </div>
       {current === 'map' ? (
         <div ref={mapPanel} role="tabpanel" className="min-h-80 overflow-hidden rounded-xl">
@@ -77,7 +102,8 @@ export function CemeteryTabs({
             rows={layout.rows}
             stones={stones}
             overlays={overlays}
-            selectedStoneId={stoneId}
+            selectedStoneId={highlighted}
+            walk={walkPanel}
             onSelectStone={setStoneId}
             labelOf={layout.labelOf}
             activeRowId={activeRowId}
@@ -85,14 +111,18 @@ export function CemeteryTabs({
             drawRowId={drawRowId}
             onDrawClose={() => {
               setDrawRowId(undefined);
-              setTab('setup');
+              if (pendingWalk) {
+                setWalkRowId(pendingWalk);
+                setPendingWalk(undefined);
+              } else setTab('setup');
             }}
             pinId={pinId}
             onPinDone={() => setPinId(undefined)}
           />
         </div>
       ) : current === 'diagram' ? (
-        <div role="tabpanel">
+        <div role="tabpanel" className="flex flex-col gap-3">
+          {walkPanel}
           <SchematicView
             sections={layout.sections}
             rowsBySection={layout.rowsBySection}
@@ -100,7 +130,7 @@ export function CemeteryTabs({
             stones={stones}
             grid={grid}
             features={features}
-            selectedId={stoneId}
+            selectedId={highlighted}
             onSelect={setStoneId}
             gridActions={
               grid ? (
@@ -141,6 +171,24 @@ export function CemeteryTabs({
           <OfflinePanel cemetery={cemetery} rows={layout.rows} stones={stones} />
         </div>
       )}
+      <WalkStart
+        key={String(walkStart)}
+        open={walkStart}
+        onOpenChange={setWalkStart}
+        cemeteryId={cemetery.id}
+        rows={layout.rows}
+        labelOf={layout.labelOf}
+        counts={layout.counts}
+        onStart={(rowId, mode) => {
+          setWalkStart(false);
+          setActiveRowId(rowId);
+          if (mode === 'draw') {
+            setPendingWalk(rowId);
+            setDrawRowId(rowId);
+            setTab('map');
+          } else setWalkRowId(rowId);
+        }}
+      />
       <StoneSheet
         stone={stones.find((m) => m.id === stoneId)}
         rows={layout.rows}

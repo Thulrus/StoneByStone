@@ -274,6 +274,20 @@ be **rotated** so rows run horizontally on screen, which makes placement far eas
 This gets ordering right automatically, which is the hardest thing to recover later and the
 thing visitors most need ("third stone from the oak in Row 4").
 
+Implementation notes (M3, `geo/row-layout.ts`, `data/walk.ts`): a row is slots `0…K-1`
+(missing indices are gaps and keep their slot). Each stone's GPS fix is the `position` of its
+first photo that has one (one fresh fix, `maximumAge: 0`, taken at the shutter press while the
+photo is processed), so the row can be re-laid out at any time. Fixes more than 25 m off the
+line are ignored. The rest are projected and fitted with weighted isotonic regression
+(weight 1/accuracy²), slots without a fix are interpolated between their neighbours and the
+row ends, and neighbours are kept ≥ 0.5 m apart (less if the row is short). Only positions
+that are absent or `row-interpolated` are rewritten. Stones placed some other way are kept and
+act as strong anchors. The line is the drawn line, else "Row start here" → "Row end here",
+else start → the fix farthest from it. Until the row end, the start fix is a device setting
+(`walk:start:<rowId>`). "Row end here" then writes `Row.line`. Each capture (stone + photo +
+re-spacing) is one undo step. Inside the camera, feedback and Undo show in the camera itself,
+because a toast would cover the shutter on a phone.
+
 ### 7.3 GPS averaging
 
 "Hold still" mode collects fixes for ~10 s (configurable), discards outliers, and stores the

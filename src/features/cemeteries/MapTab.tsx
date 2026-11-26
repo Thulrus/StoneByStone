@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { ID, Overlay } from '../../domain';
 import { CemeteryMap, type CemeteryMapProps } from '../map/CemeteryMap';
 import { GridPinWorkspace } from '../overlays/GridPinWorkspace';
@@ -8,10 +9,12 @@ export interface MapTabProps extends Omit<CemeteryMapProps, 'tool'> {
   /** Overlay being pinned, if any. */
   pinId?: ID;
   onPinDone: () => void;
+  /** An active walk-a-row session's panel. */
+  walk?: ReactNode;
 }
 
-/** The map, or a pinning session on it. */
-export function MapTab({ overlays, pinId, onPinDone, ...map }: MapTabProps) {
+/** The map, or a pinning or walk-a-row session on it. */
+export function MapTab({ overlays, pinId, onPinDone, walk, ...map }: MapTabProps) {
   const pinning = overlays.find((o) => o.id === pinId);
   if (pinning?.kind === 'legacy-grid') {
     return <GridPinWorkspace key={pinning.id} grid={pinning} onDone={onPinDone} {...map} />;
@@ -27,5 +30,11 @@ export function MapTab({ overlays, pinId, onPinDone, ...map }: MapTabProps) {
       />
     );
   }
-  return <CemeteryMap {...map} overlays={overlays} />;
+  return (
+    <CemeteryMap
+      {...map}
+      overlays={overlays}
+      tool={walk ? { map: null, panel: walk } : undefined}
+    />
+  );
 }
