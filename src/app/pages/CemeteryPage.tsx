@@ -1,21 +1,13 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useState } from 'react';
 import { Link, useParams } from 'react-router';
-import type { Cemetery, ID, MapFeature, Monument, Overlay } from '../../domain';
-import { LayoutEditor } from '../../features/cemeteries/setup/LayoutEditor';
-import { useLayout, type Layout } from '../../features/cemeteries/useLayout';
+import type { Cemetery } from '../../domain';
+import { CemeteryTabs, type Tab } from '../../features/cemeteries/CemeteryTabs';
+import { useLayout } from '../../features/cemeteries/useLayout';
 import { useFeatures, useOverlays } from '../../features/cemeteries/useRecords';
-import { CemeteryMap } from '../../features/map/CemeteryMap';
-import { OfflinePanel } from '../../features/map/OfflinePanel';
 import { hasCoordinates } from '../../features/schematic/schematic';
-import { SchematicView } from '../../features/schematic/SchematicView';
-import { StoneSheet } from '../../features/stones/StoneSheet';
 import { useStones } from '../../features/stones/useStones';
-import { cn } from '../../ui/cn';
 import { useStore } from '../store-context';
-
-type Tab = 'map' | 'diagram' | 'setup';
 
 export function CemeteryPage() {
   const { cemeteryId = '' } = useParams();
@@ -64,110 +56,5 @@ function CemeteryView({ cemetery }: { cemetery: Cemetery }) {
       features={features}
       initialTab={initialTab}
     />
-  );
-}
-
-function CemeteryTabs({
-  cemetery,
-  layout,
-  stones,
-  overlays,
-  features,
-  initialTab,
-}: {
-  cemetery: Cemetery;
-  layout: Layout;
-  stones: Monument[];
-  overlays: Overlay[];
-  features: MapFeature[];
-  initialTab: Tab;
-}) {
-  const { t } = useLingui();
-  const [current, setTab] = useState<Tab>(initialTab);
-  const [activeRowId, setActiveRowId] = useState<ID>();
-  const [drawRowId, setDrawRowId] = useState<ID>();
-  const [stoneId, setStoneId] = useState<ID>();
-
-  const tabButton = (id: Tab, label: string) => (
-    <button
-      type="button"
-      role="tab"
-      aria-selected={current === id}
-      onClick={() => setTab(id)}
-      className={cn(
-        'min-h-12 rounded-lg px-4',
-        current === id ? 'bg-primary font-semibold text-primary-fg' : 'bg-surface-2',
-      )}
-    >
-      {label}
-    </button>
-  );
-
-  return (
-    <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="flex-1 text-2xl font-bold">{cemetery.name}</h1>
-        <div role="tablist" aria-label={t`View`} className="flex gap-2">
-          {tabButton('map', t`Map`)}
-          {tabButton('diagram', t`Diagram`)}
-          {tabButton('setup', t`Setup`)}
-        </div>
-      </div>
-      {current === 'map' ? (
-        <div role="tabpanel" className="h-[calc(100dvh-13rem)] min-h-80 overflow-hidden rounded-xl">
-          <CemeteryMap
-            cemetery={cemetery}
-            rows={layout.rows}
-            stones={stones}
-            selectedStoneId={stoneId}
-            onSelectStone={setStoneId}
-            labelOf={layout.labelOf}
-            activeRowId={activeRowId}
-            onSelectRow={(id) => setActiveRowId((a) => (a === id ? undefined : id))}
-            drawRowId={drawRowId}
-            onDrawClose={() => {
-              setDrawRowId(undefined);
-              setTab('setup');
-            }}
-          />
-        </div>
-      ) : current === 'diagram' ? (
-        <div role="tabpanel">
-          <SchematicView
-            sections={layout.sections}
-            rowsBySection={layout.rowsBySection}
-            labelOf={layout.labelOf}
-            stones={stones}
-            grid={overlays.find((o) => o.kind === 'legacy-grid')}
-            features={features}
-            selectedId={stoneId}
-            onSelect={setStoneId}
-          />
-        </div>
-      ) : (
-        <div role="tabpanel" className="flex flex-col gap-4">
-          <LayoutEditor
-            cemeteryId={cemetery.id}
-            sections={layout.sections}
-            rowsBySection={layout.rowsBySection}
-            counts={layout.counts}
-            activeRowId={activeRowId}
-            onSelectRow={(id) => setActiveRowId((a) => (a === id ? undefined : id))}
-            onDrawRow={(id) => {
-              setActiveRowId(id);
-              setDrawRowId(id);
-              setTab('map');
-            }}
-          />
-          <OfflinePanel cemetery={cemetery} rows={layout.rows} stones={stones} />
-        </div>
-      )}
-      <StoneSheet
-        stone={stones.find((m) => m.id === stoneId)}
-        rows={layout.rows}
-        labelOf={layout.labelOf}
-        onClose={() => setStoneId(undefined)}
-      />
-    </div>
   );
 }

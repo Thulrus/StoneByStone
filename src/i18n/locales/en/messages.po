@@ -127,15 +127,27 @@ msgstr "Add the rows you will walk. Sections are optional; use them if the cemet
 msgid "Address"
 msgstr "Address"
 
+#: src/features/overlays/GridActions.tsx:23
+msgid "Adjust grid on map"
+msgstr "Adjust grid on map"
+
 #: src/features/map/CustomSourceForm.tsx:26
 msgid "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
 msgstr "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
+
+#: src/features/overlays/PinPanel.tsx:65
+msgid "Apply"
+msgstr "Apply"
 
 #: src/features/map/CustomSourceForm.tsx:84
 msgid "Attribution"
 msgstr "Attribution"
 
-#: src/app/pages/CemeteryPage.tsx:36
+#: src/features/overlays/PinPanel.tsx:60
+msgid "Average error: {rms} m"
+msgstr "Average error: {rms} m"
+
+#: src/app/pages/CemeteryPage.tsx:28
 #: src/app/pages/NotFoundPage.tsx:11
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
@@ -178,6 +190,7 @@ msgstr "can be saved for offline use"
 #: src/features/cemeteries/setup/TextPrompt.tsx:44
 #: src/features/map/OfflinePanel.tsx:109
 #: src/features/map/RowDrawer.tsx:76
+#: src/features/overlays/PinPanel.tsx:68
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -198,7 +211,7 @@ msgstr "Cemeteries on this device"
 msgid "Cemetery"
 msgstr "Cemetery"
 
-#: src/app/pages/CemeteryPage.tsx:33
+#: src/app/pages/CemeteryPage.tsx:25
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
@@ -214,6 +227,10 @@ msgstr "Contact (optional)"
 #: src/features/cemeteries/ImportButton.tsx:36
 msgid "Could not import {0}"
 msgstr "Could not import {0}"
+
+#: src/features/map/LocateButton.tsx:19
+msgid "Couldn't get your location"
+msgstr "Couldn't get your location"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:48
 msgid "Couldn't get your location. Search or drop a pin instead."
@@ -272,8 +289,8 @@ msgstr "Deleted row {0}"
 msgid "Deleted section {0}. Its rows are now unsectioned."
 msgstr "Deleted section {0}. Its rows are now unsectioned."
 
-#: src/app/pages/CemeteryPage.tsx:112
-#: src/features/schematic/SchematicView.tsx:78
+#: src/features/cemeteries/CemeteryTabs.tsx:60
+#: src/features/schematic/SchematicView.tsx:80
 msgid "Diagram"
 msgstr "Diagram"
 
@@ -342,6 +359,10 @@ msgstr "Esri API key"
 msgid "Esri World Imagery needs your own ArcGIS key. It stays on this device."
 msgstr "Esri World Imagery needs your own ArcGIS key. It stays on this device."
 
+#: src/features/overlays/GridActions.tsx:16
+msgid "Every grid stone is already in a row"
+msgstr "Every grid stone is already in a row"
+
 #: src/features/settings/CemeteryDefaultsForm.tsx:29
 msgid "Feet and inches"
 msgstr "Feet and inches"
@@ -366,11 +387,19 @@ msgstr "Gap"
 msgid "Getting your location…"
 msgstr "Getting your location…"
 
+#: src/features/overlays/GridPinWorkspace.tsx:53
+msgid "grid cell"
+msgstr "grid cell"
+
 #. placeholder {0}: r + 1
 #. placeholder {1}: c + 1
 #: src/features/schematic/LegacyGridView.tsx:71
 msgid "Grid row {0}, column {1}"
 msgstr "Grid row {0}, column {1}"
+
+#: src/features/overlays/GridPicker.tsx:34
+msgid "Grid row {row}, column {col}"
+msgstr "Grid row {row}, column {col}"
 
 #: src/features/map/CustomSourceForm.tsx:90
 msgid "Highest zoom level"
@@ -450,12 +479,16 @@ msgstr "Loading map…"
 msgid "Located"
 msgstr "Located"
 
+#: src/features/overlays/GridActions.tsx:16
+msgid "Made {n} rows from the grid"
+msgstr "Made {n} rows from the grid"
+
 #: src/app/Layout.tsx:68
 #: src/app/Layout.tsx:82
 msgid "Main"
 msgstr "Main"
 
-#: src/app/pages/CemeteryPage.tsx:111
+#: src/features/cemeteries/CemeteryTabs.tsx:59
 msgid "Map"
 msgstr "Map"
 
@@ -464,7 +497,7 @@ msgid "Map background for this cemetery"
 msgstr "Map background for this cemetery"
 
 #. placeholder {0}: cemetery.name
-#: src/features/map/CemeteryMap.tsx:57
+#: src/features/map/CemeteryMap.tsx:62
 msgid "Map of {0}"
 msgstr "Map of {0}"
 
@@ -510,6 +543,10 @@ msgstr "Move section {0} down"
 msgid "Move section {0} up"
 msgstr "Move section {0} up"
 
+#: src/features/map/LocateButton.tsx:31
+msgid "My location"
+msgstr "My location"
+
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:80
 #: src/features/cemeteries/WelcomeCard.tsx:42
 #: src/features/map/CustomSourceForm.tsx:64
@@ -538,7 +575,7 @@ msgstr "No cemeteries on this device yet. Create one, or import a file."
 msgid "no line"
 msgstr "no line"
 
-#: src/features/schematic/SchematicView.tsx:82
+#: src/features/schematic/SchematicView.tsx:84
 msgid "No rows or stones yet. Add rows in Setup."
 msgstr "No rows or stones yet. Add rows in Setup."
 
@@ -546,11 +583,11 @@ msgstr "No rows or stones yet. Add rows in Setup."
 msgid "No section"
 msgstr "No section"
 
-#: src/features/schematic/SchematicView.tsx:43
+#: src/features/schematic/SchematicView.tsx:45
 msgid "No stones yet"
 msgstr "No stones yet"
 
-#: src/features/schematic/SchematicView.tsx:99
+#: src/features/schematic/SchematicView.tsx:102
 msgid "Not in a row"
 msgstr "Not in a row"
 
@@ -579,6 +616,10 @@ msgstr "Nothing has been changed. Details: {0}"
 #: src/ui/Toaster.tsx:14
 msgid "Notifications"
 msgstr "Notifications"
+
+#: src/features/overlays/PinPanel.tsx:34
+msgid "Now tap the same spot on the map for point {n}."
+msgstr "Now tap the same spot on the map for point {n}."
 
 #: src/features/map/RowDrawer.tsx:59
 msgid "Now tap where the row ends."
@@ -624,9 +665,21 @@ msgstr "Photographed"
 msgid "Photos"
 msgstr "Photos"
 
+#: src/features/overlays/PinPanel.tsx:35
+msgid "Pick a {sourceHint} for point {n}, then tap the same spot on the map."
+msgstr "Pick a {sourceHint} for point {n}, then tap the same spot on the map."
+
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:112
 msgid "Pin placed. Tap the map to move it."
 msgstr "Pin placed. Tap the map to move it."
+
+#: src/features/overlays/GridActions.tsx:23
+msgid "Place grid on map"
+msgstr "Place grid on map"
+
+#: src/features/overlays/GridPinWorkspace.tsx:32
+msgid "Placed {n} stones from the v1 grid"
+msgstr "Placed {n} stones from the v1 grid"
 
 #: src/features/cemeteries/create/PlaceFinder.tsx:93
 msgid "Places found"
@@ -636,6 +689,15 @@ msgstr "Places found"
 #: src/features/stones/StoneSheet.tsx:50
 msgid "Plot {0}"
 msgstr "Plot {0}"
+
+#: src/features/overlays/PinPanel.tsx:47
+msgid "Point {num}"
+msgstr "Point {num}"
+
+#. placeholder {0}: m(r)
+#: src/features/overlays/PinPanel.tsx:48
+msgid "Point {num}: off by {0} m"
+msgstr "Point {num}: off by {0} m"
 
 #: src/features/settings/StoragePanel.tsx:122
 #: src/features/share/BackupBanner.tsx:26
@@ -662,6 +724,10 @@ msgstr "Remove"
 msgid "Remove line"
 msgstr "Remove line"
 
+#: src/features/overlays/PinPanel.tsx:51
+msgid "Remove point {num}"
+msgstr "Remove point {num}"
+
 #: src/features/cemeteries/setup/RowItem.tsx:83
 #: src/features/cemeteries/setup/SectionBlock.tsx:66
 msgid "Rename"
@@ -675,7 +741,7 @@ msgstr "Rename row"
 msgid "Rename section"
 msgstr "Rename section"
 
-#: src/features/schematic/SchematicView.tsx:53
+#: src/features/schematic/SchematicView.tsx:55
 msgid "Row {name}, stone {n}"
 msgstr "Row {name}, stone {n}"
 
@@ -769,7 +835,7 @@ msgstr "Set the cemetery's location or draw a row line first."
 msgid "Settings"
 msgstr "Settings"
 
-#: src/app/pages/CemeteryPage.tsx:113
+#: src/features/cemeteries/CemeteryTabs.tsx:61
 msgid "Setup"
 msgstr "Setup"
 
@@ -790,7 +856,7 @@ msgid "Stone"
 msgstr "Stone"
 
 #. placeholder {0}: i + 1
-#: src/features/schematic/SchematicView.tsx:106
+#: src/features/schematic/SchematicView.tsx:109
 msgid "Stone {0} not in a row"
 msgstr "Stone {0} not in a row"
 
@@ -888,6 +954,10 @@ msgstr "Time to back up"
 msgid "Transcribed"
 msgstr "Transcribed"
 
+#: src/features/overlays/GridActions.tsx:26
+msgid "Treat grid rows as cemetery rows"
+msgstr "Treat grid rows as cemetery rows"
+
 #: src/features/map/CustomSourceForm.tsx:55
 msgid "Type"
 msgstr "Type"
@@ -896,6 +966,8 @@ msgstr "Type"
 #: src/features/cemeteries/ImportButton.tsx:30
 #: src/features/cemeteries/setup/RowItem.tsx:32
 #: src/features/cemeteries/setup/SectionBlock.tsx:37
+#: src/features/overlays/GridActions.tsx:17
+#: src/features/overlays/GridPinWorkspace.tsx:33
 msgid "Undo"
 msgstr "Undo"
 
@@ -925,6 +997,7 @@ msgstr "Unnamed person"
 msgid "Using {0} of about {1} ({pct})."
 msgstr "Using {0} of about {1} ({pct})."
 
+#: src/features/overlays/GridPicker.tsx:63
 #: src/features/schematic/LegacyGridView.tsx:83
 msgid "v1 grid"
 msgstr "v1 grid"
@@ -941,7 +1014,7 @@ msgstr "v1 grid, {rows} rows by {cols} columns"
 msgid "Verified"
 msgstr "Verified"
 
-#: src/app/pages/CemeteryPage.tsx:110
+#: src/features/cemeteries/CemeteryTabs.tsx:58
 msgid "View"
 msgstr "View"
 

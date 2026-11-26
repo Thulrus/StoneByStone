@@ -146,3 +146,8 @@ export function fitSimilarity(
   const t: Affine = [c, -n, translation[0], n, c, translation[1]];
   return { transform: t, scale: s, rotation, translation, ...residuals(t, pairs) };
 }
+
+/** A stored 6-number transform as an `Affine`, or `undefined` if it isn't one. */
+export function asAffine(v: readonly number[] | undefined): Affine | undefined {
+  return v && v.length === 6 && v.every(Number.isFinite) ? (v as unknown as Affine) : undefined;
+}

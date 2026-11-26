@@ -1,5 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import type { ID, MapFeature, Monument, Overlay, Row, Section } from '../../domain';
 import { StatusLegend } from '../stones/StatusLegend';
 import { LegacyGridView } from './LegacyGridView';
@@ -16,6 +16,8 @@ export interface SchematicViewProps {
   features?: readonly MapFeature[];
   selectedId?: ID;
   onSelect: (id: ID) => void;
+  /** Buttons for the v1 grid (pin it, make rows). */
+  gridActions?: ReactNode;
 }
 
 /** Sections → rows → stones in order, as a diagram that needs no coordinates (plan §7.5). */
@@ -91,6 +93,7 @@ export function SchematicView(props: SchematicViewProps) {
           features={props.features ?? []}
           selectedId={selectedId}
           onSelect={onSelect}
+          actions={props.gridActions}
         />
       ) : null}
       {groups.loose.length > 0 ? (

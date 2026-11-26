@@ -1,5 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import type { Cemetery, ID, Monument, Row } from '../../domain';
 import { StatusLegend } from '../stones/StatusLegend';
 import { cameraFor } from './camera';
@@ -24,6 +24,8 @@ export interface CemeteryMapProps {
   /** When set, the map is in draw mode for this row. */
   drawRowId?: ID;
   onDrawClose?: () => void;
+  /** A pinning session: layers for the map and a panel shown under it. */
+  tool?: { map: ReactNode; panel: ReactNode };
 }
 
 /** The cemetery map: imagery, boundary, rows, and the row-line drawing tool. */
@@ -44,47 +46,53 @@ export function CemeteryMap(props: CemeteryMapProps) {
     settings.custom,
     settings.keys,
   );
-  const drawRow = rows.find((r) => r.id === drawRowId);
+  const tool = props.tool;
+  const drawRow = tool ? undefined : rows.find((r) => r.id === drawRowId);
+  const busy = Boolean(tool ?? drawRow);
   const focus = rows.filter((r) => r.line && (!activeRowId || r.id === activeRowId));
 
   return (
-    <div className="relative h-full">
-      <LazyMap
-        provider={provider}
-        keys={settings.keys}
-        camera={camera}
-        units={cemetery.settings.units}
-        label={t`Map of ${cemetery.name}`}
-      >
-        {cemetery.boundary ? <BoundaryLayer boundary={cemetery.boundary} /> : null}
-        <RowsLayer
-          rows={drawRow ? rows.filter((r) => r.id !== drawRow.id) : rows}
-          activeId={activeRowId}
-          labelOf={labelOf}
-          onSelect={drawRow ? undefined : onSelectRow}
-        />
-        <StonesLayer
-          stones={stones}
-          selectedId={props.selectedStoneId}
-          onSelect={drawRow ? undefined : props.onSelectStone}
-        />
-        {drawRow ? (
-          <RowDrawer
-            key={drawRow.id}
-            row={drawRow}
-            rowName={labelOf(drawRow)}
-            onClose={() => onDrawClose?.()}
+    <div className="flex h-full flex-col">
+      <div className="relative min-h-0 flex-1">
+        <LazyMap
+          provider={provider}
+          keys={settings.keys}
+          camera={camera}
+          units={cemetery.settings.units}
+          label={t`Map of ${cemetery.name}`}
+        >
+          {cemetery.boundary ? <BoundaryLayer boundary={cemetery.boundary} /> : null}
+          <RowsLayer
+            rows={drawRow ? rows.filter((r) => r.id !== drawRow.id) : rows}
+            activeId={activeRowId}
+            labelOf={labelOf}
+            onSelect={busy ? undefined : onSelectRow}
           />
-        ) : (
-          <MapToolbar
-            lines={focus.flatMap((r) => (r.line ? [r.line] : []))}
-            onImagery={() => setPicker(true)}
+          <StonesLayer
+            stones={stones}
+            selectedId={props.selectedStoneId}
+            onSelect={busy ? undefined : props.onSelectStone}
           />
-        )}
-      </LazyMap>
-      {stones.length > 0 ? (
-        <StatusLegend className="absolute start-2 top-2 z-10 flex flex-col gap-1 rounded-lg bg-surface/90 p-2 shadow" />
-      ) : null}
+          {tool?.map}
+          {drawRow ? (
+            <RowDrawer
+              key={drawRow.id}
+              row={drawRow}
+              rowName={labelOf(drawRow)}
+              onClose={() => onDrawClose?.()}
+            />
+          ) : (
+            <MapToolbar
+              lines={focus.flatMap((r) => (r.line ? [r.line] : []))}
+              onImagery={() => setPicker(true)}
+            />
+          )}
+        </LazyMap>
+        {stones.length > 0 && !tool ? (
+          <StatusLegend className="absolute start-2 top-2 z-10 flex flex-col gap-1 rounded-lg bg-surface/90 p-2 shadow" />
+        ) : null}
+      </div>
+      {tool ? <div className="max-h-[45%] overflow-y-auto">{tool.panel}</div> : null}
       <ImageryPicker
         open={picker}
         onOpenChange={setPicker}
