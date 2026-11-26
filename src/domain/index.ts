@@ -11,3 +11,4 @@ export * from './names/abbreviations';
 export * from './names/phonetic';
 export * from './status';
 export * from './defaults';
+export * from './labels';
