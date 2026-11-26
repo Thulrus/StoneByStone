@@ -28,4 +28,18 @@ test('10,000 stones import, draw, and open in the sheet when tapped', async ({
     await expect(sheet).toBeVisible({ timeout: 1000 });
   }).toPass({ timeout: 20_000 });
   await expect(sheet).toContainText(/Row \d+, stone \d+/);
+  // The sheet and its backdrop cover the map's own buttons.
+  const box = await page
+    .getByRole('button', { name: 'Imagery', includeHidden: true })
+    .boundingBox();
+  if (!box) throw new Error('no Imagery button');
+  const onTop = await page.evaluate(
+    ([x, y]) => {
+      // A modal sets pointer-events: none on the page, which hit-testing would skip.
+      document.body.style.pointerEvents = 'auto';
+      return document.elementFromPoint(x, y)?.closest('button')?.textContent ?? null;
+    },
+    [box.x + box.width / 2, box.y + box.height / 2],
+  );
+  expect(onTop).not.toBe('Imagery');
 });

@@ -5,6 +5,7 @@ import { moveRow, setRowSection } from '../../../data/layout';
 import type { ID, Row, Section } from '../../../domain';
 import { Button } from '../../../ui/Button';
 import { cn } from '../../../ui/cn';
+import { Sheet } from '../../../ui/Sheet';
 import { toast } from '../../../ui/toast-store';
 import { TextPrompt } from './TextPrompt';
 
@@ -24,6 +25,7 @@ export function RowItem(props: RowItemProps) {
   const { t } = useLingui();
   const store = useStore();
   const [renaming, setRenaming] = useState(false);
+  const [menu, setMenu] = useState(false);
 
   const remove = async () => {
     await store.rows.delete(row.id);
@@ -71,19 +73,26 @@ export function RowItem(props: RowItemProps) {
       <Button variant="secondary" onClick={() => onDraw(row.id)}>
         {row.line ? <Trans>Edit line</Trans> : <Trans>Draw line</Trans>}
       </Button>
-      <details className="relative">
-        <summary
-          className="flex min-h-12 cursor-pointer items-center px-3"
-          aria-label={t`More for row ${row.label}`}
-        >
-          ⋯
-        </summary>
-        <div className="absolute end-0 z-20 flex w-56 flex-col gap-1 rounded-lg bg-surface p-2 shadow-lg">
-          <Button variant="ghost" onClick={() => setRenaming(true)}>
+      <Button
+        variant="ghost"
+        aria-label={t`More for row ${row.label}`}
+        onClick={() => setMenu(true)}
+      >
+        ⋯
+      </Button>
+      <Sheet open={menu} onOpenChange={setMenu} title={t`Row ${row.label}`}>
+        <div className="flex flex-col gap-3">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setMenu(false);
+              setRenaming(true);
+            }}
+          >
             <Trans>Rename</Trans>
           </Button>
           {sections.length > 0 ? (
-            <label className="flex flex-col gap-1 px-3 text-sm">
+            <label className="flex flex-col gap-1">
               <Trans>Section</Trans>
               <select
                 className="min-h-12 rounded-lg border border-border bg-bg px-2"
@@ -99,11 +108,17 @@ export function RowItem(props: RowItemProps) {
               </select>
             </label>
           ) : null}
-          <Button variant="danger" onClick={() => void remove()}>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setMenu(false);
+              void remove();
+            }}
+          >
             <Trans>Delete row</Trans>
           </Button>
         </div>
-      </details>
+      </Sheet>
       {renaming ? (
         <TextPrompt
           title={t`Rename row`}

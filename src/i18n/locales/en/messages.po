@@ -86,7 +86,7 @@ msgstr "{pct} transcribed"
 msgid "{px} px"
 msgstr "{px} px"
 
-#: src/features/cemeteries/setup/RowItem.tsx:52
+#: src/features/cemeteries/setup/RowItem.tsx:54
 msgid "{stones, plural, one {# stone} other {# stones}}"
 msgstr "{stones, plural, one {# stone} other {# stones}}"
 
@@ -255,7 +255,7 @@ msgstr "Check for updates"
 msgid "Checking…"
 msgstr "Checking…"
 
-#: src/ui/Dialog.tsx:58
+#: src/ui/Dialog.tsx:59
 msgid "Close"
 msgstr "Close"
 
@@ -323,7 +323,7 @@ msgstr "Delete {name}"
 msgid "Delete offline map"
 msgstr "Delete offline map"
 
-#: src/features/cemeteries/setup/RowItem.tsx:103
+#: src/features/cemeteries/setup/RowItem.tsx:118
 msgid "Delete row"
 msgstr "Delete row"
 
@@ -333,7 +333,7 @@ msgid "Deleted {name}"
 msgstr "Deleted {name}"
 
 #. placeholder {0}: row.label
-#: src/features/cemeteries/setup/RowItem.tsx:31
+#: src/features/cemeteries/setup/RowItem.tsx:33
 msgid "Deleted row {0}"
 msgstr "Deleted row {0}"
 
@@ -375,7 +375,7 @@ msgstr "Downloading {done} of {total} tiles…"
 msgid "Draw a row line first"
 msgstr "Draw a row line first"
 
-#: src/features/cemeteries/setup/RowItem.tsx:72
+#: src/features/cemeteries/setup/RowItem.tsx:74
 msgid "Draw line"
 msgstr "Draw line"
 
@@ -387,7 +387,7 @@ msgstr "Drawing {rowName}"
 msgid "Drop a pin on the map"
 msgstr "Drop a pin on the map"
 
-#: src/features/cemeteries/setup/RowItem.tsx:72
+#: src/features/cemeteries/setup/RowItem.tsx:74
 msgid "Edit line"
 msgstr "Edit line"
 
@@ -576,17 +576,17 @@ msgid "Metres"
 msgstr "Metres"
 
 #. placeholder {0}: row.label
-#: src/features/cemeteries/setup/RowItem.tsx:77
+#: src/features/cemeteries/setup/RowItem.tsx:78
 msgid "More for row {0}"
 msgstr "More for row {0}"
 
 #. placeholder {0}: row.label
-#: src/features/cemeteries/setup/RowItem.tsx:65
+#: src/features/cemeteries/setup/RowItem.tsx:67
 msgid "Move row {0} down"
 msgstr "Move row {0} down"
 
 #. placeholder {0}: row.label
-#: src/features/cemeteries/setup/RowItem.tsx:57
+#: src/features/cemeteries/setup/RowItem.tsx:59
 msgid "Move row {0} up"
 msgstr "Move row {0} up"
 
@@ -628,7 +628,7 @@ msgstr "New section"
 msgid "No cemeteries on this device yet. Create one, or import a file."
 msgstr "No cemeteries on this device yet. Create one, or import a file."
 
-#: src/features/cemeteries/setup/RowItem.tsx:51
+#: src/features/cemeteries/setup/RowItem.tsx:53
 msgid "no line"
 msgstr "no line"
 
@@ -636,7 +636,7 @@ msgstr "no line"
 msgid "No rows or stones yet. Add rows in Setup."
 msgstr "No rows or stones yet. Add rows in Setup."
 
-#: src/features/cemeteries/setup/RowItem.tsx:93
+#: src/features/cemeteries/setup/RowItem.tsx:102
 msgid "No section"
 msgstr "No section"
 
@@ -694,7 +694,7 @@ msgstr "Offline map"
 msgid "Offline map deleted"
 msgstr "Offline map deleted"
 
-#: src/features/cemeteries/setup/RowItem.tsx:51
+#: src/features/cemeteries/setup/RowItem.tsx:53
 msgid "on map"
 msgstr "on map"
 
@@ -818,18 +818,23 @@ msgstr "Remove line"
 msgid "Remove point {num}"
 msgstr "Remove point {num}"
 
-#: src/features/cemeteries/setup/RowItem.tsx:83
+#: src/features/cemeteries/setup/RowItem.tsx:92
 #: src/features/cemeteries/setup/SectionBlock.tsx:66
 msgid "Rename"
 msgstr "Rename"
 
-#: src/features/cemeteries/setup/RowItem.tsx:109
+#: src/features/cemeteries/setup/RowItem.tsx:124
 msgid "Rename row"
 msgstr "Rename row"
 
 #: src/features/cemeteries/setup/SectionBlock.tsx:98
 msgid "Rename section"
 msgstr "Rename section"
+
+#. placeholder {0}: row.label
+#: src/features/cemeteries/setup/RowItem.tsx:83
+msgid "Row {0}"
+msgstr "Row {0}"
 
 #: src/features/schematic/SchematicView.tsx:55
 msgid "Row {name}, stone {n}"
@@ -844,7 +849,7 @@ msgstr "Row {rowName}"
 msgid "Row {rowName}, stone {0}"
 msgstr "Row {rowName}, stone {0}"
 
-#: src/features/cemeteries/setup/RowItem.tsx:110
+#: src/features/cemeteries/setup/RowItem.tsx:125
 msgid "Row label"
 msgstr "Row label"
 
@@ -908,7 +913,7 @@ msgstr "Search by name or place"
 msgid "Searching OpenStreetMap…"
 msgstr "Searching OpenStreetMap…"
 
-#: src/features/cemeteries/setup/RowItem.tsx:87
+#: src/features/cemeteries/setup/RowItem.tsx:96
 msgid "Section"
 msgstr "Section"
 
@@ -1058,7 +1063,7 @@ msgstr "Type"
 
 #: src/features/cemeteries/CemeteryList.tsx:60
 #: src/features/cemeteries/ImportButton.tsx:30
-#: src/features/cemeteries/setup/RowItem.tsx:32
+#: src/features/cemeteries/setup/RowItem.tsx:34
 #: src/features/cemeteries/setup/SectionBlock.tsx:37
 #: src/features/overlays/GridActions.tsx:17
 #: src/features/overlays/GridPinWorkspace.tsx:33

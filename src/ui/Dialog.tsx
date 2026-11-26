@@ -16,7 +16,8 @@ export interface DialogProps {
   placement?: 'center' | 'bottom';
 }
 
-const overlay = 'fixed inset-0 bg-black/50 motion-safe:animate-[sbs-fade_150ms_ease-out]';
+// Above the sticky bars and map controls (z-10), below toasts (z-50).
+const overlay = 'fixed inset-0 z-40 bg-black/50 motion-safe:animate-[sbs-fade_150ms_ease-out]';
 
 const panels = {
   center: cn(
@@ -46,7 +47,7 @@ export function Dialog({
       <RadixDialog.Portal>
         <RadixDialog.Overlay className={overlay} />
         <RadixDialog.Content
-          className={cn('bg-surface text-fg sbs-border p-4 shadow-xl', panels[placement])}
+          className={cn('z-40 bg-surface text-fg sbs-border p-4 shadow-xl', panels[placement])}
           {...(description ? {} : { 'aria-describedby': undefined })}
         >
           {placement === 'bottom' && (
