@@ -27,6 +27,8 @@ msgstr "(new stones go before stone 1)"
 msgid "(no name yet)"
 msgstr "(no name yet)"
 
+#: src/features/booklet/BookletSections.tsx:57
+#: src/features/booklet/BookletSections.tsx:140
 #: src/features/duplicates/PairCards.tsx:75
 #: src/features/people/index-import/PeoplePreview.tsx:38
 #: src/features/people/match/MatchedList.tsx:40
@@ -166,6 +168,10 @@ msgstr "{gaps, plural, one {# empty plot before it} other {# empty plots before 
 msgid "{hidden, plural, one {Show # dismissed pair} other {Show # dismissed pairs}}"
 msgstr "{hidden, plural, one {Show # dismissed pair} other {Show # dismissed pairs}}"
 
+#: src/features/booklet/PlanMapSvg.tsx:36
+msgid "{metres} m"
+msgstr "{metres} m"
+
 #: src/features/duplicates/PairCards.tsx:129
 msgid "{metres} m apart · text {alike}% alike"
 msgstr "{metres} m apart · text {alike}% alike"
@@ -227,6 +233,10 @@ msgstr "{name}: about {count} tiles, roughly {size}."
 msgid "{pct} transcribed"
 msgstr "{pct} transcribed"
 
+#: src/features/booklet/BookletView.tsx:145
+msgid "{peopleCount, plural, one {# person} other {# people}}"
+msgstr "{peopleCount, plural, one {# person} other {# people}}"
+
 #: src/features/export/ExportView.tsx:76
 msgid "{placed, plural, one {# placed stone} other {# placed stones}} as points with their names and text, for QGIS or other GIS software."
 msgstr "{placed, plural, one {# placed stone} other {# placed stones}} as points with their names and text, for QGIS or other GIS software."
@@ -248,6 +258,10 @@ msgstr "{role} photo"
 #: src/features/transcribe/date-preview.ts:61
 msgid "{start} (calculated)"
 msgstr "{start} (calculated)"
+
+#: src/features/booklet/BookletView.tsx:144
+msgid "{stoneCount, plural, one {# stone} other {# stones}}"
+msgstr "{stoneCount, plural, one {# stone} other {# stones}}"
 
 #: src/features/cemeteries/setup/RowItem.tsx:54
 msgid "{stones, plural, one {# stone} other {# stones}}"
@@ -321,6 +335,10 @@ msgstr "About ±{0} m from {n} fixes"
 #: src/features/settings/AboutPanel.tsx:43
 msgid "About this app"
 msgstr "About this app"
+
+#: src/features/booklet/BookletView.tsx:186
+msgid "About this record"
+msgstr "About this record"
 
 #: src/features/map/ImageryPicker.tsx:104
 msgid "Add a custom source"
@@ -499,6 +517,10 @@ msgstr "Back to {0}"
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
 
+#: src/features/booklet/BookletView.tsx:110
+msgid "Back to Export and print"
+msgstr "Back to Export and print"
+
 #: src/features/stones/detail/PositionSection.tsx:72
 msgid "Back to its row position"
 msgstr "Back to its row position"
@@ -571,6 +593,11 @@ msgstr "between {start} and {end}"
 #: src/features/transcribe/viewer/FilterControls.tsx:102
 msgid "Black point"
 msgstr "Black point"
+
+#: src/features/booklet/BookletView.tsx:113
+#: src/features/booklet/BookletView.tsx:132
+msgid "Booklet"
+msgstr "Booklet"
 
 #: src/features/people/index-import/field-labels.ts:14
 #: src/features/transcribe/PersonFields.tsx:48
@@ -785,6 +812,10 @@ msgstr "Column {0}"
 msgid "Column {column}"
 msgstr "Column {column}"
 
+#: src/features/booklet/BookletView.tsx:154
+msgid "Compiled with StoneByStone, {today}"
+msgstr "Compiled with StoneByStone, {today}"
+
 #: src/features/stones/attribute-labels.ts:40
 msgid "Concrete"
 msgstr "Concrete"
@@ -809,6 +840,10 @@ msgstr "Context"
 #: src/features/transcribe/viewer/FilterControls.tsx:101
 msgid "Contrast"
 msgstr "Contrast"
+
+#: src/features/booklet/BookletView.tsx:192
+msgid "Contributors"
+msgstr "Contributors"
 
 #: src/features/transcribe/ConventionsDialog.tsx:86
 msgid "Conventions"
@@ -880,10 +915,6 @@ msgstr "Created"
 #: src/features/stones/attribute-labels.ts:97
 msgid "Cross"
 msgstr "Cross"
-
-#: src/features/cemeteries/CemeteryMore.tsx:35
-msgid "CSV, GeoJSON, KML"
-msgstr "CSV, GeoJSON, KML"
 
 #: src/app/pages/SettingsPage.tsx:17
 msgid "Dark"
@@ -1144,6 +1175,10 @@ msgstr "Esri API key"
 #: src/features/map/ImageryPicker.tsx:74
 msgid "Esri World Imagery needs your own ArcGIS key. It stays on this device."
 msgstr "Esri World Imagery needs your own ArcGIS key. It stays on this device."
+
+#: src/features/booklet/BookletView.tsx:138
+msgid "Established {established}"
+msgstr "Established {established}"
 
 #: src/features/transcribe/date-preview.ts:64
 msgid "estimated {start}"
@@ -1477,6 +1512,10 @@ msgstr "In Safari, tap the Share button, then “Add to Home Screen”. Your sur
 msgid "In-app camera"
 msgstr "In-app camera"
 
+#: src/features/booklet/BookletView.tsx:172
+msgid "Index of names"
+msgstr "Index of names"
+
 #: src/features/transcribe/TranscribeForm.tsx:184
 msgid "Inscription, as carved"
 msgstr "Inscription, as carved"
@@ -1583,6 +1622,10 @@ msgstr "Less"
 msgid "Letters or words that can't be read (Ctrl+I)"
 msgstr "Letters or words that can't be read (Ctrl+I)"
 
+#: src/features/booklet/BookletView.tsx:200
+msgid "License"
+msgstr "License"
+
 #: src/features/stones/attribute-labels.ts:48
 msgid "Lichen / growth"
 msgstr "Lichen / growth"
@@ -1656,6 +1699,7 @@ msgstr "Maiden / birth surname"
 msgid "Main"
 msgstr "Main"
 
+#: src/features/booklet/BookletView.tsx:159
 #: src/features/cemeteries/CemeteryTabs.tsx:104
 msgid "Map"
 msgstr "Map"
@@ -1807,6 +1851,7 @@ msgstr "Move stone {n} later"
 msgid "My location"
 msgstr "My location"
 
+#: src/features/booklet/PlanMapSvg.tsx:46
 #: src/features/stones/RelativePlacer.tsx:178
 msgid "N"
 msgstr "N"
@@ -1875,6 +1920,10 @@ msgstr "Next stone"
 msgid "No cemeteries on this device yet. Create one, or import a file."
 msgstr "No cemeteries on this device yet. Create one, or import a file."
 
+#: src/features/booklet/BookletView.tsx:196
+msgid "No contributor names recorded."
+msgstr "No contributor names recorded."
+
 #: src/features/duplicates/PairCards.tsx:72
 msgid "No dates"
 msgstr "No dates"
@@ -1887,6 +1936,10 @@ msgstr "No GPS fixes came in. Check that location is on, then try again."
 msgid "No index records yet. Import a burial index on the <0>People</0> page, then match its records to stones here."
 msgstr "No index records yet. Import a burial index on the <0>People</0> page, then match its records to stones here."
 
+#: src/features/booklet/BookletView.tsx:202
+msgid "No license chosen yet."
+msgstr "No license chosen yet."
+
 #: src/features/people/match/RecordCard.tsx:56
 msgid "No likely stone yet. It may be an unmarked or lost grave."
 msgstr "No likely stone yet. It may be an unmarked or lost grave."
@@ -1894,6 +1947,10 @@ msgstr "No likely stone yet. It may be an unmarked or lost grave."
 #: src/features/cemeteries/setup/RowItem.tsx:53
 msgid "no line"
 msgstr "no line"
+
+#: src/features/booklet/BookletView.tsx:175
+msgid "No names transcribed yet."
+msgstr "No names transcribed yet."
 
 #: src/features/people/index-import/PeoplePreview.tsx:20
 msgid "No names yet. Mark the column (or columns) that hold names."
@@ -1954,6 +2011,7 @@ msgstr "No section"
 msgid "No stone (index record)"
 msgstr "No stone (index record)"
 
+#: src/features/booklet/BookletSections.tsx:13
 #: src/features/people/match/RecordCard.tsx:51
 msgid "No stone found"
 msgstr "No stone found"
@@ -1979,6 +2037,7 @@ msgstr "No stones yet"
 msgid "Not duplicates"
 msgstr "Not duplicates"
 
+#: src/features/booklet/BookletSections.tsx:21
 #: src/features/progress/ProgressView.tsx:123
 #: src/features/schematic/SchematicView.tsx:102
 msgid "Not in a row"
@@ -2014,6 +2073,10 @@ msgstr "Not set"
 #: src/features/cemeteries/create/PlaceFinder.tsx:111
 msgid "not tagged as a cemetery"
 msgstr "not tagged as a cemetery"
+
+#: src/features/booklet/BookletSections.tsx:154
+msgid "Not transcribed"
+msgstr "Not transcribed"
 
 #: src/features/people/index-import/field-labels.ts:25
 #: src/features/progress/RevisitChecklist.tsx:45
@@ -2126,6 +2189,10 @@ msgstr "Only {free} free. Back up and remove old cemeteries to make room."
 msgid "Opacity"
 msgstr "Opacity"
 
+#: src/features/export/ExportView.tsx:113
+msgid "Open booklet"
+msgstr "Open booklet"
+
 #: src/app/InstallPrompt.tsx:37
 msgid "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
 msgstr "Open your browser’s menu and choose “Install app” or “Add to Home screen”."
@@ -2232,6 +2299,7 @@ msgstr "Photographed"
 msgid "Photographed, not transcribed"
 msgstr "Photographed, not transcribed"
 
+#: src/features/booklet/BookletView.tsx:124
 #: src/features/settings/StoragePanel.tsx:96
 #: src/features/stones/detail/PhotosSection.tsx:72
 #: src/features/transcribe/PhotoPane.tsx:49
@@ -2289,6 +2357,15 @@ msgstr "Places found"
 msgid "placing on the map"
 msgstr "placing on the map"
 
+#. placeholder {0}: cemetery.name
+#: src/features/booklet/BookletView.tsx:160
+msgid "Plan of {0}"
+msgstr "Plan of {0}"
+
+#: src/features/booklet/BookletView.tsx:166
+msgid "Plan of section {name}"
+msgstr "Plan of section {name}"
+
 #: src/features/overlays/OverlaysPanel.tsx:54
 msgid "Plat maps and drone images"
 msgstr "Plat maps and drone images"
@@ -2302,6 +2379,11 @@ msgstr "Plat maps and drone images"
 #: src/features/stones/StoneSheet.tsx:79
 msgid "Plot {0}"
 msgstr "Plot {0}"
+
+#: src/features/booklet/BookletSections.tsx:20
+#: src/features/booklet/BookletSections.tsx:109
+msgid "plot {plot}"
+msgstr "plot {plot}"
 
 #: src/features/people/index-import/field-labels.ts:22
 msgid "Plot / lot / grave"
@@ -2362,6 +2444,14 @@ msgstr "Previous"
 #: src/features/progress/RevisitChecklist.tsx:67
 msgid "Print checklist"
 msgstr "Print checklist"
+
+#: src/features/booklet/BookletView.tsx:127
+msgid "Print or save as PDF"
+msgstr "Print or save as PDF"
+
+#: src/features/export/ExportView.tsx:101
+msgid "Printable booklet"
+msgstr "Printable booklet"
 
 #: src/features/cemeteries/CemeteryMore.tsx:33
 #: src/features/progress/ProgressView.tsx:47
@@ -2507,8 +2597,11 @@ msgstr "Rose / rosebud"
 msgid "Row"
 msgstr "Row"
 
+#. placeholder {0}: f.row
+#. placeholder {0}: g.row
 #. placeholder {0}: loc.row
-#. placeholder {0}: row.label
+#: src/features/booklet/BookletSections.tsx:16
+#: src/features/booklet/BookletSections.tsx:118
 #: src/features/cemeteries/setup/RowItem.tsx:83
 #: src/features/people/index-import/PeoplePreview.tsx:28
 #: src/features/people/match/useRecordLine.ts:13
@@ -2745,13 +2838,20 @@ msgstr "Searching OpenStreetMap…"
 msgid "Section"
 msgstr "Section"
 
+#. placeholder {0}: f.section
+#. placeholder {0}: g.section
 #. placeholder {0}: g.section.name
-#. placeholder {0}: loc.section
+#: src/features/booklet/BookletSections.tsx:15
+#: src/features/booklet/BookletSections.tsx:118
 #: src/features/people/index-import/PeoplePreview.tsx:27
 #: src/features/people/match/useRecordLine.ts:12
 #: src/features/progress/ProgressView.tsx:113
 msgid "Section {0}"
 msgstr "Section {0}"
+
+#: src/features/booklet/BookletView.tsx:164
+msgid "Section {name}"
+msgstr "Section {name}"
 
 #: src/features/cemeteries/setup/SectionBlock.tsx:99
 msgid "Section name"
@@ -2832,6 +2932,10 @@ msgstr "Spouse"
 msgid "Spreadsheet (CSV)"
 msgstr "Spreadsheet (CSV)"
 
+#: src/features/cemeteries/CemeteryMore.tsx:35
+msgid "Spreadsheet, GIS, Google Earth, printable booklet"
+msgstr "Spreadsheet, GIS, Google Earth, printable booklet"
+
 #: src/features/capture/HoldStill.tsx:77
 msgid "Stand at the stone and keep the phone still… {left} s"
 msgstr "Stand at the stone and keep the phone still… {left} s"
@@ -2864,6 +2968,7 @@ msgstr "Status key"
 msgid "stone"
 msgstr "stone"
 
+#: src/features/booklet/BookletSections.tsx:111
 #: src/features/progress/RevisitChecklist.tsx:37
 #: src/features/stones/detail/StoneDetail.tsx:49
 #: src/features/stones/RelativePlacer.tsx:56
@@ -2888,6 +2993,11 @@ msgstr "Stone {0} saved"
 msgid "Stone {0} skipped"
 msgstr "Stone {0} skipped"
 
+#: src/features/booklet/BookletSections.tsx:18
+msgid "stone {n}"
+msgstr "stone {n}"
+
+#: src/features/booklet/BookletSections.tsx:109
 #: src/features/capture/walk/RowOrderDialogs.tsx:103
 #: src/features/transcribe/NeighbourStrip.tsx:70
 msgid "Stone {n}"
@@ -2935,9 +3045,17 @@ msgstr "Stone status"
 msgid "Stones"
 msgstr "Stones"
 
+#: src/features/booklet/BookletSections.tsx:120
+msgid "Stones in no row"
+msgstr "Stones in no row"
+
 #: src/features/capture/walk/RowOrderDialogs.tsx:95
 msgid "Stones in order"
 msgstr "Stones in order"
+
+#: src/features/booklet/BookletView.tsx:182
+msgid "Stones row by row"
+msgstr "Stones row by row"
 
 #: src/features/progress/RevisitChecklist.tsx:82
 msgid "Stones to revisit"
@@ -3151,6 +3269,10 @@ msgstr "Time to back up"
 msgid "Title (Mr., Rev., …)"
 msgstr "Title (Mr., Rev., …)"
 
+#: src/features/export/ExportView.tsx:103
+msgid "Title page, map, alphabetical index and row-by-row listings with photos, ready to print or save as PDF."
+msgstr "Title page, map, alphabetical index and row-by-row listings with photos, ready to print or save as PDF."
+
 #: src/features/people/PeopleFiltersPanel.tsx:62
 msgid "to"
 msgstr "to"
@@ -3185,6 +3307,10 @@ msgstr "Transcribed, not verified"
 #: src/features/transcribe/TranscribeForm.tsx:173
 msgid "Transcription"
 msgstr "Transcription"
+
+#: src/features/booklet/BookletView.tsx:188
+msgid "Transcription convention"
+msgstr "Transcription convention"
 
 #: src/features/transcribe/ConventionsDialog.tsx:91
 msgid "Transcription conventions"

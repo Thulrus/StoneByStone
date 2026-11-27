@@ -1,7 +1,7 @@
 import { Plural, Trans } from '@lingui/react/macro';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
-import { cemeteryPath } from '../../app/paths';
+import { bookletPath, cemeteryPath } from '../../app/paths';
 import type { Cemetery, Monument, Person } from '../../domain';
 import { Button } from '../../ui/Button';
 import { download, fileSlug } from '../../ui/download';
@@ -95,6 +95,23 @@ export function ExportView({
             <Button variant="secondary" disabled={placed === 0} onClick={() => void save('kml')}>
               <Trans>Download KML</Trans>
             </Button>
+          }
+        />
+        <Choice
+          title={<Trans>Printable booklet</Trans>}
+          hint={
+            <Trans>
+              Title page, map, alphabetical index and row-by-row listings with photos, ready to
+              print or save as PDF.
+            </Trans>
+          }
+          action={
+            <Link
+              to={bookletPath(cemetery.id)}
+              className="inline-flex min-h-11 items-center rounded-lg bg-surface-2 px-4 font-medium text-primary"
+            >
+              <Trans>Open booklet</Trans>
+            </Link>
           }
         />
       </ul>

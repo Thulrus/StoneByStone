@@ -29,7 +29,7 @@ export function ShortcutHelp({ convention: c }: { convention: Convention }) {
 }
 
 /** What each mark means, for the chosen convention (plan §10.5). */
-function Reference({ convention: c }: { convention: Convention }) {
+export function ConventionReference({ convention: c }: { convention: Convention }) {
   const { t } = useLingui();
   const lines = c.lineBreak === 'slash' ? ' / ' : t`a real line break (Enter)`;
   const rows: [string, string][] = [
@@ -92,7 +92,7 @@ export function ConventionsButton({ cemetery }: { cemetery: Cemetery }) {
         description={t`Type the inscription exactly as carved: spelling, capitals, abbreviations and line breaks. Use these marks for what the stone doesn't show plainly.`}
       >
         <div className="flex flex-col gap-4">
-          <Reference convention={current} />
+          <ConventionReference convention={current} />
           <RadioGroup
             legend={t`Marks used in this cemetery`}
             name="convention"

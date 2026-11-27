@@ -33,3 +33,19 @@
 .sbs-label-active {
   background: #f5c542;
 }
+
+/* Printable booklet (features/booklet). Always black on white on paper, whatever the theme. */
+@media print {
+  @page {
+    margin: 15mm;
+  }
+  .sbs-booklet,
+  .sbs-booklet * {
+    color: #000 !important;
+    background: transparent !important;
+    border-color: #999 !important;
+  }
+  .sbs-booklet img {
+    print-color-adjust: exact;
+  }
+}

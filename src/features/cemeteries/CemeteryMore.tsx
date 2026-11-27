@@ -32,7 +32,10 @@ export function CemeteryMore({ cemetery }: { cemetery: Cemetery }) {
           <PageLink to={progressPath(cemetery.id)} hint={t`Status by row, and what to revisit`}>
             <Trans>Progress</Trans>
           </PageLink>
-          <PageLink to={exportPath(cemetery.id)} hint={t`CSV, GeoJSON, KML`}>
+          <PageLink
+            to={exportPath(cemetery.id)}
+            hint={t`Spreadsheet, GIS, Google Earth, printable booklet`}
+          >
             <Trans>Export and print</Trans>
           </PageLink>
         </nav>

@@ -688,6 +688,13 @@ queues, then apply. Every merge is a single undoable operation and is logged in 
 - **Printable booklet** via print CSS (no heavy PDF library): title page, cemetery
   description and map, section maps, alphabetical index (surname, given, dates, location),
   per-row listings with thumbnails, transcription conventions, contributors and license.
+  (M5, `features/booklet/`, route `cemetery/:id/booklet`, opened from "Export and print".
+  The maps are SVG plans drawn from stone positions, row lines and the boundary (north up,
+  scale bar; one per section when there are several), so they print sharp with no tiles.
+  The index is in `compareByName` order with letter headings; listings follow walking
+  order with each stone's first photo (role, then time) and can leave photos out.
+  Contributors are the named writers of the cemetery's records. Print CSS forces black on
+  white and breaks pages between parts; "Save as PDF" in the print dialog makes a PDF.)
 - Optional later: GEDCOM 7 (people + burial facts) for genealogy software.
 
 ### 13.2 Publishing

@@ -39,3 +39,8 @@ export function duplicatesPath(cemeteryId: string): string {
 export function exportPath(cemeteryId: string): string {
   return `${cemeteryPath(cemeteryId)}/export`;
 }
+
+/** Link target for a cemetery's printable booklet. */
+export function bookletPath(cemeteryId: string): string {
+  return `${cemeteryPath(cemeteryId)}/booklet`;
+}
