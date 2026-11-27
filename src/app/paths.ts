@@ -34,3 +34,8 @@ export function matchPath(cemeteryId: string): string {
 export function duplicatesPath(cemeteryId: string): string {
   return `${cemeteryPath(cemeteryId)}/duplicates`;
 }
+
+/** Link target for a cemetery's exports (CSV, GeoJSON, KML, booklet). */
+export function exportPath(cemeteryId: string): string {
+  return `${cemeteryPath(cemeteryId)}/export`;
+}

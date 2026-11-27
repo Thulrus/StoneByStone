@@ -44,6 +44,10 @@ export const routes: RouteObject[] = [
         }),
       },
       {
+        path: 'cemetery/:cemeteryId/export',
+        lazy: async () => ({ Component: (await import('./pages/ExportPage')).ExportPage }),
+      },
+      {
         path: 'new',
         lazy: async () => ({
           Component: (await import('../features/cemeteries/create/NewCemeteryPage'))

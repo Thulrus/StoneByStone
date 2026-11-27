@@ -227,6 +227,10 @@ msgstr "{name}: about {count} tiles, roughly {size}."
 msgid "{pct} transcribed"
 msgstr "{pct} transcribed"
 
+#: src/features/export/ExportView.tsx:76
+msgid "{placed, plural, one {# placed stone} other {# placed stones}} as points with their names and text, for QGIS or other GIS software."
+msgstr "{placed, plural, one {# placed stone} other {# placed stones}} as points with their names and text, for QGIS or other GIS software."
+
 #: src/features/transcribe/TranscribeView.tsx:191
 msgid "{position} of {total}"
 msgstr "{position} of {total}"
@@ -479,6 +483,7 @@ msgstr "Back on the list"
 
 #. placeholder {0}: cemetery.name
 #: src/features/duplicates/DuplicatesView.tsx:81
+#: src/features/export/ExportView.tsx:47
 #: src/features/people/match/MatchView.tsx:92
 #: src/features/people/PeopleView.tsx:55
 #: src/features/progress/ProgressView.tsx:44
@@ -876,6 +881,10 @@ msgstr "Created"
 msgid "Cross"
 msgstr "Cross"
 
+#: src/features/cemeteries/CemeteryMore.tsx:35
+msgid "CSV, GeoJSON, KML"
+msgstr "CSV, GeoJSON, KML"
+
 #: src/app/pages/SettingsPage.tsx:17
 msgid "Dark"
 msgstr "Dark"
@@ -1015,6 +1024,10 @@ msgstr "Download again"
 msgid "Download checklist (CSV)"
 msgstr "Download checklist (CSV)"
 
+#: src/features/export/ExportView.tsx:69
+msgid "Download CSV"
+msgstr "Download CSV"
+
 #: src/features/map/OfflinePanel.tsx:69
 msgid "Download failed"
 msgstr "Download failed"
@@ -1022,6 +1035,14 @@ msgstr "Download failed"
 #: src/features/map/OfflinePanel.tsx:138
 msgid "Download for offline"
 msgstr "Download for offline"
+
+#: src/features/export/ExportView.tsx:87
+msgid "Download GeoJSON"
+msgstr "Download GeoJSON"
+
+#: src/features/export/ExportView.tsx:96
+msgid "Download KML"
+msgstr "Download KML"
 
 #: src/features/map/OfflinePanel.tsx:103
 msgid "Downloading {done} of {total} tiles…"
@@ -1136,6 +1157,11 @@ msgstr "Every grid stone is already in a row"
 msgid "Every record is matched or set aside."
 msgstr "Every record is matched or set aside."
 
+#: src/features/cemeteries/CemeteryMore.tsx:36
+#: src/features/export/ExportView.tsx:50
+msgid "Export and print"
+msgstr "Export and print"
+
 #: src/features/transcribe/ConventionsDialog.tsx:107
 msgid "Exports say which convention was used. Changing it doesn't rewrite inscriptions already typed."
 msgstr "Exports say which convention was used. Changing it doesn't rewrite inscriptions already typed."
@@ -1219,6 +1245,10 @@ msgstr "For"
 msgid "For example https://example.org/tiles/{z}/{x}/{y}.png"
 msgstr "For example https://example.org/tiles/{z}/{x}/{y}.png"
 
+#: src/features/export/ExportView.tsx:53
+msgid "For other programs. To keep or share everything, photos included, use Back up instead."
+msgstr "For other programs. To keep or share everything, photos included, use Back up instead."
+
 #: src/features/stones/attribute-labels.ts:26
 msgid "Fragment"
 msgstr "Fragment"
@@ -1297,6 +1327,10 @@ msgstr "Go to {label}"
 #: src/features/stones/attribute-labels.ts:46
 msgid "Good"
 msgstr "Good"
+
+#: src/features/export/ExportView.tsx:92
+msgid "Google Earth (KML)"
+msgstr "Google Earth (KML)"
 
 #: src/features/stones/attribute-labels.ts:24
 msgid "Government / military"
@@ -1638,6 +1672,10 @@ msgstr "Map not saved for offline yet. Use \"Download for offline\" below."
 #: src/features/map/CemeteryMap.tsx:65
 msgid "Map of {0}"
 msgstr "Map of {0}"
+
+#: src/features/export/ExportView.tsx:74
+msgid "Map points (GeoJSON)"
+msgstr "Map points (GeoJSON)"
 
 #: src/features/cemeteries/FieldChecklist.tsx:134
 msgid "Map saved for offline ({tileCount} tiles)"
@@ -2067,6 +2105,10 @@ msgstr "On the map, average error {0} m"
 #: src/features/people/match/RecordCard.tsx:136
 msgid "On this stone"
 msgstr "On this stone"
+
+#: src/features/export/ExportView.tsx:62
+msgid "One line per person, with their stone's place, position and inscription. Opens in Excel, LibreOffice or Google Sheets."
+msgstr "One line per person, with their stone's place, position and inscription. Opens in Excel, LibreOffice or Google Sheets."
 
 #: src/features/transcribe/ConventionsDialog.tsx:13
 msgid "One line, \" / \" between carved lines"
@@ -2786,6 +2828,10 @@ msgstr "Spanish–American War"
 msgid "Spouse"
 msgstr "Spouse"
 
+#: src/features/export/ExportView.tsx:60
+msgid "Spreadsheet (CSV)"
+msgstr "Spreadsheet (CSV)"
+
 #: src/features/capture/HoldStill.tsx:77
 msgid "Stand at the stone and keep the phone still… {left} s"
 msgstr "Stand at the stone and keep the phone still… {left} s"
@@ -3032,6 +3078,10 @@ msgstr "The other person is their"
 #: src/features/map/CustomSourceForm.tsx:102
 msgid "The provider's terms allow saving tiles for offline use"
 msgstr "The provider's terms allow saving tiles for offline use"
+
+#: src/features/export/ExportView.tsx:93
+msgid "The same points, in a folder per row."
+msgstr "The same points, in a folder per row."
 
 #: src/features/cemeteries/CemeteryTabs.tsx:50
 msgid "the stone"

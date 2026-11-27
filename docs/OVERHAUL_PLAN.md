@@ -678,6 +678,13 @@ queues, then apply. Every merge is a single undoable operation and is logged in 
 - `.sbs` (native, lossless, includes photos) and `.sbs.json` (no photos).
 - **CSV** (one row per person, with stone/position columns) for spreadsheets.
 - **GeoJSON** and **KML** for GIS / Google Earth.
+  (M5, `data/format/flat.ts`, route `cemetery/:id/export` ("Export and print", linked from
+  More). Headers and property keys are fixed English so files read the same in every
+  language; the CSV headers are ones the index import recognises, and the file starts with
+  a BOM for spreadsheet apps. CSV rows come in walking order: each person on a stone, a
+  blank-name row for a stone with nobody on it, then people on no stone. GeoJSON and KML
+  hold one point per placed stone with flat properties (arrays joined with `; `); KML puts
+  them in a folder per row.)
 - **Printable booklet** via print CSS (no heavy PDF library): title page, cemetery
   description and map, section maps, alphabetical index (surname, given, dates, location),
   per-row listings with thumbnails, transcription conventions, contributors and license.
