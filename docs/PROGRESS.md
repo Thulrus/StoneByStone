@@ -5,16 +5,21 @@ Update this file at the end of every session.
 
 ## Next session starts here
 
-**WP10 is done** (#53, #54, #56 closed; #55 code done, open for the owner). Next is **WP11**
-(#57–#60: duplicates, exports, booklet, EXIF import). WP11 ends M5, so it finishes with a
-check-in.
+**WP11 is done** (#57–#60 closed). **M5 (Corpus tools) is complete. WP12 is blocked on the
+M5 check-in**: the owner tries the items below, then unblocks WP12 (M6: packets, merge
+wizard, entity matching, cemetery aliasing).
 
-What the owner can try (cemetery header → **More**): **Progress** (status by section/row,
-"Needs revisit" checklist: print or CSV); **People** (search `smith` finds Smyth/Schmidt,
-`wm` finds William; Filters); **People → Import an index (CSV)** with a real
-historical-society export (**#55's acceptance check**: map the columns, save a preset,
-import, Undo); **Match index to stones** (Same person / On this stone / No stone found,
-Matched → Unlink, Undo from the toast).
+What the owner can try (cemetery header → **More**):
+
+- **Possible duplicates** (#57): people with alike names and dates, stones closer than 1 m
+  with alike text. Nothing is changed; "Not duplicates" hides a pair (device setting).
+- **Export and print** (#58): CSV (open it in a spreadsheet), GeoJSON, KML (**open it in
+  Google Earth**: #58's acceptance check was verified by parsing only).
+- **Export and print → Open booklet** (#59): Print or save as PDF. Try it on a real cemetery
+  with photos; the e2e only prints a 200-stone fixture without photos.
+- **Import photos** (#60): pick 100+ photos taken with the phone's own camera app; try both
+  "every photo is a stone" and "within 10 seconds", with and without a row.
+- Still open from WP10: **#55** (a real historical-society CSV through People → Import).
 
 Owner device checks still open (Android, installed app):
 
@@ -22,11 +27,28 @@ Owner device checks still open (Android, installed app):
 - **#34:** the in-app camera opens and shoots; "Phone camera" switches to the system camera
   app and back.
 - **#32 (from M2):** plat overlay on the phone (Setup → "Add a plat map or drone image").
-- New in WP7, worth trying in the field: Gap/Skip/Insert/Reverse/Reorder during a walk,
-  quick chips and quick name in the camera, "Hold still here (GPS)" and "Place relative to…"
-  on the stone sheet, the screen staying on during a walk (and sleeping after "End walk"),
-  the end-of-walk summary, Setup → "Before you go out", and the stone detail screen
-  ("All details").
+
+Notes for WP12+ (from WP11, plan §11, §13.1, §20.3):
+
+- **More sheet** (`CemeteryMore.tsx`) now has 7 pages; new cemetery pages go there too. If it
+  grows further, group the links.
+- **Flat formats:** `data/format/flat.ts` (`flatStones` = live stones with people, section,
+  row, 1-based place, in walking order; `flatName`; `peopleCsv`, `stonesGeoJson`,
+  `stonesKml`). Headers/keys are fixed English on purpose. The M7 publish bundle can reuse
+  `flatStones`.
+- **Duplicates:** `domain/duplicates.ts` (`findDuplicatePeople`, `findDuplicateStones`,
+  `pairKey`). Dismissals: `data/duplicates.ts`, settings key `duplicates:dismissed:<id>`.
+  #63 entity matching (across datasets) is a different problem but can reuse the stone text
+  similarity and `dateScore` (now exported from `domain/index-match.ts`).
+- **Booklet:** `features/booklet/` (`buildBooklet`, `planMap` → `PlanMapSvg`), loader data
+  in `data/booklet.ts` (`coverPhotos`, `namedContributors`). Print CSS is in `index.css`
+  under `.sbs-booklet`. `ConventionReference` is exported from `ConventionsDialog.tsx`.
+- **Photo import:** `domain/photo/import-plan.ts` (`planPhotoStones`), `data/photo-import.ts`
+  (`importPhotoStones`, `cemeteryPhotoHashes`), UI `features/photo-import/`.
+  `tests/fixtures/exif.ts` (`withExif`) writes Exif time + GPS into a JPEG for tests.
+- The booklet e2e writes `booklet.pdf` to its test output (Chromium only); look at it after
+  layout changes.
+- Known flaky on WebKit in Docker: walk-controls "quick chips" (flaky again this session).
 
 Notes for WP11+ (from WP10, plan §11):
 
@@ -187,27 +209,27 @@ Older notes (WP6 and earlier):
 
 Status values: `todo` · `in-progress` · `done` · `blocked: check-in`
 
-| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status      |
-| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ----------- |
-| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done        |
-| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done        |
-| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done        |
-| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done        |
-| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | done        |
-| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | done        |
-| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | done        |
-| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | done        |
-| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | done        |
-| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | done        |
-| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | done        |
-| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo        |
-| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | done        |
-| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | in-progress |
-| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | todo        |
-| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo        |
-| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo        |
-| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo        |
-| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo        |
+| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status            |
+| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ----------------- |
+| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done              |
+| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done              |
+| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done              |
+| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done              |
+| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | done              |
+| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | done              |
+| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | done              |
+| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | done              |
+| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | done              |
+| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | done              |
+| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | done              |
+| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo              |
+| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | done              |
+| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | done              |
+| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | blocked: check-in |
+| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo              |
+| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo              |
+| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo              |
+| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo              |
 
 Packages that end a milestone (WP0, WP3, WP5, WP9, WP11, WP13, WP14) finish with a check-in
 before the next package starts.
@@ -237,3 +259,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-26 · WP9 · Live date/age readings with ambiguity warnings and calculated birth (#48). Name autocomplete from the cemetery's people, abbreviation-aware, <50 ms (#49). Symbols, carver, language/script, military with marker, three convention presets with in-app reference, recorded per inscription and in the README (#50). Verify pass with Ctrl+Shift+Enter, tested transitions (#51). 819 unit + 64 e2e (all 3 projects) green. M4 complete; WP10 blocked on field trial #2 (#52).
 - 2026-11-26 · M4 check-in · Owner transcribed the trial cemetery; all well. Fixed the one finding: the neighbour strip held only ±2 stones so it never scrolled (touch or wheel); it now shows the whole row, centred, with wheel scrolling. #52 closed; WP10 unblocked.
 - 2026-11-26 · WP10 · Progress dashboard with per-section/row status and a printable/CSV revisit checklist (#53). People index with MiniSearch: accent/abbreviation-aware, Soundex+D–M surnames, filters, collated order (#54). Burial-index CSV import: header guessing, column mapper with preview, presets, one-step undo; new `Source.location` (#55, open for a real society CSV). Match view: ranked stones, same person / on this stone / no stone found, unlink, all undoable (#56). Cemetery pages moved behind a More sheet. 851 unit + 78 e2e (all 3 projects) green.
+- 2026-11-26 · WP11 · Duplicate review: alike people (Soundex blocks, compatible dates) and stones <1 m with alike text, review only (#57). CSV/GeoJSON/KML exports on a new Export and print page (#58). Printable booklet: title, SVG plan maps, A–Z index, row listings with thumbnails, convention, contributors, license (#59). Bulk photo import ordered/placed by EXIF, optional grouping and row, one undo step; 121-photo e2e (#60). 873 unit + 90 e2e (all 3 projects) green. M5 complete; WP12 blocked on the M5 check-in.
