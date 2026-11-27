@@ -5,6 +5,7 @@ import { cemeteryPath } from '../../app/paths';
 import type { Cemetery, Monument, Person } from '../../domain';
 import { Button } from '../../ui/Button';
 import type { Layout } from '../cemeteries/useLayout';
+import { IndexImport } from './index-import/IndexImport';
 import { PeopleFiltersPanel } from './PeopleFiltersPanel';
 import { PersonResult } from './PersonResult';
 import { activeFilterCount, buildPeopleIndex, type PeopleFilters } from './search';
@@ -27,6 +28,7 @@ export function PeopleView({
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<PeopleFilters>({});
   const [shown, setShown] = useState(PAGE);
+  const [importing, setImporting] = useState(false);
   const index = useMemo(
     () => buildPeopleIndex(people, stones, layout.rows),
     [people, stones, layout.rows],
@@ -39,17 +41,29 @@ export function PeopleView({
 
   return (
     <div className="flex min-w-0 flex-col gap-4">
-      <div className="flex flex-col gap-1">
-        <Link to={cemeteryPath(cemetery.id)} className="text-primary underline">
-          <Trans>Back to {cemetery.name}</Trans>
-        </Link>
-        <h1 className="text-2xl font-bold">
-          <Trans>People</Trans>
-        </h1>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div className="flex flex-col gap-1">
+          <Link to={cemeteryPath(cemetery.id)} className="text-primary underline">
+            <Trans>Back to {cemetery.name}</Trans>
+          </Link>
+          <h1 className="text-2xl font-bold">
+            <Trans>People</Trans>
+          </h1>
+        </div>
+        {!importing ? (
+          <Button variant="secondary" onClick={() => setImporting(true)}>
+            <Trans>Import an index (CSV)</Trans>
+          </Button>
+        ) : null}
       </div>
-      {index.size === 0 ? (
+      {importing ? (
+        <IndexImport cemetery={cemetery} onDone={() => setImporting(false)} />
+      ) : index.size === 0 ? (
         <p className="text-fg-muted">
-          <Trans>No people yet. Names appear here as stones are transcribed.</Trans>
+          <Trans>
+            No people yet. Names appear here as stones are transcribed, or import a burial index
+            from a historical society.
+          </Trans>
         </p>
       ) : (
         <>

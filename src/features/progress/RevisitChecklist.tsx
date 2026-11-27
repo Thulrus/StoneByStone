@@ -9,7 +9,8 @@ import { FLAG_LABEL } from '../stones/attribute-labels';
 import { STATUS_LABEL } from '../stones/labels';
 import { StatusIcon } from '../stones/StatusIcon';
 import { useStoneLabel } from '../stones/useStoneLabel';
-import { csvLine, REVISIT_FLAG } from './progress';
+import { csvLine } from '../../data/format/csv';
+import { REVISIT_FLAG } from './progress';
 
 /**
  * Stones flagged "needs revisit", in walking order, as a field checklist (plan §11): printable,

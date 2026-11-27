@@ -2,7 +2,6 @@ import { expect, test } from 'vitest';
 import type { ID, Monument, MonumentStatus, Row, Section, Stamp } from '../../domain';
 import {
   buildProgress,
-  csvLine,
   donePercent,
   emptyCounts,
   percent,
@@ -102,10 +101,4 @@ test('the revisit list holds flagged live stones in walking order', () => {
   const gone = stone('located', 'A', { flags: ['needs-revisit'], deleted: {} as Stamp });
   const other = stone('located', 'A', { flags: ['illegible'] });
   expect(revisitList([b, gone, other, a], rows).map((m) => m.id)).toEqual([a.id, b.id]);
-});
-
-test('CSV fields are quoted only when needed', () => {
-  expect(csvLine(['Row 1', 3, undefined, 'say "hi"', 'a,b', ' x'])).toBe(
-    'Row 1,3,,"say ""hi""","a,b"," x"',
-  );
 });

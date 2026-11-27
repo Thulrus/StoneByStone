@@ -103,6 +103,21 @@
               },
               "note": {
                 "type": "string"
+              },
+              "location": {
+                "type": "object",
+                "properties": {
+                  "section": {
+                    "type": "string"
+                  },
+                  "row": {
+                    "type": "string"
+                  },
+                  "plot": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
               }
             },
             "required": ["kind"]

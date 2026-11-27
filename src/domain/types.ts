@@ -218,6 +218,14 @@ export interface Source {
   kind: SourceKind;
   ref?: string;
   note?: string;
+  /** Where the source puts the burial, as written there (an index's section / row / plot). */
+  location?: SourceLocation;
+}
+
+export interface SourceLocation {
+  section?: string;
+  row?: string;
+  plot?: string;
 }
 
 export interface Military {

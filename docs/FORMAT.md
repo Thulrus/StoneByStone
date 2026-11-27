@@ -116,6 +116,8 @@ device id>"`. Because every part is fixed width, comparing the strings orders th
 
 **Merging two copies of the same record:** for each field keep the value with the greater
 stamp (compare `hlc`, then `by`). `aliases` and `Person.sources` are merged as a set union.
+A source of kind `imported-index` (a CSV index import) has `ref` = file name and line, and
+may carry `location` (`section`, `row`, `plot`: the burial's place as the index writes it).
 The deletion stamp is the greater of the two.
 
 ### Monuments and status

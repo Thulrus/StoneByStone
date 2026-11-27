@@ -27,6 +27,7 @@ msgstr "(new stones go before stone 1)"
 msgid "(no name yet)"
 msgstr "(no name yet)"
 
+#: src/features/people/index-import/PeoplePreview.tsx:38
 #: src/features/people/PersonResult.tsx:27
 msgid "(no name)"
 msgstr "(no name)"
@@ -34,6 +35,11 @@ msgstr "(no name)"
 #: src/features/capture/walk/RowOrderDialogs.tsx:106
 msgid "(skipped)"
 msgstr "(skipped)"
+
+#. placeholder {0}: people.length - SHOWN
+#: src/features/people/index-import/PeoplePreview.tsx:52
+msgid "{0, plural, one {…and # more} other {…and # more}}"
+msgstr "{0, plural, one {…and # more} other {…and # more}}"
 
 #. placeholder {0}: age.d
 #: src/features/transcribe/date-preview.ts:101
@@ -60,6 +66,16 @@ msgstr "{0, plural, one {# photo} other {# photos}}"
 msgid "{0, plural, one {# place} other {# places}}"
 msgstr "{0, plural, one {# place} other {# places}}"
 
+#. placeholder {0}: skipped.length
+#: src/features/people/index-import/PeoplePreview.tsx:58
+msgid "{0, plural, one {# row has no name and will be skipped (line {lines}).} other {# rows have no name and will be skipped (lines {lines}).}}"
+msgstr "{0, plural, one {# row has no name and will be skipped (line {lines}).} other {# rows have no name and will be skipped (lines {lines}).}}"
+
+#. placeholder {0}: dataRows.length
+#: src/features/people/index-import/IndexImport.tsx:151
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {# row} other {# rows}}"
+
 #. placeholder {0}: s.skipped
 #: src/features/capture/walk/WalkSummary.tsx:57
 msgid "{0, plural, one {# skipped (flagged to revisit)} other {# skipped (flagged to revisit)}}"
@@ -80,7 +96,7 @@ msgstr "{0, plural, one {# stone is not backed up} other {# stones are not backe
 #. placeholder {0}: stones.length
 #: src/features/cemeteries/CemeteryList.tsx:32
 #: src/features/progress/ProgressView.tsx:59
-#: src/features/progress/RevisitChecklist.tsx:60
+#: src/features/progress/RevisitChecklist.tsx:61
 msgid "{0, plural, one {# stone} other {# stones}}"
 msgstr "{0, plural, one {# stone} other {# stones}}"
 
@@ -94,10 +110,20 @@ msgstr "{0, plural, one {# year} other {# years}}"
 msgid "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
 msgstr "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
 
+#. placeholder {0}: result.people.length
+#: src/features/people/index-import/IndexImport.tsx:169
+msgid "{0, plural, one {Import # person} other {Import # people}}"
+msgstr "{0, plural, one {Import # person} other {Import # people}}"
+
 #. placeholder {0}: c.id
 #: src/features/transcribe/ConventionsDialog.tsx:102
 msgid "{0}"
 msgstr "{0}"
+
+#. placeholder {0}: f.name
+#: src/features/people/index-import/IndexImport.tsx:70
+msgid "{0} has no rows"
+msgstr "{0} has no rows"
 
 #. placeholder {0}: Math.round(c.distanceM)
 #: src/features/cemeteries/create/PlaceFinder.tsx:108
@@ -149,6 +175,10 @@ msgstr "{n} file(s) written to the folder “{0}”."
 #: src/features/capture/HoldStill.tsx:81
 msgid "{n} fixes, about ±{0} m so far"
 msgstr "{n} fixes, about ±{0} m so far"
+
+#: src/features/people/index-import/IndexImport.tsx:100
+msgid "{n} people added, not yet matched to stones."
+msgstr "{n} people added, not yet matched to stones."
 
 #: src/app/pages/SettingsPage.tsx:50
 msgid "{n} seconds"
@@ -203,11 +233,11 @@ msgstr "{start} (calculated)"
 msgid "{stones, plural, one {# stone} other {# stones}}"
 msgstr "{stones, plural, one {# stone} other {# stones}}"
 
-#: src/features/people/PeopleView.tsx:83
+#: src/features/people/PeopleView.tsx:97
 msgid "{total, plural, one {# person found} other {# people found}}"
 msgstr "{total, plural, one {# person found} other {# people found}}"
 
-#: src/features/people/PeopleView.tsx:85
+#: src/features/people/PeopleView.tsx:99
 msgid "{total, plural, one {# person} other {# people}}"
 msgstr "{total, plural, one {# person} other {# people}}"
 
@@ -226,6 +256,18 @@ msgstr "1200 px (smallest files)"
 #: src/features/settings/CemeteryDefaultsForm.tsx:18
 msgid "1600 px (recommended)"
 msgstr "1600 px (recommended)"
+
+#: src/features/people/index-import/ImportOptions.tsx:74
+msgid "3 April (day first)"
+msgstr "3 April (day first)"
+
+#: src/features/people/index-import/ImportOptions.tsx:73
+msgid "4 March (month first)"
+msgstr "4 March (month first)"
+
+#: src/features/people/index-import/IndexImport.tsx:132
+msgid "A list of burials from a historical society, a church register or a card file, saved as CSV from a spreadsheet. Each row becomes a person with no stone yet; match them to stones later. Rows left over may be unmarked or lost graves."
+msgstr "A list of burials from a historical society, a church register or a card file, saved as CSV from a spreadsheet. Each row becomes a person with no stone yet; match them to stones later. Rows left over may be unmarked or lost graves."
 
 #: src/features/stones/detail/labels.ts:10
 msgid "a nearby stone or landmark"
@@ -331,6 +373,7 @@ msgstr "After a letter or word you're unsure of (Ctrl+.)"
 msgid "After stone {0}"
 msgstr "After stone {0}"
 
+#: src/features/people/index-import/field-labels.ts:17
 #: src/features/transcribe/PersonFields.tsx:50
 msgid "Age"
 msgstr "Age"
@@ -403,7 +446,7 @@ msgid "Back along the row"
 msgstr "Back along the row"
 
 #. placeholder {0}: cemetery.name
-#: src/features/people/PeopleView.tsx:44
+#: src/features/people/PeopleView.tsx:47
 #: src/features/progress/ProgressView.tsx:44
 #: src/features/stones/detail/StoneDetail.tsx:54
 #: src/features/transcribe/TranscribeView.tsx:129
@@ -490,6 +533,7 @@ msgstr "between {start} and {end}"
 msgid "Black point"
 msgstr "Black point"
 
+#: src/features/people/index-import/field-labels.ts:14
 #: src/features/transcribe/PersonFields.tsx:48
 msgid "Born"
 msgstr "Born"
@@ -538,6 +582,10 @@ msgstr "Building"
 msgid "Built"
 msgstr "Built"
 
+#: src/features/people/index-import/field-labels.ts:16
+msgid "Buried"
+msgstr "Buried"
+
 #: src/features/progress/ProgressView.tsx:79
 msgid "By section and row"
 msgstr "By section and row"
@@ -568,6 +616,8 @@ msgstr "Can't check:"
 #: src/features/map/OfflinePanel.tsx:109
 #: src/features/map/RowDrawer.tsx:76
 #: src/features/overlays/PinPanel.tsx:68
+#: src/features/people/index-import/IndexImport.tsx:143
+#: src/features/people/index-import/IndexImport.tsx:181
 #: src/features/stones/PlaceOnMap.tsx:39
 msgid "Cancel"
 msgstr "Cancel"
@@ -638,6 +688,18 @@ msgstr "Cherub"
 msgid "Child"
 msgstr "Child"
 
+#: src/features/people/index-import/IndexImport.tsx:140
+msgid "Choose a CSV file"
+msgstr "Choose a CSV file"
+
+#: src/features/people/index-import/IndexImport.tsx:178
+msgid "Choose another file"
+msgstr "Choose another file"
+
+#: src/features/people/index-import/ImportOptions.tsx:90
+msgid "Choose…"
+msgstr "Choose…"
+
 #: src/features/transcribe/MilitaryFields.tsx:59
 msgid "Civil War (Confederate)"
 msgstr "Civil War (Confederate)"
@@ -665,6 +727,15 @@ msgstr "Close camera"
 #: src/features/transcribe/MilitaryFields.tsx:43
 msgid "Co. B, 12th Vt. Inf."
 msgstr "Co. B, 12th Vt. Inf."
+
+#. placeholder {0}: i + 1
+#: src/features/people/index-import/IndexImport.tsx:46
+msgid "Column {0}"
+msgstr "Column {0}"
+
+#: src/features/people/index-import/ColumnMapper.tsx:35
+msgid "Column {column}"
+msgstr "Column {column}"
 
 #: src/features/stones/attribute-labels.ts:40
 msgid "Concrete"
@@ -695,8 +766,10 @@ msgstr "Contrast"
 msgid "Conventions"
 msgstr "Conventions"
 
+#. placeholder {0}: file.fileName
 #. placeholder {0}: file.name
 #: src/features/cemeteries/ImportButton.tsx:36
+#: src/features/people/index-import/IndexImport.tsx:105
 msgid "Could not import {0}"
 msgstr "Could not import {0}"
 
@@ -776,6 +849,10 @@ msgstr "Data protected from browser clean-up"
 msgid "dataset alignment"
 msgstr "dataset alignment"
 
+#: src/features/people/index-import/ImportOptions.tsx:66
+msgid "Dates like 3/4/1890 mean"
+msgstr "Dates like 3/4/1890 mean"
+
 #: src/features/transcribe/date-preview.ts:90
 msgid "Day and month could be the other way round ({other}). Read using this cemetery's date order."
 msgstr "Day and month could be the other way round ({other}). Read using this cemetery's date order."
@@ -853,6 +930,7 @@ msgstr "Details"
 msgid "Diagram"
 msgstr "Diagram"
 
+#: src/features/people/index-import/field-labels.ts:15
 #: src/features/transcribe/PersonFields.tsx:49
 msgid "Died"
 msgstr "Died"
@@ -865,8 +943,12 @@ msgstr "Died from (year)"
 msgid "Dismiss"
 msgstr "Dismiss"
 
+#: src/features/people/index-import/field-labels.ts:6
+msgid "Don't import"
+msgstr "Don't import"
+
 #: src/features/capture/walk/WalkSummary.tsx:41
-#: src/features/progress/RevisitChecklist.tsx:44
+#: src/features/progress/RevisitChecklist.tsx:45
 msgid "Done"
 msgstr "Done"
 
@@ -882,7 +964,7 @@ msgstr "Dove"
 msgid "Download again"
 msgstr "Download again"
 
-#: src/features/progress/RevisitChecklist.tsx:69
+#: src/features/progress/RevisitChecklist.tsx:70
 msgid "Download checklist (CSV)"
 msgstr "Download checklist (CSV)"
 
@@ -930,7 +1012,11 @@ msgstr "dual dated {dual}, new-style year {year}"
 msgid "E"
 msgstr "E"
 
-#: src/features/people/PeopleView.tsx:68
+#: src/features/people/index-import/ImportOptions.tsx:113
+msgid "e.g. County historical society"
+msgstr "e.g. County historical society"
+
+#: src/features/people/PeopleView.tsx:82
 msgid "e.g. Smith, Wm Peck, blacksmith"
 msgstr "e.g. Smith, Wm Peck, blacksmith"
 
@@ -1048,6 +1134,10 @@ msgstr "Find by name"
 msgid "First row"
 msgstr "First row"
 
+#: src/features/people/index-import/ImportOptions.tsx:62
+msgid "First row is column names"
+msgstr "First row is column names"
+
 #: src/features/transcribe/viewer/PhotoViewer.tsx:132
 msgid "Fit"
 msgstr "Fit"
@@ -1057,7 +1147,7 @@ msgid "Flag holder"
 msgstr "Flag holder"
 
 #: src/features/capture/walk/QuickTray.tsx:32
-#: src/features/progress/RevisitChecklist.tsx:44
+#: src/features/progress/RevisitChecklist.tsx:45
 #: src/features/stones/detail/AttributesSection.tsx:25
 msgid "Flags"
 msgstr "Flags"
@@ -1114,6 +1204,10 @@ msgstr "Front"
 msgid "ft"
 msgstr "ft"
 
+#: src/features/people/index-import/field-labels.ts:7
+msgid "Full name"
+msgstr "Full name"
+
 #: src/features/stones/RelativePlacer.tsx:171
 msgid "Further along the row"
 msgstr "Further along the row"
@@ -1140,6 +1234,10 @@ msgstr "Gate"
 #: src/features/cemeteries/create/PlaceFinder.tsx:84
 msgid "Getting your location…"
 msgstr "Getting your location…"
+
+#: src/features/people/index-import/field-labels.ts:9
+msgid "Given name(s)"
+msgstr "Given name(s)"
 
 #: src/features/transcribe/NeighbourStrip.tsx:91
 msgid "Go to {label}"
@@ -1188,7 +1286,7 @@ msgid "Grid row {0}, column {1}"
 msgstr "Grid row {0}, column {1}"
 
 #: src/features/overlays/GridPicker.tsx:34
-#: src/features/progress/RevisitChecklist.tsx:34
+#: src/features/progress/RevisitChecklist.tsx:35
 msgid "Grid row {row}, column {col}"
 msgstr "Grid row {row}, column {col}"
 
@@ -1258,12 +1356,27 @@ msgstr "Imagery"
 msgid "Import"
 msgstr "Import"
 
+#. placeholder {0}: file.fileName
+#: src/features/people/index-import/IndexImport.tsx:97
+msgid "Import {0}"
+msgstr "Import {0}"
+
+#: src/features/people/index-import/IndexImport.tsx:114
+msgid "Import a burial index"
+msgstr "Import a burial index"
+
+#: src/features/people/PeopleView.tsx:55
+msgid "Import an index (CSV)"
+msgstr "Import an index (CSV)"
+
 #: src/features/stones/detail/labels.ts:22
 msgid "Imported"
 msgstr "Imported"
 
+#. placeholder {0}: file.fileName
 #. placeholder {0}: file.name
 #: src/features/cemeteries/ImportButton.tsx:28
+#: src/features/people/index-import/IndexImport.tsx:99
 msgid "Imported {0}"
 msgstr "Imported {0}"
 
@@ -1437,6 +1550,10 @@ msgstr "m"
 msgid "Made {n} rows from the grid"
 msgstr "Made {n} rows from the grid"
 
+#: src/features/people/index-import/field-labels.ts:12
+msgid "Maiden / birth surname"
+msgstr "Maiden / birth surname"
+
 #: src/app/Layout.tsx:68
 #: src/app/Layout.tsx:82
 msgid "Main"
@@ -1510,6 +1627,11 @@ msgstr "Metres"
 msgid "Mexican–American War"
 msgstr "Mexican–American War"
 
+#: src/features/people/index-import/field-labels.ts:10
+msgid "Middle name(s)"
+msgstr "Middle name(s)"
+
+#: src/features/people/index-import/field-labels.ts:23
 #: src/features/transcribe/MilitaryFields.tsx:26
 msgid "Military service"
 msgstr "Military service"
@@ -1593,7 +1715,7 @@ msgstr "needs an API key"
 msgid "Needs attention:"
 msgstr "Needs attention:"
 
-#: src/features/progress/RevisitChecklist.tsx:58
+#: src/features/progress/RevisitChecklist.tsx:59
 #: src/features/stones/attribute-labels.ts:60
 msgid "Needs revisit"
 msgstr "Needs revisit"
@@ -1632,13 +1754,17 @@ msgstr "No GPS fixes came in. Check that location is on, then try again."
 msgid "no line"
 msgstr "no line"
 
+#: src/features/people/index-import/PeoplePreview.tsx:20
+msgid "No names yet. Mark the column (or columns) that hold names."
+msgstr "No names yet. Mark the column (or columns) that hold names."
+
 #: src/features/people/LinkPersonDialog.tsx:68
 msgid "No one else to link to yet."
 msgstr "No one else to link to yet."
 
-#: src/features/people/PeopleView.tsx:52
-msgid "No people yet. Names appear here as stones are transcribed."
-msgstr "No people yet. Names appear here as stones are transcribed."
+#: src/features/people/PeopleView.tsx:63
+msgid "No people yet. Names appear here as stones are transcribed, or import a burial index from a historical society."
+msgstr "No people yet. Names appear here as stones are transcribed, or import a burial index from a historical society."
 
 #: src/features/transcribe/PhotoPane.tsx:43
 msgid "No photo of this stone yet."
@@ -1718,7 +1844,8 @@ msgstr "Not set"
 msgid "not tagged as a cemetery"
 msgstr "not tagged as a cemetery"
 
-#: src/features/progress/RevisitChecklist.tsx:44
+#: src/features/people/index-import/field-labels.ts:25
+#: src/features/progress/RevisitChecklist.tsx:45
 msgid "Notes"
 msgstr "Notes"
 
@@ -1735,7 +1862,11 @@ msgstr "Nothing has been changed. Details: {0}"
 msgid "Nothing nearby is placed yet. Place a stone or a landmark first."
 msgstr "Nothing nearby is placed yet. Place a stone or a landmark first."
 
-#: src/features/progress/RevisitChecklist.tsx:76
+#: src/features/people/index-import/IndexImport.tsx:174
+msgid "Nothing to import"
+msgstr "Nothing to import"
+
+#: src/features/progress/RevisitChecklist.tsx:77
 msgid "Nothing to revisit. Stones you skip on a walk, or mark \"Needs revisit\", show up here."
 msgstr "Nothing to revisit. Stones you skip on a walk, or mark \"Needs revisit\", show up here."
 
@@ -1762,6 +1893,10 @@ msgstr "NW"
 #: src/features/stones/attribute-labels.ts:16
 msgid "Obelisk"
 msgstr "Obelisk"
+
+#: src/features/people/index-import/field-labels.ts:24
+msgid "Occupation"
+msgstr "Occupation"
 
 #: src/features/stones/attribute-labels.ts:100
 msgid "Odd Fellows three links"
@@ -1852,8 +1987,8 @@ msgstr "Pedestal / die-on-base"
 
 #: src/features/cemeteries/CemeteryMore.tsx:24
 #: src/features/people/LinkPersonDialog.tsx:71
-#: src/features/people/PeopleView.tsx:47
-#: src/features/people/PeopleView.tsx:88
+#: src/features/people/PeopleView.tsx:50
+#: src/features/people/PeopleView.tsx:102
 #: src/features/stones/detail/PeopleSection.tsx:60
 msgid "People"
 msgstr "People"
@@ -1962,12 +2097,18 @@ msgstr "placing on the map"
 msgid "Plat maps and drone images"
 msgstr "Plat maps and drone images"
 
+#. placeholder {0}: loc.plot
 #. placeholder {0}: m.address.plotLabel
 #. placeholder {0}: stone.address.plotLabel
-#: src/features/progress/RevisitChecklist.tsx:31
+#: src/features/people/index-import/PeoplePreview.tsx:29
+#: src/features/progress/RevisitChecklist.tsx:32
 #: src/features/stones/StoneSheet.tsx:79
 msgid "Plot {0}"
 msgstr "Plot {0}"
+
+#: src/features/people/index-import/field-labels.ts:22
+msgid "Plot / lot / grave"
+msgstr "Plot / lot / grave"
 
 #: src/features/overlays/PinPanel.tsx:47
 msgid "Point {num}"
@@ -2000,11 +2141,15 @@ msgstr "Preparing…"
 msgid "Presets"
 msgstr "Presets"
 
+#: src/features/people/index-import/PeoplePreview.tsx:23
+msgid "Preview"
+msgstr "Preview"
+
 #: src/features/transcribe/TranscribeForm.tsx:242
 msgid "Previous"
 msgstr "Previous"
 
-#: src/features/progress/RevisitChecklist.tsx:66
+#: src/features/progress/RevisitChecklist.tsx:67
 msgid "Print checklist"
 msgstr "Print checklist"
 
@@ -2038,6 +2183,10 @@ msgstr "Ready to work offline"
 msgid "Ready:"
 msgstr "Ready:"
 
+#: src/features/people/index-import/field-labels.ts:26
+msgid "Record number"
+msgstr "Record number"
+
 #: src/features/settings/ContributorForm.tsx:38
 msgid "Recorded on every stone and photo you add, so merged datasets show who did what."
 msgstr "Recorded on every stone and photo you add, so merged datasets show who did what."
@@ -2045,6 +2194,10 @@ msgstr "Recorded on every stone and photo you add, so merged datasets show who d
 #: src/features/transcribe/PersonFields.tsx:51
 msgid "Relationship"
 msgstr "Relationship"
+
+#: src/features/people/index-import/field-labels.ts:19
+msgid "Relationship (wife of …)"
+msgstr "Relationship (wife of …)"
 
 #: src/app/UpdatePrompt.tsx:48
 msgid "Reload"
@@ -2126,13 +2279,16 @@ msgid "Rose / rosebud"
 msgstr "Rose / rosebud"
 
 #: src/features/capture/walk/WalkStart.tsx:86
+#: src/features/people/index-import/field-labels.ts:21
 #: src/features/progress/ProgressView.tsx:92
 #: src/features/stones/detail/AttributesSection.tsx:48
 msgid "Row"
 msgstr "Row"
 
+#. placeholder {0}: loc.row
 #. placeholder {0}: row.label
 #: src/features/cemeteries/setup/RowItem.tsx:83
+#: src/features/people/index-import/PeoplePreview.tsx:28
 msgid "Row {0}"
 msgstr "Row {0}"
 
@@ -2269,6 +2425,14 @@ msgstr "Save line"
 msgid "Save name"
 msgstr "Save name"
 
+#: src/features/people/index-import/ImportOptions.tsx:118
+msgid "Save preset"
+msgstr "Save preset"
+
+#: src/features/people/index-import/ImportOptions.tsx:108
+msgid "Save these columns as a preset"
+msgstr "Save these columns as a preset"
+
 #: src/features/settings/ContributorForm.tsx:28
 msgid "Saved"
 msgstr "Saved"
@@ -2287,6 +2451,10 @@ msgstr "Saved for offline, but {failed} tiles failed"
 #: src/features/map/OfflinePanel.tsx:121
 msgid "Saved for offline: {0} tiles, {1}, on {2}."
 msgstr "Saved for offline: {0} tiles, {1}, on {2}."
+
+#: src/features/people/index-import/ImportOptions.tsx:49
+msgid "Saved preset \"{n}\""
+msgstr "Saved preset \"{n}\""
 
 #: src/features/cemeteries/WelcomeCard.tsx:43
 msgid "Saved with every stone you record, so others can see who did the work when datasets are combined. You can change it in Settings."
@@ -2316,7 +2484,7 @@ msgstr "Search by name or place"
 msgid "Search names, dates and inscriptions"
 msgstr "Search names, dates and inscriptions"
 
-#: src/features/people/PeopleView.tsx:58
+#: src/features/people/PeopleView.tsx:72
 msgid "Search names, inscriptions and notes"
 msgstr "Search names, inscriptions and notes"
 
@@ -2325,11 +2493,14 @@ msgid "Searching OpenStreetMap…"
 msgstr "Searching OpenStreetMap…"
 
 #: src/features/cemeteries/setup/RowItem.tsx:96
+#: src/features/people/index-import/field-labels.ts:20
 #: src/features/people/PeopleFiltersPanel.tsx:72
 msgid "Section"
 msgstr "Section"
 
 #. placeholder {0}: g.section.name
+#. placeholder {0}: loc.section
+#: src/features/people/index-import/PeoplePreview.tsx:27
 #: src/features/progress/ProgressView.tsx:113
 msgid "Section {0}"
 msgstr "Section {0}"
@@ -2351,6 +2522,10 @@ msgstr "Settings"
 msgid "Setup"
 msgstr "Setup"
 
+#: src/features/people/index-import/field-labels.ts:18
+msgid "Sex"
+msgstr "Sex"
+
 #: src/features/transcribe/viewer/FilterControls.tsx:122
 msgid "Sharpen"
 msgstr "Sharpen"
@@ -2359,7 +2534,7 @@ msgstr "Sharpen"
 msgid "Show"
 msgstr "Show"
 
-#: src/features/people/PeopleView.tsx:99
+#: src/features/people/PeopleView.tsx:113
 msgid "Show more"
 msgstr "Show more"
 
@@ -2412,7 +2587,7 @@ msgstr "Start"
 msgid "Starting camera…"
 msgstr "Starting camera…"
 
-#: src/features/progress/RevisitChecklist.tsx:44
+#: src/features/progress/RevisitChecklist.tsx:45
 msgid "Status"
 msgstr "Status"
 
@@ -2428,7 +2603,7 @@ msgstr "Status key"
 msgid "stone"
 msgstr "stone"
 
-#: src/features/progress/RevisitChecklist.tsx:36
+#: src/features/progress/RevisitChecklist.tsx:37
 #: src/features/stones/detail/StoneDetail.tsx:49
 #: src/features/stones/RelativePlacer.tsx:56
 #: src/features/stones/StoneSheet.tsx:79
@@ -2502,7 +2677,7 @@ msgstr "Stones"
 msgid "Stones in order"
 msgstr "Stones in order"
 
-#: src/features/progress/RevisitChecklist.tsx:81
+#: src/features/progress/RevisitChecklist.tsx:82
 msgid "Stones to revisit"
 msgstr "Stones to revisit"
 
@@ -2543,6 +2718,10 @@ msgstr "Straighten and perspective"
 msgid "street map, online only"
 msgstr "street map, online only"
 
+#: src/features/people/index-import/field-labels.ts:13
+msgid "Suffix (Jr., Sr., …)"
+msgstr "Suffix (Jr., Sr., …)"
+
 #: src/features/stones/attribute-labels.ts:52
 msgid "Sunken"
 msgstr "Sunken"
@@ -2550,6 +2729,10 @@ msgstr "Sunken"
 #: src/app/pages/SettingsPage.tsx:18
 msgid "Sunlight (high contrast)"
 msgstr "Sunlight (high contrast)"
+
+#: src/features/people/index-import/field-labels.ts:11
+msgid "Surname"
+msgstr "Surname"
 
 #: src/features/stones/RelativePlacer.tsx:178
 msgid "SW"
@@ -2698,6 +2881,10 @@ msgstr "Tilted"
 msgid "Time to back up"
 msgstr "Time to back up"
 
+#: src/features/people/index-import/field-labels.ts:8
+msgid "Title (Mr., Rev., …)"
+msgstr "Title (Mr., Rev., …)"
+
 #: src/features/people/PeopleFiltersPanel.tsx:62
 msgid "to"
 msgstr "to"
@@ -2786,6 +2973,7 @@ msgstr "Uncertain position"
 #: src/features/overlays/ImagePinWorkspace.tsx:36
 #: src/features/overlays/OverlayLayers.tsx:66
 #: src/features/overlays/OverlaysPanel.tsx:44
+#: src/features/people/index-import/IndexImport.tsx:101
 #: src/features/people/LinkPersonDialog.tsx:46
 #: src/features/stones/detail/PhotosSection.tsx:52
 #: src/features/stones/PlaceOnMap.tsx:20
@@ -2838,6 +3026,10 @@ msgstr "Updates aren't available in this browser tab"
 #: src/features/stones/attribute-labels.ts:83
 msgid "Urn"
 msgstr "Urn"
+
+#: src/features/people/index-import/ImportOptions.tsx:80
+msgid "Use a saved preset"
+msgstr "Use a saved preset"
 
 #: src/features/capture/HoldStill.tsx:129
 msgid "Use this position"
@@ -2941,7 +3133,11 @@ msgstr "Weathered marble"
 msgid "Welcome! What’s your name?"
 msgstr "Welcome! What’s your name?"
 
-#: src/features/progress/RevisitChecklist.tsx:44
+#: src/features/people/index-import/PeoplePreview.tsx:16
+msgid "What will be imported"
+msgstr "What will be imported"
+
+#: src/features/progress/RevisitChecklist.tsx:45
 msgid "Where"
 msgstr "Where"
 

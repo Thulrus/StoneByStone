@@ -102,13 +102,3 @@ export function revisitList(stones: readonly Monument[], rows: readonly Row[]): 
     rows,
   );
 }
-
-/** One CSV field, quoted when it needs to be (RFC 4180). */
-export function csvField(v: string | number | undefined): string {
-  const s = v === undefined ? '' : String(v);
-  return /[",\r\n]/.test(s) || /^\s|\s$/.test(s) ? `"${s.replaceAll('"', '""')}"` : s;
-}
-
-export function csvLine(fields: readonly (string | number | undefined)[]): string {
-  return fields.map(csvField).join(',');
-}

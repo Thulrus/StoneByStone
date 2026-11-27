@@ -591,6 +591,13 @@ unit, `marker` for the government-issue or society marker).
   During transcription and in a dedicated **Match** view, these are matched to stones. The
   survey becomes _verify and place_ instead of _start from nothing_, and index records with
   no stone highlight probable unmarked or lost graves.
+  (M5 import: `data/format/csv.ts` reads CSV (BOM, `,` `;` or tab, quoted line breaks);
+  `data/format/index-csv.ts` guesses the column fields from headers and builds people;
+  `data/index-import.ts` writes them as one undo step and keeps presets (by folded header,
+  with header-row flag and date order) in device settings. The UI is on the People page.
+  Imported people get no `asCarved` (that is the stone's spelling), `matchStatus: unmatched`,
+  and one source `{ kind: 'imported-index', ref: '<file>, <record no. or line N>', location }`.
+  A blank Born with Died + Age becomes the calculated birth, as in desk mode.)
 - **Duplicate detection** within a dataset: same/similar name + compatible dates, or two
   stones within ~1 m with similar transcriptions. Reviewed, never auto-merged.
 - **Search:** full-text over names (normalized, abbreviation-aware, phonetic), inscriptions,
@@ -959,6 +966,8 @@ interface Person extends Stamped {
     kind: 'stone' | 'imported-index' | 'record' | 'family' | 'ai-draft' | 'other';
     ref?: string;
     note?: string;
+    /** Where the source puts the burial, as written there (index section / row / plot). */
+    location?: { section?: string; row?: string; plot?: string };
   }[];
   matchStatus?: 'unmatched' | 'matched' | 'no-stone-found';
   externalIds?: Record<string, string>;
