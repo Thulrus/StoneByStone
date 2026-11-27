@@ -62,7 +62,10 @@ export function Layout() {
         {t`Skip to content`}
       </a>
       <header className="sticky top-0 z-10 flex print:hidden items-center justify-between gap-4 bg-surface px-4 pt-[env(safe-area-inset-top)] sbs-border border-x-0 border-t-0">
-        <span className="py-3 text-lg font-bold">StoneByStone</span>
+        <span className="flex items-center gap-2 py-3 text-lg font-bold">
+          <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" className="size-7" />
+          StoneByStone
+        </span>
         <div className="flex items-center gap-2">
           <BackupIndicator />
           <nav aria-label={t`Main`} className="hidden gap-1 md:flex">

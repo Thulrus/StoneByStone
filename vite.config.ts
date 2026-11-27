@@ -32,7 +32,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'prompt',
       injectRegister: false,
-      includeAssets: ['favicon.ico', 'icon-16.png', 'icon-32.png', 'robots.txt'],
+      includeAssets: ['favicon.ico', 'icon.svg', 'apple-touch-icon.png', 'robots.txt'],
       manifest: {
         id: base,
         name: 'StoneByStone',
@@ -47,6 +47,12 @@ export default defineConfig({
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
           { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+          {
+            src: 'icon-maskable-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
         ],
       },
       workbox: {
