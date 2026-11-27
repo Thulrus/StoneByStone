@@ -34,6 +34,10 @@ export const routes: RouteObject[] = [
         lazy: async () => ({ Component: (await import('./pages/PeoplePage')).PeoplePage }),
       },
       {
+        path: 'cemetery/:cemeteryId/match',
+        lazy: async () => ({ Component: (await import('./pages/MatchPage')).MatchPage }),
+      },
+      {
         path: 'new',
         lazy: async () => ({
           Component: (await import('../features/cemeteries/create/NewCemeteryPage'))

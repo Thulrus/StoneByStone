@@ -17,3 +17,4 @@ export * from './photo/phash';
 export * from './attributes';
 export * from './relations';
 export * from './conventions';
+export * from './index-match';

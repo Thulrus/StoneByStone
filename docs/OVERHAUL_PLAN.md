@@ -598,6 +598,16 @@ unit, `marker` for the government-issue or society marker).
   Imported people get no `asCarved` (that is the stone's spelling), `matchStatus: unmatched`,
   and one source `{ kind: 'imported-index', ref: '<file>, <record no. or line N>', location }`.
   A blank Born with Died + Age becomes the calculated birth, as in desk mode.)
+  (M5 Match view, route `cemetery/:id/match`, linked from More and from People: scoring in
+  `domain/index-match.ts` (name against the stone's people or its inscription words, death
+  and birth years, index section / row / plot against the stone's; a clear date conflict
+  sinks a candidate, place alone never makes one). Writes in `data/index-match.ts`, each one
+  undo step: **Same person** merges the record into the stone's person (keeps the carved
+  name, fills blank fields, adds the source and the record's id to `aliases`, tombstones the
+  record); **On this stone** attaches the record; **No stone found** sets
+  `matchStatus: no-stone-found` (likely unmarked or lost graves). **Unlink** detaches, or
+  splits a merge back out as a new record and clears the fields the merge filled (those
+  stamped with the merge). The desk-mode matching panel (§9) is not built yet.)
 - **Duplicate detection** within a dataset: same/similar name + compatible dates, or two
   stones within ~1 m with similar transcriptions. Reviewed, never auto-merged.
 - **Search:** full-text over names (normalized, abbreviation-aware, phonetic), inscriptions,

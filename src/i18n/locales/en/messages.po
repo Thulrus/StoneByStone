@@ -28,6 +28,8 @@ msgid "(no name yet)"
 msgstr "(no name yet)"
 
 #: src/features/people/index-import/PeoplePreview.tsx:38
+#: src/features/people/match/MatchedList.tsx:40
+#: src/features/people/match/RecordCard.tsx:42
 #: src/features/people/PersonResult.tsx:27
 msgid "(no name)"
 msgstr "(no name)"
@@ -72,7 +74,7 @@ msgid "{0, plural, one {# row has no name and will be skipped (line {lines}).} o
 msgstr "{0, plural, one {# row has no name and will be skipped (line {lines}).} other {# rows have no name and will be skipped (lines {lines}).}}"
 
 #. placeholder {0}: dataRows.length
-#: src/features/people/index-import/IndexImport.tsx:151
+#: src/features/people/index-import/IndexImport.tsx:152
 msgid "{0, plural, one {# row} other {# rows}}"
 msgstr "{0, plural, one {# row} other {# rows}}"
 
@@ -111,9 +113,14 @@ msgid "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
 msgstr "{0, plural, one {Gap (# before next)} other {Gap (# before next)}}"
 
 #. placeholder {0}: result.people.length
-#: src/features/people/index-import/IndexImport.tsx:169
+#: src/features/people/index-import/IndexImport.tsx:170
 msgid "{0, plural, one {Import # person} other {Import # people}}"
 msgstr "{0, plural, one {Import # person} other {Import # people}}"
+
+#. placeholder {0}: list.length - shown
+#: src/features/people/match/MatchView.tsx:162
+msgid "{0, plural, one {Show more (# left)} other {Show more (# left)}}"
+msgstr "{0, plural, one {Show more (# left)} other {Show more (# left)}}"
 
 #. placeholder {0}: c.id
 #: src/features/transcribe/ConventionsDialog.tsx:102
@@ -176,7 +183,7 @@ msgstr "{n} file(s) written to the folder “{0}”."
 msgid "{n} fixes, about ±{0} m so far"
 msgstr "{n} fixes, about ±{0} m so far"
 
-#: src/features/people/index-import/IndexImport.tsx:100
+#: src/features/people/index-import/IndexImport.tsx:101
 msgid "{n} people added, not yet matched to stones."
 msgstr "{n} people added, not yet matched to stones."
 
@@ -233,11 +240,11 @@ msgstr "{start} (calculated)"
 msgid "{stones, plural, one {# stone} other {# stones}}"
 msgstr "{stones, plural, one {# stone} other {# stones}}"
 
-#: src/features/people/PeopleView.tsx:97
+#: src/features/people/PeopleView.tsx:115
 msgid "{total, plural, one {# person found} other {# people found}}"
 msgstr "{total, plural, one {# person found} other {# people found}}"
 
-#: src/features/people/PeopleView.tsx:99
+#: src/features/people/PeopleView.tsx:117
 msgid "{total, plural, one {# person} other {# people}}"
 msgstr "{total, plural, one {# person} other {# people}}"
 
@@ -265,7 +272,7 @@ msgstr "3 April (day first)"
 msgid "4 March (month first)"
 msgstr "4 March (month first)"
 
-#: src/features/people/index-import/IndexImport.tsx:132
+#: src/features/people/index-import/IndexImport.tsx:133
 msgid "A list of burials from a historical society, a church register or a card file, saved as CSV from a spreadsheet. Each row becomes a person with no stone yet; match them to stones later. Rows left over may be unmarked or lost graves."
 msgstr "A list of burials from a historical society, a church register or a card file, saved as CSV from a spreadsheet. Each row becomes a person with no stone yet; match them to stones later. Rows left over may be unmarked or lost graves."
 
@@ -344,6 +351,10 @@ msgstr "Add source"
 msgid "Add the rows you will walk. Sections are optional; use them if the cemetery has named or lettered areas. Draw each row's line on the map, or do it later."
 msgstr "Add the rows you will walk. Sections are optional; use them if the cemetery has named or lettered areas. Draw each row's line on the map, or do it later."
 
+#: src/features/people/match/RecordCard.tsx:134
+msgid "Add to {label} as another person"
+msgstr "Add to {label} as another person"
+
 #: src/features/overlays/OverlaysPanel.tsx:99
 msgid "Adding…"
 msgstr "Adding…"
@@ -406,6 +417,10 @@ msgstr "An update was found. Tap Reload when the banner appears."
 msgid "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
 msgstr "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
 
+#: src/features/people/match/RecordCard.tsx:136
+msgid "Another person here"
+msgstr "Another person here"
+
 #: src/features/people/PeopleFiltersPanel.tsx:78
 #: src/features/people/PeopleFiltersPanel.tsx:96
 #: src/features/people/PeopleFiltersPanel.tsx:112
@@ -445,8 +460,13 @@ msgstr "Back"
 msgid "Back along the row"
 msgstr "Back along the row"
 
+#: src/features/people/match/MatchView.tsx:61
+msgid "Back on the list"
+msgstr "Back on the list"
+
 #. placeholder {0}: cemetery.name
-#: src/features/people/PeopleView.tsx:47
+#: src/features/people/match/MatchView.tsx:92
+#: src/features/people/PeopleView.tsx:55
 #: src/features/progress/ProgressView.tsx:44
 #: src/features/stones/detail/StoneDetail.tsx:54
 #: src/features/transcribe/TranscribeView.tsx:129
@@ -586,6 +606,11 @@ msgstr "Built"
 msgid "Buried"
 msgstr "Buried"
 
+#. placeholder {0}: formatDate(p.burial)
+#: src/features/people/match/useRecordLine.ts:9
+msgid "buried {0}"
+msgstr "buried {0}"
+
 #: src/features/progress/ProgressView.tsx:79
 msgid "By section and row"
 msgstr "By section and row"
@@ -616,8 +641,8 @@ msgstr "Can't check:"
 #: src/features/map/OfflinePanel.tsx:109
 #: src/features/map/RowDrawer.tsx:76
 #: src/features/overlays/PinPanel.tsx:68
-#: src/features/people/index-import/IndexImport.tsx:143
-#: src/features/people/index-import/IndexImport.tsx:181
+#: src/features/people/index-import/IndexImport.tsx:144
+#: src/features/people/index-import/IndexImport.tsx:182
 #: src/features/stones/PlaceOnMap.tsx:39
 msgid "Cancel"
 msgstr "Cancel"
@@ -688,11 +713,11 @@ msgstr "Cherub"
 msgid "Child"
 msgstr "Child"
 
-#: src/features/people/index-import/IndexImport.tsx:140
+#: src/features/people/index-import/IndexImport.tsx:141
 msgid "Choose a CSV file"
 msgstr "Choose a CSV file"
 
-#: src/features/people/index-import/IndexImport.tsx:178
+#: src/features/people/index-import/IndexImport.tsx:179
 msgid "Choose another file"
 msgstr "Choose another file"
 
@@ -723,6 +748,10 @@ msgstr "Close"
 #: src/features/capture/Camera.tsx:96
 msgid "Close camera"
 msgstr "Close camera"
+
+#: src/features/people/match/RecordCard.tsx:97
+msgid "close year"
+msgstr "close year"
 
 #: src/features/transcribe/MilitaryFields.tsx:43
 msgid "Co. B, 12th Vt. Inf."
@@ -769,7 +798,7 @@ msgstr "Conventions"
 #. placeholder {0}: file.fileName
 #. placeholder {0}: file.name
 #: src/features/cemeteries/ImportButton.tsx:36
-#: src/features/people/index-import/IndexImport.tsx:105
+#: src/features/people/index-import/IndexImport.tsx:106
 msgid "Could not import {0}"
 msgstr "Could not import {0}"
 
@@ -801,6 +830,10 @@ msgstr "Couldn't read that image"
 #: src/features/capture/useSavePhoto.ts:61
 msgid "Couldn't read that photo"
 msgstr "Couldn't read that photo"
+
+#: src/features/people/match/MatchView.tsx:53
+msgid "Couldn't save"
+msgstr "Couldn't save"
 
 #: src/features/capture/walk/useWalkCapture.ts:137
 msgid "Couldn't save that photo"
@@ -1016,7 +1049,7 @@ msgstr "E"
 msgid "e.g. County historical society"
 msgstr "e.g. County historical society"
 
-#: src/features/people/PeopleView.tsx:82
+#: src/features/people/PeopleView.tsx:100
 msgid "e.g. Smith, Wm Peck, blacksmith"
 msgstr "e.g. Smith, Wm Peck, blacksmith"
 
@@ -1084,6 +1117,10 @@ msgstr "estimated {start}"
 #: src/features/overlays/GridActions.tsx:16
 msgid "Every grid stone is already in a row"
 msgstr "Every grid stone is already in a row"
+
+#: src/features/people/match/MatchView.tsx:127
+msgid "Every record is matched or set aside."
+msgstr "Every record is matched or set aside."
 
 #: src/features/transcribe/ConventionsDialog.tsx:107
 msgid "Exports say which convention was used. Changing it doesn't rewrite inscriptions already typed."
@@ -1357,15 +1394,15 @@ msgid "Import"
 msgstr "Import"
 
 #. placeholder {0}: file.fileName
-#: src/features/people/index-import/IndexImport.tsx:97
+#: src/features/people/index-import/IndexImport.tsx:98
 msgid "Import {0}"
 msgstr "Import {0}"
 
-#: src/features/people/index-import/IndexImport.tsx:114
+#: src/features/people/index-import/IndexImport.tsx:115
 msgid "Import a burial index"
 msgstr "Import a burial index"
 
-#: src/features/people/PeopleView.tsx:55
+#: src/features/people/PeopleView.tsx:72
 msgid "Import an index (CSV)"
 msgstr "Import an index (CSV)"
 
@@ -1376,7 +1413,7 @@ msgstr "Imported"
 #. placeholder {0}: file.fileName
 #. placeholder {0}: file.name
 #: src/features/cemeteries/ImportButton.tsx:28
-#: src/features/people/index-import/IndexImport.tsx:99
+#: src/features/people/index-import/IndexImport.tsx:100
 msgid "Imported {0}"
 msgstr "Imported {0}"
 
@@ -1510,6 +1547,10 @@ msgstr "Light"
 msgid "Light from (degrees)"
 msgstr "Light from (degrees)"
 
+#: src/features/people/match/RecordCard.tsx:59
+msgid "Likely stones for {name}"
+msgstr "Likely stones for {name}"
+
 #: src/features/stones/attribute-labels.ts:36
 msgid "Limestone"
 msgstr "Limestone"
@@ -1517,6 +1558,10 @@ msgstr "Limestone"
 #: src/features/people/LinkPersonDialog.tsx:52
 msgid "Link {who} to…"
 msgstr "Link {who} to…"
+
+#: src/features/cemeteries/CemeteryMore.tsx:26
+msgid "Link an imported burial index to stones"
+msgstr "Link an imported burial index to stones"
 
 #: src/features/transcribe/PersonFields.tsx:57
 msgid "Link to a person…"
@@ -1541,6 +1586,10 @@ msgstr "Local contrast"
 #: src/features/stones/labels.ts:6
 msgid "Located"
 msgstr "Located"
+
+#: src/features/people/match/RecordCard.tsx:51
+msgid "Look for a stone again"
+msgstr "Look for a stone again"
 
 #: src/features/stones/RelativePlacer.tsx:79
 msgid "m"
@@ -1608,6 +1657,30 @@ msgstr "Masonic square and compass"
 #: src/app/pages/SettingsPage.tsx:22
 msgid "Match device"
 msgstr "Match device"
+
+#: src/features/cemeteries/CemeteryMore.tsx:27
+#: src/features/people/match/MatchView.tsx:95
+msgid "Match index to stones"
+msgstr "Match index to stones"
+
+#: src/features/people/PeopleView.tsx:68
+msgid "Match to stones ({toMatch})"
+msgstr "Match to stones ({toMatch})"
+
+#. placeholder {0}: matched.length
+#: src/features/people/match/MatchView.tsx:113
+msgid "Matched ({0})"
+msgstr "Matched ({0})"
+
+#. placeholder {0}: personName(r)
+#: src/features/people/match/MatchView.tsx:57
+#: src/features/people/match/MatchView.tsx:59
+msgid "Matched {0}"
+msgstr "Matched {0}"
+
+#: src/features/people/match/MatchedList.tsx:37
+msgid "Matched records"
+msgstr "Matched records"
 
 #: src/features/capture/walk/QuickTray.tsx:30
 #: src/features/people/PeopleFiltersPanel.tsx:122
@@ -1750,6 +1823,14 @@ msgstr "No cemeteries on this device yet. Create one, or import a file."
 msgid "No GPS fixes came in. Check that location is on, then try again."
 msgstr "No GPS fixes came in. Check that location is on, then try again."
 
+#: src/features/people/match/MatchView.tsx:100
+msgid "No index records yet. Import a burial index on the <0>People</0> page, then match its records to stones here."
+msgstr "No index records yet. Import a burial index on the <0>People</0> page, then match its records to stones here."
+
+#: src/features/people/match/RecordCard.tsx:56
+msgid "No likely stone yet. It may be an unmarked or lost grave."
+msgstr "No likely stone yet. It may be an unmarked or lost grave."
+
 #: src/features/cemeteries/setup/RowItem.tsx:53
 msgid "no line"
 msgstr "no line"
@@ -1762,7 +1843,11 @@ msgstr "No names yet. Mark the column (or columns) that hold names."
 msgid "No one else to link to yet."
 msgstr "No one else to link to yet."
 
-#: src/features/people/PeopleView.tsx:63
+#: src/features/people/match/RecordCard.tsx:119
+msgid "No one entered on this stone yet"
+msgstr "No one entered on this stone yet"
+
+#: src/features/people/PeopleView.tsx:81
 msgid "No people yet. Names appear here as stones are transcribed, or import a burial index from a historical society."
 msgstr "No people yet. Names appear here as stones are transcribed, or import a burial index from a historical society."
 
@@ -1773,6 +1858,10 @@ msgstr "No photo of this stone yet."
 #: src/features/transcribe/FilterSelect.tsx:8
 msgid "No photo yet"
 msgstr "No photo yet"
+
+#: src/features/people/match/MatchView.tsx:129
+msgid "No records set aside."
+msgstr "No records set aside."
 
 #: src/features/stones/detail/AttributesSection.tsx:55
 msgid "No row"
@@ -1799,6 +1888,15 @@ msgstr "No section"
 #: src/features/people/PersonResult.tsx:56
 msgid "No stone (index record)"
 msgstr "No stone (index record)"
+
+#: src/features/people/match/RecordCard.tsx:51
+msgid "No stone found"
+msgstr "No stone found"
+
+#. placeholder {0}: noStone.length
+#: src/features/people/match/MatchView.tsx:112
+msgid "No stone found ({0})"
+msgstr "No stone found ({0})"
 
 #: src/features/transcribe/TranscribeView.tsx:142
 msgid "No stones in this list. Choose another list above."
@@ -1858,11 +1956,15 @@ msgstr "Nothing found. Try another search, or drop a pin."
 msgid "Nothing has been changed. Details: {0}"
 msgstr "Nothing has been changed. Details: {0}"
 
+#: src/features/people/match/MatchedList.tsx:32
+msgid "Nothing matched yet."
+msgstr "Nothing matched yet."
+
 #: src/features/stones/RelativePlacer.tsx:108
 msgid "Nothing nearby is placed yet. Place a stone or a landmark first."
 msgstr "Nothing nearby is placed yet. Place a stone or a landmark first."
 
-#: src/features/people/index-import/IndexImport.tsx:174
+#: src/features/people/index-import/IndexImport.tsx:175
 msgid "Nothing to import"
 msgstr "Nothing to import"
 
@@ -1922,6 +2024,10 @@ msgstr "on map"
 #: src/features/overlays/OverlaysPanel.tsx:66
 msgid "On the map, average error {0} m"
 msgstr "On the map, average error {0} m"
+
+#: src/features/people/match/RecordCard.tsx:136
+msgid "On this stone"
+msgstr "On this stone"
 
 #: src/features/transcribe/ConventionsDialog.tsx:13
 msgid "One line, \" / \" between carved lines"
@@ -1987,8 +2093,8 @@ msgstr "Pedestal / die-on-base"
 
 #: src/features/cemeteries/CemeteryMore.tsx:24
 #: src/features/people/LinkPersonDialog.tsx:71
-#: src/features/people/PeopleView.tsx:50
-#: src/features/people/PeopleView.tsx:102
+#: src/features/people/PeopleView.tsx:58
+#: src/features/people/PeopleView.tsx:120
 #: src/features/stones/detail/PeopleSection.tsx:60
 msgid "People"
 msgstr "People"
@@ -2067,6 +2173,10 @@ msgstr "Place grid on map"
 msgid "Place on the map"
 msgstr "Place on the map"
 
+#: src/features/people/match/RecordCard.tsx:99
+msgid "place partly agrees"
+msgstr "place partly agrees"
+
 #: src/features/stones/detail/PositionSection.tsx:62
 #: src/features/stones/RelativePlacer.tsx:99
 #: src/features/stones/StoneSheet.tsx:118
@@ -2101,6 +2211,7 @@ msgstr "Plat maps and drone images"
 #. placeholder {0}: m.address.plotLabel
 #. placeholder {0}: stone.address.plotLabel
 #: src/features/people/index-import/PeoplePreview.tsx:29
+#: src/features/people/match/useRecordLine.ts:14
 #: src/features/progress/RevisitChecklist.tsx:32
 #: src/features/stones/StoneSheet.tsx:79
 msgid "Plot {0}"
@@ -2153,7 +2264,7 @@ msgstr "Previous"
 msgid "Print checklist"
 msgstr "Print checklist"
 
-#: src/features/cemeteries/CemeteryMore.tsx:27
+#: src/features/cemeteries/CemeteryMore.tsx:30
 #: src/features/progress/ProgressView.tsx:47
 msgid "Progress"
 msgstr "Progress"
@@ -2161,6 +2272,10 @@ msgstr "Progress"
 #: src/features/cemeteries/FieldChecklist.tsx:153
 msgid "Protect data"
 msgstr "Protect data"
+
+#: src/features/people/match/RecordCard.tsx:134
+msgid "Put on {label}"
+msgstr "Put on {label}"
 
 #: src/features/transcribe/MilitaryFields.tsx:37
 msgid "Pvt., Capt."
@@ -2190,6 +2305,14 @@ msgstr "Record number"
 #: src/features/settings/ContributorForm.tsx:38
 msgid "Recorded on every stone and photo you add, so merged datasets show who did what."
 msgstr "Recorded on every stone and photo you add, so merged datasets show who did what."
+
+#: src/features/people/match/MatchView.tsx:110
+msgid "Records"
+msgstr "Records"
+
+#: src/features/people/match/MatchView.tsx:136
+msgid "Records with no stone found: likely unmarked or lost graves. They stay in the People index."
+msgstr "Records with no stone found: likely unmarked or lost graves. They stay in the People index."
 
 #: src/features/transcribe/PersonFields.tsx:51
 msgid "Relationship"
@@ -2289,6 +2412,7 @@ msgstr "Row"
 #. placeholder {0}: row.label
 #: src/features/cemeteries/setup/RowItem.tsx:83
 #: src/features/people/index-import/PeoplePreview.tsx:28
+#: src/features/people/match/useRecordLine.ts:13
 msgid "Row {0}"
 msgstr "Row {0}"
 
@@ -2392,9 +2516,29 @@ msgstr "Rows without a section"
 msgid "S"
 msgstr "S"
 
+#: src/features/people/match/RecordCard.tsx:94
+msgid "same name"
+msgstr "same name"
+
+#: src/features/people/match/RecordCard.tsx:127
+msgid "Same person"
+msgstr "Same person"
+
+#: src/features/people/match/MatchedList.tsx:60
+msgid "same person as {on}"
+msgstr "same person as {on}"
+
+#: src/features/people/match/RecordCard.tsx:98
+msgid "same place"
+msgstr "same place"
+
 #: src/features/capture/walk/QuickName.tsx:59
 msgid "Same surname: {lastSurname}"
 msgstr "Same surname: {lastSurname}"
+
+#: src/features/people/match/RecordCard.tsx:96
+msgid "same year"
+msgstr "same year"
 
 #: src/features/stones/attribute-labels.ts:34
 msgid "Sandstone"
@@ -2425,7 +2569,7 @@ msgstr "Save line"
 msgid "Save name"
 msgstr "Save name"
 
-#: src/features/people/index-import/ImportOptions.tsx:118
+#: src/features/people/index-import/ImportOptions.tsx:123
 msgid "Save preset"
 msgstr "Save preset"
 
@@ -2484,7 +2628,7 @@ msgstr "Search by name or place"
 msgid "Search names, dates and inscriptions"
 msgstr "Search names, dates and inscriptions"
 
-#: src/features/people/PeopleView.tsx:72
+#: src/features/people/PeopleView.tsx:90
 msgid "Search names, inscriptions and notes"
 msgstr "Search names, inscriptions and notes"
 
@@ -2501,6 +2645,7 @@ msgstr "Section"
 #. placeholder {0}: g.section.name
 #. placeholder {0}: loc.section
 #: src/features/people/index-import/PeoplePreview.tsx:27
+#: src/features/people/match/useRecordLine.ts:12
 #: src/features/progress/ProgressView.tsx:113
 msgid "Section {0}"
 msgstr "Section {0}"
@@ -2508,6 +2653,11 @@ msgstr "Section {0}"
 #: src/features/cemeteries/setup/SectionBlock.tsx:99
 msgid "Section name"
 msgstr "Section name"
+
+#. placeholder {0}: personName(r)
+#: src/features/people/match/MatchView.tsx:61
+msgid "Set aside {0}"
+msgstr "Set aside {0}"
 
 #: src/features/map/OfflinePanel.tsx:95
 msgid "Set the cemetery's location or draw a row line first."
@@ -2534,7 +2684,7 @@ msgstr "Sharpen"
 msgid "Show"
 msgstr "Show"
 
-#: src/features/people/PeopleView.tsx:113
+#: src/features/people/PeopleView.tsx:131
 msgid "Show more"
 msgstr "Show more"
 
@@ -2545,6 +2695,10 @@ msgstr "Shown on the map. Check the provider's terms."
 #: src/features/people/relation-labels.ts:10
 msgid "Sibling"
 msgstr "Sibling"
+
+#: src/features/people/match/RecordCard.tsx:95
+msgid "similar name"
+msgstr "similar name"
 
 #: src/features/capture/walk/WalkCamera.tsx:133
 #: src/features/capture/walk/WalkPanel.tsx:136
@@ -2591,7 +2745,7 @@ msgstr "Starting camera…"
 msgid "Status"
 msgstr "Status"
 
-#: src/features/cemeteries/CemeteryMore.tsx:26
+#: src/features/cemeteries/CemeteryMore.tsx:29
 msgid "Status by row, and what to revisit"
 msgstr "Status by row, and what to revisit"
 
@@ -2889,6 +3043,11 @@ msgstr "Title (Mr., Rev., …)"
 msgid "to"
 msgstr "to"
 
+#. placeholder {0}: toMatch.length
+#: src/features/people/match/MatchView.tsx:111
+msgid "To match ({0})"
+msgstr "To match ({0})"
+
 #: src/features/transcribe/viewer/FilterControls.tsx:98
 msgid "Tone"
 msgstr "Tone"
@@ -2973,8 +3132,9 @@ msgstr "Uncertain position"
 #: src/features/overlays/ImagePinWorkspace.tsx:36
 #: src/features/overlays/OverlayLayers.tsx:66
 #: src/features/overlays/OverlaysPanel.tsx:44
-#: src/features/people/index-import/IndexImport.tsx:101
+#: src/features/people/index-import/IndexImport.tsx:102
 #: src/features/people/LinkPersonDialog.tsx:46
+#: src/features/people/match/MatchView.tsx:51
 #: src/features/stones/detail/PhotosSection.tsx:52
 #: src/features/stones/PlaceOnMap.tsx:20
 #: src/features/stones/RelativePlacer.tsx:75
@@ -2999,6 +3159,7 @@ msgstr "Units"
 msgid "Units and photo quality apply to cemeteries you create from now on."
 msgstr "Units and photo quality apply to cemeteries you create from now on."
 
+#: src/features/people/match/MatchedList.tsx:66
 #: src/features/people/RelationsList.tsx:46
 msgid "Unlink"
 msgstr "Unlink"
@@ -3006,6 +3167,11 @@ msgstr "Unlink"
 #: src/features/people/RelationsList.tsx:43
 msgid "Unlink {name}"
 msgstr "Unlink {name}"
+
+#. placeholder {0}: personName(item.record)
+#: src/features/people/match/MatchView.tsx:66
+msgid "Unlinked {0}"
+msgstr "Unlinked {0}"
 
 #: src/features/transcribe/VerifyBar.tsx:26
 msgid "Unmark verified"

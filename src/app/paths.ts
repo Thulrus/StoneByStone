@@ -24,3 +24,8 @@ export function progressPath(cemeteryId: string): string {
 export function peoplePath(cemeteryId: string): string {
   return `${cemeteryPath(cemeteryId)}/people`;
 }
+
+/** Link target for matching imported index records to stones. */
+export function matchPath(cemeteryId: string): string {
+  return `${cemeteryPath(cemeteryId)}/match`;
+}

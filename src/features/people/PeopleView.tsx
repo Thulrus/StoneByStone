@@ -1,8 +1,8 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useDeferredValue, useMemo, useState } from 'react';
 import { Link } from 'react-router';
-import { cemeteryPath } from '../../app/paths';
-import type { Cemetery, Monument, Person } from '../../domain';
+import { cemeteryPath, matchPath } from '../../app/paths';
+import { isIndexRecord, type Cemetery, type Monument, type Person } from '../../domain';
 import { Button } from '../../ui/Button';
 import type { Layout } from '../cemeteries/useLayout';
 import { IndexImport } from './index-import/IndexImport';
@@ -38,6 +38,14 @@ export function PeopleView({
   const f = useDeferredValue(filters);
   const hits = useMemo(() => index.search(q, f), [index, q, f]);
   const total = hits.length;
+  const toMatch = useMemo(
+    () =>
+      people.filter(
+        (p) =>
+          !p.deleted && !p.monumentId && isIndexRecord(p) && p.matchStatus !== 'no-stone-found',
+      ).length,
+    [people],
+  );
 
   return (
     <div className="flex min-w-0 flex-col gap-4">
@@ -51,9 +59,19 @@ export function PeopleView({
           </h1>
         </div>
         {!importing ? (
-          <Button variant="secondary" onClick={() => setImporting(true)}>
-            <Trans>Import an index (CSV)</Trans>
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            {toMatch > 0 ? (
+              <Link
+                to={matchPath(cemetery.id)}
+                className="inline-flex min-h-12 items-center rounded-lg bg-primary px-4 font-medium text-primary-fg"
+              >
+                <Trans>Match to stones ({toMatch})</Trans>
+              </Link>
+            ) : null}
+            <Button variant="secondary" onClick={() => setImporting(true)}>
+              <Trans>Import an index (CSV)</Trans>
+            </Button>
+          </div>
         ) : null}
       </div>
       {importing ? (
