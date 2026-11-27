@@ -10,6 +10,7 @@ import { writeSbs } from '../../data/format/sbs';
 import { getSetting, setSetting } from '../../data/settings';
 import type { Store } from '../../data/store';
 import type { Cemetery } from '../../domain';
+import { download, fileSlug } from '../../ui/download';
 
 const FOLDER_KEY = 'backupFolder';
 
@@ -36,13 +37,7 @@ export type DeliveryMethod = 'share' | 'folder' | 'download';
 export type Delivery = { method: DeliveryMethod; folder?: string } | { method: 'cancelled' };
 
 export function backupFileName(name: string, now = new Date()): string {
-  const slug =
-    name
-      .normalize('NFKD')
-      .toLowerCase()
-      .replace(/[^\p{L}\p{N}]+/gu, '-')
-      .replace(/^-+|-+$/g, '') || 'cemetery';
-  return `${slug}-${now.toISOString().slice(0, 10)}.sbs`;
+  return `${fileSlug(name)}-${now.toISOString().slice(0, 10)}.sbs`;
 }
 
 export async function cemeteryBackupFile(store: Store, cemetery: Cemetery): Promise<File> {
@@ -69,17 +64,6 @@ async function folder(store: Store, pick: NonNullable<PickerWindow['showDirector
   const picked = await pick({ id: 'stonebystone-backups', mode: 'readwrite' });
   await setSetting(store, FOLDER_KEY, picked);
   return picked;
-}
-
-function download(file: File) {
-  const url = URL.createObjectURL(file);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = file.name;
-  document.body.append(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }
 
 /** Hand the files to the user by the best means this browser has. */

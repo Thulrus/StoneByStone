@@ -71,8 +71,12 @@ msgstr "{0, plural, one {# stone captured} other {# stones captured}}"
 msgid "{0, plural, one {# stone is not backed up} other {# stones are not backed up}}"
 msgstr "{0, plural, one {# stone is not backed up} other {# stones are not backed up}}"
 
+#. placeholder {0}: counts.total
 #. placeholder {0}: progress.total
+#. placeholder {0}: stones.length
 #: src/features/cemeteries/CemeteryList.tsx:32
+#: src/features/progress/ProgressView.tsx:56
+#: src/features/progress/RevisitChecklist.tsx:60
 msgid "{0, plural, one {# stone} other {# stones}}"
 msgstr "{0, plural, one {# stone} other {# stones}}"
 
@@ -107,6 +111,10 @@ msgstr "{0} m. Tap to add a bend, or drag a point to adjust."
 #: src/features/cemeteries/ImportButton.tsx:29
 msgid "{0} new, {1} updated, {2} unchanged."
 msgstr "{0} new, {1} updated, {2} unchanged."
+
+#: src/features/progress/ProgressView.tsx:57
+msgid "{done}% transcribed"
+msgstr "{done}% transcribed"
 
 #: src/features/cemeteries/FieldChecklist.tsx:122
 msgid "{free} free for photos"
@@ -370,15 +378,16 @@ msgid "Back along the row"
 msgstr "Back along the row"
 
 #. placeholder {0}: cemetery.name
+#: src/features/progress/ProgressView.tsx:44
 #: src/features/stones/detail/StoneDetail.tsx:54
 #: src/features/transcribe/TranscribeView.tsx:129
 msgid "Back to {0}"
 msgstr "Back to {0}"
 
+#: src/app/pages/CemeteryGate.tsx:27
 #: src/app/pages/CemeteryPage.tsx:28
 #: src/app/pages/NotFoundPage.tsx:11
 #: src/app/pages/StonePage.tsx:49
-#: src/app/pages/TranscribePage.tsx:25
 msgid "Back to cemeteries"
 msgstr "Back to cemeteries"
 
@@ -410,6 +419,10 @@ msgstr "Backup failed"
 #: src/features/share/useBackup.ts:29
 msgid "Backup saved"
 msgstr "Backup saved"
+
+#: src/features/progress/ProgressView.tsx:101
+msgid "Bar"
+msgstr "Bar"
 
 #: src/features/cemeteries/FieldChecklist.tsx:114
 msgid "Battery {pct}%"
@@ -499,6 +512,10 @@ msgstr "Building"
 msgid "Built"
 msgstr "Built"
 
+#: src/features/progress/ProgressView.tsx:76
+msgid "By section and row"
+msgstr "By section and row"
+
 #: src/features/transcribe/date-preview.ts:141
 msgid "Calculated from the age: {at}"
 msgstr "Calculated from the age: {at}"
@@ -554,8 +571,8 @@ msgstr "Cemeteries on this device"
 msgid "Cemetery"
 msgstr "Cemetery"
 
+#: src/app/pages/CemeteryGate.tsx:24
 #: src/app/pages/CemeteryPage.tsx:25
-#: src/app/pages/TranscribePage.tsx:22
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
@@ -797,7 +814,7 @@ msgstr "Detail type"
 msgid "Details"
 msgstr "Details"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:104
+#: src/features/cemeteries/CemeteryTabs.tsx:108
 #: src/features/schematic/SchematicView.tsx:80
 msgid "Diagram"
 msgstr "Diagram"
@@ -811,6 +828,7 @@ msgid "Dismiss"
 msgstr "Dismiss"
 
 #: src/features/capture/walk/WalkSummary.tsx:41
+#: src/features/progress/RevisitChecklist.tsx:44
 msgid "Done"
 msgstr "Done"
 
@@ -825,6 +843,10 @@ msgstr "Dove"
 #: src/features/map/OfflinePanel.tsx:138
 msgid "Download again"
 msgstr "Download again"
+
+#: src/features/progress/RevisitChecklist.tsx:69
+msgid "Download checklist (CSV)"
+msgstr "Download checklist (CSV)"
 
 #: src/features/map/OfflinePanel.tsx:69
 msgid "Download failed"
@@ -985,6 +1007,7 @@ msgid "Flag holder"
 msgstr "Flag holder"
 
 #: src/features/capture/walk/QuickTray.tsx:32
+#: src/features/progress/RevisitChecklist.tsx:44
 #: src/features/stones/detail/AttributesSection.tsx:25
 msgid "Flags"
 msgstr "Flags"
@@ -1068,7 +1091,7 @@ msgstr "Gate"
 msgid "Getting your location…"
 msgstr "Getting your location…"
 
-#: src/features/transcribe/NeighbourStrip.tsx:74
+#: src/features/transcribe/NeighbourStrip.tsx:91
 msgid "Go to {label}"
 msgstr "Go to {label}"
 
@@ -1115,6 +1138,7 @@ msgid "Grid row {0}, column {1}"
 msgstr "Grid row {0}, column {1}"
 
 #: src/features/overlays/GridPicker.tsx:34
+#: src/features/progress/RevisitChecklist.tsx:34
 msgid "Grid row {row}, column {col}"
 msgstr "Grid row {row}, column {col}"
 
@@ -1368,7 +1392,7 @@ msgstr "Made {n} rows from the grid"
 msgid "Main"
 msgstr "Main"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:103
+#: src/features/cemeteries/CemeteryTabs.tsx:107
 msgid "Map"
 msgstr "Map"
 
@@ -1517,11 +1541,12 @@ msgstr "needs an API key"
 msgid "Needs attention:"
 msgstr "Needs attention:"
 
+#: src/features/progress/RevisitChecklist.tsx:58
 #: src/features/stones/attribute-labels.ts:60
 msgid "Needs revisit"
 msgstr "Needs revisit"
 
-#: src/features/transcribe/NeighbourStrip.tsx:24
+#: src/features/transcribe/NeighbourStrip.tsx:39
 msgid "Neighbours in the row"
 msgstr "Neighbours in the row"
 
@@ -1579,6 +1604,10 @@ msgstr "No rows or stones yet. Add rows in Setup."
 msgid "No rows planned. Add them above, or start a new row when you walk."
 msgstr "No rows planned. Add them above, or start a new row when you walk."
 
+#: src/features/progress/ProgressView.tsx:81
+msgid "No rows yet. Add them on the Setup tab."
+msgstr "No rows yet. Add them on the Setup tab."
+
 #: src/features/cemeteries/setup/RowItem.tsx:102
 msgid "No section"
 msgstr "No section"
@@ -1591,6 +1620,7 @@ msgstr "No stones in this list. Choose another list above."
 msgid "No stones yet"
 msgstr "No stones yet"
 
+#: src/features/progress/ProgressView.tsx:120
 #: src/features/schematic/SchematicView.tsx:102
 msgid "Not in a row"
 msgstr "Not in a row"
@@ -1626,6 +1656,10 @@ msgstr "Not set"
 msgid "not tagged as a cemetery"
 msgstr "not tagged as a cemetery"
 
+#: src/features/progress/RevisitChecklist.tsx:44
+msgid "Notes"
+msgstr "Notes"
+
 #: src/features/cemeteries/create/PlaceFinder.tsx:89
 msgid "Nothing found. Try another search, or drop a pin."
 msgstr "Nothing found. Try another search, or drop a pin."
@@ -1638,6 +1672,10 @@ msgstr "Nothing has been changed. Details: {0}"
 #: src/features/stones/RelativePlacer.tsx:108
 msgid "Nothing nearby is placed yet. Place a stone or a landmark first."
 msgstr "Nothing nearby is placed yet. Place a stone or a landmark first."
+
+#: src/features/progress/RevisitChecklist.tsx:76
+msgid "Nothing to revisit. Stones you skip on a walk, or mark \"Needs revisit\", show up here."
+msgstr "Nothing to revisit. Stones you skip on a walk, or mark \"Needs revisit\", show up here."
 
 #: src/features/transcribe/TranscribeView.tsx:100
 msgid "Nothing to verify on that stone yet"
@@ -1859,7 +1897,9 @@ msgstr "placing on the map"
 msgid "Plat maps and drone images"
 msgstr "Plat maps and drone images"
 
+#. placeholder {0}: m.address.plotLabel
 #. placeholder {0}: stone.address.plotLabel
+#: src/features/progress/RevisitChecklist.tsx:31
 #: src/features/stones/StoneSheet.tsx:79
 msgid "Plot {0}"
 msgstr "Plot {0}"
@@ -1898,6 +1938,15 @@ msgstr "Presets"
 #: src/features/transcribe/TranscribeForm.tsx:242
 msgid "Previous"
 msgstr "Previous"
+
+#: src/features/progress/RevisitChecklist.tsx:66
+msgid "Print checklist"
+msgstr "Print checklist"
+
+#: src/features/cemeteries/CemeteryTabs.tsx:122
+#: src/features/progress/ProgressView.tsx:47
+msgid "Progress"
+msgstr "Progress"
 
 #: src/features/cemeteries/FieldChecklist.tsx:153
 msgid "Protect data"
@@ -2012,6 +2061,7 @@ msgid "Rose / rosebud"
 msgstr "Rose / rosebud"
 
 #: src/features/capture/walk/WalkStart.tsx:86
+#: src/features/progress/ProgressView.tsx:89
 #: src/features/stones/detail/AttributesSection.tsx:48
 msgid "Row"
 msgstr "Row"
@@ -2023,7 +2073,7 @@ msgstr "Row {0}"
 
 #. placeholder {0}: layout.labelOf(placeRow)
 #. placeholder {1}: (placing?.address?.rowIndex ?? 0) + 1
-#: src/features/cemeteries/CemeteryTabs.tsx:48
+#: src/features/cemeteries/CemeteryTabs.tsx:52
 msgid "row {0}, stone {1}"
 msgstr "row {0}, stone {1}"
 
@@ -2108,6 +2158,10 @@ msgstr "Row start set"
 #: src/features/map/MapToolbar.tsx:36
 msgid "Rows horizontal"
 msgstr "Rows horizontal"
+
+#: src/features/progress/ProgressView.tsx:110
+msgid "Rows with no section"
+msgstr "Rows with no section"
 
 #: src/features/cemeteries/setup/SectionBlock.tsx:45
 msgid "Rows without a section"
@@ -2201,6 +2255,11 @@ msgstr "Searching OpenStreetMap…"
 msgid "Section"
 msgstr "Section"
 
+#. placeholder {0}: g.section.name
+#: src/features/progress/ProgressView.tsx:110
+msgid "Section {0}"
+msgstr "Section {0}"
+
 #: src/features/cemeteries/setup/SectionBlock.tsx:99
 msgid "Section name"
 msgstr "Section name"
@@ -2214,7 +2273,7 @@ msgstr "Set the cemetery's location or draw a row line first."
 msgid "Settings"
 msgstr "Settings"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:105
+#: src/features/cemeteries/CemeteryTabs.tsx:109
 msgid "Setup"
 msgstr "Setup"
 
@@ -2275,6 +2334,10 @@ msgstr "Start"
 msgid "Starting camera…"
 msgstr "Starting camera…"
 
+#: src/features/progress/RevisitChecklist.tsx:44
+msgid "Status"
+msgstr "Status"
+
 #: src/features/stones/StatusLegend.tsx:10
 msgid "Status key"
 msgstr "Status key"
@@ -2283,6 +2346,7 @@ msgstr "Status key"
 msgid "stone"
 msgstr "stone"
 
+#: src/features/progress/RevisitChecklist.tsx:36
 #: src/features/stones/detail/StoneDetail.tsx:49
 #: src/features/stones/RelativePlacer.tsx:56
 #: src/features/stones/StoneSheet.tsx:79
@@ -2307,7 +2371,7 @@ msgid "Stone {0} skipped"
 msgstr "Stone {0} skipped"
 
 #: src/features/capture/walk/RowOrderDialogs.tsx:103
-#: src/features/transcribe/NeighbourStrip.tsx:53
+#: src/features/transcribe/NeighbourStrip.tsx:70
 msgid "Stone {n}"
 msgstr "Stone {n}"
 
@@ -2344,9 +2408,17 @@ msgstr "Stone placed on the map"
 msgid "Stone placed relative to {0}"
 msgstr "Stone placed relative to {0}"
 
+#: src/features/progress/ProgressView.tsx:92
+msgid "Stones"
+msgstr "Stones"
+
 #: src/features/capture/walk/RowOrderDialogs.tsx:95
 msgid "Stones in order"
 msgstr "Stones in order"
+
+#: src/features/progress/RevisitChecklist.tsx:81
+msgid "Stones to revisit"
+msgstr "Stones to revisit"
 
 #: src/features/settings/StoragePanel.tsx:38
 msgid "Storage"
@@ -2472,7 +2544,7 @@ msgstr "The other person is their"
 msgid "The provider's terms allow saving tiles for offline use"
 msgstr "The provider's terms allow saving tiles for offline use"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:49
+#: src/features/cemeteries/CemeteryTabs.tsx:53
 msgid "the stone"
 msgstr "the stone"
 
@@ -2544,7 +2616,7 @@ msgstr "Tone"
 msgid "Top/bottom width"
 msgstr "Top/bottom width"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:117
+#: src/features/cemeteries/CemeteryTabs.tsx:119
 #: src/features/stones/StoneSheet.tsx:130
 #: src/features/transcribe/TranscribeView.tsx:132
 msgid "Transcribe"
@@ -2721,7 +2793,7 @@ msgstr "Veteran marker / flag holder"
 msgid "Vietnam War"
 msgstr "Vietnam War"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:102
+#: src/features/cemeteries/CemeteryTabs.tsx:106
 msgid "View"
 msgstr "View"
 
@@ -2735,7 +2807,7 @@ msgstr "Waiting for GPS…"
 
 #: src/features/capture/walk/WalkPanel.tsx:94
 #: src/features/capture/walk/WalkStart.tsx:77
-#: src/features/cemeteries/CemeteryTabs.tsx:109
+#: src/features/cemeteries/CemeteryTabs.tsx:113
 msgid "Walk a row"
 msgstr "Walk a row"
 
@@ -2767,6 +2839,10 @@ msgstr "Weathered marble"
 msgid "Welcome! What’s your name?"
 msgstr "Welcome! What’s your name?"
 
+#: src/features/progress/RevisitChecklist.tsx:44
+msgid "Where"
+msgstr "Where"
+
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:93
 msgid "Where is it? (optional)"
 msgstr "Where is it? (optional)"
@@ -2786,6 +2862,10 @@ msgstr "Which way"
 #: src/features/transcribe/viewer/FilterControls.tsx:103
 msgid "White point"
 msgstr "White point"
+
+#: src/features/progress/ProgressView.tsx:53
+msgid "Whole cemetery"
+msgstr "Whole cemetery"
 
 #: src/features/transcribe/PersonFields.tsx:51
 msgid "wife of John"

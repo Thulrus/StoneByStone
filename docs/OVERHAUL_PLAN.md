@@ -581,6 +581,10 @@ unit, `marker` for the government-issue or society marker).
   plus flags (`needs-revisit`, `uncertain-position`, `illegible`). Map coloring by status.
 - **Progress dashboard:** per section and row, percent at each status; list of
   needs-revisit items for the next field trip (exportable as a field checklist).
+  (M5, `features/progress/`, route `cemetery/:id/progress`, linked from the cemetery header:
+  counts by status for the cemetery, each section and row, and stones in no row; percentages
+  round down, so 100% means every stone. The checklist lists stones flagged `needs-revisit`
+  in walking order with their other flags and notes; it prints, or downloads as CSV.)
 - **Import existing indexes** (high value for historic cemeteries): CSV / spreadsheet from a
   historical society, WPA/DAR survey, church register, interment card file. A column-mapping
   UI (with saved presets) creates Person records with `source: imported-index` and no stone.

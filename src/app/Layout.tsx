@@ -61,7 +61,7 @@ export function Layout() {
       >
         {t`Skip to content`}
       </a>
-      <header className="sticky top-0 z-10 flex items-center justify-between gap-4 bg-surface px-4 pt-[env(safe-area-inset-top)] sbs-border border-x-0 border-t-0">
+      <header className="sticky top-0 z-10 flex print:hidden items-center justify-between gap-4 bg-surface px-4 pt-[env(safe-area-inset-top)] sbs-border border-x-0 border-t-0">
         <span className="py-3 text-lg font-bold">StoneByStone</span>
         <div className="flex items-center gap-2">
           <BackupIndicator />
@@ -81,7 +81,7 @@ export function Layout() {
       <nav
         aria-label={t`Main`}
         data-bottom-bar
-        className="sticky bottom-0 flex justify-around bg-surface pb-[env(safe-area-inset-bottom)] sbs-border border-x-0 border-b-0 md:hidden"
+        className="sticky bottom-0 flex justify-around bg-surface print:hidden pb-[env(safe-area-inset-bottom)] sbs-border border-x-0 border-b-0 md:hidden"
       >
         {nav}
       </nav>

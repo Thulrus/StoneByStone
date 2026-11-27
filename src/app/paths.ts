@@ -14,3 +14,8 @@ export function transcribePath(cemeteryId: string, stoneId?: string): string {
   const base = `${cemeteryPath(cemeteryId)}/transcribe`;
   return stoneId ? `${base}?stone=${encodeURIComponent(stoneId)}` : base;
 }
+
+/** Link target for a cemetery's progress dashboard. */
+export function progressPath(cemeteryId: string): string {
+  return `${cemeteryPath(cemeteryId)}/progress`;
+}
