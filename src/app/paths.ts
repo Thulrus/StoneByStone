@@ -19,3 +19,8 @@ export function transcribePath(cemeteryId: string, stoneId?: string): string {
 export function progressPath(cemeteryId: string): string {
   return `${cemeteryPath(cemeteryId)}/progress`;
 }
+
+/** Link target for a cemetery's people index. */
+export function peoplePath(cemeteryId: string): string {
+  return `${cemeteryPath(cemeteryId)}/people`;
+}

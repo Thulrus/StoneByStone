@@ -22,7 +22,8 @@ test('progress: numbers match the data; the revisit checklist downloads', async 
   await skipWelcome(page);
   await importFile(page, file);
   await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
-  await page.getByRole('link', { name: 'Progress' }).click();
+  await page.getByRole('button', { name: 'More' }).click();
+  await page.getByRole('link', { name: /^Progress/ }).click();
 
   await expect(page.getByRole('heading', { name: 'Progress', level: 1 })).toBeVisible();
   await expect(page.getByText('8 stones · 50% transcribed')).toBeVisible();

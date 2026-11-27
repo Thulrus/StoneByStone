@@ -595,6 +595,11 @@ unit, `marker` for the government-issue or society marker).
   stones within ~1 m with similar transcriptions. Reviewed, never auto-merged.
 - **Search:** full-text over names (normalized, abbreviation-aware, phonetic), inscriptions,
   notes; filters by date range, section, status, symbol, material, veteran.
+  (M5, `features/people/search.ts`, route `cemetery/:id/people`: MiniSearch over name text,
+  surname sound keys (Soundex + Daitch–Mokotoff) and stone/person text. Every query word must
+  match by spelling, prefix (or 1-edit fuzz from 5 letters) or, for surnames, by sound.
+  "Date range" is the death year, falling back to burial then birth. With no query, results
+  are in `Intl.Collator` order by surname, given names, death year.)
 - **Multiple cemeteries per device**, each with a globally unique ID.
 - **Cemetery setup shortcuts:** search by name/place (Nominatim geocoder), or "cemeteries
   near me" via the OpenStreetMap Overpass API (`landuse=cemetery`, `amenity=grave_yard`),

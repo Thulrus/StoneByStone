@@ -1,7 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import { useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
-import { progressPath, stonePath, transcribePath } from '../../app/paths';
+import { stonePath, transcribePath } from '../../app/paths';
 import type { Cemetery, ID, MapFeature, Monument, Overlay } from '../../domain';
 import { Button } from '../../ui/Button';
 import { cn } from '../../ui/cn';
@@ -13,6 +13,7 @@ import { OverlaysPanel } from '../overlays/OverlaysPanel';
 import { SchematicView } from '../schematic/SchematicView';
 import { usePlaceOnMap } from '../stones/PlaceOnMap';
 import { StoneSheet } from '../stones/StoneSheet';
+import { CemeteryMore } from './CemeteryMore';
 import { FieldChecklist } from './FieldChecklist';
 import { MapTab } from './MapTab';
 import { LayoutEditor } from './setup/LayoutEditor';
@@ -20,10 +21,6 @@ import { useFillViewport } from './useFillViewport';
 import type { Layout } from './useLayout';
 
 export type Tab = 'map' | 'diagram' | 'setup';
-
-const pageLinkClassName = cn(
-  'inline-flex min-h-12 items-center rounded-lg bg-surface-2 px-4 font-medium',
-);
 
 /** A cemetery's Map / Diagram / Setup tabs and the stone sheet shared by them. */
 export function CemeteryTabs({
@@ -114,15 +111,14 @@ export function CemeteryTabs({
           </Button>
         ) : null}
         {stones.length > 0 && !walkRow ? (
-          <>
-            <Link to={transcribePath(cemetery.id)} className={pageLinkClassName}>
-              {t`Transcribe`}
-            </Link>
-            <Link to={progressPath(cemetery.id)} className={pageLinkClassName}>
-              {t`Progress`}
-            </Link>
-          </>
+          <Link
+            to={transcribePath(cemetery.id)}
+            className="inline-flex min-h-12 items-center rounded-lg bg-surface-2 px-4 font-medium"
+          >
+            {t`Transcribe`}
+          </Link>
         ) : null}
+        {!walkRow ? <CemeteryMore cemetery={cemetery} /> : null}
       </div>
       {current === 'map' ? (
         <div ref={mapPanel} role="tabpanel" className="min-h-80 overflow-hidden rounded-xl">

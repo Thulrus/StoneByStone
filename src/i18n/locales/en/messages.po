@@ -27,6 +27,10 @@ msgstr "(new stones go before stone 1)"
 msgid "(no name yet)"
 msgstr "(no name yet)"
 
+#: src/features/people/PersonResult.tsx:27
+msgid "(no name)"
+msgstr "(no name)"
+
 #: src/features/capture/walk/RowOrderDialogs.tsx:106
 msgid "(skipped)"
 msgstr "(skipped)"
@@ -75,7 +79,7 @@ msgstr "{0, plural, one {# stone is not backed up} other {# stones are not backe
 #. placeholder {0}: progress.total
 #. placeholder {0}: stones.length
 #: src/features/cemeteries/CemeteryList.tsx:32
-#: src/features/progress/ProgressView.tsx:56
+#: src/features/progress/ProgressView.tsx:59
 #: src/features/progress/RevisitChecklist.tsx:60
 msgid "{0, plural, one {# stone} other {# stones}}"
 msgstr "{0, plural, one {# stone} other {# stones}}"
@@ -112,7 +116,7 @@ msgstr "{0} m. Tap to add a bend, or drag a point to adjust."
 msgid "{0} new, {1} updated, {2} unchanged."
 msgstr "{0} new, {1} updated, {2} unchanged."
 
-#: src/features/progress/ProgressView.tsx:57
+#: src/features/progress/ProgressView.tsx:60
 msgid "{done}% transcribed"
 msgstr "{done}% transcribed"
 
@@ -162,6 +166,12 @@ msgstr "{name} can't be saved for offline use under its terms. Pick USGS imagery
 msgid "{name} is on the map"
 msgstr "{name} is on the map"
 
+#. placeholder {0}: where(stone)
+#. placeholder {1}: t(STATUS_LABEL[stone.status])
+#: src/features/people/PersonResult.tsx:49
+msgid "{name}: {0}, {1}"
+msgstr "{name}: {0}, {1}"
+
 #: src/features/map/OfflinePanel.tsx:131
 msgid "{name}: about {count} tiles, roughly {size}."
 msgstr "{name}: about {count} tiles, roughly {size}."
@@ -192,6 +202,14 @@ msgstr "{start} (calculated)"
 #: src/features/cemeteries/setup/RowItem.tsx:54
 msgid "{stones, plural, one {# stone} other {# stones}}"
 msgstr "{stones, plural, one {# stone} other {# stones}}"
+
+#: src/features/people/PeopleView.tsx:83
+msgid "{total, plural, one {# person found} other {# people found}}"
+msgstr "{total, plural, one {# person found} other {# people found}}"
+
+#: src/features/people/PeopleView.tsx:85
+msgid "{total, plural, one {# person} other {# people}}"
+msgstr "{total, plural, one {# person} other {# people}}"
 
 #: src/features/cemeteries/FieldChecklist.tsx:165
 msgid "{withLine, plural, one {# with a line on the map} other {# with a line on the map}}"
@@ -345,6 +363,13 @@ msgstr "An update was found. Tap Reload when the banner appears."
 msgid "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
 msgstr "An XYZ address needs {z}, {x} and {y} (or {quadkey})."
 
+#: src/features/people/PeopleFiltersPanel.tsx:78
+#: src/features/people/PeopleFiltersPanel.tsx:96
+#: src/features/people/PeopleFiltersPanel.tsx:112
+#: src/features/people/PeopleFiltersPanel.tsx:128
+msgid "Any"
+msgstr "Any"
+
 #: src/features/overlays/PinPanel.tsx:65
 msgid "Apply"
 msgstr "Apply"
@@ -378,6 +403,7 @@ msgid "Back along the row"
 msgstr "Back along the row"
 
 #. placeholder {0}: cemetery.name
+#: src/features/people/PeopleView.tsx:44
 #: src/features/progress/ProgressView.tsx:44
 #: src/features/stones/detail/StoneDetail.tsx:54
 #: src/features/transcribe/TranscribeView.tsx:129
@@ -420,7 +446,7 @@ msgstr "Backup failed"
 msgid "Backup saved"
 msgstr "Backup saved"
 
-#: src/features/progress/ProgressView.tsx:101
+#: src/features/progress/ProgressView.tsx:104
 msgid "Bar"
 msgstr "Bar"
 
@@ -512,7 +538,7 @@ msgstr "Building"
 msgid "Built"
 msgstr "Built"
 
-#: src/features/progress/ProgressView.tsx:76
+#: src/features/progress/ProgressView.tsx:79
 msgid "By section and row"
 msgstr "By section and row"
 
@@ -576,6 +602,10 @@ msgstr "Cemetery"
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
+#: src/features/cemeteries/CemeteryMore.tsx:22
+msgid "Cemetery pages"
+msgstr "Cemetery pages"
+
 #: src/features/stones/detail/labels.ts:19
 msgid "Changed"
 msgstr "Changed"
@@ -619,6 +649,10 @@ msgstr "Civil War (Union)"
 #: src/features/stones/attribute-labels.ts:91
 msgid "Clasped hands"
 msgstr "Clasped hands"
+
+#: src/features/people/PeopleFiltersPanel.tsx:148
+msgid "Clear filters"
+msgstr "Clear filters"
 
 #: src/ui/Dialog.tsx:59
 msgid "Close"
@@ -814,7 +848,7 @@ msgstr "Detail type"
 msgid "Details"
 msgstr "Details"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:108
+#: src/features/cemeteries/CemeteryTabs.tsx:105
 #: src/features/schematic/SchematicView.tsx:80
 msgid "Diagram"
 msgstr "Diagram"
@@ -822,6 +856,10 @@ msgstr "Diagram"
 #: src/features/transcribe/PersonFields.tsx:49
 msgid "Died"
 msgstr "Died"
+
+#: src/features/people/PeopleFiltersPanel.tsx:53
+msgid "Died from (year)"
+msgstr "Died from (year)"
 
 #: src/ui/Toaster.tsx:63
 msgid "Dismiss"
@@ -891,6 +929,10 @@ msgstr "dual dated {dual}, new-style year {year}"
 #: src/features/stones/RelativePlacer.tsx:178
 msgid "E"
 msgstr "E"
+
+#: src/features/people/PeopleView.tsx:68
+msgid "e.g. Smith, Wm Peck, blacksmith"
+msgstr "e.g. Smith, Wm Peck, blacksmith"
 
 #: src/features/stones/detail/AttributesSection.tsx:73
 msgid "Earlier"
@@ -989,6 +1031,14 @@ msgstr "Field checklist"
 #: src/features/stones/attribute-labels.ts:41
 msgid "Fieldstone"
 msgstr "Fieldstone"
+
+#: src/features/people/PeopleFiltersPanel.tsx:50
+msgid "Filters"
+msgstr "Filters"
+
+#: src/features/people/PeopleFiltersPanel.tsx:50
+msgid "Filters ({count})"
+msgstr "Filters ({count})"
 
 #: src/features/people/LinkPersonDialog.tsx:62
 msgid "Find by name"
@@ -1392,7 +1442,7 @@ msgstr "Made {n} rows from the grid"
 msgid "Main"
 msgstr "Main"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:107
+#: src/features/cemeteries/CemeteryTabs.tsx:104
 msgid "Map"
 msgstr "Map"
 
@@ -1443,6 +1493,7 @@ msgid "Match device"
 msgstr "Match device"
 
 #: src/features/capture/walk/QuickTray.tsx:30
+#: src/features/people/PeopleFiltersPanel.tsx:122
 #: src/features/stones/detail/AttributesSection.tsx:23
 msgid "Material"
 msgstr "Material"
@@ -1467,6 +1518,7 @@ msgstr "Military service"
 msgid "Missing"
 msgstr "Missing"
 
+#: src/features/cemeteries/CemeteryMore.tsx:19
 #: src/features/stones/RelativePlacer.tsx:158
 msgid "More"
 msgstr "More"
@@ -1584,6 +1636,10 @@ msgstr "no line"
 msgid "No one else to link to yet."
 msgstr "No one else to link to yet."
 
+#: src/features/people/PeopleView.tsx:52
+msgid "No people yet. Names appear here as stones are transcribed."
+msgstr "No people yet. Names appear here as stones are transcribed."
+
 #: src/features/transcribe/PhotoPane.tsx:43
 msgid "No photo of this stone yet."
 msgstr "No photo of this stone yet."
@@ -1604,13 +1660,19 @@ msgstr "No rows or stones yet. Add rows in Setup."
 msgid "No rows planned. Add them above, or start a new row when you walk."
 msgstr "No rows planned. Add them above, or start a new row when you walk."
 
-#: src/features/progress/ProgressView.tsx:81
+#: src/features/progress/ProgressView.tsx:84
 msgid "No rows yet. Add them on the Setup tab."
 msgstr "No rows yet. Add them on the Setup tab."
 
 #: src/features/cemeteries/setup/RowItem.tsx:102
+#: src/features/people/PeopleFiltersPanel.tsx:84
 msgid "No section"
 msgstr "No section"
+
+#: src/features/people/PeopleFiltersPanel.tsx:102
+#: src/features/people/PersonResult.tsx:56
+msgid "No stone (index record)"
+msgstr "No stone (index record)"
 
 #: src/features/transcribe/TranscribeView.tsx:142
 msgid "No stones in this list. Choose another list above."
@@ -1620,7 +1682,7 @@ msgstr "No stones in this list. Choose another list above."
 msgid "No stones yet"
 msgstr "No stones yet"
 
-#: src/features/progress/ProgressView.tsx:120
+#: src/features/progress/ProgressView.tsx:123
 #: src/features/schematic/SchematicView.tsx:102
 msgid "Not in a row"
 msgstr "Not in a row"
@@ -1788,7 +1850,10 @@ msgstr "Path"
 msgid "Pedestal / die-on-base"
 msgstr "Pedestal / die-on-base"
 
+#: src/features/cemeteries/CemeteryMore.tsx:24
 #: src/features/people/LinkPersonDialog.tsx:71
+#: src/features/people/PeopleView.tsx:47
+#: src/features/people/PeopleView.tsx:88
 #: src/features/stones/detail/PeopleSection.tsx:60
 msgid "People"
 msgstr "People"
@@ -1943,7 +2008,7 @@ msgstr "Previous"
 msgid "Print checklist"
 msgstr "Print checklist"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:122
+#: src/features/cemeteries/CemeteryMore.tsx:27
 #: src/features/progress/ProgressView.tsx:47
 msgid "Progress"
 msgstr "Progress"
@@ -2061,7 +2126,7 @@ msgid "Rose / rosebud"
 msgstr "Rose / rosebud"
 
 #: src/features/capture/walk/WalkStart.tsx:86
-#: src/features/progress/ProgressView.tsx:89
+#: src/features/progress/ProgressView.tsx:92
 #: src/features/stones/detail/AttributesSection.tsx:48
 msgid "Row"
 msgstr "Row"
@@ -2073,7 +2138,7 @@ msgstr "Row {0}"
 
 #. placeholder {0}: layout.labelOf(placeRow)
 #. placeholder {1}: (placing?.address?.rowIndex ?? 0) + 1
-#: src/features/cemeteries/CemeteryTabs.tsx:52
+#: src/features/cemeteries/CemeteryTabs.tsx:49
 msgid "row {0}, stone {1}"
 msgstr "row {0}, stone {1}"
 
@@ -2159,7 +2224,7 @@ msgstr "Row start set"
 msgid "Rows horizontal"
 msgstr "Rows horizontal"
 
-#: src/features/progress/ProgressView.tsx:110
+#: src/features/progress/ProgressView.tsx:113
 msgid "Rows with no section"
 msgstr "Rows with no section"
 
@@ -2247,16 +2312,25 @@ msgstr "Search"
 msgid "Search by name or place"
 msgstr "Search by name or place"
 
+#: src/features/cemeteries/CemeteryMore.tsx:23
+msgid "Search names, dates and inscriptions"
+msgstr "Search names, dates and inscriptions"
+
+#: src/features/people/PeopleView.tsx:58
+msgid "Search names, inscriptions and notes"
+msgstr "Search names, inscriptions and notes"
+
 #: src/features/cemeteries/create/PlaceFinder.tsx:85
 msgid "Searching OpenStreetMap…"
 msgstr "Searching OpenStreetMap…"
 
 #: src/features/cemeteries/setup/RowItem.tsx:96
+#: src/features/people/PeopleFiltersPanel.tsx:72
 msgid "Section"
 msgstr "Section"
 
 #. placeholder {0}: g.section.name
-#: src/features/progress/ProgressView.tsx:110
+#: src/features/progress/ProgressView.tsx:113
 msgid "Section {0}"
 msgstr "Section {0}"
 
@@ -2273,7 +2347,7 @@ msgstr "Set the cemetery's location or draw a row line first."
 msgid "Settings"
 msgstr "Settings"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:109
+#: src/features/cemeteries/CemeteryTabs.tsx:106
 msgid "Setup"
 msgstr "Setup"
 
@@ -2284,6 +2358,10 @@ msgstr "Sharpen"
 #: src/features/transcribe/FilterSelect.tsx:26
 msgid "Show"
 msgstr "Show"
+
+#: src/features/people/PeopleView.tsx:99
+msgid "Show more"
+msgstr "Show more"
 
 #: src/features/map/CustomSourceForm.tsx:85
 msgid "Shown on the map. Check the provider's terms."
@@ -2337,6 +2415,10 @@ msgstr "Starting camera…"
 #: src/features/progress/RevisitChecklist.tsx:44
 msgid "Status"
 msgstr "Status"
+
+#: src/features/cemeteries/CemeteryMore.tsx:26
+msgid "Status by row, and what to revisit"
+msgstr "Status by row, and what to revisit"
 
 #: src/features/stones/StatusLegend.tsx:10
 msgid "Status key"
@@ -2408,7 +2490,11 @@ msgstr "Stone placed on the map"
 msgid "Stone placed relative to {0}"
 msgstr "Stone placed relative to {0}"
 
-#: src/features/progress/ProgressView.tsx:92
+#: src/features/people/PeopleFiltersPanel.tsx:88
+msgid "Stone status"
+msgstr "Stone status"
+
+#: src/features/progress/ProgressView.tsx:95
 msgid "Stones"
 msgstr "Stones"
 
@@ -2468,6 +2554,10 @@ msgstr "Sunlight (high contrast)"
 #: src/features/stones/RelativePlacer.tsx:178
 msgid "SW"
 msgstr "SW"
+
+#: src/features/people/PeopleFiltersPanel.tsx:106
+msgid "Symbol"
+msgstr "Symbol"
 
 #: src/features/transcribe/StoneFields.tsx:54
 #: src/features/transcribe/StoneFields.tsx:56
@@ -2544,7 +2634,7 @@ msgstr "The other person is their"
 msgid "The provider's terms allow saving tiles for offline use"
 msgstr "The provider's terms allow saving tiles for offline use"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:53
+#: src/features/cemeteries/CemeteryTabs.tsx:50
 msgid "the stone"
 msgstr "the stone"
 
@@ -2608,6 +2698,10 @@ msgstr "Tilted"
 msgid "Time to back up"
 msgstr "Time to back up"
 
+#: src/features/people/PeopleFiltersPanel.tsx:62
+msgid "to"
+msgstr "to"
+
 #: src/features/transcribe/viewer/FilterControls.tsx:98
 msgid "Tone"
 msgstr "Tone"
@@ -2616,7 +2710,7 @@ msgstr "Tone"
 msgid "Top/bottom width"
 msgstr "Top/bottom width"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:119
+#: src/features/cemeteries/CemeteryTabs.tsx:118
 #: src/features/stones/StoneSheet.tsx:130
 #: src/features/transcribe/TranscribeView.tsx:132
 msgid "Transcribe"
@@ -2785,15 +2879,23 @@ msgstr "Verified & next"
 msgid "Version"
 msgstr "Version"
 
+#: src/features/people/PersonResult.tsx:35
+msgid "veteran"
+msgstr "veteran"
+
 #: src/features/stones/attribute-labels.ts:62
 msgid "Veteran marker / flag holder"
 msgstr "Veteran marker / flag holder"
+
+#: src/features/people/PeopleFiltersPanel.tsx:144
+msgid "Veterans only"
+msgstr "Veterans only"
 
 #: src/features/transcribe/MilitaryFields.tsx:64
 msgid "Vietnam War"
 msgstr "Vietnam War"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:106
+#: src/features/cemeteries/CemeteryTabs.tsx:103
 msgid "View"
 msgstr "View"
 
@@ -2807,7 +2909,7 @@ msgstr "Waiting for GPS…"
 
 #: src/features/capture/walk/WalkPanel.tsx:94
 #: src/features/capture/walk/WalkStart.tsx:77
-#: src/features/cemeteries/CemeteryTabs.tsx:113
+#: src/features/cemeteries/CemeteryTabs.tsx:110
 msgid "Walk a row"
 msgstr "Walk a row"
 
@@ -2863,7 +2965,7 @@ msgstr "Which way"
 msgid "White point"
 msgstr "White point"
 
-#: src/features/progress/ProgressView.tsx:53
+#: src/features/progress/ProgressView.tsx:56
 msgid "Whole cemetery"
 msgstr "Whole cemetery"
 
