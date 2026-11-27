@@ -676,8 +676,7 @@ someone else's partial data to make a more complete map."_
     (§12.3); a new cemetery is created otherwise. Teams send their files to one coordinator,
     who imports them in any order (the merge is order-independent, §21.2) and shares the
     result back.
-- Optional later: QR-code handshake with live device-to-device transfer (needs a hosted
-  signaling or relay service; not planned), cloud sync (§27).
+- Optional later: live device-to-device sync (§12.4), cloud sync (§27).
 
 ### 12.2 What makes merging hard and how v2 handles it
 
@@ -700,6 +699,32 @@ someone else's partial data to make a more complete map."_
 
 Summary first ("142 new stones, 37 likely duplicates, 4 conflicts"), then focused review
 queues, then apply. Every merge is a single undoable operation and is logged in history.
+
+### 12.4 Nearby sync (nice-to-have, unscheduled)
+
+**Not part of any milestone.** Think about it only once M0–M7 are done. The Share button
+(§12.1) stays the supported way to move data. This section only records the idea.
+
+**Idea:** two devices on the same Wi-Fi open Share → Nearby, see each other by name, tap and
+accept, and sync directly over the LAN (the PairDrop / Snapdrop approach). Users set up nothing.
+
+- **Discovery:** browsers cannot scan the LAN, so a small hosted **signaling service** (e.g.
+  a Cloudflare Worker with a Durable Object, free tier or $5/mo) groups WebSocket clients by
+  public IP (by /64 prefix for IPv6) and relays only the WebRTC handshake (a few KB). It
+  never sees cemetery data and stores nothing.
+- **Transfer:** a WebRTC data channel, which takes the direct LAN path when one exists. A
+  two-way delta exchange: each side sends its per-node HLC high-water marks and receives
+  only newer records and missing photos (by `sha256`), then both run the normal merge
+  (§21.2), so the devices converge. Same-ID changes apply directly. Cross-ID duplicates
+  still go through the merge wizard's review (§12.3).
+- **Fallback:** if a device doesn't appear (cellular, VPN, client-isolated guest Wi-Fi), a
+  short pair code or QR joins the same room across networks. Without a TURN server, some
+  networks will fail to connect, and the UI then points to the Share button.
+- **Robustness:** stream incoming chunks into IndexedDB (never buffer a whole photo set in
+  memory, which matters most on iOS), resume after drops (a screen lock kills the
+  connection), and cap room lifetime and message sizes on the server.
+- **Constraint:** the app must work fully when the service is down or unreachable. This is
+  the only feature that would depend on hosted infrastructure, so it stays optional.
 
 ---
 
