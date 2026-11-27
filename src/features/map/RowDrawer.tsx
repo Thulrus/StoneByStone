@@ -59,7 +59,8 @@ export function RowDrawer({ row, rowName, onClose }: RowDrawerProps) {
               ? t`Now tap where the row ends.`
               : t`${Math.round(lengthM)} m. Tap to add a bend, or drag a point to adjust.`}
         </p>
-        <div className="flex flex-wrap gap-2">
+        {/* Tighter on phones, so the buttons keep to one line and the card covers less map. */}
+        <div className="flex flex-wrap gap-2 max-sm:[&>button]:px-3">
           <Button
             variant="secondary"
             disabled={points.length === 0}

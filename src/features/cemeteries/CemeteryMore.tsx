@@ -22,8 +22,14 @@ export function CemeteryMore({ cemetery }: { cemetery: Cemetery }) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button variant="secondary" size="lg" onClick={() => setOpen(true)}>
-        <Trans>More</Trans>
+      {/* "⋯" on phones, so the header keeps to two lines and the map keeps its height. */}
+      <Button variant="secondary" className="max-md:px-0" onClick={() => setOpen(true)}>
+        <span aria-hidden className="text-xl leading-none md:hidden">
+          ⋯
+        </span>
+        <span className="max-md:sr-only">
+          <Trans>More</Trans>
+        </span>
       </Button>
       <Sheet open={open} onOpenChange={setOpen} title={cemetery.name}>
         <nav aria-label={t`Cemetery pages`} className="flex flex-col gap-2">

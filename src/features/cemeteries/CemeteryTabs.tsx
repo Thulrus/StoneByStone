@@ -83,7 +83,7 @@ export function CemeteryTabs({
       aria-selected={current === id}
       onClick={() => setTab(id)}
       className={cn(
-        'min-h-12 rounded-lg px-4',
+        'min-h-12 rounded-lg px-3 md:px-4',
         current === id ? 'bg-primary font-semibold text-primary-fg' : 'bg-surface-2',
       )}
     >
@@ -100,10 +100,13 @@ export function CemeteryTabs({
         >
           {cemetery.name}
         </h1>
-        <div role="tablist" aria-label={t`View`} className="flex gap-2">
-          {tabButton('map', t`Map`)}
-          {tabButton('diagram', t`Diagram`)}
-          {tabButton('setup', t`Setup`)}
+        <div className="flex gap-2">
+          <div role="tablist" aria-label={t`View`} className="flex gap-2">
+            {tabButton('map', t`Map`)}
+            {tabButton('diagram', t`Diagram`)}
+            {tabButton('setup', t`Setup`)}
+          </div>
+          {!walkRow ? <CemeteryMore cemetery={cemetery} /> : null}
         </div>
         {current !== 'setup' && !walkRow && !drawRowId && !placing ? (
           <Button size="lg" onClick={() => setWalkStart(true)}>
@@ -118,7 +121,6 @@ export function CemeteryTabs({
             {t`Transcribe`}
           </Link>
         ) : null}
-        {!walkRow ? <CemeteryMore cemetery={cemetery} /> : null}
       </div>
       {current === 'map' ? (
         <div ref={mapPanel} role="tabpanel" className="min-h-80 overflow-hidden rounded-xl">

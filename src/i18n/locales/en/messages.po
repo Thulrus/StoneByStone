@@ -711,7 +711,7 @@ msgstr "Can't check:"
 #: src/features/cemeteries/create/NewCemeteryPage.tsx:127
 #: src/features/cemeteries/setup/TextPrompt.tsx:44
 #: src/features/map/OfflinePanel.tsx:109
-#: src/features/map/RowDrawer.tsx:76
+#: src/features/map/RowDrawer.tsx:77
 #: src/features/overlays/PinPanel.tsx:68
 #: src/features/people/index-import/IndexImport.tsx:144
 #: src/features/people/index-import/IndexImport.tsx:182
@@ -749,7 +749,7 @@ msgstr "Cemetery"
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
-#: src/features/cemeteries/CemeteryMore.tsx:29
+#: src/features/cemeteries/CemeteryMore.tsx:35
 msgid "Cemetery pages"
 msgstr "Cemetery pages"
 
@@ -1051,7 +1051,7 @@ msgstr "Detail type"
 msgid "Details"
 msgstr "Details"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:105
+#: src/features/cemeteries/CemeteryTabs.tsx:106
 #: src/features/schematic/SchematicView.tsx:80
 msgid "Diagram"
 msgstr "Diagram"
@@ -1231,7 +1231,7 @@ msgstr "Every grid stone is already in a row"
 msgid "Every record is matched or set aside."
 msgstr "Every record is matched or set aside."
 
-#: src/features/cemeteries/CemeteryMore.tsx:52
+#: src/features/cemeteries/CemeteryMore.tsx:58
 #: src/features/export/ExportView.tsx:50
 msgid "Export and print"
 msgstr "Export and print"
@@ -1532,7 +1532,7 @@ msgstr "Import an index (CSV)"
 msgid "Import failed"
 msgstr "Import failed"
 
-#: src/features/cemeteries/CemeteryMore.tsx:46
+#: src/features/cemeteries/CemeteryMore.tsx:52
 #: src/features/photo-import/PhotoImportView.tsx:68
 #: src/features/photo-import/PhotoImportView.tsx:92
 msgid "Import photos"
@@ -1700,7 +1700,7 @@ msgstr "Limestone"
 msgid "Link {who} to…"
 msgstr "Link {who} to…"
 
-#: src/features/cemeteries/CemeteryMore.tsx:33
+#: src/features/cemeteries/CemeteryMore.tsx:39
 msgid "Link an imported burial index to stones"
 msgstr "Link an imported burial index to stones"
 
@@ -1750,7 +1750,7 @@ msgid "Main"
 msgstr "Main"
 
 #: src/features/booklet/BookletView.tsx:159
-#: src/features/cemeteries/CemeteryTabs.tsx:104
+#: src/features/cemeteries/CemeteryTabs.tsx:105
 msgid "Map"
 msgstr "Map"
 
@@ -1804,7 +1804,7 @@ msgstr "Masonic square and compass"
 msgid "Match device"
 msgstr "Match device"
 
-#: src/features/cemeteries/CemeteryMore.tsx:34
+#: src/features/cemeteries/CemeteryMore.tsx:40
 #: src/features/people/match/MatchView.tsx:95
 msgid "Match index to stones"
 msgstr "Match index to stones"
@@ -1859,7 +1859,7 @@ msgstr "Military service"
 msgid "Missing"
 msgstr "Missing"
 
-#: src/features/cemeteries/CemeteryMore.tsx:26
+#: src/features/cemeteries/CemeteryMore.tsx:31
 #: src/features/stones/RelativePlacer.tsx:158
 msgid "More"
 msgstr "More"
@@ -2297,7 +2297,7 @@ msgstr "Path"
 msgid "Pedestal / die-on-base"
 msgstr "Pedestal / die-on-base"
 
-#: src/features/cemeteries/CemeteryMore.tsx:31
+#: src/features/cemeteries/CemeteryMore.tsx:37
 #: src/features/duplicates/DuplicatesView.tsx:102
 #: src/features/people/LinkPersonDialog.tsx:71
 #: src/features/people/PeopleView.tsx:58
@@ -2306,7 +2306,7 @@ msgstr "Pedestal / die-on-base"
 msgid "People"
 msgstr "People"
 
-#: src/features/cemeteries/CemeteryMore.tsx:36
+#: src/features/cemeteries/CemeteryMore.tsx:42
 msgid "People or stones recorded twice"
 msgstr "People or stones recorded twice"
 
@@ -2364,7 +2364,7 @@ msgstr "Photographed, not transcribed"
 msgid "Photos"
 msgstr "Photos"
 
-#: src/features/cemeteries/CemeteryMore.tsx:44
+#: src/features/cemeteries/CemeteryMore.tsx:50
 msgid "Photos from another camera app, placed by time and location"
 msgstr "Photos from another camera app, placed by time and location"
 
@@ -2493,7 +2493,7 @@ msgstr "Possible duplicate people"
 msgid "Possible duplicate stones"
 msgstr "Possible duplicate stones"
 
-#: src/features/cemeteries/CemeteryMore.tsx:37
+#: src/features/cemeteries/CemeteryMore.tsx:43
 #: src/features/duplicates/DuplicatesView.tsx:84
 msgid "Possible duplicates"
 msgstr "Possible duplicates"
@@ -2527,7 +2527,7 @@ msgstr "Print or save as PDF"
 msgid "Printable booklet"
 msgstr "Printable booklet"
 
-#: src/features/cemeteries/CemeteryMore.tsx:40
+#: src/features/cemeteries/CemeteryMore.tsx:46
 #: src/features/progress/ProgressView.tsx:47
 msgid "Progress"
 msgstr "Progress"
@@ -2608,7 +2608,7 @@ msgstr "Remove"
 msgid "Remove gap"
 msgstr "Remove gap"
 
-#: src/features/map/RowDrawer.tsx:72
+#: src/features/map/RowDrawer.tsx:73
 msgid "Remove line"
 msgstr "Remove line"
 
@@ -2842,7 +2842,7 @@ msgstr "Save it"
 msgid "Save key"
 msgstr "Save key"
 
-#: src/features/map/RowDrawer.tsx:79
+#: src/features/map/RowDrawer.tsx:80
 msgid "Save line"
 msgstr "Save line"
 
@@ -2905,7 +2905,7 @@ msgstr "Search"
 msgid "Search by name or place"
 msgstr "Search by name or place"
 
-#: src/features/cemeteries/CemeteryMore.tsx:30
+#: src/features/cemeteries/CemeteryMore.tsx:36
 msgid "Search names, dates and inscriptions"
 msgstr "Search names, dates and inscriptions"
 
@@ -2956,7 +2956,7 @@ msgstr "Set the cemetery's location or draw a row line first."
 msgid "Settings"
 msgstr "Settings"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:106
+#: src/features/cemeteries/CemeteryTabs.tsx:107
 msgid "Setup"
 msgstr "Setup"
 
@@ -3021,7 +3021,7 @@ msgstr "Spouse"
 msgid "Spreadsheet (CSV)"
 msgstr "Spreadsheet (CSV)"
 
-#: src/features/cemeteries/CemeteryMore.tsx:50
+#: src/features/cemeteries/CemeteryMore.tsx:56
 msgid "Spreadsheet, GIS, Google Earth, printable booklet"
 msgstr "Spreadsheet, GIS, Google Earth, printable booklet"
 
@@ -3045,7 +3045,7 @@ msgstr "Starting camera…"
 msgid "Status"
 msgstr "Status"
 
-#: src/features/cemeteries/CemeteryMore.tsx:39
+#: src/features/cemeteries/CemeteryMore.tsx:45
 msgid "Status by row, and what to revisit"
 msgstr "Status by row, and what to revisit"
 
@@ -3383,7 +3383,7 @@ msgstr "Took photos with your phone's own camera? Each becomes a stone, in the o
 msgid "Top/bottom width"
 msgstr "Top/bottom width"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:118
+#: src/features/cemeteries/CemeteryTabs.tsx:121
 #: src/features/stones/StoneSheet.tsx:130
 #: src/features/transcribe/TranscribeView.tsx:132
 msgid "Transcribe"
@@ -3475,7 +3475,7 @@ msgstr "Uncertain position"
 msgid "Undo"
 msgstr "Undo"
 
-#: src/features/map/RowDrawer.tsx:68
+#: src/features/map/RowDrawer.tsx:69
 msgid "Undo point"
 msgstr "Undo point"
 
@@ -3585,7 +3585,7 @@ msgstr "Veterans only"
 msgid "Vietnam War"
 msgstr "Vietnam War"
 
-#: src/features/cemeteries/CemeteryTabs.tsx:103
+#: src/features/cemeteries/CemeteryTabs.tsx:104
 msgid "View"
 msgstr "View"
 
@@ -3599,7 +3599,7 @@ msgstr "Waiting for GPS…"
 
 #: src/features/capture/walk/WalkPanel.tsx:94
 #: src/features/capture/walk/WalkStart.tsx:77
-#: src/features/cemeteries/CemeteryTabs.tsx:110
+#: src/features/cemeteries/CemeteryTabs.tsx:113
 msgid "Walk a row"
 msgstr "Walk a row"
 
