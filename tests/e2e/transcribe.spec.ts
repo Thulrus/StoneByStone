@@ -275,3 +275,29 @@ test('verify pass: confirm and move on; a later edit clears it', async ({ page }
   await expect(form).toContainText('Transcribed ·');
   await expect(form.getByRole('button', { name: 'Unmark verified' })).toHaveCount(0);
 });
+
+test('the neighbour strip holds the whole row and scrolls', async ({
+  page,
+  isMobile,
+}, testInfo) => {
+  const file = testInfo.outputPath('long-row.sbs.json');
+  await writeFile(file, JSON.stringify(makeStonesDocument({ rows: 1, perRow: 40 })));
+  await stubTiles(page);
+  await page.goto('./');
+  await skipWelcome(page);
+  await importFile(page, file);
+  await page.getByRole('list', { name: 'Cemeteries on this device' }).getByRole('link').click();
+  await page.getByRole('link', { name: 'Transcribe' }).click();
+  await page.getByLabel('Show').selectOption({ label: 'All stones' });
+
+  const strip = page.getByRole('list', { name: 'Neighbours in the row' });
+  await expect(strip.getByRole('listitem')).toHaveCount(40);
+  expect(await strip.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(true);
+  // Phones swipe it (it overflows, so it can scroll); the wheel is a desktop thing.
+  if (isMobile) return;
+  const left = () => strip.evaluate((el) => el.scrollLeft);
+  const before = await left();
+  await strip.hover();
+  await page.mouse.wheel(0, 300);
+  await expect.poll(left).toBeGreaterThan(before);
+});

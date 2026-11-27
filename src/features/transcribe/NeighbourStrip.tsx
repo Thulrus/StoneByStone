@@ -1,11 +1,13 @@
 import { useLingui } from '@lingui/react/macro';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { useEffect, useRef } from 'react';
 import { useStore } from '../../app/store-context';
 import type { ID, Monument } from '../../domain';
 import { cn } from '../../ui/cn';
 import { BlobImage } from '../capture/PhotoStrip';
 import { StatusIcon } from '../stones/StatusIcon';
 import { photoOrder, rowNeighbours } from './queue';
+import { useWheelScrollX } from './useWheelScrollX';
 
 export interface NeighbourStripProps {
   stone: Monument;
@@ -15,13 +17,28 @@ export interface NeighbourStripProps {
   onPick: (id: ID) => void;
 }
 
-/** Thumbnails of the stones either side in the row (plan §9), for context. */
+/**
+ * The whole row as thumbnails (plan §9), scrolled to keep the current stone in the middle.
+ * Swipe, trackpad or mouse wheel scroll it; queued stones can be picked.
+ */
 export function NeighbourStrip({ stone, stones, inQueue, onPick }: NeighbourStripProps) {
   const { t } = useLingui();
-  const { before, after } = rowNeighbours(stone, stones);
+  const { before, after } = rowNeighbours(stone, stones, Infinity);
+  const list = useRef<HTMLUListElement>(null);
+  useWheelScrollX(list, stone.id);
+  useEffect(() => {
+    list.current
+      // eslint-disable-next-line lingui/no-unlocalized-strings -- a CSS selector, never shown
+      ?.querySelector('[aria-current="true"]')
+      ?.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }, [stone.id]);
   if (before.length + after.length === 0) return null;
   return (
-    <ul aria-label={t`Neighbours in the row`} className="flex gap-2 overflow-x-auto">
+    <ul
+      ref={list}
+      aria-label={t`Neighbours in the row`}
+      className="flex gap-2 overflow-x-auto overscroll-x-contain pb-2"
+    >
       {[...before, stone, ...after].map((m) => (
         <Neighbour
           key={m.id}

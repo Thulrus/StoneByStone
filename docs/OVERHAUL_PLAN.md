@@ -414,7 +414,7 @@ used to compute a similarity transform and re-align the incoming dataset (§21.4
 - **Queue** of stones filtered by status (default: photographed but not transcribed),
   ordered by section/row/index so families stay together.
 - **Layout:** large zoomable/pannable photo (left or top) and form (right or bottom).
-  Thumbnails of neighbors in the row for context.
+  Thumbnails of the whole row for context, scrolled to the current stone.
 - **Photo enhancement** (non-destructive, client-side canvas/WebGL): brightness, contrast,
   levels, grayscale, invert, unsharp mask, CLAHE-style local contrast, emboss/"raking
   light" simulation, rotate/straighten, perspective correct. Weathered marble that is
