@@ -231,7 +231,7 @@ Status values: `todo` · `in-progress` · `done` · `blocked: check-in`
 | WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | done              |
 | WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | done              |
 | WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | blocked: check-in |
-| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo              |
+| WP13  | M6        | #65–#67 | Alignment, Share button, merge e2e                                                      | deep   | todo              |
 | WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo              |
 | —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo              |
 | WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo              |

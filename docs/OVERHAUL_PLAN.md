@@ -657,7 +657,27 @@ someone else's partial data to make a more complete map."_
   given person), optionally without full-res photos. Small enough to email or message.
 - Import of either into an existing cemetery triggers the merge flow; into no cemetery
   creates a new one.
-- Optional later: share via Web Share API / QR code for small packets; cloud sync (§27).
+- **Share button (#66).** Moving data between devices or people must need no server, no
+  account and no pairing, so it rides on the OS share sheet (AirDrop, Quick Share / Nearby
+  Share, Messages, email, Drive):
+  - A **Share** action on each cemetery (header → More, and on Home) offers "Everything"
+    (full `.sbs`) or "Changes since I last shared" (a packet), with or without photos, and
+    shows the file size before sending.
+  - It calls `navigator.share({ files })` wherever `navigator.canShare({ files })` is true
+    (phones, and desktop Chrome/Edge/Safari), not only on coarse pointers. Elsewhere it falls
+    back to a download with a one-line hint ("Send this file to the other device and open it
+    in StoneByStone"). If building the file outlasts the tap's user activation, a toast
+    offers a fresh tap (as backups do, §19).
+  - **Open with StoneByStone:** the installed PWA registers `file_handlers` for `.sbs` and
+    reads them through `launchQueue`, so tapping a received file on Android or desktop
+    Chromium opens the import/merge flow directly. iOS has no equivalent; there the user
+    uses Import.
+  - Opening a file for a cemetery already on the device goes straight to the merge flow
+    (§12.3); a new cemetery is created otherwise. Teams send their files to one coordinator,
+    who imports them in any order (the merge is order-independent, §21.2) and shares the
+    result back.
+- Optional later: QR-code handshake with live device-to-device transfer (needs a hosted
+  signaling or relay service; not planned), cloud sync (§27).
 
 ### 12.2 What makes merging hard and how v2 handles it
 
