@@ -5,9 +5,16 @@ Update this file at the end of every session.
 
 ## Next session starts here
 
-**M4 is signed off (field trial #2, #52 closed).** Next is **WP10** (#53–#56: progress,
-people search, CSV import, match view). The one trial finding (neighbour strip didn't scroll)
-is fixed: the strip now shows the whole row.
+**WP10 is done** (#53, #54, #56 closed; #55 code done, open for the owner). Next is **WP11**
+(#57–#60: duplicates, exports, booklet, EXIF import). WP11 ends M5, so it finishes with a
+check-in.
+
+What the owner can try (cemetery header → **More**): **Progress** (status by section/row,
+"Needs revisit" checklist: print or CSV); **People** (search `smith` finds Smyth/Schmidt,
+`wm` finds William; Filters); **People → Import an index (CSV)** with a real
+historical-society export (**#55's acceptance check**: map the columns, save a preset,
+import, Undo); **Match index to stones** (Same person / On this stone / No stone found,
+Matched → Unlink, Undo from the toast).
 
 Owner device checks still open (Android, installed app):
 
@@ -20,6 +27,29 @@ Owner device checks still open (Android, installed app):
   on the stone sheet, the screen staying on during a walk (and sleeping after "End walk"),
   the end-of-walk summary, Setup → "Before you go out", and the stone detail screen
   ("All details").
+
+Notes for WP11+ (from WP10, plan §11):
+
+- **Pages:** Progress, People and Match are routes (`cemetery/:id/progress|people|match`),
+  reached from the cemetery header's **More** sheet (`CemeteryMore.tsx`). Add new cemetery
+  pages there, not as header buttons: a fourth header line squeezed the map on phones and
+  broke the map-tap e2e. `app/pages/CemeteryGate.tsx` loads `:cemeteryId` for a page.
+- **CSV:** `data/format/csv.ts` (`parseCsv`, `csvLine`). #58 CSV export should use
+  `csvLine`, and `ui/download.ts` (`download`, `fileSlug`).
+- **People:** `features/people/search.ts` (`buildPeopleIndex`, `personName`,
+  `compareByName`). #57 duplicates can reuse `nameScore`/`yearScore` from
+  `domain/index-match.ts`.
+- **Index records:** `Source.location` is new (schema, FORMAT.md, plan updated).
+  `isIndexRecord(p)`. Merged records are tombstones named in a live person's `aliases`
+  (`matchedItems` reads people with deleted ones). Imported names have no `asCarved`.
+- **Not built:** the desk-mode matching panel (plan §9); the Match view covers matching.
+- **WebKit layout:** a visually hidden (`sr-only`, absolute) element inside an
+  `overflow-x-auto` box let the whole page slide sideways on WebKit only. Make such
+  scrollers `relative`. The progress e2e checks this with `window.scrollTo`.
+- Generated `src/i18n/locales/en/messages.ts` (from `i18n:compile`) is not tracked;
+  delete it after compiling. `i18n:extract` is what the commits need.
+- Known flaky on WebKit in Docker: stone-detail, walk-controls, transcribe "couple" tests
+  (pass on retry); `Setup.test.tsx` row test (unit) once more this session.
 
 Notes for WP10+ (from WP9, plan §9, §10.1, §10.4, §10.5):
 
@@ -157,27 +187,27 @@ Older notes (WP6 and earlier):
 
 Status values: `todo` · `in-progress` · `done` · `blocked: check-in`
 
-| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status      |
-| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ----------- |
-| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done        |
-| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done        |
-| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done        |
-| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done        |
-| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | done        |
-| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | done        |
-| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | done        |
-| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | done        |
-| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | done        |
-| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | done        |
-| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | done        |
-| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo        |
-| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | in-progress |
-| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | todo        |
-| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | todo        |
-| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo        |
-| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo        |
-| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo        |
-| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo        |
+| WP    | Milestone | Issues  | Scope                                                                                   | Model  | Status |
+| ----- | --------- | ------- | --------------------------------------------------------------------------------------- | ------ | ------ |
+| WP0   | M0        | #1–#9   | Repo reset, scaffold, shell, PWA, UI primitives, i18n, tests, CI, device check-in       | fast   | done   |
+| WP1   | M1        | #10–#14 | Domain types, HLC, FuzzyDate, names, stamps + merge                                     | deep   | done   |
+| WP2   | M1        | #15–#19 | Dexie + repositories, history/undo, schemas, .sbs, v1 importer                          | deep   | done   |
+| WP3   | M1        | #20–#22 | Contributor/settings, Home, data safety                                                 | fast   | done   |
+| WP4   | M2        | #23–#27 | Geo module, map, imagery, create cemetery, sections/rows                                | deep   | done   |
+| WP5   | M2        | #28–#32 | Stones layer, schematic view, offline tiles, grid pinning, plat overlay                 | fast   | done   |
+| WP6   | M3        | #33–#35 | Photo pipeline, camera, walk-a-row                                                      | deep   | done   |
+| WP7   | M3        | #36–#42 | Row controls, GPS averaging, chips, relative placement, polish, checklist, stone detail | fast   | done   |
+| —     | M3        | #43     | **Field trial #1** (owner)                                                              | —      | done   |
+| WP8   | M4        | #44–#47 | Queue, photo enhancement, keyboard form, multiple people                                | fast   | done   |
+| WP9   | M4        | #48–#51 | FuzzyDate UI, autocomplete, symbols/military, verify pass                               | fast   | done   |
+| —     | M4        | #52     | **Field trial #2** (owner)                                                              | —      | todo   |
+| WP10  | M5        | #53–#56 | Progress, people search, CSV import, match view                                         | deep   | done   |
+| WP11  | M5        | #57–#60 | Duplicates, exports, booklet, EXIF import                                               | fast   | todo   |
+| WP12  | M6        | #61–#64 | Packets, merge wizard, entity matching, cemetery aliasing                               | deep   | todo   |
+| WP13  | M6        | #65–#67 | Alignment, Web Share, merge e2e                                                         | deep   | todo   |
+| WP14  | M7        | #68–#72 | Privacy, publish bundle, viewer, deep links, navigation                                 | fast   | todo   |
+| —     | M7        | #73     | Code license decision (owner)                                                           | —      | todo   |
+| WP15+ | M8        | #74–#79 | One issue per session, any order                                                        | varies | todo   |
 
 Packages that end a milestone (WP0, WP3, WP5, WP9, WP11, WP13, WP14) finish with a check-in
 before the next package starts.
@@ -206,3 +236,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-26 · WP8 · Desk-mode queue with save & next ≤100 ms (#44). WebGL photo viewer: zoom/pan, tone, levels, unsharp, local contrast, raking light, straighten, perspective, presets; 60 fps on a GPU at 2× (#45). Keyboard-first form with people, Ctrl+Enter/./I shortcuts (#46). Multiple people and two-sided relationship links with carved-phrase suggestions (#47). 786 unit + 58 e2e green.
 - 2026-11-26 · WP9 · Live date/age readings with ambiguity warnings and calculated birth (#48). Name autocomplete from the cemetery's people, abbreviation-aware, <50 ms (#49). Symbols, carver, language/script, military with marker, three convention presets with in-app reference, recorded per inscription and in the README (#50). Verify pass with Ctrl+Shift+Enter, tested transitions (#51). 819 unit + 64 e2e (all 3 projects) green. M4 complete; WP10 blocked on field trial #2 (#52).
 - 2026-11-26 · M4 check-in · Owner transcribed the trial cemetery; all well. Fixed the one finding: the neighbour strip held only ±2 stones so it never scrolled (touch or wheel); it now shows the whole row, centred, with wheel scrolling. #52 closed; WP10 unblocked.
+- 2026-11-26 · WP10 · Progress dashboard with per-section/row status and a printable/CSV revisit checklist (#53). People index with MiniSearch: accent/abbreviation-aware, Soundex+D–M surnames, filters, collated order (#54). Burial-index CSV import: header guessing, column mapper with preview, presets, one-step undo; new `Source.location` (#55, open for a real society CSV). Match view: ranked stones, same person / on this stone / no stone found, unlink, all undoable (#56). Cemetery pages moved behind a More sheet. 851 unit + 78 e2e (all 3 projects) green.
