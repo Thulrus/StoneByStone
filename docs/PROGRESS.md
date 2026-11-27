@@ -48,6 +48,11 @@ Notes for WP12+ (from WP11, plan §11, §13.1, §20.3):
   `tests/fixtures/exif.ts` (`withExif`) writes Exif time + GPS into a JPEG for tests.
 - The booklet e2e writes `booklet.pdf` to its test output (Chromium only); look at it after
   layout changes.
+- **CI was red from WP10 to here**, so WP10/WP11 never deployed until 2026-11-27. Fixed: the
+  service worker is blocked in e2e (its toast covered phone layouts), CI runs 2 workers with
+  longer WebKit timeouts, failed runs now upload the HTML report and `test-results/`, and the
+  cemetery header keeps to two lines on phones ("More" is "⋯" there). Plan §2.1.1 now
+  requires a green CI run before a session ends.
 - Known flaky on WebKit in Docker: walk-controls "quick chips" (flaky again this session).
 
 Notes for WP11+ (from WP10, plan §11):
@@ -260,3 +265,4 @@ One line per session: date · WP · what was done · what's left (if anything).
 - 2026-11-26 · M4 check-in · Owner transcribed the trial cemetery; all well. Fixed the one finding: the neighbour strip held only ±2 stones so it never scrolled (touch or wheel); it now shows the whole row, centred, with wheel scrolling. #52 closed; WP10 unblocked.
 - 2026-11-26 · WP10 · Progress dashboard with per-section/row status and a printable/CSV revisit checklist (#53). People index with MiniSearch: accent/abbreviation-aware, Soundex+D–M surnames, filters, collated order (#54). Burial-index CSV import: header guessing, column mapper with preview, presets, one-step undo; new `Source.location` (#55, open for a real society CSV). Match view: ranked stones, same person / on this stone / no stone found, unlink, all undoable (#56). Cemetery pages moved behind a More sheet. 851 unit + 78 e2e (all 3 projects) green.
 - 2026-11-26 · WP11 · Duplicate review: alike people (Soundex blocks, compatible dates) and stones <1 m with alike text, review only (#57). CSV/GeoJSON/KML exports on a new Export and print page (#58). Printable booklet: title, SVG plan maps, A–Z index, row listings with thumbnails, convention, contributors, license (#59). Bulk photo import ordered/placed by EXIF, optional grouping and row, one undo step; 121-photo e2e (#60). 873 unit + 90 e2e (all 3 projects) green. M5 complete; WP12 blocked on the M5 check-in.
+- 2026-11-27 · CI fix · CI had been red since WP10 (WebKit only), so nothing deployed. Blocked the service worker in e2e, 2 CI workers and longer WebKit timeouts, HTML report + traces uploaded on failure, cemetery header kept to two lines on phones, row-drawing card compacted, "Importing…" status on photo import, 5 s Testing Library waits. Plan §2.1.1 and CLAUDE.md now require green CI. CI green (91 e2e, no retries) and deployed.
