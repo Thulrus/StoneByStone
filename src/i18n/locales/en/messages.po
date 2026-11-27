@@ -51,6 +51,11 @@ msgstr "{0, plural, one {…and # more} other {…and # more}}"
 msgid "{0, plural, one {# day} other {# days}}"
 msgstr "{0, plural, one {# day} other {# days}}"
 
+#. placeholder {0}: plan.duplicates.length
+#: src/features/photo-import/PhotoImportView.tsx:146
+msgid "{0, plural, one {# is already in this cemetery and is skipped} other {# are already in this cemetery and are skipped}}"
+msgstr "{0, plural, one {# is already in this cemetery and is skipped} other {# are already in this cemetery and are skipped}}"
+
 #. placeholder {0}: age.m
 #: src/features/transcribe/date-preview.ts:100
 msgid "{0, plural, one {# month} other {# months}}"
@@ -210,6 +215,10 @@ msgstr "{n} seconds"
 msgid "{n} stone(s) on this device are not in any backup."
 msgstr "{n} stone(s) on this device are not in any backup."
 
+#: src/features/photo-import/PhotoImportView.tsx:73
+msgid "{n} stones added from photos"
+msgstr "{n} stones added from photos"
+
 #: src/features/map/OfflinePanel.tsx:85
 msgid "{name} can't be saved for offline use under its terms. Pick USGS imagery, or a custom source whose terms allow it, from the map's Imagery menu. The diagram works offline without any imagery."
 msgstr "{name} can't be saved for offline use under its terms. Pick USGS imagery, or a custom source whose terms allow it, from the map's Imagery menu. The diagram works offline without any imagery."
@@ -249,6 +258,10 @@ msgstr "{position} of {total}"
 msgid "{px} px"
 msgstr "{px} px"
 
+#: src/features/photo-import/PhotoImportView.tsx:138
+msgid "{read_, plural, one {# photo read} other {# photos read}}"
+msgstr "{read_, plural, one {# photo read} other {# photos read}}"
+
 #: src/features/capture/PhotoStrip.tsx:34
 #: src/features/stones/detail/PhotosSection.tsx:23
 #: src/features/transcribe/PhotoPane.tsx:38
@@ -259,9 +272,17 @@ msgstr "{role} photo"
 msgid "{start} (calculated)"
 msgstr "{start} (calculated)"
 
+#: src/features/photo-import/PhotoImportView.tsx:134
+msgid "{stoneCount, plural, one {# stone to add} other {# stones to add}}"
+msgstr "{stoneCount, plural, one {# stone to add} other {# stones to add}}"
+
 #: src/features/booklet/BookletView.tsx:144
 msgid "{stoneCount, plural, one {# stone} other {# stones}}"
 msgstr "{stoneCount, plural, one {# stone} other {# stones}}"
+
+#: src/features/photo-import/PhotoImportView.tsx:196
+msgid "{stoneCount, plural, one {Import # stone} other {Import # stones}}"
+msgstr "{stoneCount, plural, one {Import # stone} other {Import # stones}}"
 
 #: src/features/cemeteries/setup/RowItem.tsx:54
 msgid "{stones, plural, one {# stone} other {# stones}}"
@@ -278,6 +299,10 @@ msgstr "{total, plural, one {# person} other {# people}}"
 #: src/features/cemeteries/FieldChecklist.tsx:165
 msgid "{withLine, plural, one {# with a line on the map} other {# with a line on the map}}"
 msgstr "{withLine, plural, one {# with a line on the map} other {# with a line on the map}}"
+
+#: src/features/photo-import/PhotoImportView.tsx:139
+msgid "{withTime} with the time taken, {withGps} with a location"
+msgstr "{withTime} with the time taken, {withGps} with a location"
 
 #: src/features/capture/walk/WalkPanel.tsx:96
 msgid "<0>Walking row {rowName}</0> · {count} stones"
@@ -504,6 +529,7 @@ msgstr "Back on the list"
 #: src/features/export/ExportView.tsx:47
 #: src/features/people/match/MatchView.tsx:92
 #: src/features/people/PeopleView.tsx:55
+#: src/features/photo-import/PhotoImportView.tsx:89
 #: src/features/progress/ProgressView.tsx:44
 #: src/features/stones/detail/StoneDetail.tsx:54
 #: src/features/transcribe/TranscribeView.tsx:129
@@ -723,7 +749,7 @@ msgstr "Cemetery"
 msgid "Cemetery not found"
 msgstr "Cemetery not found"
 
-#: src/features/cemeteries/CemeteryMore.tsx:22
+#: src/features/cemeteries/CemeteryMore.tsx:29
 msgid "Cemetery pages"
 msgstr "Cemetery pages"
 
@@ -766,6 +792,14 @@ msgstr "Choose a CSV file"
 #: src/features/people/index-import/IndexImport.tsx:179
 msgid "Choose another file"
 msgstr "Choose another file"
+
+#: src/features/photo-import/PhotoImportView.tsx:120
+msgid "Choose other photos"
+msgstr "Choose other photos"
+
+#: src/features/photo-import/PhotoImportView.tsx:120
+msgid "Choose photos"
+msgstr "Choose photos"
 
 #: src/features/people/index-import/ImportOptions.tsx:90
 msgid "Choose…"
@@ -884,6 +918,11 @@ msgstr "Couldn't read that image"
 #: src/features/capture/useSavePhoto.ts:61
 msgid "Couldn't read that photo"
 msgstr "Couldn't read that photo"
+
+#. placeholder {0}: state.failed.join(', ')
+#: src/features/photo-import/PhotoImportView.tsx:154
+msgid "Couldn't read: {0}"
+msgstr "Couldn't read: {0}"
 
 #: src/features/people/match/MatchView.tsx:53
 msgid "Couldn't save"
@@ -1192,7 +1231,7 @@ msgstr "Every grid stone is already in a row"
 msgid "Every record is matched or set aside."
 msgstr "Every record is matched or set aside."
 
-#: src/features/cemeteries/CemeteryMore.tsx:36
+#: src/features/cemeteries/CemeteryMore.tsx:52
 #: src/features/export/ExportView.tsx:50
 msgid "Export and print"
 msgstr "Export and print"
@@ -1489,6 +1528,16 @@ msgstr "Import a burial index"
 msgid "Import an index (CSV)"
 msgstr "Import an index (CSV)"
 
+#: src/features/photo-import/PhotoImportView.tsx:79
+msgid "Import failed"
+msgstr "Import failed"
+
+#: src/features/cemeteries/CemeteryMore.tsx:46
+#: src/features/photo-import/PhotoImportView.tsx:68
+#: src/features/photo-import/PhotoImportView.tsx:92
+msgid "Import photos"
+msgstr "Import photos"
+
 #: src/features/stones/detail/labels.ts:22
 msgid "Imported"
 msgstr "Imported"
@@ -1650,7 +1699,7 @@ msgstr "Limestone"
 msgid "Link {who} to…"
 msgstr "Link {who} to…"
 
-#: src/features/cemeteries/CemeteryMore.tsx:26
+#: src/features/cemeteries/CemeteryMore.tsx:33
 msgid "Link an imported burial index to stones"
 msgstr "Link an imported burial index to stones"
 
@@ -1754,7 +1803,7 @@ msgstr "Masonic square and compass"
 msgid "Match device"
 msgstr "Match device"
 
-#: src/features/cemeteries/CemeteryMore.tsx:27
+#: src/features/cemeteries/CemeteryMore.tsx:34
 #: src/features/people/match/MatchView.tsx:95
 msgid "Match index to stones"
 msgstr "Match index to stones"
@@ -1809,7 +1858,7 @@ msgstr "Military service"
 msgid "Missing"
 msgstr "Missing"
 
-#: src/features/cemeteries/CemeteryMore.tsx:19
+#: src/features/cemeteries/CemeteryMore.tsx:26
 #: src/features/stones/RelativePlacer.tsx:158
 msgid "More"
 msgstr "More"
@@ -1988,6 +2037,10 @@ msgstr "No records set aside."
 msgid "No row"
 msgstr "No row"
 
+#: src/features/photo-import/PhotoImportView.tsx:183
+msgid "No row: place them by location only"
+msgstr "No row: place them by location only"
+
 #: src/features/schematic/SchematicView.tsx:84
 msgid "No rows or stones yet. Add rows in Setup."
 msgstr "No rows or stones yet. Add rows in Setup."
@@ -2032,6 +2085,10 @@ msgstr "No stones look like duplicates."
 #: src/features/schematic/SchematicView.tsx:45
 msgid "No stones yet"
 msgstr "No stones yet"
+
+#: src/features/photo-import/PhotoImportView.tsx:169
+msgid "No: every photo is a different stone"
+msgstr "No: every photo is a different stone"
 
 #: src/features/duplicates/PairCards.tsx:37
 msgid "Not duplicates"
@@ -2239,7 +2296,7 @@ msgstr "Path"
 msgid "Pedestal / die-on-base"
 msgstr "Pedestal / die-on-base"
 
-#: src/features/cemeteries/CemeteryMore.tsx:24
+#: src/features/cemeteries/CemeteryMore.tsx:31
 #: src/features/duplicates/DuplicatesView.tsx:102
 #: src/features/people/LinkPersonDialog.tsx:71
 #: src/features/people/PeopleView.tsx:58
@@ -2248,7 +2305,7 @@ msgstr "Pedestal / die-on-base"
 msgid "People"
 msgstr "People"
 
-#: src/features/cemeteries/CemeteryMore.tsx:29
+#: src/features/cemeteries/CemeteryMore.tsx:36
 msgid "People or stones recorded twice"
 msgstr "People or stones recorded twice"
 
@@ -2305,6 +2362,22 @@ msgstr "Photographed, not transcribed"
 #: src/features/transcribe/PhotoPane.tsx:49
 msgid "Photos"
 msgstr "Photos"
+
+#: src/features/cemeteries/CemeteryMore.tsx:44
+msgid "Photos from another camera app, placed by time and location"
+msgstr "Photos from another camera app, placed by time and location"
+
+#: src/features/photo-import/PhotoImportView.tsx:170
+msgid "Photos taken within 10 seconds are one stone"
+msgstr "Photos taken within 10 seconds are one stone"
+
+#: src/features/photo-import/PhotoImportView.tsx:171
+msgid "Photos taken within 30 seconds are one stone"
+msgstr "Photos taken within 30 seconds are one stone"
+
+#: src/features/photo-import/PhotoImportView.tsx:159
+msgid "Photos with no time taken go last, in file-name order."
+msgstr "Photos with no time taken go last, in file-name order."
 
 #: src/features/overlays/PinPanel.tsx:35
 msgid "Pick a {sourceHint} for point {n}, then tap the same spot on the map."
@@ -2419,7 +2492,7 @@ msgstr "Possible duplicate people"
 msgid "Possible duplicate stones"
 msgstr "Possible duplicate stones"
 
-#: src/features/cemeteries/CemeteryMore.tsx:30
+#: src/features/cemeteries/CemeteryMore.tsx:37
 #: src/features/duplicates/DuplicatesView.tsx:84
 msgid "Possible duplicates"
 msgstr "Possible duplicates"
@@ -2453,7 +2526,7 @@ msgstr "Print or save as PDF"
 msgid "Printable booklet"
 msgstr "Printable booklet"
 
-#: src/features/cemeteries/CemeteryMore.tsx:33
+#: src/features/cemeteries/CemeteryMore.tsx:40
 #: src/features/progress/ProgressView.tsx:47
 msgid "Progress"
 msgstr "Progress"
@@ -2465,6 +2538,10 @@ msgstr "Protect data"
 #: src/features/people/match/RecordCard.tsx:134
 msgid "Put on {label}"
 msgstr "Put on {label}"
+
+#: src/features/photo-import/PhotoImportView.tsx:176
+msgid "Put the stones in a row"
+msgstr "Put the stones in a row"
 
 #: src/features/transcribe/MilitaryFields.tsx:37
 msgid "Pvt., Capt."
@@ -2478,6 +2555,12 @@ msgstr "Raking light"
 #: src/features/transcribe/MilitaryFields.tsx:36
 msgid "Rank"
 msgstr "Rank"
+
+#. placeholder {0}: state.done
+#. placeholder {1}: state.total
+#: src/features/photo-import/PhotoImportView.tsx:124
+msgid "Reading photo {0} of {1}…"
+msgstr "Reading photo {0} of {1}…"
 
 #: src/app/UpdatePrompt.tsx:33
 msgid "Ready to work offline"
@@ -2599,12 +2682,13 @@ msgstr "Row"
 
 #. placeholder {0}: f.row
 #. placeholder {0}: g.row
-#. placeholder {0}: loc.row
+#. placeholder {0}: layout.labelOf(r)
 #: src/features/booklet/BookletSections.tsx:16
 #: src/features/booklet/BookletSections.tsx:118
 #: src/features/cemeteries/setup/RowItem.tsx:83
 #: src/features/people/index-import/PeoplePreview.tsx:28
 #: src/features/people/match/useRecordLine.ts:13
+#: src/features/photo-import/PhotoImportView.tsx:186
 msgid "Row {0}"
 msgstr "Row {0}"
 
@@ -2820,7 +2904,7 @@ msgstr "Search"
 msgid "Search by name or place"
 msgstr "Search by name or place"
 
-#: src/features/cemeteries/CemeteryMore.tsx:23
+#: src/features/cemeteries/CemeteryMore.tsx:30
 msgid "Search names, dates and inscriptions"
 msgstr "Search names, dates and inscriptions"
 
@@ -2874,6 +2958,10 @@ msgstr "Settings"
 #: src/features/cemeteries/CemeteryTabs.tsx:106
 msgid "Setup"
 msgstr "Setup"
+
+#: src/features/photo-import/PhotoImportView.tsx:164
+msgid "Several photos of one stone?"
+msgstr "Several photos of one stone?"
 
 #: src/features/people/index-import/field-labels.ts:18
 msgid "Sex"
@@ -2932,7 +3020,7 @@ msgstr "Spouse"
 msgid "Spreadsheet (CSV)"
 msgstr "Spreadsheet (CSV)"
 
-#: src/features/cemeteries/CemeteryMore.tsx:35
+#: src/features/cemeteries/CemeteryMore.tsx:50
 msgid "Spreadsheet, GIS, Google Earth, printable booklet"
 msgstr "Spreadsheet, GIS, Google Earth, printable booklet"
 
@@ -2956,7 +3044,7 @@ msgstr "Starting camera…"
 msgid "Status"
 msgstr "Status"
 
-#: src/features/cemeteries/CemeteryMore.tsx:32
+#: src/features/cemeteries/CemeteryMore.tsx:39
 msgid "Status by row, and what to revisit"
 msgstr "Status by row, and what to revisit"
 
@@ -3286,6 +3374,10 @@ msgstr "To match ({0})"
 msgid "Tone"
 msgstr "Tone"
 
+#: src/features/photo-import/PhotoImportView.tsx:95
+msgid "Took photos with your phone's own camera? Each becomes a stone, in the order they were taken, placed where the photo's location says. Nothing is added until you press Import."
+msgstr "Took photos with your phone's own camera? Each becomes a stone, in the order they were taken, placed where the photo's location says. Nothing is added until you press Import."
+
 #: src/features/transcribe/viewer/FilterControls.tsx:150
 msgid "Top/bottom width"
 msgstr "Top/bottom width"
@@ -3373,6 +3465,7 @@ msgstr "Uncertain position"
 #: src/features/people/index-import/IndexImport.tsx:102
 #: src/features/people/LinkPersonDialog.tsx:46
 #: src/features/people/match/MatchView.tsx:51
+#: src/features/photo-import/PhotoImportView.tsx:74
 #: src/features/stones/detail/PhotosSection.tsx:52
 #: src/features/stones/PlaceOnMap.tsx:20
 #: src/features/stones/RelativePlacer.tsx:75

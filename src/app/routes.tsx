@@ -52,6 +52,12 @@ export const routes: RouteObject[] = [
         lazy: async () => ({ Component: (await import('./pages/BookletPage')).BookletPage }),
       },
       {
+        path: 'cemetery/:cemeteryId/import-photos',
+        lazy: async () => ({
+          Component: (await import('./pages/PhotoImportPage')).PhotoImportPage,
+        }),
+      },
+      {
         path: 'new',
         lazy: async () => ({
           Component: (await import('../features/cemeteries/create/NewCemeteryPage'))

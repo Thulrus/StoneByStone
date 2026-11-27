@@ -1,7 +1,14 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
-import { duplicatesPath, exportPath, matchPath, peoplePath, progressPath } from '../../app/paths';
+import {
+  duplicatesPath,
+  exportPath,
+  matchPath,
+  photoImportPath,
+  peoplePath,
+  progressPath,
+} from '../../app/paths';
 import type { Cemetery } from '../../domain';
 import { Button } from '../../ui/Button';
 import { Sheet } from '../../ui/Sheet';
@@ -31,6 +38,12 @@ export function CemeteryMore({ cemetery }: { cemetery: Cemetery }) {
           </PageLink>
           <PageLink to={progressPath(cemetery.id)} hint={t`Status by row, and what to revisit`}>
             <Trans>Progress</Trans>
+          </PageLink>
+          <PageLink
+            to={photoImportPath(cemetery.id)}
+            hint={t`Photos from another camera app, placed by time and location`}
+          >
+            <Trans>Import photos</Trans>
           </PageLink>
           <PageLink
             to={exportPath(cemetery.id)}

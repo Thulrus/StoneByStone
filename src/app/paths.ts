@@ -44,3 +44,8 @@ export function exportPath(cemeteryId: string): string {
 export function bookletPath(cemeteryId: string): string {
   return `${cemeteryPath(cemeteryId)}/booklet`;
 }
+
+/** Link target for importing photos taken with another camera app. */
+export function photoImportPath(cemeteryId: string): string {
+  return `${cemeteryPath(cemeteryId)}/import-photos`;
+}

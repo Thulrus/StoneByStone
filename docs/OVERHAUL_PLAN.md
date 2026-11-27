@@ -1132,6 +1132,14 @@ README.txt         human explanation of the format and license
 `.sbs`, `.sbs.json`, v1 `.cem.json` (§22), CSV (with column mapper), GeoJSON (points →
 monuments with properties mapped), images (bulk photo import: EXIF GPS/time used to place
 and order stones — useful for people who photographed a cemetery with a normal camera app).
+(M5 bulk photo import, route `cemetery/:id/import-photos` linked from More: files go through
+the photo pipeline one at a time; `domain/photo/import-plan.ts` orders them by EXIF time
+(no time: last, by file name), skips photos whose sha256 the cemetery already has, and can
+make shots within 10 or 30 s of a stone's first shot (and ≤ 8 m from the previous one) one
+stone: the first is `front`, the rest `other`. The default is one photo per stone.
+`data/photo-import.ts` writes it all as one undo step: with no row each stone sits at its
+first photo's GPS (`source: gps`); into a row the stones go after its last one and the row
+is laid out as on a walk, fitting the photos' fixes along it.)
 
 JSON Schemas (draft-07) live in `schema/v2/` (one per entity, plus `manifest.json`,
 `common.json` and `document.json` for `.sbs.json`) and are validated with Ajv on import.
