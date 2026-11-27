@@ -29,3 +29,8 @@ export function peoplePath(cemeteryId: string): string {
 export function matchPath(cemeteryId: string): string {
   return `${cemeteryPath(cemeteryId)}/match`;
 }
+
+/** Link target for a cemetery's possible-duplicates review. */
+export function duplicatesPath(cemeteryId: string): string {
+  return `${cemeteryPath(cemeteryId)}/duplicates`;
+}

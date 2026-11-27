@@ -610,6 +610,14 @@ unit, `marker` for the government-issue or society marker).
   stamped with the merge). The desk-mode matching panel (§9) is not built yet.)
 - **Duplicate detection** within a dataset: same/similar name + compatible dates, or two
   stones within ~1 m with similar transcriptions. Reviewed, never auto-merged.
+  (M5, `domain/duplicates.ts`, route `cemetery/:id/duplicates`, linked from More: people are
+  compared within Soundex surname blocks: name score ≥ 0.8 and death/birth years within 3,
+  or an identical full name when neither has years; differing suffixes, linked people, and
+  an index record against a person on a stone (that is the Match view) are left out. Stones
+  closer than 1 m pair up when their words (numbers, and names of 3+ letters minus
+  epitaph boilerplate) overlap by half, or two of their people's names score ≥ 0.8; linked
+  stones such as a footstone are left out. "Not duplicates" is a device setting per
+  cemetery, so the review never writes survey data.)
 - **Search:** full-text over names (normalized, abbreviation-aware, phonetic), inscriptions,
   notes; filters by date range, section, status, symbol, material, veteran.
   (M5, `features/people/search.ts`, route `cemetery/:id/people`: MiniSearch over name text,

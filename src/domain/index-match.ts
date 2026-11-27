@@ -108,7 +108,8 @@ export function yearScore(a: FuzzyDate | undefined, b: FuzzyDate | undefined): n
   return -1;
 }
 
-function dateScore(r: Person, p: Person): number | undefined {
+/** Birth and death year agreement of two people (see `yearScore`); `undefined` when not comparable. */
+export function dateScore(r: Person, p: Person): number | undefined {
   const death = yearScore(r.death ?? r.burial, p.death ?? p.burial);
   const birth = yearScore(r.birth, p.birth);
   if (death === undefined) return birth;

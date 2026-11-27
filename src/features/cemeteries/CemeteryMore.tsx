@@ -1,7 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
-import { matchPath, peoplePath, progressPath } from '../../app/paths';
+import { duplicatesPath, matchPath, peoplePath, progressPath } from '../../app/paths';
 import type { Cemetery } from '../../domain';
 import { Button } from '../../ui/Button';
 import { Sheet } from '../../ui/Sheet';
@@ -25,6 +25,9 @@ export function CemeteryMore({ cemetery }: { cemetery: Cemetery }) {
           </PageLink>
           <PageLink to={matchPath(cemetery.id)} hint={t`Link an imported burial index to stones`}>
             <Trans>Match index to stones</Trans>
+          </PageLink>
+          <PageLink to={duplicatesPath(cemetery.id)} hint={t`People or stones recorded twice`}>
+            <Trans>Possible duplicates</Trans>
           </PageLink>
           <PageLink to={progressPath(cemetery.id)} hint={t`Status by row, and what to revisit`}>
             <Trans>Progress</Trans>

@@ -27,6 +27,7 @@ msgstr "(new stones go before stone 1)"
 msgid "(no name yet)"
 msgstr "(no name yet)"
 
+#: src/features/duplicates/PairCards.tsx:75
 #: src/features/people/index-import/PeoplePreview.tsx:38
 #: src/features/people/match/MatchedList.tsx:40
 #: src/features/people/match/RecordCard.tsx:42
@@ -160,6 +161,14 @@ msgstr "{free} free for photos"
 #: src/features/capture/walk/WalkCamera.tsx:108
 msgid "{gaps, plural, one {# empty plot before it} other {# empty plots before it}}"
 msgstr "{gaps, plural, one {# empty plot before it} other {# empty plots before it}}"
+
+#: src/features/duplicates/DuplicatesView.tsx:96
+msgid "{hidden, plural, one {Show # dismissed pair} other {Show # dismissed pairs}}"
+msgstr "{hidden, plural, one {Show # dismissed pair} other {Show # dismissed pairs}}"
+
+#: src/features/duplicates/PairCards.tsx:129
+msgid "{metres} m apart · text {alike}% alike"
+msgstr "{metres} m apart · text {alike}% alike"
 
 #: src/features/cemeteries/FieldChecklist.tsx:163
 msgid "{n, plural, one {# row planned} other {# rows planned}}"
@@ -440,6 +449,10 @@ msgstr "As carved (brackets, real line breaks)"
 msgid "as carved, often at the base"
 msgstr "as carved, often at the base"
 
+#: src/features/duplicates/PairCards.tsx:37
+msgid "Ask again"
+msgstr "Ask again"
+
 #: src/features/map/CustomSourceForm.tsx:84
 msgid "Attribution"
 msgstr "Attribution"
@@ -465,6 +478,7 @@ msgid "Back on the list"
 msgstr "Back on the list"
 
 #. placeholder {0}: cemetery.name
+#: src/features/duplicates/DuplicatesView.tsx:81
 #: src/features/people/match/MatchView.tsx:92
 #: src/features/people/PeopleView.tsx:55
 #: src/features/progress/ProgressView.tsx:44
@@ -1768,6 +1782,10 @@ msgstr "N"
 msgid "Name"
 msgstr "Name"
 
+#: src/features/duplicates/PairCards.tsx:94
+msgid "Name {name}% alike · dates agree"
+msgstr "Name {name}% alike · dates agree"
+
 #: src/features/stones/detail/PeopleSection.tsx:31
 msgid "Name as carved"
 msgstr "Name as carved"
@@ -1819,6 +1837,10 @@ msgstr "Next stone"
 msgid "No cemeteries on this device yet. Create one, or import a file."
 msgstr "No cemeteries on this device yet. Create one, or import a file."
 
+#: src/features/duplicates/PairCards.tsx:72
+msgid "No dates"
+msgstr "No dates"
+
 #: src/features/capture/HoldStill.tsx:95
 msgid "No GPS fixes came in. Check that location is on, then try again."
 msgstr "No GPS fixes came in. Check that location is on, then try again."
@@ -1846,6 +1868,10 @@ msgstr "No one else to link to yet."
 #: src/features/people/match/RecordCard.tsx:119
 msgid "No one entered on this stone yet"
 msgstr "No one entered on this stone yet"
+
+#: src/features/duplicates/DuplicatesView.tsx:107
+msgid "No people look like duplicates."
+msgstr "No people look like duplicates."
 
 #: src/features/people/PeopleView.tsx:81
 msgid "No people yet. Names appear here as stones are transcribed, or import a burial index from a historical society."
@@ -1884,6 +1910,7 @@ msgstr "No rows yet. Add them on the Setup tab."
 msgid "No section"
 msgstr "No section"
 
+#: src/features/duplicates/PairCards.tsx:81
 #: src/features/people/PeopleFiltersPanel.tsx:102
 #: src/features/people/PersonResult.tsx:56
 msgid "No stone (index record)"
@@ -1902,9 +1929,17 @@ msgstr "No stone found ({0})"
 msgid "No stones in this list. Choose another list above."
 msgstr "No stones in this list. Choose another list above."
 
+#: src/features/duplicates/DuplicatesView.tsx:126
+msgid "No stones look like duplicates."
+msgstr "No stones look like duplicates."
+
 #: src/features/schematic/SchematicView.tsx:45
 msgid "No stones yet"
 msgstr "No stones yet"
+
+#: src/features/duplicates/PairCards.tsx:37
+msgid "Not duplicates"
+msgstr "Not duplicates"
 
 #: src/features/progress/ProgressView.tsx:123
 #: src/features/schematic/SchematicView.tsx:102
@@ -1955,6 +1990,10 @@ msgstr "Nothing found. Try another search, or drop a pin."
 #: src/app/StoreGate.tsx:65
 msgid "Nothing has been changed. Details: {0}"
 msgstr "Nothing has been changed. Details: {0}"
+
+#: src/features/duplicates/DuplicatesView.tsx:87
+msgid "Nothing here is changed for you. Open the stones to fix or delete a duplicate, or mark a pair \"Not duplicates\" to stop seeing it."
+msgstr "Nothing here is changed for you. Open the stones to fix or delete a duplicate, or mark a pair \"Not duplicates\" to stop seeing it."
 
 #: src/features/people/match/MatchedList.tsx:32
 msgid "Nothing matched yet."
@@ -2092,12 +2131,17 @@ msgid "Pedestal / die-on-base"
 msgstr "Pedestal / die-on-base"
 
 #: src/features/cemeteries/CemeteryMore.tsx:24
+#: src/features/duplicates/DuplicatesView.tsx:102
 #: src/features/people/LinkPersonDialog.tsx:71
 #: src/features/people/PeopleView.tsx:58
 #: src/features/people/PeopleView.tsx:120
 #: src/features/stones/detail/PeopleSection.tsx:60
 msgid "People"
 msgstr "People"
+
+#: src/features/cemeteries/CemeteryMore.tsx:29
+msgid "People or stones recorded twice"
+msgstr "People or stones recorded twice"
 
 #: src/features/stones/detail/HistorySection.tsx:24
 msgid "person"
@@ -2243,6 +2287,19 @@ msgstr "Position"
 msgid "Position within about ±{0} m"
 msgstr "Position within about ±{0} m"
 
+#: src/features/duplicates/DuplicatesView.tsx:110
+msgid "Possible duplicate people"
+msgstr "Possible duplicate people"
+
+#: src/features/duplicates/DuplicatesView.tsx:129
+msgid "Possible duplicate stones"
+msgstr "Possible duplicate stones"
+
+#: src/features/cemeteries/CemeteryMore.tsx:30
+#: src/features/duplicates/DuplicatesView.tsx:84
+msgid "Possible duplicates"
+msgstr "Possible duplicates"
+
 #: src/features/settings/StoragePanel.tsx:122
 #: src/features/share/BackupBanner.tsx:26
 msgid "Preparing…"
@@ -2264,7 +2321,7 @@ msgstr "Previous"
 msgid "Print checklist"
 msgstr "Print checklist"
 
-#: src/features/cemeteries/CemeteryMore.tsx:30
+#: src/features/cemeteries/CemeteryMore.tsx:33
 #: src/features/progress/ProgressView.tsx:47
 msgid "Progress"
 msgstr "Progress"
@@ -2520,6 +2577,10 @@ msgstr "S"
 msgid "same name"
 msgstr "same name"
 
+#: src/features/duplicates/PairCards.tsx:93
+msgid "Same name · no dates to compare"
+msgstr "Same name · no dates to compare"
+
 #: src/features/people/match/RecordCard.tsx:127
 msgid "Same person"
 msgstr "Same person"
@@ -2745,7 +2806,7 @@ msgstr "Starting camera…"
 msgid "Status"
 msgstr "Status"
 
-#: src/features/cemeteries/CemeteryMore.tsx:29
+#: src/features/cemeteries/CemeteryMore.tsx:32
 msgid "Status by row, and what to revisit"
 msgstr "Status by row, and what to revisit"
 
@@ -2823,6 +2884,7 @@ msgstr "Stone placed relative to {0}"
 msgid "Stone status"
 msgstr "Stone status"
 
+#: src/features/duplicates/DuplicatesView.tsx:121
 #: src/features/progress/ProgressView.tsx:95
 msgid "Stones"
 msgstr "Stones"
