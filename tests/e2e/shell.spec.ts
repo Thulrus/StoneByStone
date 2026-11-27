@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test';
 
+// The offline shell is the service worker's job.
+test.use({ serviceWorkers: 'allow' });
+
 test('hash routes survive a reload', async ({ page }) => {
   await page.goto('#/settings');
   await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();

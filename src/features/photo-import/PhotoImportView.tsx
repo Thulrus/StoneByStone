@@ -188,13 +188,16 @@ export function PhotoImportView({ cemetery, layout }: { cemetery: Cemetery; layo
               ))}
             </select>
           </label>
-          <Button
-            className="self-start"
-            disabled={busy || stoneCount === 0}
-            onClick={() => void doImport()}
-          >
-            <Plural value={stoneCount} one="Import # stone" other="Import # stones" />
-          </Button>
+          <div className="flex flex-wrap items-center gap-3">
+            <Button disabled={busy || stoneCount === 0} onClick={() => void doImport()}>
+              <Plural value={stoneCount} one="Import # stone" other="Import # stones" />
+            </Button>
+            {busy ? (
+              <p role="status">
+                <Trans>Importing…</Trans>
+              </p>
+            ) : null}
+          </div>
         </section>
       ) : null}
     </div>

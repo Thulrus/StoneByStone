@@ -109,8 +109,20 @@ needs lives in the repo and the issues.
   or add a line to the relevant issue instead of doing it.
 - **Finishing:** close the completed issues (`Closes #N` in commits) and check off their
   acceptance criteria. Then update `PROGRESS.md`: set the package status, rewrite the "Next
-  session starts here" block, and append a log line. Commit and push.
-- **Stopping partway:** if the session runs long or gets stuck, stop at a green commit. Leave
+  session starts here" block, and append a log line. Commit, push, and wait for CI to pass
+  (below).
+- **CI must pass:** a green local run is not enough. After every push, check the GitHub
+  Actions run for that commit (`gh run list --branch master --limit 3`, then
+  `gh run watch <id>` or `gh run view <id> --log-failed`) and don't end the session until it
+  is green. Also look at the run for the commit you started from: if it was already red, fix
+  that first or tell the owner. A red run means the Build and Deploy jobs are skipped, so the
+  owner's installed app stays on an old version. CI is slower than a dev machine (4 vCPUs,
+  WebKit draws maps in software). To reproduce a CI-only failure, run the Playwright Docker
+  image with `--cpus=4 -e CI=1` (see PROGRESS.md for the command), and download traces with
+  `gh run download <id> -n playwright-report` (failed runs upload the HTML report and
+  `test-results/`).
+- **Stopping partway:** if the session runs long or gets stuck, stop at a commit that is green
+  in CI. Leave
   the package `in-progress`. Comment on the open issue with what's done, what's left, and any
   traps you hit. Then update `PROGRESS.md` as above.
 - **Check-ins:** when a package finishes a milestone or comes right before a field trial,

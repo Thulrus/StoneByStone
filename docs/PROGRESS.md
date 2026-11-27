@@ -184,7 +184,7 @@ Older notes (WP6 and earlier):
 - **CI must be green to deploy.** It was red from WP4 until this fix (mobile WebKit only), so
   the owner's phone stayed on the M1 build. After every push, run `gh run watch` and fix
   failures before ending the session. Run WebKit locally in Docker (host lacks its deps):
-  `docker run --rm --ipc=host --user $(id -u):$(id -g) -e HOME=/tmp -e CI=1 -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v1.65.1-noble npx playwright test`
+  `docker run --rm --cpus=4 --ipc=host --user $(id -u):$(id -g) -e HOME=/tmp -e CI=1 -v "$PWD":/work -w /work mcr.microsoft.com/playwright:v1.65.1-noble npx playwright test`
   (match the image tag to the installed `@playwright/test`).
 - Settings → "About this app" shows the version, build commit and build time, and has a
   "Check for updates" button (`__BUILD_SHA__` / `__BUILD_TIME__` come from `vite.config.ts`).

@@ -62,7 +62,10 @@ test('photo import: 121 photos become stones in EXIF time order, front and back 
   await page.getByRole('radio', { name: 'Photos taken within 10 seconds are one stone' }).check();
   await expect(page.getByRole('heading', { name: '61 stones to add' })).toBeVisible();
   await page.getByRole('button', { name: 'Import 61 stones' }).click();
-  await expect(page.getByText('61 stones added from photos', { exact: true })).toBeVisible();
+  // Writing 120 photos takes a while on WebKit.
+  await expect(page.getByText('61 stones added from photos', { exact: true })).toBeVisible({
+    timeout: 30_000,
+  });
 
   await page.getByRole('button', { name: 'More' }).click();
   await page.getByRole('link', { name: /^Export and print/ }).click();

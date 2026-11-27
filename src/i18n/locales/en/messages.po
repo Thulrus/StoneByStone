@@ -280,7 +280,7 @@ msgstr "{stoneCount, plural, one {# stone to add} other {# stones to add}}"
 msgid "{stoneCount, plural, one {# stone} other {# stones}}"
 msgstr "{stoneCount, plural, one {# stone} other {# stones}}"
 
-#: src/features/photo-import/PhotoImportView.tsx:196
+#: src/features/photo-import/PhotoImportView.tsx:193
 msgid "{stoneCount, plural, one {Import # stone} other {Import # stones}}"
 msgstr "{stoneCount, plural, one {Import # stone} other {Import # stones}}"
 
@@ -1550,6 +1550,7 @@ msgid "Imported {0}"
 msgstr "Imported {0}"
 
 #: src/features/cemeteries/ImportButton.tsx:59
+#: src/features/photo-import/PhotoImportView.tsx:197
 msgid "Importing…"
 msgstr "Importing…"
 
@@ -1743,8 +1744,8 @@ msgstr "Made {n} rows from the grid"
 msgid "Maiden / birth surname"
 msgstr "Maiden / birth surname"
 
-#: src/app/Layout.tsx:68
-#: src/app/Layout.tsx:82
+#: src/app/Layout.tsx:71
+#: src/app/Layout.tsx:85
 msgid "Main"
 msgstr "Main"
 
